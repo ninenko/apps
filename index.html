@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 56px;
+      margin-bottom: 40px;
       position: relative;
     }
 
@@ -62,19 +62,55 @@
       letter-spacing: 0.5px;
     }
 
-    .lang-btn.active {
-      background: #2a2a3e;
-      color: #a78bfa;
+    .lang-btn.active { background: #2a2a3e; color: #a78bfa; }
+    .lang-btn:hover:not(.active) { color: #c4c4d8; }
+
+    /* Category filter */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
     }
 
-    .lang-btn:hover:not(.active) {
-      color: #c4c4d8;
+    .filter-btn {
+      background: #1a1a24;
+      border: 1px solid #2a2a38;
+      color: #6b6b80;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 7px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      letter-spacing: 0.3px;
     }
+
+    .filter-btn.active {
+      background: #2a2a3e;
+      color: #a78bfa;
+      border-color: #7c6af7;
+    }
+
+    .filter-btn:hover:not(.active) { color: #c4c4d8; border-color: #3a3a50; }
+
+    /* Section label */
+    .section-label {
+      max-width: 900px;
+      margin: 0 auto 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #3a3a58;
+    }
+
+    .section-block { margin-bottom: 36px; }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
       max-width: 900px;
       margin: 0 auto;
     }
@@ -83,7 +119,7 @@
       background: #1a1a24;
       border: 1px solid #2a2a38;
       border-radius: 14px;
-      padding: 24px;
+      padding: 22px;
       text-decoration: none;
       color: inherit;
       transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
@@ -98,16 +134,16 @@
       box-shadow: 0 8px 32px rgba(124, 106, 247, 0.15);
     }
 
-    .card-icon { font-size: 2rem; line-height: 1; }
+    .card-icon { font-size: 1.9rem; line-height: 1; }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: #e8e8f0;
     }
 
     .card-desc {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: #7b7b90;
       line-height: 1.5;
       flex: 1;
@@ -115,14 +151,15 @@
 
     .card-tag {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       padding: 3px 10px;
       border-radius: 20px;
-      background: #2a2a38;
-      color: #a78bfa;
       font-weight: 500;
       width: fit-content;
     }
+
+    .tag-app  { background: #1e2a1e; color: #4ade80; }
+    .tag-lecture { background: #1e1e2e; color: #818cf8; }
 
     footer {
       text-align: center;
@@ -132,6 +169,7 @@
     }
 
     [data-lang] { display: none; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -139,8 +177,8 @@
   <header>
     <h1>Ivan's Apps</h1>
     <p>
-      <span data-lang="ru">Коллекция HTML-приложений, опубликованных через Cowork</span>
-      <span data-lang="en">A collection of HTML apps published via Cowork</span>
+      <span data-lang="ru">Коллекция HTML-приложений и лекций, опубликованных через Cowork</span>
+      <span data-lang="en">A collection of HTML apps and lectures published via Cowork</span>
     </p>
     <div class="lang-switcher">
       <button class="lang-btn" onclick="setLang('ru')">RU</button>
@@ -148,25 +186,113 @@
     </div>
   </header>
 
-  <div class="grid">
+  <!-- Category filter -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('both')">
+      <span data-lang="en">Both</span><span data-lang="ru">Всё</span>
+    </button>
+    <button class="filter-btn" onclick="setFilter('apps')">
+      <span data-lang="en">Apps</span><span data-lang="ru">Приложения</span>
+    </button>
+    <button class="filter-btn" onclick="setFilter('lectures')">
+      <span data-lang="en">Lectures</span><span data-lang="ru">Лекции</span>
+    </button>
+  </div>
 
-    <a class="card" href="matrix-picker.html">
-      <div class="card-icon">🟩</div>
-      <div class="card-title">Matrix Name Picker</div>
-      <div class="card-desc">
-        <span data-lang="ru">Случайный выбор имени из списка. Анимация в стиле фильма «Матрица» — зелёные символы, терминальный интерфейс.</span>
-        <span data-lang="en">Randomly picks a name from your list. Matrix-style animation — green symbols, terminal aesthetic.</span>
-      </div>
-      <span class="card-tag">
-        <span data-lang="ru">Инструмент</span>
-        <span data-lang="en">Tool</span>
-      </span>
-    </a>
+  <!-- APPS -->
+  <div class="section-block" id="section-apps">
+    <div class="section-label">
+      <span data-lang="en">Apps</span><span data-lang="ru">Приложения</span>
+    </div>
+    <div class="grid">
 
+      <a class="card" href="apps/matrix-picker.html">
+        <div class="card-icon">🟩</div>
+        <div class="card-title">Matrix Name Picker</div>
+        <div class="card-desc">
+          <span data-lang="en">Randomly picks a name from your list. Matrix-style animation — green symbols, terminal aesthetic.</span>
+          <span data-lang="ru">Случайный выбор имени из списка в стиле «Матрицы» — зелёные символы, терминальный интерфейс.</span>
+        </div>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Tool</span><span data-lang="ru">Инструмент</span>
+        </span>
+      </a>
+
+      <a class="card" href="apps/binary-transistors-explorer.html">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Binary & Transistors Explorer</div>
+        <div class="card-desc">
+          <span data-lang="en">Interactive visualisation of how transistors work and how binary numbers are built from them.</span>
+          <span data-lang="ru">Интерактивная визуализация работы транзисторов и построения двоичных чисел.</span>
+        </div>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Interactive</span><span data-lang="ru">Интерактив</span>
+        </span>
+      </a>
+
+      <a class="card" href="apps/punchcard-emulator.html">
+        <div class="card-icon">🪄</div>
+        <div class="card-title">Punchcard Emulator</div>
+        <div class="card-desc">
+          <span data-lang="en">Emulates a simplified IBM punchcard. Type code, see it punched into the card in real time.</span>
+          <span data-lang="ru">Эмулятор перфокарты IBM. Вводи код и смотри, как он пробивается на карте в реальном времени.</span>
+        </div>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Emulator</span><span data-lang="ru">Эмулятор</span>
+        </span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- LECTURES -->
+  <div class="section-block" id="section-lectures">
+    <div class="section-label">
+      <span data-lang="en">Lectures</span><span data-lang="ru">Лекции</span>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="lectures/api-slides.html">
+        <div class="card-icon">🔌</div>
+        <div class="card-title">What is an API?</div>
+        <div class="card-desc">
+          <span data-lang="en">Slide deck explaining what APIs are, how they work, and why they matter.</span>
+          <span data-lang="ru">Слайды о том, что такое API, как они работают и зачем нужны.</span>
+        </div>
+        <span class="card-tag tag-lecture">
+          <span data-lang="en">Slides</span><span data-lang="ru">Слайды</span>
+        </span>
+      </a>
+
+      <a class="card" href="lectures/randomness_slides.html">
+        <div class="card-icon">🎲</div>
+        <div class="card-title">Случайность в игре</div>
+        <div class="card-desc">
+          <span data-lang="en">How randomness works in games — probability, RNG, and why outcomes feel fair or unfair.</span>
+          <span data-lang="ru">Как случайность работает в играх — вероятность, генераторы случайных чисел и ощущение честности.</span>
+        </div>
+        <span class="card-tag tag-lecture">
+          <span data-lang="en">Slides</span><span data-lang="ru">Слайды</span>
+        </span>
+      </a>
+
+      <a class="card" href="lectures/story-of-programming-slides.html">
+        <div class="card-icon">💾</div>
+        <div class="card-title">The Story of Programming</div>
+        <div class="card-desc">
+          <span data-lang="en">A visual history of programming — from punch cards and assembly to modern languages.</span>
+          <span data-lang="ru">Визуальная история программирования — от перфокарт и ассемблера до современных языков.</span>
+        </div>
+        <span class="card-tag tag-lecture">
+          <span data-lang="en">Slides</span><span data-lang="ru">Слайды</span>
+        </span>
+      </a>
+
+    </div>
   </div>
 
   <footer>
-    <p>ninenko.github.io/apps · <span data-lang="ru">обновляется через Cowork</span><span data-lang="en">updated via Cowork</span></p>
+    <p>ninenko.github.io/apps · <span data-lang="en">updated via Cowork</span><span data-lang="ru">обновляется через Cowork</span></p>
   </footer>
 
   <script>
@@ -175,14 +301,27 @@
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
       });
       document.documentElement.lang = lang;
       localStorage.setItem('lang', lang);
     }
 
-    const saved = localStorage.getItem('lang') || 'en';
-    setLang(saved);
+    function setFilter(filter) {
+      const apps     = document.getElementById('section-apps');
+      const lectures = document.getElementById('section-lectures');
+      apps.classList.toggle('hidden',     filter === 'lectures');
+      lectures.classList.toggle('hidden', filter === 'apps');
+      document.querySelectorAll('.filter-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', ['both','apps','lectures'][i] === filter);
+      });
+      localStorage.setItem('filter', filter);
+    }
+
+    const lang   = localStorage.getItem('lang')   || 'en';
+    const filter = localStorage.getItem('filter') || 'both';
+    setLang(lang);
+    setFilter(filter);
   </script>
 
 </body>

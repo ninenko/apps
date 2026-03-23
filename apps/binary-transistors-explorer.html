@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary & Transistors Explorer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --gray: #64748b;
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --glow-green: 0 0 20px rgba(34,197,94,0.5);
+    --glow-blue: 0 0 20px rgba(56,189,248,0.4);
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 1rem;
+    line-height: 1.5;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reveal-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .reveal-label {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .display-mode {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--surface);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--surface2);
+  }
+
+  .mode-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text-dim);
+  }
+
+  .mode-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: var(--surface2);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid var(--surface2);
+  }
+
+  .switch.on {
+    background: linear-gradient(135deg, var(--green), #16a34a);
+    border-color: var(--green);
+    box-shadow: var(--glow-green);
+  }
+
+  .switch-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .switch.on .switch-knob {
+    left: 32px;
+  }
+
+  .decimal-display {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border-radius: 16px;
+    padding: 1.25rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(56,189,248,0.15);
+  }
+
+  .decimal-display.off .decimal-value,
+  .decimal-display.off .ascii-char,
+  .decimal-display.off .ascii-label,
+  .decimal-display.off .binary-string,
+  .decimal-display.off .calculation {
+    opacity: 0.15;
+    filter: blur(8px);
+    user-select: none;
+  }
+
+  .decimal-value {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    color: var(--accent);
+    text-shadow: var(--glow-blue);
+    transition: all 0.3s;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ascii-char {
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: var(--accent);
+    margin-top: 0.5rem;
+    font-weight: 800;
+    text-shadow: var(--glow-blue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ascii-label {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+
+  .decimal-label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+  }
+
+  .calculation {
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    color: var(--accent2);
+    margin-top: 0.5rem;
+    min-height: 1.5em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .binary-string {
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--text-dim);
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .binary-string .one { color: var(--accent); font-weight: 700; }
+
+  .bits-section {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(4px, 1.5vw, 12px);
+    margin-bottom: 1.5rem;
+  }
+
+  .bit-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .power-label {
+    font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  .bit-box {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 700;
+    transition: all 0.25s;
+    border: 2px solid var(--surface2);
+    background: var(--surface);
+    color: var(--gray);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .bit-box.active {
+    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(129,140,248,0.2));
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--glow-blue);
+    transform: scale(1.05);
+  }
+
+  .bit-box.part-of-number {
+    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(129,140,248,0.2));
+    border-color: var(--accent);
+    box-shadow: var(--glow-blue);
+    transform: scale(1.05);
+  }
+
+  .value-label {
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .transistors-title {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .transistors-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(4px, 1.5vw, 12px);
+    margin-bottom: 1.5rem;
+  }
+
+  .transistor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .transistor-visual {
+    width: 100%;
+    max-width: 80px;
+    aspect-ratio: 0.7;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s;
+    background: var(--surface);
+    border: 2px solid var(--surface2);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .transistor-visual:hover {
+    transform: scale(1.08);
+    border-color: var(--accent);
+  }
+
+  .transistor-visual.on {
+    background: linear-gradient(180deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+    border-color: var(--green);
+    box-shadow: var(--glow-green);
+  }
+
+  .transistor-visual.off {
+    opacity: 0.6;
+  }
+
+  .switch-icon {
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    transition: all 0.3s;
+  }
+
+  .transistor-visual.on .switch-icon { color: var(--green); }
+  .transistor-visual.off .switch-icon { color: var(--red); }
+
+  .transistor-state {
+    font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .transistor-visual.on .transistor-state { color: var(--green); }
+  .transistor-visual.off .transistor-state { color: var(--red); }
+
+  .transistor-label {
+    font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+    color: var(--text-dim);
+  }
+
+  .transistor-visual.on::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: radial-gradient(circle, rgba(34,197,94,0.2), transparent 70%);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+  }
+
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-random { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+  .btn-clear { background: linear-gradient(135deg, #64748b, #94a3b8); }
+
+  .info-box {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 1.25rem;
+    border: 1px solid var(--surface2);
+  }
+
+  .info-box h2 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .info-box h3 {
+    font-size: 0.95rem;
+    color: var(--accent2);
+    margin: 0.75rem 0 0.35rem;
+  }
+
+  .info-box p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .info-box strong { color: var(--text); }
+
+  @media (max-width: 480px) {
+    body { padding: 0.5rem; }
+    .bit-box { border-radius: 8px; }
+    .transistor-visual { border-radius: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ Binary & Transistors Explorer</h1>
+  <p class="subtitle">Click the transistors to toggle them ON and OFF</p>
+
+  <div class="reveal-toggle">
+    <span class="reveal-label">Show Value</span>
+    <div class="switch" id="revealSwitch" onclick="toggleReveal()">
+      <div class="switch-knob"></div>
+    </div>
+    <div class="display-mode">
+      <button class="mode-btn active" id="decimalBtn" onclick="setMode('decimal')">Decimal</button>
+      <button class="mode-btn" id="asciiBtn" onclick="setMode('ascii')">ASCII</button>
+    </div>
+  </div>
+
+  <div class="decimal-display off" id="decimalDisplay">
+    <div class="decimal-label">Value</div>
+    <div class="decimal-value" id="decimalValue">0</div>
+    <div class="ascii-char" id="asciiChar" style="display:none;"></div>
+    <div class="ascii-label" id="asciiLabel" style="display:none;"></div>
+    <div class="binary-string" id="binaryString">0</div>
+    <div class="calculation" id="calculation">All transistors are OFF</div>
+  </div>
+
+  <div class="transistors-title">📊 Binary Representation</div>
+  <div class="bits-section" id="bitsSection"></div>
+
+  <div class="transistors-title" style="margin-top: 1.5rem;">⚡ Interactive Transistors (Click to Toggle)</div>
+  <div class="transistors-grid" id="transistorsGrid"></div>
+
+  <div class="controls">
+    <button class="btn btn-random" onclick="randomBits()">🎲 Random Number</button>
+    <button class="btn btn-clear" onclick="clearAll()">✖ Clear All</button>
+  </div>
+
+  <div class="info-box">
+    <h2>📘 How Does Binary Work?</h2>
+    <p>Computers use <strong>binary</strong> — a number system with only two digits: <strong>0</strong> and <strong>1</strong>. Each digit is called a <strong>bit</strong>. A group of 8 bits is called a <strong>byte</strong>, which can represent values from 0 to 255.</p>
+    <p>Each bit position has a value that is a <strong>power of 2</strong>. To find the decimal number, you simply add up the values of all the bits that are "ON" (set to 1).</p>
+
+    <h3>🔌 What Are Transistors?</h3>
+    <p>A <strong>transistor</strong> is a tiny electronic switch inside your computer's processor. It can be either <strong>ON</strong> (representing 1) or <strong>OFF</strong> (representing 0). Modern CPUs contain <strong>billions</strong> of these switches working together.</p>
+
+    <h3>💻 The Connection</h3>
+    <p>Every number, letter, image, and video on your computer is stored as patterns of <strong>0s and 1s</strong> — each one controlled by a physical transistor. When you click a transistor above, imagine you are flipping a real switch inside a CPU!</p>
+  </div>
+</div>
+
+<script>
+const bits = [0, 0, 0, 0, 0, 0, 0, 0];
+const values = [128, 64, 32, 16, 8, 4, 2, 1];
+let revealEnabled = false;
+let displayMode = 'decimal';
+
+function toggleReveal() {
+  revealEnabled = !revealEnabled;
+  const revealSwitch = document.getElementById('revealSwitch');
+  const decimalDisplay = document.getElementById('decimalDisplay');
+  
+  if (revealEnabled) {
+    revealSwitch.classList.add('on');
+    decimalDisplay.classList.remove('off');
+  } else {
+    revealSwitch.classList.remove('on');
+    decimalDisplay.classList.add('off');
+  }
+}
+
+function setMode(mode) {
+  displayMode = mode;
+  const decimalBtn = document.getElementById('decimalBtn');
+  const asciiBtn = document.getElementById('asciiBtn');
+  
+  if (mode === 'decimal') {
+    decimalBtn.classList.add('active');
+    asciiBtn.classList.remove('active');
+  } else {
+    asciiBtn.classList.add('active');
+    decimalBtn.classList.remove('active');
+  }
+  
+  update();
+}
+
+function init() {
+  const bitsSection = document.getElementById('bitsSection');
+  const transistorsGrid = document.getElementById('transistorsGrid');
+
+  values.forEach((val, i) => {
+    const t = document.createElement('div');
+    t.className = 'transistor';
+    t.innerHTML = `
+      <div class="transistor-visual off" id="trans${i}" onclick="toggleBit(${i})">
+        <div class="switch-icon">⚡</div>
+        <div class="transistor-state" id="transState${i}">OFF</div>
+      </div>
+      <div class="transistor-label">2<sup>${7 - i}</sup> = ${val}</div>
+    `;
+    transistorsGrid.appendChild(t);
+
+    const col = document.createElement('div');
+    col.className = 'bit-col';
+    col.innerHTML = `
+      <div class="power-label">Bit ${7 - i}</div>
+      <div class="bit-box" id="bit${i}">0</div>
+      <div class="value-label">${val}</div>
+    `;
+    bitsSection.appendChild(col);
+  });
+}
+
+function toggleBit(i) {
+  bits[i] = bits[i] ? 0 : 1;
+  update();
+}
+
+function update() {
+  let decimal = 0;
+  const parts = [];
+
+  let leftmostActiveBit = -1;
+  for (let i = 0; i < 8; i++) {
+    if (bits[i] === 1) {
+      leftmostActiveBit = i;
+      break;
+    }
+  }
+
+  bits.forEach((b, i) => {
+    const box = document.getElementById('bit' + i);
+    const trans = document.getElementById('trans' + i);
+    const state = document.getElementById('transState' + i);
+
+    box.textContent = b;
+    box.classList.remove('active', 'part-of-number');
+    
+    if (b === 1) {
+      box.classList.add('active');
+    } else if (leftmostActiveBit !== -1 && i > leftmostActiveBit) {
+      box.classList.add('part-of-number');
+    }
+
+    trans.className = 'transistor-visual ' + (b ? 'on' : 'off');
+    state.textContent = b ? 'ON' : 'OFF';
+
+    if (b) {
+      decimal += values[i];
+      parts.push(values[i]);
+    }
+  });
+
+  document.getElementById('decimalValue').textContent = decimal;
+
+  const asciiChar = document.getElementById('asciiChar');
+  const asciiLabel = document.getElementById('asciiLabel');
+  
+  if (displayMode === 'ascii') {
+    if (decimal >= 33 && decimal <= 126) {
+      asciiChar.textContent = String.fromCharCode(decimal);
+      asciiLabel.textContent = `ASCII ${decimal}`;
+    } else if (decimal === 32) {
+      asciiChar.textContent = '␣';
+      asciiLabel.textContent = 'Space';
+    } else if (decimal === 0) {
+      asciiChar.textContent = '∅';
+      asciiLabel.textContent = 'NULL';
+    } else if (decimal === 10) {
+      asciiChar.textContent = '↵';
+      asciiLabel.textContent = 'Line Feed (\\n)';
+    } else if (decimal === 13) {
+      asciiChar.textContent = '⏎';
+      asciiLabel.textContent = 'Carriage Return (\\r)';
+    } else if (decimal === 9) {
+      asciiChar.textContent = '⇥';
+      asciiLabel.textContent = 'Tab (\\t)';
+    } else {
+      asciiChar.textContent = '�';
+      asciiLabel.textContent = `Non-printable (ASCII ${decimal})`;
+    }
+    asciiChar.style.display = 'block';
+    asciiLabel.style.display = 'block';
+    document.getElementById('decimalValue').style.display = 'none';
+  } else {
+    asciiChar.style.display = 'none';
+    asciiLabel.style.display = 'none';
+    document.getElementById('decimalValue').style.display = 'block';
+  }
+
+  let binaryStr = bits.join('');
+  let trimmedBinary = binaryStr.replace(/^0+/, '');
+  if (trimmedBinary === '') trimmedBinary = '0';
+  
+  const binStr = trimmedBinary.split('').map((b) =>
+    `<span class="${b === '1' ? 'one' : ''}">${b}</span>`
+  ).join('');
+  document.getElementById('binaryString').innerHTML = binStr;
+
+  const calc = document.getElementById('calculation');
+  if (parts.length === 0) {
+    calc.textContent = 'All transistors are OFF';
+  } else {
+    calc.textContent = parts.join(' + ') + ' = ' + decimal;
+  }
+}
+
+function randomBits() {
+  const num = Math.floor(Math.random() * 256);
+  for (let i = 0; i < 8; i++) {
+    bits[i] = (num >> (7 - i)) & 1;
+  }
+  update();
+}
+
+function clearAll() {
+  bits.fill(0);
+  update();
+}
+
+init();
+update();
+</script>
+</body>
+</html>

@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punchcard Emulator · Simplified IBM Systems Program Card</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Special+Elite&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:        #080810;
+  --desk:       #0f1117;
+  --card-face:  #f4efd6;
+  --card-edge:  #c9b97c;
+  --card-line:  rgba(180,158,70,0.13);
+  --hole-on:    #130800;
+  --hole-off:   rgba(195,172,95,0.16);
+  --amber:      #c8862a;
+  --amber-lite: #f0b856;
+  --amber-dim:  rgba(200,134,42,0.3);
+  --green:      #22c55e;
+  --red:        #ef4444;
+  --panel:      #12151f;
+  --panel2:     #1a1f2e;
+  --border:     #1e2535;
+  --text:       #e8dfc8;
+  --text-dim:   #7a8a99;
+  --mono:       'IBM Plex Mono', 'Courier New', monospace;
+  --display:    'Playfair Display', Georgia, serif;
+  --type:       'Special Elite', 'Courier New', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--mono);
+  background: var(--desk);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  overflow-x: hidden;
+  /* subtle desk texture */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,134,42,0.04) 0%, transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.005) 3px,
+      rgba(255,255,255,0.005) 4px
+    );
+}
+
+/* ───── HEADER ───── */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.header-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.6rem;
+  opacity: 0.8;
+}
+
+.header h1 {
+  font-family: var(--type);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: var(--card-face);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 40px rgba(200,134,42,0.25);
+  line-height: 1.15;
+}
+
+.header-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--amber-dim);
+  margin: 0.8rem auto;
+}
+
+.header-sub {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ───── CONTROLS ───── */
+.controls-wrap {
+  max-width: 860px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0 0.6rem 0 0;
+  overflow: hidden;
+}
+
+.input-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: var(--panel2);
+  padding: 0.55rem 0.7rem;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.type-input {
+  font-family: var(--type);
+  font-size: 1.05rem;
+  padding: 0.5rem 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--card-face);
+  outline: none;
+  width: 220px;
+  letter-spacing: 0.08em;
+}
+
+.type-input::placeholder {
+  color: #2e3a4a;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.char-count {
+  font-size: 0.62rem;
+  color: #2e3a4a;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.char-count.near { color: var(--amber); }
+
+.btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.52rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.18s;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.btn:active { transform: scale(0.96); }
+
+.btn-translate {
+  background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.08));
+  border-color: rgba(34,197,94,0.35);
+  color: var(--green);
+}
+
+.btn-translate:hover {
+  background: linear-gradient(135deg, rgba(34,197,94,0.28), rgba(34,197,94,0.18));
+  border-color: rgba(34,197,94,0.7);
+  box-shadow: 0 0 16px rgba(34,197,94,0.15);
+}
+
+.btn-clear {
+  background: rgba(239,68,68,0.07);
+  border-color: rgba(239,68,68,0.25);
+  color: #e87070;
+}
+
+.btn-clear:hover {
+  background: rgba(239,68,68,0.16);
+  border-color: rgba(239,68,68,0.5);
+}
+
+.btn-random {
+  background: rgba(200,134,42,0.08);
+  border-color: var(--amber-dim);
+  color: var(--amber);
+}
+
+.btn-random:hover {
+  background: rgba(200,134,42,0.2);
+  border-color: rgba(200,134,42,0.6);
+  box-shadow: 0 0 16px rgba(200,134,42,0.12);
+}
+
+/* ───── CARD WRAPPER ───── */
+.card-scene {
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Drop shadow "desk surface" under card */
+.card-scene::before {
+  content: '';
+  position: absolute;
+  inset: 8px 12px -8px;
+  background: rgba(200,134,42,0.06);
+  border-radius: 10px;
+  filter: blur(20px);
+  z-index: 0;
+}
+
+.card-viewport {
+  overflow-x: auto;
+  overflow-y: visible;
+  cursor: grab;
+  padding-bottom: 4px;
+  position: relative;
+  z-index: 1;
+  /* custom scrollbar */
+  scrollbar-color: rgba(200,134,42,0.3) var(--panel);
+  scrollbar-width: thin;
+}
+
+.card-viewport:active { cursor: grabbing; }
+.card-viewport::-webkit-scrollbar { height: 4px; }
+.card-viewport::-webkit-scrollbar-track { background: var(--panel); border-radius: 2px; }
+.card-viewport::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 2px; }
+.card-viewport::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+
+/* ───── THE PUNCH CARD ───── */
+.punchcard {
+  background: var(--card-face);
+  border-radius: 9px 9px 5px 5px;
+  border: 1.5px solid var(--card-edge);
+  box-shadow:
+    0 10px 60px rgba(0,0,0,0.7),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.65),
+    inset 0 -1px 0 rgba(0,0,0,0.07);
+  position: relative;
+  min-width: max-content;
+  padding: 0.4rem 0.55rem 0.5rem 0.5rem;
+  /* paper texture: faint horizontal rules */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 22px,
+      rgba(180,158,70,0.07) 22px,
+      rgba(180,158,70,0.07) 23px
+    );
+}
+
+/* Notched corner — top left */
+.punchcard::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 24px 0 0 24px;
+  border-color: transparent transparent transparent var(--desk);
+  z-index: 3;
+}
+
+/* Notch shadow line */
+.punchcard::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 24px; height: 24px;
+  background: linear-gradient(135deg, transparent 49%, rgba(0,0,0,0.12) 50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Top print stripe */
+.card-stripe {
+  height: 13px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 28px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(180,150,60,0.11) 0, rgba(180,150,60,0.11) 7px,
+    transparent 7px, transparent 11px
+  );
+  border-bottom: 1px solid rgba(180,155,65,0.15);
+}
+
+.stripe-text {
+  font-family: var(--mono);
+  font-size: 0.39rem;
+  color: rgba(100,75,30,0.7);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ───── COLUMNS LAYOUT ───── */
+.columns-area {
+  display: flex;
+  gap: 3px;
+  align-items: flex-start;
+}
+
+/* LEFT: bit value labels */
+.bit-axis {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin-right: 5px;
+  user-select: none;
+}
+
+.bit-axis-spacer {
+  height: 15px; /* matches col-number height */
+}
+
+.bit-axis-row {
+  font-family: var(--mono);
+  font-size: 0.36rem;
+  color: rgba(120,90,35,0.75);
+  text-align: right;
+  height: 20px;
+  line-height: 20px;
+  padding-right: 3px;
+  white-space: nowrap;
+}
+
+.bit-axis-gap { height: 4px; } /* gap between holes and labels below */
+.bit-axis-ascii { height: 16px; }
+.bit-axis-bin   { height: 11px; }
+.bit-axis-dec   { height: 10px; }
+
+/* ───── ONE COLUMN ───── */
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+}
+
+.col-num {
+  font-family: var(--mono);
+  font-size: 0.36rem;
+  color: rgba(140,105,40,0.7);
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  user-select: none;
+}
+
+/* ── HOLE ── */
+.holes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hole {
+  width: 16px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid rgba(140,110,45,0.25);
+  cursor: pointer;
+  transition: transform 0.1s, background 0.1s, box-shadow 0.1s;
+  position: relative;
+}
+
+.hole.blank  { background: var(--hole-off); }
+
+.hole.on {
+  background: var(--hole-on);
+  border-color: rgba(8,4,0,0.85);
+  box-shadow:
+    inset 0 1px 4px rgba(0,0,0,0.85),
+    inset 0 -1px 1px rgba(255,150,0,0.04);
+}
+
+.hole:hover {
+  transform: scale(1.16);
+  z-index: 10;
+  position: relative;
+}
+
+.hole.blank:hover  {
+  background: rgba(200,176,100,0.38);
+  border-color: rgba(170,135,55,0.55);
+  box-shadow: 0 0 5px rgba(200,170,80,0.2);
+}
+
+.hole.on:hover { background: #1e0d00; }
+
+/* ── ASCII CHAR below holes ── */
+.col-ascii {
+  font-family: var(--type);
+  font-size: 0;          /* invisible until revealed */
+  color: #3a2508;
+  text-align: center;
+  height: 16px;
+  line-height: 16px;
+  margin-top: 4px;
+  width: 16px;
+  overflow: visible;
+  transition: font-size 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+  user-select: none;
+  cursor: default;
+}
+
+.col-ascii.dot {
+  font-size: 0.75rem;
+  color: rgba(90,65,22,0.28);
+}
+
+.col-ascii.revealed {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e1000;
+}
+
+/* ── BINARY STRING ── */
+.col-bin {
+  font-family: var(--mono);
+  font-size: 0.3rem;
+  color: rgba(160,125,50,0.6);
+  text-align: center;
+  height: 11px;
+  line-height: 11px;
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+
+/* ── DECIMAL VALUE ── */
+.col-dec {
+  font-family: var(--mono);
+  font-size: 0.3rem;
+  color: rgba(130,95,35,0.55);
+  text-align: center;
+  height: 10px;
+  line-height: 10px;
+  user-select: none;
+}
+
+/* Bottom stripe */
+.card-bot-stripe {
+  height: 9px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(180,150,60,0.08) 0, rgba(180,150,60,0.08) 7px,
+    transparent 7px, transparent 11px
+  );
+  border-top: 1px solid rgba(180,155,65,0.12);
+  margin-top: 4px;
+  border-radius: 0 0 4px 4px;
+}
+
+/* ───── SCROLL HINT ───── */
+.scroll-hint {
+  text-align: center;
+  font-size: 0.6rem;
+  color: #1e2535;
+  margin: 0.4rem 0 0.25rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* ───── TRANSLATE RESULT ───── */
+.result-zone {
+  max-width: 860px;
+  margin: 1.1rem auto;
+  text-align: center;
+  min-height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.result-word {
+  font-family: var(--type);
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  color: var(--card-face);
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 30px rgba(200,134,42,0.3);
+  border-bottom: 1px solid var(--amber-dim);
+  padding-bottom: 0.2rem;
+  animation: wordIn 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes wordIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.result-meta {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.result-mapping {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  justify-content: center;
+  max-width: 860px;
+  padding: 0.5rem 1rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.map-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.45rem;
+  animation: pairIn 0.25s ease-out both;
+}
+
+@keyframes pairIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.map-dec  { color: var(--amber); font-weight: 700; }
+.map-arrow { color: #2e3a4a; margin: 0 0.1rem; }
+.map-char {
+  font-family: var(--type);
+  font-size: 1rem;
+  color: var(--card-face);
+  font-weight: 700;
+  min-width: 0.8rem;
+  text-align: center;
+}
+
+.result-idle {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #2a3345;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ───── STATUS BAR ───── */
+.status-bar {
+  max-width: 860px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.stats-group { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+.stat {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.stat .lbl { color: #2e3a4a; }
+.stat .val { color: var(--amber); font-weight: 700; transition: color 0.2s; }
+.stat .val.g { color: var(--green); }
+.stat .val.r { color: var(--red); }
+
+.legend-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.leg {
+  font-size: 0.62rem;
+  color: #2e3a4a;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.leg-swatch {
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid rgba(140,110,45,0.25);
+}
+
+.leg-swatch.on  { background: var(--hole-on); border-color: #0a0400; }
+.leg-swatch.off { background: var(--hole-off); }
+
+/* ───── INFO CARDS ───── */
+.info-grid {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.75rem;
+}
+
+.info-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 0.9rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--amber-dim), transparent);
+}
+
+.ic-title {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--amber);
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ic-body {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.ic-body strong { color: var(--text); font-weight: 600; }
+
+/* ───── FOOTER ───── */
+.footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 0.6rem;
+  color: #1a2030;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">// English for IT Students · IUCA · Block 1</div>
+  <h1>Punchcard Emulator</h1>
+  <div style="font-family:var(--type);font-size:clamp(0.85rem,2.5vw,1.1rem);color:var(--amber);letter-spacing:0.06em;margin-bottom:0.5rem;">Simplified IBM Systems Program Card</div>
+  <div class="header-rule"></div>
+  <div class="header-sub">Click holes to punch · Type to encode · Translate to reveal ASCII</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls-wrap">
+  <div class="input-group">
+    <span class="input-label">INPUT</span>
+    <input
+      class="type-input"
+      id="typeInput"
+      type="text"
+      placeholder="type to punch cards…"
+      maxlength="32"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <span class="char-count" id="charCount">0/32</span>
+  </div>
+  <button class="btn btn-translate" id="translateBtn" onclick="translateCard()">▸ Translate to ASCII</button>
+  <button class="btn btn-random" onclick="randomCard()">⚄ Random</button>
+  <button class="btn btn-clear" onclick="clearCard()">✕ Clear</button>
+</div>
+
+<!-- CARD -->
+<div class="card-scene">
+  <div class="card-viewport" id="cardViewport">
+    <div class="punchcard" id="punchcard">
+
+      <div class="card-stripe">
+        <span class="stripe-text">IBM SYSTEM/360 · 80-COLUMN PROGRAM CARD · ENGLISH FOR IT STUDENTS · IUCA · 32 OF 80 COLUMNS SHOWN</span>
+      </div>
+
+      <div class="columns-area" id="columnsArea">
+        <!-- injected by JS -->
+      </div>
+
+      <div class="card-bot-stripe"></div>
+    </div>
+  </div>
+</div>
+
+<div class="scroll-hint" id="scrollHint">← drag or scroll to pan card →</div>
+
+<!-- RESULT -->
+<div class="result-zone" id="resultZone">
+  <div class="result-idle">punch holes manually · or type above · then click translate</div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="stats-group">
+    <div class="stat"><span class="lbl">COLS:</span><span class="val" id="sCols">32</span></div>
+    <div class="stat"><span class="lbl">BITS/COL:</span><span class="val">8</span></div>
+    <div class="stat"><span class="lbl">HOLES PUNCHED:</span><span class="val" id="sPunched">0</span></div>
+    <div class="stat"><span class="lbl">ASCII DECODED:</span><span class="val g" id="sDecoded">—</span></div>
+    <div class="stat"><span class="lbl">CARD:</span><span class="val" id="sStatus">BLANK</span></div>
+  </div>
+  <div class="legend-group">
+    <div class="leg"><div class="leg-swatch on"></div>Punched = 1</div>
+    <div class="leg"><div class="leg-swatch off"></div>Blank = 0</div>
+  </div>
+</div>
+
+<!-- INFO GRID -->
+<div class="info-grid">
+  <div class="info-card">
+    <div class="ic-title">📐 Screen Capacity</div>
+    <div class="ic-body">
+      Real IBM cards had <strong>80 columns × 12 rows</strong>. At a readable hole size on screen, <strong>32 columns</strong> fit comfortably — each column holds <strong>8 bits = 1 byte = 1 ASCII character</strong>.
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">🔢 Bit Positions</div>
+    <div class="ic-body">
+      Top row = <strong>bit 7 (value 128)</strong>. Bottom row = <strong>bit 0 (value 1)</strong>. Add all punched row values together to get the decimal number, then look up the ASCII table.
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">⌨️ Keypunch Machine</div>
+    <div class="ic-body">
+      Programmers typed on a machine that punched holes instead of ink. <strong>One card per line of code.</strong> A 500-line program = 500 physical cards. Drop them — start over.
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">🔗 Binary ↔ ASCII</div>
+    <div class="ic-body">
+      Letter <strong>'H' = 72 = 01001000</strong>. Letter <strong>'A' = 65 = 01000001</strong>. Space = 32 = 00100000. Every character you type is secretly a number in disguise.
+    </div>
+  </div>
+</div>
+
+<div class="footer">// punchcard-emulator.html · English for IT Students · IUCA · Block 1 · Digital Foundations</div>
+
+<script>
+const NUM_COLS = 32;
+const NUM_BITS = 8;
+const BIT_VALUES = [128, 64, 32, 16, 8, 4, 2, 1];
+const SUP = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+
+// card state: [col][bit]
+let card = make2D();
+let translated = false;
+
+function make2D() {
+  return Array.from({length: NUM_COLS}, () => new Array(NUM_BITS).fill(0));
+}
+
+function sup(n) {
+  return String(n).split('').map(d => SUP[d] || d).join('');
+}
+
+// ─── BUILD DOM ───
+function build() {
+  const area = document.getElementById('columnsArea');
+  area.innerHTML = '';
+
+  // Bit axis (left labels)
+  const axis = document.createElement('div');
+  axis.className = 'bit-axis';
+
+  const sp = document.createElement('div');
+  sp.className = 'bit-axis-spacer';
+  axis.appendChild(sp);
+
+  BIT_VALUES.forEach((v, i) => {
+    const r = document.createElement('div');
+    r.className = 'bit-axis-row';
+    r.textContent = `2${sup(7-i)}=${String(v).padStart(3,' ')}`;
+    axis.appendChild(r);
+  });
+
+  // spacers for ascii / bin / dec rows
+  [['bit-axis-ascii',''], ['bit-axis-bin',''], ['bit-axis-dec','']].forEach(([cls]) => {
+    const d = document.createElement('div');
+    d.className = cls;
+    axis.appendChild(d);
+  });
+
+  area.appendChild(axis);
+
+  // Column groups
+  for (let c = 0; c < NUM_COLS; c++) {
+    const col = document.createElement('div');
+    col.className = 'col';
+    col.id = `col-${c}`;
+
+    // number
+    const num = document.createElement('div');
+    num.className = 'col-num';
+    num.textContent = String(c + 1).padStart(2, '0');
+    col.appendChild(num);
+
+    // holes
+    const holes = document.createElement('div');
+    holes.className = 'holes';
+    for (let b = 0; b < NUM_BITS; b++) {
+      const h = document.createElement('div');
+      h.className = 'hole blank';
+      h.id = `h-${c}-${b}`;
+      h.title = `Col ${c+1}  Bit ${7-b}  Value ${BIT_VALUES[b]}`;
+      h.addEventListener('click', () => toggle(c, b));
+      holes.appendChild(h);
+    }
+    col.appendChild(holes);
+
+    // ascii
+    const ascii = document.createElement('div');
+    ascii.className = 'col-ascii';
+    ascii.id = `a-${c}`;
+    col.appendChild(ascii);
+
+    // binary
+    const bin = document.createElement('div');
+    bin.className = 'col-bin';
+    bin.id = `b-${c}`;
+    bin.textContent = '00000000';
+    col.appendChild(bin);
+
+    // decimal
+    const dec = document.createElement('div');
+    dec.className = 'col-dec';
+    dec.id = `d-${c}`;
+    dec.textContent = '0';
+    col.appendChild(dec);
+
+    area.appendChild(col);
+  }
+
+  updateStats();
+}
+
+// ─── TOGGLE HOLE ───
+function toggle(c, b) {
+  card[c][b] ^= 1;
+  refreshCol(c);
+  translated = false;
+  resetResult();
+  updateStats();
+}
+
+// ─── REFRESH ONE COLUMN ───
+function refreshCol(c) {
+  let dec = 0;
+  for (let b = 0; b < NUM_BITS; b++) {
+    const h = document.getElementById(`h-${c}-${b}`);
+    if (card[c][b]) { h.className = 'hole on'; dec += BIT_VALUES[b]; }
+    else              h.className = 'hole blank';
+  }
+  document.getElementById(`b-${c}`).textContent = card[c].join('');
+  document.getElementById(`d-${c}`).textContent = dec;
+
+  if (!translated) {
+    const aEl = document.getElementById(`a-${c}`);
+    aEl.className = dec > 0 ? 'col-ascii dot' : 'col-ascii';
+    aEl.textContent = dec > 0 ? '·' : '';
+  }
+}
+
+// ─── TRANSLATE ───
+function translateCard() {
+  translated = true;
+  let word = '';
+  let mappings = [];  // [{dec, ch}]
+  let count = 0;
+
+  for (let c = 0; c < NUM_COLS; c++) {
+    const dec = colDec(c);
+    const aEl = document.getElementById(`a-${c}`);
+
+    if (dec === 0) {
+      aEl.className = 'col-ascii';
+      aEl.textContent = '';
+    } else {
+      // Always convert via ASCII — String.fromCharCode handles all values
+      const ch = (dec >= 32 && dec <= 126)
+        ? String.fromCharCode(dec)
+        : dec === 10 ? '↵'
+        : dec === 9  ? '⇥'
+        : '·';
+
+      aEl.className = 'col-ascii revealed';
+      aEl.textContent = (dec >= 32 && dec <= 126) ? ch : '·';
+
+      const printable = dec >= 32 && dec <= 126 ? String.fromCharCode(dec) : null;
+      word += printable || '';
+      mappings.push({ dec, ch: printable || `ctrl-${dec}` });
+      count++;
+    }
+  }
+
+  const zone = document.getElementById('resultZone');
+  if (count === 0) {
+    zone.innerHTML = `<div class="result-idle">no holes punched — blank card</div>`;
+  } else {
+    // Build the mapping table: "72 → H  ·  101 → e  ·  108 → l …"
+    const mapHtml = mappings.map((m, i) =>
+      `<span class="map-pair" style="animation-delay:${i * 40}ms"><span class="map-dec">${m.dec}</span><span class="map-arrow">→</span><span class="map-char">${esc(m.ch)}</span></span>`
+    ).join('');
+
+    zone.innerHTML = `
+      <div class="result-word">${esc(word) || '<span style="opacity:0.3">no printable chars</span>'}</div>
+      <div class="result-mapping">${mapHtml}</div>
+      <div class="result-meta">${count} column${count!==1?'s':''} decoded via ASCII table</div>
+    `;
+  }
+  updateStats();
+}
+
+function resetResult() {
+  document.getElementById('resultZone').innerHTML =
+    `<div class="result-idle">punch holes or type above · then click translate</div>`;
+  for (let c = 0; c < NUM_COLS; c++) {
+    const aEl = document.getElementById(`a-${c}`);
+    if (aEl) {
+      const dec = colDec(c);
+      aEl.className = dec > 0 ? 'col-ascii dot' : 'col-ascii';
+      aEl.textContent = dec > 0 ? '·' : '';
+    }
+  }
+}
+
+// ─── CLEAR ───
+function clearCard() {
+  card = make2D();
+  translated = false;
+  document.getElementById('typeInput').value = '';
+  document.getElementById('charCount').textContent = '0/32';
+  document.getElementById('charCount').classList.remove('near');
+  for (let c = 0; c < NUM_COLS; c++) refreshCol(c);
+  resetResult();
+  updateStats();
+}
+
+// ─── RANDOM ───
+function randomCard() {
+  const phrases = [
+    'HELLO WORLD', 'IUCA 2025', 'IT STUDENTS', 'BINARY CODE',
+    'PRINT RESULT', 'LOAD A 0', 'TRANSISTOR', 'PUNCH CARD',
+    'ASSEMBLER', 'FORTRAN 77', 'KEYPUNCH', 'ADA LOVELACE',
+    'GRACE HOPPER', 'COMPILER', 'DIGITAL 101',
+  ];
+  const p = phrases[Math.floor(Math.random() * phrases.length)];
+  document.getElementById('typeInput').value = p;
+  updateCharCount(p.length);
+  encodeText(p);
+}
+
+// ─── ENCODE TEXT → CARD ───
+function encodeText(text) {
+  card = make2D();
+  const chars = text.toUpperCase().slice(0, NUM_COLS);
+  for (let c = 0; c < chars.length; c++) {
+    const code = chars.charCodeAt(c);
+    for (let b = 0; b < NUM_BITS; b++) {
+      card[c][b] = (code >> (7 - b)) & 1;
+    }
+  }
+  translated = false;
+  for (let c = 0; c < NUM_COLS; c++) refreshCol(c);
+  resetResult();
+  updateStats();
+}
+
+// ─── STATS ───
+function colDec(c) {
+  return card[c].reduce((s, b, i) => s + b * BIT_VALUES[i], 0);
+}
+
+function updateStats() {
+  let punched = 0, chars = 0;
+  for (let c = 0; c < NUM_COLS; c++) {
+    punched += card[c].filter(Boolean).length;
+    const dec = colDec(c);
+    if (dec >= 32 && dec <= 126) chars++;
+  }
+  document.getElementById('sPunched').textContent = punched;
+  document.getElementById('sDecoded').textContent = translated ? chars : '—';
+  const statusEl = document.getElementById('sStatus');
+  statusEl.textContent = punched === 0 ? 'BLANK' : translated ? 'TRANSLATED' : 'PUNCHED';
+  statusEl.className = 'val' + (punched === 0 ? '' : translated ? ' g' : '');
+}
+
+function updateCharCount(n) {
+  const el = document.getElementById('charCount');
+  el.textContent = `${n}/32`;
+  el.classList.toggle('near', n >= 28);
+}
+
+// ─── TYPE INPUT ───
+document.getElementById('typeInput').addEventListener('input', function() {
+  updateCharCount(this.value.length);
+  if (this.value.length > 0) encodeText(this.value);
+  else { card = make2D(); for (let c = 0; c < NUM_COLS; c++) refreshCol(c); resetResult(); updateStats(); }
+});
+
+// Allow Enter to translate
+document.getElementById('typeInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') translateCard();
+});
+
+// ─── DRAG TO SCROLL ───
+(function() {
+  const vp = document.getElementById('cardViewport');
+  let down = false, sx, sl;
+  vp.addEventListener('mousedown', e => { down=true; sx=e.pageX-vp.offsetLeft; sl=vp.scrollLeft; });
+  document.addEventListener('mouseup', () => down=false);
+  vp.addEventListener('mousemove', e => {
+    if (!down) return;
+    e.preventDefault();
+    vp.scrollLeft = sl - (e.pageX - vp.offsetLeft - sx);
+  });
+  // Hide scroll hint once user has scrolled
+  vp.addEventListener('scroll', () => {
+    if (vp.scrollLeft > 10)
+      document.getElementById('scrollHint').style.opacity = '0';
+  }, {once: true});
+})();
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── INIT ───
+build();
+</script>
+</body>
+</html>

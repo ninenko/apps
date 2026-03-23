@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Случайность в игре</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E2A;--bg2:#111840;--bg3:#0D1535;
+  --cyan:#00E5FF;--gold:#FFD600;--green:#00E676;
+  --coral:#FF6B6B;--purple:#B388FF;--orange:#FF9800;
+  --muted:#B8C8E8;--white:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'VT323',monospace;font-size:20px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.35) 100%)}
+
+nav{position:fixed;top:0;left:0;right:0;height:50px;background:rgba(10,14,42,.96);border-bottom:3px solid var(--cyan);
+  display:flex;align-items:center;padding:0 2rem;gap:1rem;z-index:1000}
+.nav-logo{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--cyan);margin-right:auto}
+.nav-dot{width:10px;height:10px;background:var(--bg2);border:2px solid var(--muted);cursor:pointer;transition:all .2s}
+.nav-dot.active{background:var(--cyan);border-color:var(--cyan)}
+
+section{min-height:100vh;padding:80px 5vw 60px;display:flex;flex-direction:column;justify-content:center;border-bottom:3px solid var(--bg2);position:relative}
+
+.tag{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--bg);display:inline-block;padding:5px 12px;margin-bottom:1.4rem;letter-spacing:1px}
+h2{font-family:'Press Start 2P',monospace;font-size:clamp(13px,2.2vw,26px);line-height:1.7;margin-bottom:1.5rem}
+.sub{font-size:23px;color:var(--muted);margin-bottom:1.5rem;line-height:1.4}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:750px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.card{background:var(--bg2);border:2px solid var(--bg3);padding:1.4rem;position:relative;overflow:hidden;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.card-bar{position:absolute;top:0;left:0;right:0;height:4px}
+.card h3{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.8;margin-bottom:.7rem}
+.card p{font-size:21px;color:#eef2ff;line-height:1.5}
+
+.qbox{background:var(--bg2);border-left:5px solid var(--gold);padding:1rem 1.4rem;margin:1.2rem 0;font-size:24px;color:var(--gold);line-height:1.5}
+.fact{background:var(--bg2);border-left:4px solid var(--cyan);padding:.9rem 1.2rem;font-size:21px;color:#eef2ff;line-height:1.5}
+.fact strong{color:var(--cyan)}
+
+.btn{font-family:'Press Start 2P',monospace;font-size:10px;border:none;padding:13px 20px;cursor:pointer;transition:all .2s;letter-spacing:.5px;width:100%}
+.btn:hover{filter:brightness(1.15);transform:scale(1.02)}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.rv.on{opacity:1;transform:none}
+
+/* SOURCE CARDS — no toggle, always shown */
+.src{background:var(--bg2);border:2px solid;padding:1.4rem;position:relative;overflow:hidden;transition:all .2s}
+.src:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.src h3{font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.8;margin-bottom:.5rem}
+.src .ssub{font-size:19px;color:var(--muted);margin-bottom:.7rem}
+.src .sbody{font-size:21px;color:#eef2ff;line-height:1.5}
+.src-ico{font-size:32px;margin-bottom:.7rem}
+
+/* DICE */
+.dice-v{width:80px;height:80px;background:var(--bg2);border:3px solid var(--muted);
+  display:grid;grid-template-columns:repeat(3,1fr);align-items:center;justify-items:center;
+  padding:8px;cursor:pointer;transition:border-color .2s;image-rendering:pixelated}
+.dice-v:hover{border-color:var(--cyan)}
+.dp{width:12px;height:12px;transition:background .15s}
+.big-dice{width:100px;height:100px;background:var(--bg3);border:4px solid var(--purple);
+  display:grid;grid-template-columns:repeat(3,1fr);align-items:center;justify-items:center;
+  padding:10px;cursor:pointer;margin:1rem auto;transition:transform .1s;image-rendering:pixelated}
+.big-dice:active{transform:scale(.92)}
+.bdp{width:14px;height:14px}
+
+/* DRUM */
+.drum-disp{background:var(--bg3);border:2px solid var(--muted);padding:1.4rem 1rem;min-height:80px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:12px;color:var(--cyan);
+  letter-spacing:1px;text-align:center;line-height:1.8;margin-bottom:1rem}
+.drum-disp.spin{color:var(--gold);animation:flk .08s infinite}
+@keyframes flk{0%,100%{opacity:1}50%{opacity:.6}}
+.nchip{font-size:18px;background:var(--bg3);border:1px solid var(--muted);padding:3px 8px;cursor:pointer;transition:all .15s;display:inline-block}
+.nchip:hover{border-color:var(--cyan);color:var(--cyan)}
+.nchip.sel{background:var(--cyan);color:var(--bg);border-color:var(--cyan)}
+
+/* PLANES */
+.plane-in{width:100%;background:var(--bg3);border:2px solid var(--muted);color:var(--white);font-family:'VT323',monospace;font-size:20px;padding:.8rem;resize:vertical;min-height:80px;outline:none;transition:border-color .2s}
+.plane-in:focus{border-color:var(--green)}
+.plane-in::placeholder{color:var(--muted)}
+
+/* Folding stage — canvas overlay sits on top of textarea during fold */
+#foldStage{position:relative;margin-top:.6rem}
+#foldCanvas{display:block;margin:0 auto}
+
+.sky{background:var(--bg3);border:2px solid var(--bg2);min-height:220px;position:relative;overflow:hidden;margin-top:.8rem}
+#skyHint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:var(--muted);text-align:center;pointer-events:none;line-height:1.6}
+
+/* Flying plane SVG elements inside sky */
+.sky-plane{position:absolute;cursor:pointer;user-select:none;will-change:transform,opacity}
+.sky-plane svg{display:block}
+
+.lmsg{background:var(--bg3);border-left:3px solid var(--green);padding:.5rem .8rem;font-size:20px;color:#eef2ff;animation:fdi .4s ease}
+@keyframes fdi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* TASK CARDS — flip mechanic */
+.deck-section{background:var(--bg2);border:3px solid;padding:1.5rem}
+.deck-section h3{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.8;margin-bottom:.3rem}
+.deck-label{font-size:19px;color:var(--muted);margin-bottom:1.2rem}
+
+.cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.2rem}
+.flip-card{height:130px;perspective:600px;cursor:pointer}
+.flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border:2px solid;padding:.6rem;text-align:center}
+.flip-front{flex-direction:column;gap:.4rem}
+.flip-front .card-ico{font-size:28px}
+.flip-front .card-hint{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--muted);line-height:1.8}
+.flip-back{transform:rotateY(180deg);font-size:15px;color:#eef2ff;line-height:1.5;align-items:flex-start;font-style:italic}
+.card-selected-text{background:var(--bg3);border:2px solid var(--muted);padding:1rem 1.2rem;font-size:21px;color:var(--white);line-height:1.5;min-height:70px;display:flex;align-items:center;justify-content:center;text-align:center;margin-bottom:.8rem;transition:all .3s}
+.card-selected-text.flash{animation:cf .3s ease}
+@keyframes cf{0%,100%{opacity:1}50%{opacity:0}}
+
+/* TRANSITION */
+#s6{justify-content:center;align-items:center;text-align:center;min-height:65vh}
+.big-gl{font-family:'Press Start 2P',monospace;font-size:clamp(28px,7vw,68px);color:var(--cyan);letter-spacing:4px;text-shadow:0 0 20px rgba(0,229,255,.4);animation:pls 2s ease-in-out infinite}
+@keyframes pls{0%,100%{text-shadow:0 0 20px rgba(0,229,255,.4)}50%{text-shadow:0 0 45px rgba(0,229,255,.9)}}
+.tico{font-family:'Press Start 2P',monospace;font-size:8px;text-align:center}
+.tico .em{font-size:38px;display:block;margin-bottom:.5rem}
+
+/* STATS */
+.stat-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem;font-size:20px}
+.slabel{width:24px;color:var(--purple);font-weight:bold}
+.strk{flex:1;height:14px;background:var(--bg3);border:1px solid var(--bg2)}
+.sfill{height:100%;background:var(--purple);transition:width .3s}
+.scount{width:28px;text-align:right;color:var(--white);font-size:18px}
+
+/* COIN */
+#coinWrap{display:flex;flex-direction:column;align-items:center;gap:.6rem;cursor:pointer;flex-shrink:0;user-select:none}
+.clabel{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold);text-align:center;line-height:1.8}
+.score{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--gold)}
+
+.cdeck{border-left:4px solid;padding:1rem}
+
+footer{background:var(--bg3);border-top:3px solid var(--gold);padding:2rem 5vw;text-align:center}
+footer .ft{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--gold);margin-bottom:.8rem;line-height:1.8}
+footer p{font-size:21px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">▶ СЛУЧАЙНОСТЬ В ИГРЕ</div>
+  <div id="navDots" style="display:flex;gap:6px"></div>
+</nav>
+
+<!-- ══ S1 TITLE ══════════════════════════════════ -->
+<section id="s1" data-label="СТАРТ">
+  <div class="tag" style="background:var(--cyan)">▶ УРОВЕНЬ 2</div>
+  <div style="display:flex;align-items:flex-start;gap:3rem;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px">
+      <h2 style="color:var(--cyan);font-size:clamp(20px,4.5vw,52px)">СЛУЧАЙНОСТЬ</h2>
+      <h2 style="color:var(--gold);font-size:clamp(20px,4.5vw,52px);margin-top:.2rem">В ИГРЕ</h2>
+      <div class="sub" style="margin-top:1rem">Почему неопределённость делает игру игрой</div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted)">МОНЕТ:</span>
+        <span class="score" id="coinCount">00</span>
+        <span style="font-size:22px">🪙</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted)" id="coinFlips"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:1.2rem">
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--cyan)">● СЛУЧАЙНОСТЬ</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--gold)">● СЛОЖНОСТЬ</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--green)">● СКРЫТАЯ ИНФО</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--purple)">● ЧЕЛОВЕК</span>
+      </div>
+    </div>
+    <div id="coinWrap" onclick="flipCoin()" title="Нажми — подбросить монету">
+      <canvas id="coinCanvas" width="140" height="140"></canvas>
+      <div class="clabel" id="coinLabel">НАЖМИ ▼<br>ПОДБРОСИТЬ</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S2 FOUR SOURCES ════════════════════════════ -->
+<section id="s2" data-label="ИСТОЧНИКИ">
+  <div class="tag" style="background:var(--gold)">НЕОПРЕДЕЛЁННОСТЬ</div>
+  <h2>ЧЕТЫРЕ ИСТОЧНИКА</h2>
+  <div class="g2 rv">
+    <div class="src" style="border-color:var(--cyan)">
+      <div class="card-bar" style="background:var(--cyan)"></div>
+      <div class="src-ico">🎲</div>
+      <h3 style="color:var(--cyan)">СЛУЧАЙНОСТЬ</h3>
+      <div class="ssub">Кубик, барабан, жребий</div>
+      <div class="sbody">Исход непредсказуем по природе. Никто не контролирует результат — ни учитель, ни ученик.</div>
+    </div>
+    <div class="src" style="border-color:var(--gold)">
+      <div class="card-bar" style="background:var(--gold)"></div>
+      <div class="src-ico">♟️</div>
+      <h3 style="color:var(--gold)">СЛОЖНОСТЬ</h3>
+      <div class="ssub">Шахматы, го, открытые задачи</div>
+      <div class="sbody">Вариантов слишком много для просчёта. Непредсказуемость рождается из глубины, не из случая.</div>
+    </div>
+    <div class="src" style="border-color:var(--green)">
+      <div class="card-bar" style="background:var(--green)"></div>
+      <div class="src-ico">🃏</div>
+      <h3 style="color:var(--green)">СКРЫТАЯ ИНФОРМАЦИЯ</h3>
+      <div class="ssub">Покер, дипломатия</div>
+      <div class="sbody">Ты не видишь карты соперника. Это асимметрия знания, а не случай.</div>
+    </div>
+    <div class="src" style="border-color:var(--purple)">
+      <div class="card-bar" style="background:var(--purple)"></div>
+      <div class="src-ico">🧑</div>
+      <h3 style="color:var(--purple)">ЧЕЛОВЕЧЕСКИЙ ФАКТОР</h3>
+      <div class="ssub">Ролевые игры, переговоры</div>
+      <div class="sbody">Другой человек непредсказуем, потому что живой — не потому что кубик.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S3 HAND OF FATE ════════════════════════════ -->
+<section id="s3" data-label="СУДЬБА">
+  <div class="tag" style="background:var(--gold)">ИСТОРИЯ</div>
+  <h2 style="color:var(--gold)">РУКА СУДЬБЫ</h2>
+  <div class="qbox rv">Случай справедливее человека — он не знает фаворитов.</div>
+  <div class="g3 rv">
+    <div class="card" style="border-color:var(--cyan)">
+      <div class="card-bar" style="background:var(--cyan)"></div>
+      <h3 style="color:var(--cyan);font-size:8px;margin-bottom:.3rem">ДРЕВНЯЯ ГРЕЦИЯ</h3>
+      <h3 style="color:var(--white)">Клеротерион</h3>
+      <p>Устройство для жеребьёвки при распределении государственных должностей. Случай исключал коррупцию лучше любых выборов.</p>
+    </div>
+    <div class="card" style="border-color:var(--gold)">
+      <div class="card-bar" style="background:var(--gold)"></div>
+      <h3 style="color:var(--gold);font-size:8px;margin-bottom:.3rem">КЫРГЫЗСТАН</h3>
+      <h3 style="color:var(--white)">Жауырын</h3>
+      <p>Гадание на лопатке — передача решения высшей силе. Когда выбор слишком тяжёл, его делегируют.</p>
+    </div>
+    <div class="card" style="border-color:var(--green)">
+      <div class="card-bar" style="background:var(--green)"></div>
+      <h3 style="color:var(--green);font-size:8px;margin-bottom:.3rem">ПРИНЦИП</h3>
+      <h3 style="color:var(--white)">Никто не виноват</h3>
+      <p>Случайность снимает с человека ответственность за исход и снимает обвинения в несправедливости.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S4 TWO TYPES + DICE ════════════════════════ -->
+<section id="s4" data-label="ДВА ТИПА">
+  <div class="tag" style="background:var(--cyan)">ТИПОЛОГИЯ</div>
+  <h2>ДВА ТИПА СЛУЧАЙНОСТИ</h2>
+  <div class="g2 rv" style="margin-bottom:1.5rem">
+    <div style="border:3px solid var(--green);background:var(--bg2);padding:1.4rem">
+      <span style="background:var(--green);color:var(--bg);font-family:'Press Start 2P',monospace;font-size:10px;padding:4px 10px;display:inline-block;margin-bottom:1rem;line-height:1.8">СЛУЧАЙНОСТЬ НА ВХОДЕ</span>
+      <p style="font-size:18px;color:#eef2ff;margin-bottom:1rem;line-height:1.4">Неопределённость ДО решения. Ты получаешь условия — и только потом действуешь.</p>
+      <div style="border-left:4px solid var(--green);padding:.4rem .8rem;color:var(--green);font-size:16px;margin:.4rem 0">→ Кого выбрал барабан</div>
+      <div style="border-left:4px solid var(--green);padding:.4rem .8rem;color:var(--green);font-size:16px;margin:.4rem 0">→ Какую карточку вытянул</div>
+      <div style="background:rgba(0,230,118,.12);color:var(--green);font-family:'Press Start 2P',monospace;font-size:8px;padding:.6rem .9rem;margin-top:.8rem;line-height:1.8">✓ Воспринимается как честно</div>
+    </div>
+    <div style="border:3px solid var(--coral);background:var(--bg2);padding:1.4rem">
+      <span style="background:var(--coral);color:var(--bg);font-family:'Press Start 2P',monospace;font-size:10px;padding:4px 10px;display:inline-block;margin-bottom:1rem;line-height:1.8">СЛУЧАЙНОСТЬ НА ВЫХОДЕ</span>
+      <p style="font-size:18px;color:#eef2ff;margin-bottom:1rem;line-height:1.4">Неопределённость ПОСЛЕ решения. Ты всё сделал правильно — но результат непредсказуем.</p>
+      <div style="border-left:4px solid var(--coral);padding:.4rem .8rem;color:var(--coral);font-size:16px;margin:.4rem 0">→ Случайная оценка за правильный ответ</div>
+      <div style="border-left:4px solid var(--coral);padding:.4rem .8rem;color:var(--coral);font-size:16px;margin:.4rem 0">→ Кубик решает, правильно ли ты ответил</div>
+      <div style="background:rgba(255,107,107,.12);color:var(--coral);font-family:'Press Start 2P',monospace;font-size:8px;padding:.6rem .9rem;margin-top:.8rem;line-height:1.8">⚠ Может разрушать мотивацию</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:2px solid var(--muted);padding:1.5rem" class="rv">
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-bottom:1.2rem;letter-spacing:1px">▶ ПОПРОБУЙ — ПОЧУВСТВУЙ РАЗНИЦУ</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:start">
+      <div>
+        <div style="background:var(--green);color:var(--bg);font-family:'Press Start 2P',monospace;font-size:8px;padding:4px 10px;display:inline-block;margin-bottom:.8rem;line-height:1.8">КУБИК ДО</div>
+        <p style="font-size:20px;color:var(--muted);margin-bottom:.8rem">Бросаем — потом отвечаешь на вопрос с таким номером.</p>
+        <div class="dice-v" id="dv1" onclick="rollDice(1)">
+          <div class="dp" id="d1_1"></div><div class="dp" id="d1_2"></div><div class="dp" id="d1_3"></div>
+          <div class="dp" id="d1_4"></div><div class="dp" id="d1_5"></div><div class="dp" id="d1_6"></div>
+          <div class="dp" id="d1_7"></div><div class="dp" id="d1_8"></div><div class="dp" id="d1_9"></div>
+        </div>
+        <div style="font-size:21px;color:var(--muted);margin:.5rem 0" id="dr1">нажми ↑</div>
+        <div style="background:var(--bg2);border:2px solid var(--bg3);padding:.8rem;font-size:20px;min-height:60px;color:var(--white)" id="do1">Выпавшее число — твой вопрос. Ты знаешь его до ответа.</div>
+      </div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:21px;color:var(--muted);align-self:center;padding-top:2rem">VS</div>
+      <div>
+        <div style="background:var(--coral);color:var(--bg);font-family:'Press Start 2P',monospace;font-size:8px;padding:4px 10px;display:inline-block;margin-bottom:.8rem;line-height:1.8">КУБИК ПОСЛЕ</div>
+        <p style="font-size:20px;color:var(--muted);margin-bottom:.8rem">Сначала отвечаешь — потом бросаем. Кубик «оценивает».</p>
+        <div class="dice-v" id="dv2" onclick="rollDice(2)">
+          <div class="dp" id="d2_1"></div><div class="dp" id="d2_2"></div><div class="dp" id="d2_3"></div>
+          <div class="dp" id="d2_4"></div><div class="dp" id="d2_5"></div><div class="dp" id="d2_6"></div>
+          <div class="dp" id="d2_7"></div><div class="dp" id="d2_8"></div><div class="dp" id="d2_9"></div>
+        </div>
+        <div style="font-size:21px;color:var(--muted);margin:.5rem 0" id="dr2">нажми ↑</div>
+        <div style="background:var(--bg2);border:2px solid var(--bg3);padding:.8rem;font-size:20px;min-height:60px;color:var(--white)" id="do2">Ты правильно ответил — но кубик решит, засчитать ли.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S5 ILLUSION ════════════════════════════════ -->
+<section id="s5" data-label="ИЛЛЮЗИЯ">
+  <div class="tag" style="background:var(--purple)">ПСИХОЛОГИЯ</div>
+  <h2 style="color:var(--purple)">ИЛЛЮЗИЯ КОНТРОЛЯ</h2>
+  <div class="g2">
+    <div style="background:var(--bg2);border:2px solid var(--purple);padding:1.5rem">
+      <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--purple);margin-bottom:1rem;line-height:1.8">БРОСЬ КУБИК — СЛЕДИ ЗА ОЩУЩЕНИЕМ</div>
+      <div class="big-dice" id="bigDice" onclick="rollBig()">
+        <div class="bdp" id="bd1"></div><div class="bdp" id="bd2"></div><div class="bdp" id="bd3"></div>
+        <div class="bdp" id="bd4"></div><div class="bdp" id="bd5"></div><div class="bdp" id="bd6"></div>
+        <div class="bdp" id="bd7"></div><div class="bdp" id="bd8"></div><div class="bdp" id="bd9"></div>
+      </div>
+      <div id="bigRes" style="text-align:center;font-family:'Press Start 2P',monospace;font-size:14px;color:var(--purple);margin-bottom:1rem">нажми ↑</div>
+      <div id="statsBar"></div>
+      <div id="totalR" style="font-size:19px;color:var(--muted);margin-top:.5rem">Всего бросков: 0</div>
+      <div id="illCmt" style="margin-top:1rem;font-size:21px;color:var(--muted);min-height:40px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem" class="rv">
+      <div style="background:var(--bg2);border:2px solid var(--purple);padding:1.2rem;font-size:22px;color:var(--purple);line-height:1.5">«Это <span style="color:var(--white)">мой кубик</span> — три шестёрки подряд.»</div>
+      <div style="background:var(--bg2);border:2px solid var(--purple);padding:1.2rem;font-size:22px;color:var(--purple);line-height:1.5">«<span style="color:var(--white)">Барабан меня чувствует</span> — выбрал трижды.»</div>
+      <div style="background:var(--bg2);border:2px solid var(--purple);padding:1.2rem;font-size:22px;color:var(--purple);line-height:1.5">«<span style="color:var(--white)">Сегодня моя очередь</span> — давно не выбирали.»</div>
+      <div style="background:var(--bg2);border:2px solid var(--bg3);padding:1.2rem;font-size:18px;color:#eef2ff;line-height:1.5">Мозг заточен искать паттерны — и делает это даже без данных. Ученики начинают воспринимать барабан как живое существо. <span style="color:var(--purple)">Это не проблема — это ресурс.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S6 TRANSITION ══════════════════════════════ -->
+<section id="s6" data-label="В КЛАСС">
+  <h2 style="color:var(--muted)">А ТЕПЕРЬ —</h2>
+  <div class="big-gl">В КЛАСС</div>
+  <div style="display:flex;gap:2.5rem;justify-content:center;margin-top:2rem;flex-wrap:wrap">
+    <div class="tico" style="color:var(--gold)"><span class="em">🥁</span>БАРАБАН</div>
+    <div class="tico" style="color:var(--orange)"><span class="em">🥔</span>КАРТОШКА</div>
+    <div class="tico" style="color:var(--green)"><span class="em">✈️</span>САМОЛЁТИКИ</div>
+    <div class="tico" style="color:var(--purple)"><span class="em">🃏</span>КАРТОЧКИ</div>
+  </div>
+</section>
+
+<!-- ══ S7 DRUM ════════════════════════════════════ -->
+<section id="s7" data-label="БАРАБАН">
+  <div class="tag" style="background:var(--cyan)">01 МЕХАНИКА</div>
+  <h2 style="color:var(--cyan)">БАРАБАН И ЖРЕБИЙ</h2>
+  <div class="g2">
+    <div style="background:var(--bg2);border:3px solid var(--cyan);padding:1.5rem">
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-bottom:1.2rem;line-height:1.8">БАРАБАН ВЫБИРАЕТ ОТВЕЧАЮЩЕГО</div>
+      <div class="drum-disp" id="drumDisp">ГОТОВ К ЗАПУСКУ</div>
+      <div id="drumNames" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;justify-content:center"></div>
+      <button class="btn" style="background:var(--cyan);color:var(--bg)" id="spinBtn" onclick="spinDrum()">▶ КРУТИТЬ БАРАБАН</button>
+      <div style="font-size:18px;color:var(--muted);text-align:center;margin-top:.5rem">Нажми на имя — убрать/добавить</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem" class="rv">
+      <div class="fact"><strong>Случайность на входе:</strong> все знают правила до того, как их выбрали.</div>
+      <div class="fact"><strong>Нейтральность:</strong> никто не «вызван» учителем — выбрала судьба.</div>
+      <div class="fact"><strong>Внимание класса:</strong> может выпасть любой — значит, все слушают.</div>
+      <div class="fact" style="border-color:var(--coral)"><strong style="color:var(--coral)">Осторожно:</strong> если ученик явно не готов, случайный выбор снижает психологическую безопасность. Вводите постепенно.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S8 PLANES ══════════════════════════════════ -->
+<section id="s8" data-label="САМОЛЁТ">
+  <div class="tag" style="background:var(--green)">03 МЕХАНИКА</div>
+  <h2 style="color:var(--green)">САМОЛЁТИКИ С ОТВЕТАМИ</h2>
+  <div class="g2">
+    <div style="background:var(--bg2);border:3px solid var(--green);padding:1.5rem">
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--green);margin-bottom:1rem;line-height:1.8">НАПИШИ ОТВЕТ — ЗАПУСТИ</div>
+      <div id="foldStage">
+        <textarea class="plane-in" id="planeIn" placeholder="Напиши мысль, ответ или вопрос..."></textarea>
+        <canvas id="foldCanvas" width="320" height="80" style="display:none;border:2px solid var(--green);background:var(--bg3)"></canvas>
+      </div>
+      <button class="btn" style="background:var(--green);color:var(--bg);margin-top:.6rem" id="planeBtn" onclick="launchPlane()">✈ ЗАПУСТИТЬ САМОЛЁТИК</button>
+      <div class="sky" id="sky">
+        <div id="skyHint">Запускай самолётики — они появятся здесь.<br>Нажми на самолётик чтобы прочитать.</div>
+      </div>
+      <div id="landedPlanes" style="display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem" class="rv">
+      <div class="fact" style="border-color:var(--green)"><strong style="color:var(--green)">Все написали:</strong> никто не спрятался. Даже молчаливые участвуют.</div>
+      <div class="fact" style="border-color:var(--green)"><strong style="color:var(--green)">Автор неизвестен:</strong> страх ошибки снижается — бумага не краснеет.</div>
+      <div class="fact" style="border-color:var(--green)"><strong style="color:var(--green)">Усложнение:</strong> тот, кто поднял чужой самолётик, должен его защитить.</div>
+      <div class="fact" style="border-color:var(--coral)"><strong style="color:var(--coral)">Осторожно:</strong> не для оценочных заданий — анонимность работает только без отметок.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S9 TASK CARDS ══════════════════════════════ -->
+<section id="s9" data-label="КАРТОЧКИ">
+  <div class="tag" style="background:var(--purple)">04 МЕХАНИКА</div>
+  <h2 style="color:var(--purple)">КАРТОЧКИ С ЗАДАНИЯМИ</h2>
+  <div class="sub">Выбери карточку — переверни — узнай задание</div>
+  <div class="g2 rv" style="margin-bottom:2rem">
+    <!-- DECK 1 -->
+    <div class="deck-section" style="border-color:var(--cyan)">
+      <div style="background:var(--cyan);padding:5px 12px;display:inline-block;margin-bottom:.4rem">
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--bg)">🎓 ВОПРОСЫ ПО КУРСУ</span>
+      </div>
+      <div class="deck-label">Геймификация — теория и понятия</div>
+      <div class="cards-row" id="cr1"></div>
+      <div class="card-selected-text" id="cst1">Выбери карточку выше</div>
+      <div style="font-size:19px;color:var(--muted);text-align:center" id="cnt1"></div>
+    </div>
+    <!-- DECK 2 -->
+    <div class="deck-section" style="border-color:var(--gold)">
+      <div style="background:var(--gold);padding:5px 12px;display:inline-block;margin-bottom:.4rem">
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--bg)">🏫 ПРО ОПЫТ В ШКОЛЕ</span>
+      </div>
+      <div class="deck-label">Делимся практикой из своих классов</div>
+      <div class="cards-row" id="cr2"></div>
+      <div class="card-selected-text" id="cst2">Выбери карточку выше</div>
+      <div style="font-size:19px;color:var(--muted);text-align:center" id="cnt2"></div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:2px solid var(--muted);padding:1.5rem" class="rv">
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted);margin-bottom:1rem;letter-spacing:1px">ЦВЕТНЫЕ КОЛОДЫ — ДОЗИРОВАНИЕ СЛУЧАЙНОСТИ</div>
+    <div class="g3">
+      <div class="cdeck" style="background:rgba(0,230,118,.1);border-color:var(--green)">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--green);margin-bottom:.5rem">🟢 ЗЕЛЁНАЯ</div>
+        <div style="font-size:21px;color:#eef2ff">Ученик выбирает колоду сам. Внутри — случайное задание базового уровня.</div>
+      </div>
+      <div class="cdeck" style="background:rgba(255,214,0,.08);border-color:var(--gold)">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--gold);margin-bottom:.5rem">🟡 ЖЁЛТАЯ</div>
+        <div style="font-size:21px;color:#eef2ff">Ученик выбирает сам. Случай работает внутри выбранного уровня.</div>
+      </div>
+      <div class="cdeck" style="background:rgba(255,107,107,.08);border-color:var(--coral)">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--coral);margin-bottom:.5rem">🔴 КРАСНАЯ</div>
+        <div style="font-size:21px;color:#eef2ff">Сложный уровень. Никто не видит, что именно ты вытянул — это приватно.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">ГЕЙМИФИКАЦИЯ В ОБРАЗОВАНИИ · УРОВЕНЬ 2 · IUCA</div>
+  <p>Zamanbap Mugalim / Teach for Kyrgyzstan</p>
+</footer>
+
+<script>
+// ── NAV ──────────────────────────────────────────────
+const secs=document.querySelectorAll('section');
+const nd=document.getElementById('navDots');
+secs.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.className='nav-dot';d.title=s.dataset.label||'';
+  d.onclick=()=>s.scrollIntoView({behavior:'smooth'});
+  nd.appendChild(d);
+});
+function upNav(){
+  nd.querySelectorAll('.nav-dot').forEach((d,i)=>{
+    const r=secs[i].getBoundingClientRect();
+    d.classList.toggle('active',r.top<=window.innerHeight/2&&r.bottom>window.innerHeight/2);
+  });
+}
+window.addEventListener('scroll',upNav);upNav();
+
+// ── REVEAL ───────────────────────────────────────────
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+// ── COIN — fixed ─────────────────────────────────────
+// Bug was: animation side was tied to rotation count starting from 0 (heads).
+// Fix: track explicitly which side is showing based on result,
+// and sync final rotation so it always lands on correct face.
+let flipCount=0,headsCount=0,flipping=false;
+const cc=document.getElementById('coinCanvas');
+const ctx=cc.getContext('2d');
+const W=140,R=56,CX=70,CY=70;
+
+function drawCoinFace(side,squeeze){
+  // squeeze: 1=full circle, 0=line (mid-flip), -1=full other side
+  ctx.clearRect(0,0,W,W);
+  const rx=R*Math.abs(squeeze); // x-radius squeezed during flip
+  const ry=R;
+
+  // shadow
+  ctx.save();
+  ctx.translate(CX,CY+4);
+  ctx.scale(rx/R,0.18);
+  ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fill();
+  ctx.restore();
+
+  if(rx<2) return; // edge-on, skip drawing
+
+  // rim (slightly larger, darker)
+  ctx.save();ctx.translate(CX,CY);ctx.scale(rx/R,1);
+  ctx.beginPath();ctx.arc(0,0,R+3,0,Math.PI*2);
+  ctx.fillStyle=side==='heads'?'#B8960C':'#7A5C00';ctx.fill();
+  ctx.restore();
+
+  // main face
+  ctx.save();ctx.translate(CX,CY);ctx.scale(rx/R,1);
+  ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);
+  const grad=ctx.createRadialGradient(-R*.3,-R*.3,R*.1,0,0,R);
+  if(side==='heads'){
+    grad.addColorStop(0,'#FFF59D');
+    grad.addColorStop(0.4,'#FFD600');
+    grad.addColorStop(1,'#B8960C');
+  } else {
+    grad.addColorStop(0,'#FFE082');
+    grad.addColorStop(0.4,'#FFC107');
+    grad.addColorStop(1,'#7A5C00');
+  }
+  ctx.fillStyle=grad;ctx.fill();
+  ctx.restore();
+
+  // shine arc
+  ctx.save();ctx.translate(CX,CY);ctx.scale(rx/R,1);
+  ctx.beginPath();ctx.arc(-R*.15,-R*.2,R*.45,Math.PI*1.1,Math.PI*1.75);
+  ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=6;ctx.stroke();
+  ctx.restore();
+
+  // text/symbol — only draw when not too squeezed
+  if(rx>R*0.4){
+    ctx.save();ctx.translate(CX,CY);ctx.scale(rx/R,1);
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    if(side==='heads'){
+      ctx.font=`bold ${Math.round(R*.55)}px serif`;
+      ctx.fillStyle='rgba(100,60,0,0.85)';
+      ctx.fillText('Ω',0,0);
+      ctx.font=`bold ${Math.round(R*.2)}px 'Press Start 2P', monospace`;
+      ctx.fillStyle='rgba(100,60,0,0.6)';
+      ctx.fillText('ОРЁЛ',0,R*.55);
+    } else {
+      ctx.font=`bold ${Math.round(R*.48)}px serif`;
+      ctx.fillStyle='rgba(80,40,0,0.8)';
+      ctx.fillText('★',0,-4);
+      ctx.font=`bold ${Math.round(R*.18)}px 'Press Start 2P', monospace`;
+      ctx.fillStyle='rgba(80,40,0,0.6)';
+      ctx.fillText('РЕШКА',0,R*.55);
+    }
+    ctx.restore();
+  }
+}
+
+drawCoinFace('heads',1);
+
+function flipCoin(){
+  if(flipping)return;
+  flipping=true;
+  document.getElementById('coinLabel').textContent='...';
+
+  const result=Math.random()<0.5?'heads':'tails';
+
+  // Pure time-based: use performance.now() as absolute reference.
+  // One full rotation = 2 half-rotations.
+  // angle goes 0 → totalAngle continuously over totalDuration ms.
+  // At angle θ: squeeze = cos(θ), side = floor(θ/π) % 2 === 0 ? 'heads' : 'tails'
+  // To land on result at end:
+  //   final half-index = floor(totalAngle/π)
+  //   if result='heads' → final half-index must be even → totalAngle = 2kπ for some k
+  //   if result='tails' → final half-index must be odd  → totalAngle = (2k+1)π
+  // We slow down near the end (ease-out) so it feels natural.
+
+  const fullRotations = 4 + Math.floor(Math.random()*3); // 4–6 full rotations
+  // extra half if needed to land on correct side
+  const baseAngle = fullRotations * 2 * Math.PI; // lands on heads (even half)
+  const totalAngle = result==='heads' ? baseAngle : baseAngle + Math.PI;
+  const totalDuration = 1400 + Math.random()*400; // 1400–1800 ms
+
+  // Ease-out cubic: t in [0,1] → eased in [0,1]
+  function easeOut(t){ return 1 - Math.pow(1-t,3); }
+
+  const startTime = performance.now();
+
+  function anim(ts){
+    const elapsed = ts - startTime; // absolute ms since flip started
+    const t = Math.min(elapsed / totalDuration, 1); // 0..1 linear progress
+    const easedT = easeOut(t);
+    const angle = easedT * totalAngle; // current rotation angle in radians
+
+    // Which side is showing: floor(angle/π) gives half-rotation index
+    // even index → heads, odd → tails
+    const halfIdx = Math.floor(angle / Math.PI);
+    const showSide = halfIdx % 2 === 0 ? 'heads' : 'tails';
+
+    // squeeze = cos(angle mod π), maps each half-rotation 1→-1
+    // but we want: 1 at start of half, 0 at midpoint, -1 at end
+    // cos(angle mod π) does exactly this: cos(0)=1, cos(π/2)=0, cos(π)=-1
+    const squeeze = Math.cos(angle % Math.PI);
+
+    drawCoinFace(showSide, squeeze);
+
+    if(t < 1){
+      requestAnimationFrame(anim);
+    } else {
+      // Guarantee correct final face
+      drawCoinFace(result, 1);
+      flipping=false;
+      // All counters update AFTER result is known — consistent state
+      flipCount++;
+      if(result==='heads') headsCount++;
+      const tailsCount = flipCount - headsCount;
+      document.getElementById('coinLabel').textContent=result==='heads'?'⬆ ОРЁЛ':'⬇ РЕШКА';
+      document.getElementById('coinCount').textContent=String(flipCount).padStart(2,'0');
+      document.getElementById('coinFlips').textContent=`О:${headsCount} Р:${tailsCount}`;
+    }
+  }
+  requestAnimationFrame(anim);
+}
+
+// ── DICE ─────────────────────────────────────────────
+const PIPS={
+  1:[0,0,0,0,1,0,0,0,0],2:[1,0,0,0,0,0,0,0,1],3:[1,0,0,0,1,0,0,0,1],
+  4:[1,0,1,0,0,0,1,0,1],5:[1,0,1,0,1,0,1,0,1],6:[1,0,1,1,0,1,1,0,1]
+};
+function rFace(pre,val,col){
+  PIPS[val].forEach((on,i)=>{
+    const el=document.getElementById(`${pre}${i+1}`);
+    if(el)el.style.background=on?col:'transparent';
+  });
+}
+function animDice(pre,col,cb){
+  let c=0;
+  const iv=setInterval(()=>{
+    rFace(pre,Math.ceil(Math.random()*6),col);c++;
+    if(c>=8){clearInterval(iv);cb(Math.ceil(Math.random()*6));}
+  },60);
+}
+
+const Qs=['Что такое геймификация по Deterding?','Три потребности по СДТ?','Геймификация vs игровое обучение?','Что такое случайность на входе?','Один элемент игры «Слон»?','Что такое MDA-фреймворк?'];
+function rollDice(n){
+  const pre=`d${n}_`,col=n===1?'#00E676':'#FF6B6B';
+  const rEl=document.getElementById(`dr${n}`),oEl=document.getElementById(`do${n}`);
+  rEl.textContent='...';oEl.textContent='';
+  animDice(pre,col,val=>{
+    rFace(pre,val,col);rEl.textContent=`Выпало: ${val}`;
+    if(n===1){oEl.textContent=`Вопрос №${val}: «${Qs[val-1]}»`;oEl.style.color='#00E676';}
+    else{
+      const grades={1:'НБ',2:'2',3:'3',4:'4',5:'5',6:'5+'};
+      const colors={1:'#8899BB',2:'#FF6B6B',3:'#FF9800',4:'#FFD600',5:'#00E676',6:'#00E5FF'};
+      oEl.textContent=`Оценка: ${grades[val]}`;
+      oEl.style.color=colors[val];
+    }
+  });
+}
+
+// ── BIG DICE ─────────────────────────────────────────
+const rc=[0,0,0,0,0,0];let tr=0;
+function buildStats(){
+  const bar=document.getElementById('statsBar');bar.innerHTML='';
+  const mx=Math.max(...rc,1);
+  for(let i=0;i<6;i++){
+    const row=document.createElement('div');row.className='stat-row';
+    row.innerHTML=`<div class="slabel">${i+1}</div><div class="strk"><div class="sfill" style="width:${(rc[i]/mx)*100}%"></div></div><div class="scount">${rc[i]}</div>`;
+    bar.appendChild(row);
+  }
+}
+function rollBig(){
+  animDice('bd','#B388FF',val=>{
+    rFace('bd',val,'#B388FF');
+    document.getElementById('bigRes').textContent=`Выпало: ${val}`;
+    rc[val-1]++;tr++;
+    document.getElementById('totalR').textContent=`Всего бросков: ${tr}`;
+    buildStats();
+    const cmt=document.getElementById('illCmt');
+    const mi=rc.indexOf(Math.max(...rc));
+    if(tr>=5)cmt.textContent=`Чаще всего выпадает ${mi+1}. Это закономерность или случай?`;
+    if(tr>=12){
+      const exp=tr/6,close=rc.every(c=>Math.abs(c-exp)<exp*.8);
+      cmt.textContent=close?`После ${tr} бросков — распределение близко к равномерному. Паттерн был иллюзией.`:`После ${tr} бросков — разброс всё ещё заметен. Случайность требует много попыток.`;
+    }
+    cmt.style.color='#B388FF';
+  });
+}
+buildStats();
+
+// ── DRUM ─────────────────────────────────────────────
+const HP=['Гермиона','Гарри','Рон','Невилл','Луна','Джинни','Драко','Седрик','Фред','Джордж','Дамблдор','Снейп'];
+let active=[...HP],spinning2=false;
+function renderNames(){
+  const c=document.getElementById('drumNames');c.innerHTML='';
+  HP.forEach(n=>{
+    const ch=document.createElement('div');ch.className='nchip'+(active.includes(n)?' sel':'');
+    ch.textContent=n;
+    ch.onclick=()=>{
+      if(active.includes(n)){if(active.length>1)active=active.filter(x=>x!==n);}
+      else active.push(n);
+      renderNames();
+    };
+    c.appendChild(ch);
+  });
+}
+function spinDrum(){
+  if(spinning2||active.length===0)return;
+  spinning2=true;
+  const btn=document.getElementById('spinBtn');btn.disabled=true;
+  const disp=document.getElementById('drumDisp');
+  disp.classList.add('spin');
+  let cnt=0,tot=20+Math.floor(Math.random()*15);
+  const iv=setInterval(()=>{
+    disp.textContent=active[Math.floor(Math.random()*active.length)];cnt++;
+    if(cnt>=tot){
+      clearInterval(iv);
+      const w=active[Math.floor(Math.random()*active.length)];
+      disp.textContent='★ '+w+' ★';disp.classList.remove('spin');
+      disp.style.color='var(--gold)';
+      setTimeout(()=>{disp.style.color='';spinning2=false;btn.disabled=false;},2500);
+    }
+  },80);
+}
+renderNames();
+
+// ── PLANES ───────────────────────────────────────────
+const planeMessages = [];
+let planeLaunching = false;
+
+// SVG plane path — clean paper airplane shape
+function planeSVG(color, size=32){
+  const s = size;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="2,16 30,4 22,28" fill="${color}" opacity="0.9"/>
+    <polygon points="2,16 30,4 16,18" fill="rgba(255,255,255,0.25)"/>
+    <line x1="16" y1="18" x2="22" y2="28" stroke="${color}" stroke-width="1" opacity="0.5"/>
+  </svg>`;
+}
+
+// Folding animation on canvas
+function animateFold(text, color, onDone){
+  const inp = document.getElementById('planeIn');
+  const canvas = document.getElementById('foldCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  inp.style.display = 'none';
+  canvas.style.display = 'block';
+
+  // Draw the "paper" sheet with text, then fold it into a triangle
+  const totalDuration = 900; // ms
+  const startTime = performance.now();
+
+  // Easing
+  function easeInOut(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function drawFrame(ts){
+    const t = Math.min((ts - startTime) / totalDuration, 1);
+    const e = easeInOut(t);
+    ctx.clearRect(0,0,W,H);
+
+    // Phase 1 (0→0.5): paper sheet collapses horizontally
+    // Phase 2 (0.5→1): folds into plane triangle shape
+
+    if(t < 0.5){
+      // Sheet squeezing in from sides
+      const progress = e * 2; // 0→1 over first half
+      const sheetW = W * (1 - progress * 0.6);
+      const sheetX = (W - sheetW) / 2;
+
+      // Paper background
+      ctx.fillStyle = '#1a2550';
+      ctx.fillRect(sheetX, 4, sheetW, H-8);
+
+      // Fold lines appearing
+      if(progress > 0.3){
+        const fp = (progress - 0.3) / 0.7;
+        ctx.strokeStyle = `rgba(0,229,255,${fp * 0.6})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4,4]);
+        // diagonal fold lines
+        ctx.beginPath();
+        ctx.moveTo(sheetX, 4);
+        ctx.lineTo(sheetX + sheetW/2, H/2);
+        ctx.moveTo(sheetX + sheetW, 4);
+        ctx.lineTo(sheetX + sheetW/2, H/2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Text fading out
+      const textOpacity = 1 - progress * 1.5;
+      if(textOpacity > 0){
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, textOpacity);
+        ctx.fillStyle = '#8899BB';
+        ctx.font = '13px VT323, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        // clip to sheet area
+        ctx.beginPath();
+        ctx.rect(sheetX, 4, sheetW, H-8);
+        ctx.clip();
+        const words = text.split(' ');
+        const line1 = words.slice(0, Math.ceil(words.length/2)).join(' ');
+        const line2 = words.slice(Math.ceil(words.length/2)).join(' ');
+        ctx.fillText(line1, W/2, H/2 - 8);
+        ctx.fillText(line2, W/2, H/2 + 8);
+        ctx.restore();
+      }
+
+    } else {
+      // Phase 2: triangle forming and rotating
+      const progress = (e - easeInOut(0.5)) / (1 - easeInOut(0.5));
+
+      ctx.save();
+      ctx.translate(W/2, H/2);
+      ctx.rotate(progress * Math.PI * 0.15); // slight tilt as it forms
+
+      const scale = 0.4 + progress * 0.6;
+      ctx.scale(scale, scale);
+
+      // Triangle / plane shape
+      const pw = 60, ph = 30;
+      ctx.beginPath();
+      ctx.moveTo(-pw, 0);
+      ctx.lineTo(pw, -ph*0.4);
+      ctx.lineTo(pw*0.3, ph*0.4);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+
+      // Highlight
+      ctx.beginPath();
+      ctx.moveTo(-pw, 0);
+      ctx.lineTo(pw, -ph*0.4);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,255,255,0.2)';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    if(t < 1){
+      requestAnimationFrame(drawFrame);
+    } else {
+      // Done — hide canvas, restore textarea
+      setTimeout(()=>{
+        canvas.style.display = 'none';
+        inp.style.display = 'block';
+        onDone();
+      }, 120);
+    }
+  }
+
+  requestAnimationFrame(drawFrame);
+}
+
+// Smooth noise helper (layered sines — no dependency)
+function smoothNoise(t, seed){
+  return Math.sin(t * 2.1 + seed) * 0.5
+       + Math.sin(t * 3.7 + seed * 1.3) * 0.3
+       + Math.sin(t * 7.3 + seed * 0.7) * 0.2;
+}
+
+// Physics-based generative flight
+function flyPlaneInSky(savedText, color){
+  const sky = document.getElementById('sky');
+  document.getElementById('skyHint').style.display = 'none';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'sky-plane';
+  wrapper.innerHTML = planeSVG(color, 36);
+  wrapper.title = 'Нажми чтобы прочитать';
+
+  const skyW = sky.offsetWidth;
+  const skyH = sky.offsetHeight;
+
+  // Entry from left edge at random height
+  const startX = -40;
+  const startY = skyH * 0.2 + Math.random() * skyH * 0.55;
+
+  // Destination: right portion of sky, random height
+  const endX = skyW * 0.55 + Math.random() * skyW * 0.38;
+  const endY = skyH * 0.08 + Math.random() * skyH * 0.55;
+
+  wrapper.style.cssText = `left:${startX}px;top:${startY}px;position:absolute;opacity:0;will-change:transform,opacity;transition:none;cursor:pointer`;
+  sky.appendChild(wrapper);
+
+  // Click reveals message
+  const msg = savedText;
+  let clicked = false;
+  wrapper.onclick = () => {
+    if(clicked) return;
+    clicked = true;
+    const ld = document.getElementById('landedPlanes');
+    const it = document.createElement('div');
+    it.className = 'lmsg';
+    it.textContent = '✈ ' + msg;
+    ld.appendChild(it);
+    wrapper.style.opacity = '0.2';
+    wrapper.onclick = null;
+  };
+
+  // Per-plane unique seeds for independent noise channels
+  const seedX  = Math.random() * 100;
+  const seedY  = Math.random() * 100;
+  const seedR  = Math.random() * 100;
+
+  // Wind parameters — each plane gets its own character
+  const windStrengthX = 18 + Math.random() * 22;  // px amplitude, horizontal drift
+  const windStrengthY = 22 + Math.random() * 28;  // px amplitude, vertical drift
+  const turbFreq      = 0.8 + Math.random() * 1.4; // how fast noise cycles
+
+  // Main arc — quadratic bezier control point
+  const cpX = startX + (endX - startX) * (0.35 + Math.random() * 0.3);
+  const cpY = Math.min(startY, endY) - 40 - Math.random() * 50;
+
+  const duration = 2400 + Math.random() * 800;
+  const startTime = performance.now();
+
+  // Ease: fast start, gradual settle
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  // Previous position for angle calculation
+  let prevX = startX, prevY = startY;
+
+  function animFly(ts){
+    const t = Math.min((ts - startTime) / duration, 1);
+    const e = easeOutCubic(t);
+
+    // Quadratic Bezier base path
+    const u = 1 - e;
+    const baseX = u*u*startX + 2*u*e*cpX + e*e*endX;
+    const baseY = u*u*startY + 2*u*e*cpY + e*e*endY;
+
+    // Generative wind: noise amplitude fades in then out
+    // Peaks around t=0.4, quiet at start and end
+    const windEnv = Math.sin(t * Math.PI) * (1 - Math.pow(t, 3));
+
+    const nx = smoothNoise(t * turbFreq, seedX) * windStrengthX * windEnv;
+    const ny = smoothNoise(t * turbFreq, seedY) * windStrengthY * windEnv;
+
+    const px = baseX + nx;
+    const py = baseY + ny;
+
+    // Angle from actual velocity (current - prev position)
+    const dvx = px - prevX;
+    const dvy = py - prevY;
+    const angle = Math.atan2(dvy, dvx);
+    prevX = px; prevY = py;
+
+    // Extra roll from noise — plane banks into turns
+    const roll = smoothNoise(t * turbFreq * 1.2, seedR) * 0.18 * windEnv;
+
+    // Opacity: fade in first 6%, full after
+    const opacity = t < 0.06 ? t / 0.06 : 1;
+
+    wrapper.style.left    = px + 'px';
+    wrapper.style.top     = py + 'px';
+    wrapper.style.opacity = opacity;
+    wrapper.style.transform = `rotate(${angle + roll}rad)`;
+
+    if(t < 1) requestAnimationFrame(animFly);
+  }
+
+  requestAnimationFrame(animFly);
+}
+
+function launchPlane(){
+  const inp = document.getElementById('planeIn');
+  const txt = inp.value.trim();
+  if(!txt || planeLaunching) return;
+  planeLaunching = true;
+
+  const btn = document.getElementById('planeBtn');
+  btn.disabled = true;
+  btn.textContent = '✦ СКЛАДЫВАЕТСЯ...';
+
+  const color = `hsl(${120 + Math.random()*120},80%,65%)`;
+  const saved = txt;
+  inp.value = '';
+
+  animateFold(saved, color, () => {
+    planeLaunching = false;
+    btn.disabled = false;
+    btn.textContent = '✈ ЗАПУСТИТЬ САМОЛЁТИК';
+    flyPlaneInSky(saved, color);
+  });
+}
+
+// ── TASK CARDS — flip mechanic ────────────────────────
+const courseQ=[
+  'Что такое геймификация? Чем она отличается от игрового обучения?',
+  'Назови три потребности по теории самодетерминации.',
+  'Что такое случайность на входе и на выходе? Приведи пример каждой.',
+  'Почему бейджи и очки могут снижать внутреннюю мотивацию?',
+  'Что такое MDA-фреймворк? Расшифруй аббревиатуру.',
+  'Чем «Слон» является: геймификацией или игровым обучением?',
+  'Что такое «тёмная сторона» мотивации в Окталисе?',
+  'Назови два способа создать случайность без цифровых технологий.',
+  'Что происходит с вовлечённостью, когда исход предсказуем?',
+  'Как случайность связана с психологической безопасностью?',
+];
+const schoolQ=[
+  'Расскажи об уроке, где ученики были неожиданно активны. Что произошло?',
+  'Что самое сложное в поддержании внимания класса до конца урока?',
+  'Был ли момент, когда ты передал роль ведущего ученику? Как это прошло?',
+  'Есть ли у тебя «тихий» ученик? Что ты знаешь о его интересах?',
+  'Опиши урок, который пошёл совсем не по плану — и чем это закончилось.',
+  'Как твои ученики реагируют на соревнование между собой?',
+  'Что мотивирует учеников в твоей школе сильнее всего?',
+  'Расскажи о моменте, когда тебя удивил ответ ученика.',
+  'Что происходит в классе, когда ты опаздываешь на несколько минут?',
+  'Есть ли ритуал, который ученики уже ждут на каждом уроке?',
+];
+
+// Card state per deck: which 3 cards are showing, which is selected
+const deckState={
+  1:{pool:[...courseQ],showing:[],selectedText:'',color:'var(--cyan)'},
+  2:{pool:[...schoolQ],showing:[],selectedText:'',color:'var(--gold)'},
+};
+
+function shuffle(arr){return arr.sort(()=>Math.random()-.5)}
+
+function deal(deckNum){
+  const st=deckState[deckNum];
+  if(st.pool.length<3){
+    // refill from original
+    st.pool=shuffle([...(deckNum===1?courseQ:schoolQ)]);
+  }
+  shuffle(st.pool);
+  st.showing=st.pool.splice(0,3);
+  st.selectedText='';
+  renderCards(deckNum);
+  // update count
+  const total=deckNum===1?courseQ.length:schoolQ.length;
+
+}
+
+function renderCards(deckNum){
+  const st=deckState[deckNum];
+  const row=document.getElementById(`cr${deckNum}`);
+  row.innerHTML='';
+  const cst=document.getElementById(`cst${deckNum}`);
+  cst.textContent='Выбери карточку выше';
+  cst.classList.remove('flash');
+
+  st.showing.forEach((q,i)=>{
+    const wrap=document.createElement('div');wrap.className='flip-card';
+    wrap.innerHTML=`
+      <div class="flip-inner">
+        <div class="flip-front" style="background:var(--bg2);border-color:${st.color}">
+          <div class="card-ico">🃏</div>
+          <div class="card-hint" style="color:${st.color}">НАЖМИ<br>ОТКРЫТЬ</div>
+        </div>
+        <div class="flip-back" style="background:var(--bg3);border-color:${st.color};font-size:12px;color:var(--muted);padding:.5rem">
+          ${q.length>60?q.slice(0,57)+'…':q}
+        </div>
+      </div>`;
+    wrap.onclick=()=>{
+      // flip this card
+      wrap.classList.toggle('flipped');
+      if(wrap.classList.contains('flipped')){
+        // show full text below
+        cst.classList.remove('flash');
+        void cst.offsetWidth;
+        cst.classList.add('flash');
+        setTimeout(()=>{cst.textContent=q;},150);
+      } else {
+        cst.textContent='Выбери карточку выше';
+      }
+    };
+    row.appendChild(wrap);
+  });
+
+  // Add "новые карточки" button
+  const btn=document.createElement('button');
+  btn.style.cssText=`font-family:'Press Start 2P',monospace;font-size:7px;background:transparent;border:2px solid ${st.color};color:${st.color};padding:8px;cursor:pointer;width:100%;margin-top:.5rem;letter-spacing:.5px;transition:all .2s;grid-column:1/-1`;
+  btn.textContent='↻ НОВЫЕ КАРТОЧКИ';
+  btn.onclick=()=>deal(deckNum);
+  // append after row, inside deck-section
+  const ds=row.parentElement;
+  const existing=ds.querySelector('.new-cards-btn');
+  if(existing)existing.remove();
+  btn.className='new-cards-btn';
+  row.after(btn);
+}
+
+// Init both decks
+deal(1);deal(2);
+</script>
+</body>
+</html>

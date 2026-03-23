@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Story of Programming</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0a0a0f;
+  --paper: #f5f0e8;
+  --paper2: #ede7d9;
+  --amber: #c8862a;
+  --amber-light: #f0b856;
+  --punch: #c0392b;
+  --teal: #1a6b6b;
+  --code-bg: #111827;
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--ink);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* Animated binary rain behind hero */
+#binaryRain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.12;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--amber);
+  pointer-events: none;
+  display: flex;
+  gap: 0;
+}
+
+.rain-col {
+  display: flex;
+  flex-direction: column;
+  animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 800px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  color: var(--amber-light);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+}
+
+.hero-scroll {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #475569;
+  letter-spacing: 0.2em;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 0;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* The vertical spine */
+.chapter::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--amber) 0%, rgba(200,134,42,0.1) 100%);
+}
+
+.chapter:last-child::before { bottom: 60px; }
+
+.chapter-inner {
+  padding-left: 80px;
+  padding-bottom: 5rem;
+}
+
+/* Era dot on spine */
+.era-dot {
+  position: absolute;
+  left: 18px;
+  top: 28px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  color: var(--amber);
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.era-dot.active-dot {
+  background: var(--amber);
+  color: var(--ink);
+  box-shadow: 0 0 20px rgba(200,134,42,0.6);
+}
+
+.era-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.5rem;
+}
+
+.chapter h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--paper);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.chapter p {
+  color: #94a3b8;
+  font-weight: 300;
+  max-width: 600px;
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+}
+
+.chapter p strong {
+  color: var(--amber-light);
+  font-weight: 600;
+}
+
+/* ── CODE BLOCKS ── */
+.code-card {
+  background: var(--code-bg);
+  border: 1px solid #1e293b;
+  border-left: 3px solid var(--amber);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  line-height: 1.8;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  max-width: 600px;
+}
+
+.code-card .comment { color: #475569; }
+.code-card .kw { color: #c792ea; }
+.code-card .fn-name { color: #82aaff; }
+.code-card .str { color: #c3e88d; }
+.code-card .num { color: #f78c6c; }
+.code-card .bit-1 { color: var(--amber-light); font-weight: 700; }
+.code-card .bit-0 { color: #475569; }
+
+.code-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+/* ── TAPE / CARD VISUAL ── */
+.tape-visual {
+  display: flex;
+  gap: 3px;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  max-width: 560px;
+}
+
+.hole {
+  width: 28px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.hole.punched {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+.hole.blank {
+  background: #1e293b;
+  color: #334155;
+  border: 1px solid #1e293b;
+}
+
+/* ── PUNCH CARD ── */
+.punchcard-wrap {
+  margin: 1.75rem 0;
+  max-width: 620px;
+}
+
+.punchcard {
+  background: #f5f0d8;
+  border-radius: 6px 6px 4px 4px;
+  padding: 0.6rem 0.8rem 0.8rem;
+  border: 1px solid #c8b87a;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Notched corner */
+.punchcard::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 18px 18px 0;
+  border-color: transparent #b8a060 transparent transparent;
+}
+
+.punchcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(139,109,50,0.25);
+}
+
+.punchcard-title {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #6b5230;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.punchcard-id {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #9b7a40;
+}
+
+.punchcard-cols {
+  display: flex;
+  gap: 3px;
+  align-items: flex-start;
+}
+
+.pc-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pc-col-label {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  color: #9b7a40;
+  margin-bottom: 2px;
+}
+
+.pc-hole {
+  width: 100%;
+  aspect-ratio: 1/1.3;
+  border-radius: 2px;
+  border: 1px solid rgba(139,109,50,0.3);
+  transition: all 0.25s;
+  cursor: default;
+}
+
+.pc-hole.punched {
+  background: #2a1a00;
+  border-color: #1a0d00;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.pc-hole.blank {
+  background: rgba(200,176,100,0.15);
+}
+
+.punchcard-footer {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pc-char-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: #6b5230;
+  background: rgba(139,109,50,0.1);
+  border-radius: 2px;
+  padding: 0.1rem 0.3rem;
+  min-width: 14px;
+  text-align: center;
+}
+
+.punchcard-instructions {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #475569;
+  margin-top: 0.75rem;
+}
+
+/* Loom image stand-in graphic */
+.loom-graphic {
+  display: flex;
+  gap: 4px;
+  margin: 1.5rem 0;
+  max-width: 400px;
+  flex-wrap: wrap;
+}
+
+.loom-thread {
+  height: 60px;
+  width: 10px;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.loom-thread-bar {
+  width: 100%;
+  flex: 1;
+  border-radius: 1px;
+}
+
+.loom-hole {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1a0a00;
+  border: 1px solid #3d2000;
+}
+
+.origin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(192,57,43,0.12);
+  border: 1px solid rgba(192,57,43,0.3);
+  border-radius: 4px;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #e07b6a;
+  margin-bottom: 1rem;
+}
+
+/* ── LANGUAGE LADDER ── */
+.lang-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 680px;
+  margin: 1.5rem 0;
+}
+
+.lang-rung {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lang-bar {
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.lang-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex-shrink: 0;
+}
+
+.lang-name {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--paper);
+}
+
+.lang-desc {
+  font-size: 0.72rem;
+  color: #475569;
+}
+
+/* Width = complexity (machine code is WIDEST = hardest to read) */
+.lang-bar.machcode { 
+  width: 100%;
+  background: linear-gradient(90deg, #1a0800, #3d1a00, #5a2800);
+  border: 1px solid rgba(200,134,42,0.6);
+  color: var(--amber-light);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+
+.lang-bar.asm      { 
+  width: 80%;
+  background: linear-gradient(90deg, #0a1a00, #1f3d00);
+  border: 1px solid #305a00;
+  color: #86efac;
+}
+
+.lang-bar.lowlang  { 
+  width: 64%;
+  background: linear-gradient(90deg, #00101a, #003357);
+  border: 1px solid #0057a0;
+  color: #93c5fd;
+}
+
+.lang-bar.cobol {
+  width: 48%;
+  background: linear-gradient(90deg, #1a0a10, #3d1a2a);
+  border: 1px solid #8b3a5c;
+  color: #f0a0c0;
+}
+
+.lang-bar.midlang  { 
+  width: 36%;
+  background: linear-gradient(90deg, #0f001a, #2a0057);
+  border: 1px solid #6000a0;
+  color: #c4b5fd;
+}
+
+.lang-bar.highlang { 
+  width: 24%;
+  background: linear-gradient(90deg, #001a1a, #005757);
+  border: 1px solid #009090;
+  color: #6ee7b7;
+}
+
+.ladder-legend {
+  display: flex;
+  justify-content: space-between;
+  max-width: 680px;
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #334155;
+}
+
+.ladder-arrow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 680px;
+  margin-bottom: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #334155;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* ── QUOTE ── */
+.blockquote {
+  border-left: 3px solid var(--amber);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  max-width: 540px;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--paper);
+  line-height: 1.6;
+}
+
+.blockquote cite {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-style: normal;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+  margin-top: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* ── VOCAB PILL ── */
+.vocab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(200,134,42,0.12);
+  border: 1px solid rgba(200,134,42,0.3);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  color: var(--amber-light);
+  margin: 0.15rem;
+}
+
+/* ── FINAL SECTION ── */
+.finale {
+  background: linear-gradient(to bottom, var(--ink), #0a1628);
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+
+.finale h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--paper);
+  margin-bottom: 1rem;
+}
+
+.finale h2 em { color: var(--amber-light); font-style: italic; }
+
+.finale p {
+  color: #64748b;
+  font-size: 1.05rem;
+  max-width: 540px;
+  margin: 0 auto 2rem;
+}
+
+.vocab-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: #1e293b;
+  letter-spacing: 0.2em;
+  border-top: 1px solid #0f172a;
+}
+
+/* ── INTERSECTION OBSERVER FADE-IN ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .chapter-inner { padding-left: 56px; }
+  .chapter::before { left: 14px; }
+  .era-dot { left: 4px; }
+  .hole { width: 22px; height: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div id="binaryRain" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">// English for IT Students — Block 1</div>
+    <h1>The <em>Story</em> of<br>Programming</h1>
+    <p class="hero-sub">From a single switch flipped inside a machine to millions of lines of human-readable code — the journey of how we learned to talk to computers.</p>
+    <div class="hero-scroll">↓ &nbsp; scroll to begin &nbsp; ↓</div>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<main>
+<div class="timeline">
+
+  <!-- CHAPTER 1: Binary -->
+  <article class="chapter">
+    <div class="era-dot" id="dot1">1</div>
+    <div class="chapter-inner">
+      <div class="era-tag fade-in">Era 01 · 1940s</div>
+      <h2 class="fade-in">It begins with a<br>single switch.</h2>
+      <p class="fade-in">
+        Deep inside the first computers — machines the size of rooms — were thousands of 
+        <strong>transistors</strong>: tiny electronic switches that could be either 
+        <strong>ON</strong> or <strong>OFF</strong>.
+        That's it. Two states. Two numbers.
+      </p>
+      <p class="fade-in">
+        Engineers discovered that combining these two states — <strong>0</strong> and <strong>1</strong> — 
+        was enough to represent <em>any</em> number, letter, or instruction. 
+        This is <strong>binary</strong>, the native language of all computers.
+      </p>
+
+      <!-- Animated tape visual -->
+      <div class="fade-in">
+        <div class="code-label">The letter "A" in 8-bit binary</div>
+        <div class="tape-visual" id="tapeVisual"></div>
+      </div>
+
+      <div class="code-card fade-in">
+        <div class="code-label">Binary · "Hello" starts with 'H' = 72</div>
+        <span class="comment">// 8 transistors encode one character</span><br>
+        <span class="comment">// Position:  128  64  32  16   8   4   2   1</span><br>
+        <span class="bit-1">1</span><span class="bit-0"> 0 0 0 1 0 0 0</span>  <span class="comment">// = 64+8 = 72 = 'H'</span><br>
+        <span class="bit-0">0 </span><span class="bit-1">1</span><span class="bit-0"> 1 0 0 1 0 1</span>  <span class="comment">// = 101 = 'e'</span><br>
+        <span class="bit-0">0 </span><span class="bit-1">1</span><span class="bit-0"> 1 0 1 1 0 0</span>  <span class="comment">// = 108 = 'l'</span>
+      </div>
+
+      <p class="fade-in">
+        To program the first computers, engineers had to write every instruction as a 
+        long string of 0s and 1s — then <strong>physically punch holes</strong> into paper tape 
+        or cards to feed those instructions into the machine.
+        A program of 1000 instructions meant 1000 rows of holes.
+      </p>
+
+      <div class="blockquote fade-in">
+        "We were not programming. We were speaking the machine's own language,
+        digit by digit, hole by hole."
+        <cite>— Early ENIAC programmer, 1940s</cite>
+      </div>
+    </div>
+  </article>
+
+  <!-- CHAPTER 2: Punch Cards -->
+  <article class="chapter">
+    <div class="era-dot" id="dot2">0</div>
+    <div class="chapter-inner">
+      <div class="era-tag fade-in">Era 00 · 1801 → 1970s</div>
+      <h2 class="fade-in">Before computers,<br>there were looms.</h2>
+
+      <div class="origin-badge fade-in">🧵 Origin Story — This did not start with computers</div>
+
+      <p class="fade-in">
+        In <strong>1801</strong>, a French weaver named <strong>Joseph-Marie Jacquard</strong>
+        wanted to automate his loom — a machine that weaved complex silk patterns.
+        Hand-weaving a pattern required a master craftsman to manually raise and lower
+        hundreds of individual threads in exactly the right sequence. One mistake meant a ruined pattern.
+      </p>
+      <p class="fade-in">
+        Jacquard's solution was revolutionary: he punched <strong>holes in stiff cardboard cards</strong>. 
+        Each hole told the loom: <em>"raise this thread."</em> No hole meant: <em>"keep it down."</em>
+        Sound familiar? <strong>Hole = 1. No hole = 0.</strong>
+        The loom read the cards automatically, weaving the same perfect pattern every time, with no human error.
+      </p>
+
+      <!-- Loom visual -->
+      <div class="fade-in">
+        <div class="code-label">Jacquard Loom · 1801 · Hole = thread UP (1), No hole = thread DOWN (0)</div>
+        <div class="loom-graphic" id="loomGraphic"></div>
+      </div>
+
+      <p class="fade-in">
+        Fifty years later, mathematician <strong>Charles Babbage</strong> saw Jacquard's cards and 
+        had a vision: what if you could use the same idea to control a <em>calculating machine</em>?
+        His collaborator <strong>Ada Lovelace</strong> — widely considered the 
+        <strong>world's first programmer</strong> — wrote the first algorithm designed to be 
+        processed by a machine, describing it in notes longer than the original paper she was translating.
+      </p>
+
+      <div class="blockquote fade-in">
+        "The Analytical Engine weaves algebraic patterns just as the Jacquard-loom weaves flowers and leaves."
+        <cite>— Ada Lovelace, 1843</cite>
+      </div>
+
+      <h2 class="fade-in" style="margin-top: 2rem;">To program a computer,<br>you punched holes in cards.</h2>
+
+      <p class="fade-in">
+        By the <strong>1940s and 1950s</strong>, every major computer used punch cards as its primary 
+        input method. A programmer would sit at a <strong>keypunch machine</strong> — 
+        essentially a typewriter that punched holes instead of printing ink — and prepare a 
+        <strong>deck of cards</strong>, one card per line of code.
+      </p>
+      <p class="fade-in">
+        Each card held <strong>80 columns</strong>, each column representing one character.
+        The position and pattern of holes in that column encoded the character as binary.
+        A program of 500 lines was a <strong>physical stack of 500 cards</strong>, 
+        held together with a rubber band, carried carefully to the computer operator, 
+        and fed into a <strong>card reader</strong> one by one.
+      </p>
+
+      <!-- Static punch card -->
+      <div class="fade-in punchcard-wrap">
+        <div class="code-label">Example punch card · "HELLO" encoded as binary holes</div>
+        <div class="punchcard" id="punchcard">
+          <div class="punchcard-header">
+            <span class="punchcard-title">IBM 80-COLUMN CARD · PROGRAM INPUT</span>
+            <span class="punchcard-id">CARD 001 / 500</span>
+          </div>
+          <div class="punchcard-cols" id="punchcardCols"></div>
+          <div class="punchcard-footer" id="punchcardFooter"></div>
+        </div>
+        <div class="punchcard-instructions">↑ Each column = 1 character. Dark holes = 1 (punched through). Light = 0 (solid card).</div>
+      </div>
+
+      <p class="fade-in">
+        Drop the deck? <strong>Game over.</strong> The cards would scatter across the floor — 
+        500 cards with no page numbers, no way to tell which came first. 
+        Programmers quickly learned to draw a diagonal line across the top edge of their sorted deck
+        so they could re-sort it instantly if it was ever dropped.
+        Debugging was physical. Programming was <em>manual labor</em>.
+      </p>
+
+      <div class="code-card fade-in" style="border-left-color: #c0392b;">
+        <div class="code-label">The programmer's nightmare — a dropped deck</div>
+        <span class="comment">// Your 500-card program, sorted correctly:</span><br>
+        <span class="bit-1">▌</span><span class="comment"> 001: LOAD A, 0</span><br>
+        <span class="bit-1">▌</span><span class="comment"> 002: LOAD B, 5</span><br>
+        <span class="bit-1">▌</span><span class="comment"> 003: ADD  A, B</span><br>
+        <span class="bit-1">▌</span><span class="comment"> ...</span><br>
+        <span class="bit-1">▌</span><span class="comment"> 500: PRINT RESULT</span><br><br>
+        <span class="comment">// After dropping the deck:</span><br>
+        <span style="color:#c0392b">✖ 437: PRINT RESULT</span><br>
+        <span style="color:#c0392b">✖ 003: ADD  A, B</span><br>
+        <span style="color:#c0392b">✖ 500: LOAD A, 0</span><br>
+        <span style="color:#c0392b">✖ 002: ???  ████</span><br>
+        <span class="comment">// Good luck.</span>
+      </div>
+
+      <p class="fade-in">
+        Punch cards remained the dominant form of programming input well into the <strong>1970s</strong>.
+        They were only gradually replaced by <strong>terminals</strong> — screens with keyboards 
+        where you could type and <em>see</em> your code, edit a single character without 
+        re-punching an entire card, and run it instantly.
+        For programmers of that era, the terminal felt like a miracle.
+      </p>
+    </div>
+  </article>
+
+  <!-- CHAPTER 3: Assembly -->
+  <article class="chapter">
+    <div class="era-dot" id="dot3">2</div>
+    <div class="chapter-inner">
+      <div class="era-tag fade-in">Era 02 · Early 1950s</div>
+      <h2 class="fade-in">Humans invent<br>a shortcut.</h2>
+      <p class="fade-in">
+        Writing pure binary was exhausting and error-prone. So programmers invented 
+        <strong>Assembly language</strong> — a system of short, human-readable 
+        abbreviations called <strong>mnemonics</strong> that mapped directly to binary instructions.
+      </p>
+      <p class="fade-in">
+        Instead of <code>10110000 01100001</code>, you could write <code>MOV AL, 97</code>.
+        A special program called an <strong>assembler</strong> would then translate 
+        your readable code back into binary for the machine.
+      </p>
+
+      <div class="code-card fade-in">
+        <div class="code-label">Assembly · print "Hi" to screen</div>
+        <span class="comment">; Load the character 'H' into register AL</span><br>
+        <span class="kw">MOV</span> AL, <span class="num">72</span>      <span class="comment">; 72 = ASCII 'H'</span><br>
+        <span class="kw">INT</span> <span class="num">21h</span>       <span class="comment">; Call OS to print it</span><br>
+        <span class="kw">MOV</span> AL, <span class="num">105</span>     <span class="comment">; 105 = ASCII 'i'</span><br>
+        <span class="kw">INT</span> <span class="num">21h</span><br>
+        <span class="kw">MOV</span> AH, <span class="num">4Ch</span>     <span class="comment">; Exit program</span><br>
+        <span class="kw">INT</span> <span class="num">21h</span>
+      </div>
+
+      <p class="fade-in">
+        Assembly was a revolution — but it was still <strong>machine-specific</strong>. 
+        Code written for one type of processor was useless on another. 
+        And even the simplest task required dozens of individual steps. 
+        The dream of writing code closer to <em>human thought</em> was just beginning.
+      </p>
+    </div>
+  </article>
+
+  <!-- CHAPTER 4: Early High-Level Languages -->
+  <article class="chapter">
+    <div class="era-dot" id="dot4">3</div>
+    <div class="chapter-inner">
+      <div class="era-tag fade-in">Era 03 · Mid 1950s–1970s</div>
+      <h2 class="fade-in">The first languages<br>that think like people.</h2>
+      <p class="fade-in">
+        In 1954, IBM engineer <strong>John Backus</strong> led a team to create 
+        <strong>FORTRAN</strong> — the first widely-used high-level programming language. 
+        For the first time, a programmer could write a mathematical formula almost exactly 
+        as it appeared on paper, and a program called a <strong>compiler</strong> 
+        would translate it all the way down to binary automatically.
+      </p>
+      <p class="fade-in">
+        In 1959, <strong>Grace Hopper</strong> pioneered <strong>COBOL</strong>, 
+        designed to read almost like English — making programs readable by business managers, 
+        not just engineers. The idea was radical: <strong>code should communicate with humans</strong>.
+      </p>
+
+      <div class="code-card fade-in">
+        <div class="code-label">FORTRAN · 1957 · Calculate an average</div>
+        <span class="comment">C     Calculate average of three numbers</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">REAL</span> A, B, C, AVG<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A = <span class="num">10.0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B = <span class="num">20.0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C = <span class="num">30.0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AVG = (A + B + C) / <span class="num">3.0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">PRINT</span> *, <span class="str">'Average = '</span>, AVG<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">END</span>
+      </div>
+
+      <div class="code-card fade-in">
+        <div class="code-label">COBOL · 1959 · Business logic in plain English</div>
+        <span class="kw">IDENTIFICATION DIVISION.</span><br>
+        PROGRAM-ID. SALARY-CALC.<br><br>
+        <span class="kw">PROCEDURE DIVISION.</span><br>
+        &nbsp;&nbsp;COMPUTE MONTHLY-PAY = ANNUAL-SALARY / <span class="num">12</span><br>
+        &nbsp;&nbsp;DISPLAY <span class="str">"Monthly pay: "</span> MONTHLY-PAY<br>
+        &nbsp;&nbsp;STOP RUN.
+      </div>
+
+      <p class="fade-in">
+        Then came <strong>C</strong> in 1972 — powerful enough to write operating systems, 
+        yet readable enough for humans. C became the parent of an entire family of 
+        modern languages. Almost every language you use today has C's DNA in it.
+      </p>
+    </div>
+  </article>
+
+  <!-- CHAPTER 5: Modern Era -->
+  <article class="chapter">
+    <div class="era-dot" id="dot5">4</div>
+    <div class="chapter-inner">
+      <div class="era-tag fade-in">Era 04 · 1990s–Today</div>
+      <h2 class="fade-in">Code becomes<br>almost human.</h2>
+      <p class="fade-in">
+        By the 1990s, languages grew increasingly <strong>expressive</strong>. 
+        Python (1991) let programmers write logic that looked almost like plain English. 
+        JavaScript (1995) brought programming into every web browser. 
+        Compilers and interpreters became invisible — you wrote the idea, 
+        the machine did the rest.
+      </p>
+
+      <div class="code-card fade-in">
+        <div class="code-label">Python · 2024 · The same "average" as before</div>
+        <span class="comment"># One line. Same result. 70 years of progress.</span><br>
+        numbers = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>]<br>
+        <span class="fn-name">print</span>(<span class="str">f"Average = {</span><span class="fn-name">sum</span>(numbers) / <span class="fn-name">len</span>(numbers)<span class="str">}"</span>)
+      </div>
+
+      <p class="fade-in">
+        Today, a single line of Python does what once required 
+        <strong>hundreds of lines of Assembly</strong>. 
+        High-level languages handle memory, type-checking, and data structures automatically. 
+        Programmers focus entirely on <strong>what</strong> they want to build — 
+        not <em>how</em> the transistors should switch.
+      </p>
+
+      <div class="fade-in">
+        <div class="code-label">The abstraction ladder — wider bar = harder to read for humans</div>
+        <div class="ladder-arrow">← harder to read &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; easier to read →</div>
+        <div class="lang-ladder">
+          <div class="lang-rung">
+            <div class="lang-bar machcode">10110000 01001000 10110100 00001001 10111010 00001101 00000000 10110110 00000000 11001101 00100001</div>
+            <div class="lang-meta"><span class="lang-name">Machine Code</span><span class="lang-desc">Raw binary — what the CPU actually runs</span></div>
+          </div>
+          <div class="lang-rung">
+            <div class="lang-bar asm">MOV AH, 09h  /  MOV DX, msg  /  INT 21h</div>
+            <div class="lang-meta"><span class="lang-name">Assembly</span><span class="lang-desc">Short words — still very close to hardware</span></div>
+          </div>
+          <div class="lang-rung">
+            <div class="lang-bar lowlang">printf("Hello, world\n");</div>
+            <div class="lang-meta"><span class="lang-name">C / C++</span><span class="lang-desc">First truly readable syntax, 1972</span></div>
+          </div>
+          <div class="lang-rung">
+            <div class="lang-bar cobol">DISPLAY "Hello".</div>
+            <div class="lang-meta"><span class="lang-name">COBOL</span><span class="lang-desc">English-like business language, 1959</span></div>
+          </div>
+          <div class="lang-rung">
+            <div class="lang-bar midlang">System.out.println("Hello");</div>
+            <div class="lang-meta"><span class="lang-name">Java / C#</span><span class="lang-desc">Object-oriented, structured, 1990s</span></div>
+          </div>
+          <div class="lang-rung">
+            <div class="lang-bar highlang">print("Hello")</div>
+            <div class="lang-meta"><span class="lang-name">Python</span><span class="lang-desc">Almost plain English — 1 line</span></div>
+          </div>
+        </div>
+        <div class="ladder-legend">
+          <span>▲ closest to hardware</span>
+          <span>▼ closest to human thought</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div><!-- /timeline -->
+</main>
+
+<!-- ── FINALE ── -->
+<section class="finale">
+  <h2 class="fade-in">One truth, <em>endless languages.</em></h2>
+  <p class="fade-in">
+    Every Python script, every website, every AI model — at the very bottom, 
+    it is all transistors switching between 0 and 1.
+    Programming languages are just <strong>layers of translation</strong>, 
+    built by humans so we don't have to think in binary.
+  </p>
+  <div class="vocab-cloud fade-in" aria-label="Key vocabulary">
+    <span class="vocab">binary</span>
+    <span class="vocab">transistor</span>
+    <span class="vocab">bit</span>
+    <span class="vocab">byte</span>
+    <span class="vocab">Jacquard loom</span>
+    <span class="vocab">punch card</span>
+    <span class="vocab">keypunch</span>
+    <span class="vocab">card reader</span>
+    <span class="vocab">Ada Lovelace</span>
+    <span class="vocab">machine code</span>
+    <span class="vocab">assembly</span>
+    <span class="vocab">mnemonic</span>
+    <span class="vocab">assembler</span>
+    <span class="vocab">compiler</span>
+    <span class="vocab">interpreter</span>
+    <span class="vocab">high-level language</span>
+    <span class="vocab">abstraction</span>
+    <span class="vocab">FORTRAN</span>
+    <span class="vocab">COBOL</span>
+    <span class="vocab">Python</span>
+    <span class="vocab">syntax</span>
+  </div>
+</section>
+
+<footer>// story-of-programming.html · English for IT Students · IUCA</footer>
+
+<script>
+/* ── Binary Rain ── */
+(function buildRain() {
+  const container = document.getElementById('binaryRain');
+  const cols = Math.floor(window.innerWidth / 14);
+  for (let c = 0; c < cols; c++) {
+    const col = document.createElement('div');
+    col.className = 'rain-col';
+    const height = window.innerHeight;
+    const rows = Math.ceil(height / 14) * 2;
+    let html = '';
+    for (let r = 0; r < rows; r++) {
+      html += (Math.random() > 0.5 ? '1' : '0') + '<br>';
+    }
+    col.innerHTML = html;
+    const dur = 4 + Math.random() * 8;
+    const delay = -Math.random() * 12;
+    col.style.cssText = `animation-duration:${dur}s;animation-delay:${delay}s;`;
+    container.appendChild(col);
+  }
+})();
+
+/* ── Punch-tape animation ── */
+(function buildTape() {
+  const bits = [0,1,0,0,0,0,0,1]; // 65 = 'A'
+  const container = document.getElementById('tapeVisual');
+  if (!container) return;
+  bits.forEach((b, i) => {
+    const hole = document.createElement('div');
+    hole.className = 'hole ' + (b ? 'punched' : 'blank');
+    hole.textContent = b;
+    container.appendChild(hole);
+    // Animate in sequentially
+    hole.style.opacity = '0';
+    hole.style.transform = 'scale(0.5)';
+    setTimeout(() => {
+      hole.style.transition = 'all 0.3s ease';
+      hole.style.opacity = '1';
+      hole.style.transform = 'scale(1)';
+    }, 300 + i * 120);
+  });
+  // label
+  const label = document.createElement('div');
+  label.style.cssText = 'width:100%;font-family:var(--mono);font-size:0.75rem;color:#475569;margin-top:0.4rem;';
+  label.textContent = '→ binary for "A" (ASCII 65) = 01000001';
+  container.parentNode.insertBefore(label, container.nextSibling);
+})();
+
+/* ── Loom Graphic ── */
+(function buildLoom() {
+  const container = document.getElementById('loomGraphic');
+  if (!container) return;
+  const pattern = [1,0,1,1,0,1,0,0,1,1,0,1,1,0,1,0,1,0,1,1,0,0,1,0,1,1,0,1,0,1,0,0,1,1,0];
+  const colors = ['#8b3a3a','#3a6b8b','#8b7a3a','#3a8b5c','#7a3a8b','#8b5c3a','#3a8b8b','#6b8b3a'];
+  pattern.forEach((has_hole, i) => {
+    const thread = document.createElement('div');
+    thread.className = 'loom-thread';
+    const color = colors[i % colors.length];
+    if (has_hole) {
+      // Thread goes UP (hole) — show gap
+      thread.innerHTML = `
+        <div class="loom-thread-bar" style="background:${color};flex:2;border-radius:2px;"></div>
+        <div class="loom-hole"></div>
+        <div class="loom-thread-bar" style="background:${color};flex:2;border-radius:2px;"></div>
+      `;
+    } else {
+      thread.innerHTML = `<div class="loom-thread-bar" style="background:${color};width:100%;height:60px;border-radius:2px;"></div>`;
+    }
+    container.appendChild(thread);
+  });
+})();
+
+/* ── Static Punch Card ── */
+(function buildPunchCard() {
+  const colsContainer = document.getElementById('punchcardCols');
+  const footerContainer = document.getElementById('punchcardFooter');
+  if (!colsContainer) return;
+
+  const word = 'HELLO';
+  const ascii = word.split('').map(c => c.charCodeAt(0));
+  const numRows = 8;
+
+  ascii.forEach((code, ci) => {
+    const group = document.createElement('div');
+    group.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:2px;margin-right:6px;';
+
+    const label = document.createElement('div');
+    label.className = 'pc-col-label';
+    label.textContent = word[ci];
+    group.appendChild(label);
+
+    let bits = [];
+    for (let b = numRows - 1; b >= 0; b--) {
+      bits.push((code >> b) & 1);
+    }
+
+    const holesContainer = document.createElement('div');
+    holesContainer.style.cssText = 'display:flex;gap:2px;';
+
+    bits.forEach((bit) => {
+      const hole = document.createElement('div');
+      hole.style.cssText = `width:12px;height:16px;border-radius:2px;border:1px solid rgba(139,109,50,0.35);background:${bit ? '#2a1a00' : 'rgba(200,176,100,0.15)'};box-shadow:${bit ? 'inset 0 1px 2px rgba(0,0,0,0.5)' : 'none'};`;
+      holesContainer.appendChild(hole);
+    });
+
+    group.appendChild(holesContainer);
+
+    const binLabel = document.createElement('div');
+    binLabel.style.cssText = 'font-family:var(--mono);font-size:0.45rem;color:#9b7a40;margin-top:2px;letter-spacing:1px;';
+    binLabel.textContent = code.toString(2).padStart(8, '0');
+    group.appendChild(binLabel);
+
+    colsContainer.appendChild(group);
+
+    const foot = document.createElement('div');
+    foot.className = 'pc-char-label';
+    foot.textContent = word[ci];
+    footerContainer.appendChild(foot);
+  });
+
+  // Blank columns
+  for (let i = 0; i < 8; i++) {
+    const group = document.createElement('div');
+    group.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:2px;margin-right:3px;';
+    const label = document.createElement('div');
+    label.className = 'pc-col-label';
+    label.textContent = ' ';
+    group.appendChild(label);
+    const holesContainer = document.createElement('div');
+    holesContainer.style.cssText = 'display:flex;gap:2px;';
+    for (let b = 0; b < 8; b++) {
+      const hole = document.createElement('div');
+      hole.style.cssText = 'width:12px;height:16px;border-radius:2px;border:1px solid rgba(139,109,50,0.2);background:rgba(200,176,100,0.08);';
+      holesContainer.appendChild(hole);
+    }
+    group.appendChild(holesContainer);
+    colsContainer.appendChild(group);
+  }
+})();
+
+/* ── Intersection Observer for fade-ins ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Also activate era dots
+      const chapter = entry.target.closest('.chapter');
+      if (chapter) {
+        const dot = chapter.querySelector('.era-dot');
+        if (dot) dot.classList.add('active-dot');
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
