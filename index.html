@@ -143,8 +143,8 @@
       <span data-lang="en">A collection of HTML apps published via Cowork</span>
     </p>
     <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
     </div>
   </header>
 
@@ -181,7 +181,7 @@
       localStorage.setItem('lang', lang);
     }
 
-    const saved = localStorage.getItem('lang') || 'ru';
+    const saved = localStorage.getItem('lang') || 'en';
     setLang(saved);
   </script>
 
