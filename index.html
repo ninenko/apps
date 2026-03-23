@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan's Apps</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f13;
+      color: #e8e8f0;
+      min-height: 100vh;
+      padding: 48px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 10px;
+      color: #6b6b80;
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1a1a24;
+      border: 1px solid #2a2a38;
+      border-radius: 14px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #7c6af7;
+      box-shadow: 0 8px 32px rgba(124, 106, 247, 0.15);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e8e8f0;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: #7b7b90;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #2a2a38;
+      color: #a78bfa;
+      font-weight: 500;
+      width: fit-content;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      color: #3a3a50;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Ivan's Apps</h1>
+    <p>Коллекция HTML-приложений, опубликованных через Cowork</p>
+  </header>
+
+  <div class="grid">
+
+    <a class="card" href="matrix-picker.html">
+      <div class="card-icon">🟩</div>
+      <div class="card-title">Matrix Name Picker</div>
+      <div class="card-desc">Случайный выбор имени из списка. Анимация в стиле фильма Матрица — зелёные символы, терминальный интерфейс.</div>
+      <span class="card-tag">Инструмент</span>
+    </a>
+
+  </div>
+
+  <footer>
+    <p>ninenko.github.io/apps · обновляется через Cowork</p>
+  </footer>
+
+</body>
+</html>
