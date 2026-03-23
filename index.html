@@ -18,6 +18,7 @@
     header {
       text-align: center;
       margin-bottom: 56px;
+      position: relative;
     }
 
     header h1 {
@@ -34,6 +35,40 @@
       margin-top: 10px;
       color: #6b6b80;
       font-size: 0.95rem;
+    }
+
+    .lang-switcher {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 4px;
+      background: #1a1a24;
+      border: 1px solid #2a2a38;
+      border-radius: 10px;
+      padding: 4px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      color: #6b6b80;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .lang-btn.active {
+      background: #2a2a3e;
+      color: #a78bfa;
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: #c4c4d8;
     }
 
     .grid {
@@ -63,10 +98,7 @@
       box-shadow: 0 8px 32px rgba(124, 106, 247, 0.15);
     }
 
-    .card-icon {
-      font-size: 2rem;
-      line-height: 1;
-    }
+    .card-icon { font-size: 2rem; line-height: 1; }
 
     .card-title {
       font-size: 1.1rem;
@@ -98,13 +130,22 @@
       color: #3a3a50;
       font-size: 0.8rem;
     }
+
+    [data-lang] { display: none; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Ivan's Apps</h1>
-    <p>Коллекция HTML-приложений, опубликованных через Cowork</p>
+    <p>
+      <span data-lang="ru">Коллекция HTML-приложений, опубликованных через Cowork</span>
+      <span data-lang="en">A collection of HTML apps published via Cowork</span>
+    </p>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
   </header>
 
   <div class="grid">
@@ -112,15 +153,37 @@
     <a class="card" href="matrix-picker.html">
       <div class="card-icon">🟩</div>
       <div class="card-title">Matrix Name Picker</div>
-      <div class="card-desc">Случайный выбор имени из списка. Анимация в стиле фильма Матрица — зелёные символы, терминальный интерфейс.</div>
-      <span class="card-tag">Инструмент</span>
+      <div class="card-desc">
+        <span data-lang="ru">Случайный выбор имени из списка. Анимация в стиле фильма «Матрица» — зелёные символы, терминальный интерфейс.</span>
+        <span data-lang="en">Randomly picks a name from your list. Matrix-style animation — green symbols, terminal aesthetic.</span>
+      </div>
+      <span class="card-tag">
+        <span data-lang="ru">Инструмент</span>
+        <span data-lang="en">Tool</span>
+      </span>
     </a>
 
   </div>
 
   <footer>
-    <p>ninenko.github.io/apps · обновляется через Cowork</p>
+    <p>ninenko.github.io/apps · <span data-lang="ru">обновляется через Cowork</span><span data-lang="en">updated via Cowork</span></p>
   </footer>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+      });
+      document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
+    }
+
+    const saved = localStorage.getItem('lang') || 'ru';
+    setLang(saved);
+  </script>
 
 </body>
 </html>
