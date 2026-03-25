@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Embeddings — Semantic Feature Space</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b0f;
+    --panel: #111116;
+    --panel2: #16161c;
+    --border: #252530;
+    --border2: #1e1e28;
+    --amber: #f5a623;
+    --amber-dim: #6b4710;
+    --amber-glow: rgba(245,166,35,0.12);
+    --amber-glow2: rgba(245,166,35,0.06);
+    --text: #dddde8;
+    --text-dim: #555568;
+    --text-mid: #8888a0;
+    --green: #3effa0;
+    --blue: #5599ff;
+    --pink: #ff6eb0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .hd-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--amber);
+    text-transform: uppercase;
+    opacity: 0.6;
+    border: 1px solid var(--amber-dim);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .hd-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+  }
+  .hd-title span { color: var(--amber); }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    padding: 11px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .tab-btn:hover { color: var(--text-mid); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  /* ── PAGES ── */
+  .page { display: none; flex: 1; overflow: hidden; }
+  .page.active { display: flex; }
+
+  /* ══════════════════════════════
+     PAGE 1 — SPACE
+  ══════════════════════════════ */
+  #page-space {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  /* LEFT SIDEBAR — word list */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-head {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border2);
+    flex-shrink: 0;
+  }
+  .sidebar-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .ctrl-row {
+    display: flex;
+    gap: 6px;
+  }
+  .ctrl-btn {
+    flex: 1;
+    padding: 5px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ctrl-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+  .word-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .word-list::-webkit-scrollbar { width: 4px; }
+  .word-list::-webkit-scrollbar-track { background: transparent; }
+  .word-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .word-group-label {
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 12px 18px 4px;
+  }
+
+  .word-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: background 0.12s;
+    user-select: none;
+  }
+  .word-item:hover { background: var(--amber-glow2); }
+  .word-item.active { background: var(--amber-glow); }
+
+  .word-toggle {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .word-item.active .word-toggle {
+    background: var(--amber);
+    border-color: var(--amber);
+  }
+  .word-toggle-check {
+    color: #000;
+    font-size: 9px;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .word-item.active .word-toggle-check { opacity: 1; }
+
+  .word-name {
+    font-size: 12px;
+    color: var(--text-mid);
+    transition: color 0.15s;
+    flex: 1;
+  }
+  .word-item.active .word-name { color: var(--text); }
+
+  .word-dot-sm {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.4;
+    transition: opacity 0.15s;
+  }
+  .word-item.active .word-dot-sm { opacity: 1; }
+
+  /* CENTER — plot */
+  .plot-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+  }
+
+  .axis-label-x {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 10px;
+  }
+  .axis-label-y-wrap {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  #mainCanvas {
+    cursor: default;
+    display: block;
+    border-radius: 3px;
+  }
+
+  /* RIGHT — info panel */
+  .info-panel {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    gap: 16px;
+    overflow-y: auto;
+  }
+  .info-section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .info-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .selected-card {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+  }
+  .selected-word-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .coord-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border2);
+  }
+  .coord-key { color: var(--text-mid); }
+  .coord-val { color: var(--amber); font-weight: 600; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11px;
+    color: var(--text-mid);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════
+     PAGE 2 — VECTORS TABLE
+  ══════════════════════════════ */
+  #page-vectors {
+    flex-direction: column;
+    padding: 28px;
+    overflow-y: auto;
+  }
+
+  .vec-page-head {
+    margin-bottom: 24px;
+  }
+  .vec-page-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .vec-page-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+  }
+
+  .vec-table-wrap {
+    overflow-x: auto;
+  }
+
+  table.vec-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+  }
+  .vec-table th {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 8px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    background: var(--panel);
+  }
+  .vec-table th.axis-h { color: var(--amber); }
+  .vec-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border2);
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .vec-table tr:hover td { background: var(--amber-glow2); }
+  .vec-table tr.inactive td { opacity: 0.28; }
+
+  .td-word {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .td-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .td-num {
+    color: var(--amber);
+    font-weight: 600;
+    text-align: right;
+    min-width: 28px;
+    display: inline-block;
+  }
+  .td-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .td-bar {
+    height: 4px;
+    background: var(--amber);
+    border-radius: 2px;
+    opacity: 0.5;
+    transition: width 0.3s;
+    min-width: 2px;
+  }
+  .vec-table td.group-label {
+    background: var(--panel2);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* note box */
+  .note-box {
+    background: var(--amber-glow);
+    border: 1px solid var(--amber-dim);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-top: 20px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    max-width: 700px;
+  }
+  .note-box strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="hd-tag">AI / LLMs</span>
+  <span class="hd-title">SEMANTIC <span>FEATURE SPACE</span></span>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('space')">01 · Feature Space</button>
+  <button class="tab-btn" onclick="switchTab('vectors')">02 · Word Vectors</button>
+</div>
+
+<!-- ══ PAGE 1: SPACE ══ -->
+<div class="page active" id="page-space">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-label">Word List</div>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" onclick="activateAll()">All on</button>
+        <button class="ctrl-btn" onclick="deactivateAll()">All off</button>
+      </div>
+    </div>
+    <div class="word-list" id="wordList"></div>
+  </div>
+
+  <!-- PLOT -->
+  <div class="plot-area">
+    <div class="axis-label-y-wrap">AGE →</div>
+    <canvas id="mainCanvas"></canvas>
+    <div class="axis-label-x">← GENDER →</div>
+  </div>
+
+  <!-- INFO -->
+  <div class="info-panel">
+    <div>
+      <div class="info-section-label">Selected Word</div>
+      <div id="selectedCard">
+        <div class="info-hint">Click any word on the plot or in the list to see its vector.</div>
+      </div>
+    </div>
+    <div>
+      <div class="info-section-label">Color Groups</div>
+      <div id="legendList"></div>
+    </div>
+    <div>
+      <div class="info-section-label">How to Read</div>
+      <div class="info-hint">
+        Each word is a <strong style="color:var(--text)">point</strong> in 2D space.<br><br>
+        X = gender<br>1 = male · 10 = female<br><br>
+        Y = age<br>1 = infant · 10 = elderly<br><br>
+        Words <strong style="color:var(--text)">close together</strong> have similar meaning.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ PAGE 2: VECTORS ══ -->
+<div class="page" id="page-vectors">
+  <div class="vec-page-head">
+    <div class="vec-page-title">Word Vectors — Numbers</div>
+    <div class="vec-page-sub">Every word is a list of numbers. Here each word has 2 numbers: [gender, age]. Words activated on the space tab are highlighted. Inactive words are dimmed.</div>
+  </div>
+  <div class="vec-table-wrap">
+    <table class="vec-table" id="vecTable"></table>
+  </div>
+  <div class="note-box">
+    <strong>What is a vector?</strong> Just a list of numbers. Here: <strong>[gender, age]</strong>. "boy" = [1, 2]. "grandmother" = [9, 9]. In real AI systems, each word has 300–1536 numbers — the same idea, just more dimensions.
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA — 10×10 semantic space
+// Each word: name, g (gender 1-10), a (age 1-10), group, color
+// ══════════════════════════════════════════════
+const GROUPS = [
+  { id: 'male',    label: 'Male',    color: '#f5a623' },
+  { id: 'female',  label: 'Female',  color: '#ff6eb0' },
+  { id: 'neutral', label: 'Neutral', color: '#a78bfa' },
+  { id: 'royal',   label: 'Royal',   color: '#facc15' },
+];
+
+const WORDS = [
+  // MALE
+  { name: 'infant boy',   g: 2, a: 1,  group: 'male' },
+  { name: 'boy',          g: 2, a: 3,  group: 'male' },
+  { name: 'teenager',     g: 3, a: 5,  group: 'male' },  // male leaning
+  { name: 'man',          g: 2, a: 7,  group: 'male' },
+  { name: 'grandfather',  g: 2, a: 9,  group: 'male' },
+  { name: 'uncle',        g: 2, a: 6,  group: 'male' },
+  { name: 'father',       g: 2, a: 7,  group: 'male' },
+  { name: 'son',          g: 2, a: 3,  group: 'male' },
+  // FEMALE
+  { name: 'infant girl',  g: 8, a: 1,  group: 'female' },
+  { name: 'girl',         g: 8, a: 3,  group: 'female' },
+  { name: 'woman',        g: 8, a: 7,  group: 'female' },
+  { name: 'grandmother',  g: 8, a: 9,  group: 'female' },
+  { name: 'aunt',         g: 8, a: 6,  group: 'female' },
+  { name: 'mother',       g: 8, a: 7,  group: 'female' },
+  { name: 'daughter',     g: 8, a: 3,  group: 'female' },
+  // NEUTRAL
+  { name: 'infant',       g: 5, a: 1,  group: 'neutral' },
+  { name: 'child',        g: 5, a: 3,  group: 'neutral' },
+  { name: 'adult',        g: 5, a: 7,  group: 'neutral' },
+  { name: 'elder',        g: 5, a: 9,  group: 'neutral' },
+  { name: 'parent',       g: 5, a: 7,  group: 'neutral' },
+  { name: 'sibling',      g: 5, a: 4,  group: 'neutral' },
+  { name: 'grandparent',  g: 5, a: 9,  group: 'neutral' },
+  { name: 'teenager (n)', g: 5, a: 5,  group: 'neutral' },
+  // ROYAL
+  { name: 'prince',       g: 2, a: 4,  group: 'royal' },
+  { name: 'king',         g: 2, a: 8,  group: 'royal' },
+  { name: 'princess',     g: 8, a: 4,  group: 'royal' },
+  { name: 'queen',        g: 8, a: 7,  group: 'royal' },
+  { name: 'monarch',      g: 5, a: 7,  group: 'royal' },
+];
+
+// Clean up display names for the royal neutral
+WORDS.find(w => w.name === 'teenager (n)').displayName = 'teenager';
+
+// State
+const active = new Set();
+let hoveredWord = null;
+let selectedWord = null;
+
+function getColor(w) {
+  return GROUPS.find(g => g.id === w.group).color;
+}
+function displayName(w) {
+  return w.displayName || w.name;
+}
+
+// ══════════════════════════════════════════════
+// BUILD SIDEBAR
+// ══════════════════════════════════════════════
+function buildSidebar() {
+  const el = document.getElementById('wordList');
+  el.innerHTML = '';
+  GROUPS.forEach(grp => {
+    const grpWords = WORDS.filter(w => w.group === grp.id);
+    const lbl = document.createElement('div');
+    lbl.className = 'word-group-label';
+    lbl.textContent = grp.label;
+    el.appendChild(lbl);
+    grpWords.forEach(w => {
+      const div = document.createElement('div');
+      div.className = 'word-item' + (active.has(w.name) ? ' active' : '');
+      div.id = 'wi-' + w.name;
+      div.innerHTML = `
+        <div class="word-toggle"><span class="word-toggle-check">✓</span></div>
+        <span class="word-name">${displayName(w)}</span>
+        <div class="word-dot-sm" style="background:${grp.color}"></div>
+      `;
+      div.onclick = () => toggleWord(w.name);
+      el.appendChild(div);
+    });
+  });
+}
+
+function buildLegend() {
+  const el = document.getElementById('legendList');
+  el.innerHTML = GROUPS.map(g => `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${g.color}"></div>
+      ${g.label}
+    </div>
+  `).join('');
+}
+
+function toggleWord(name) {
+  if (active.has(name)) {
+    active.delete(name);
+    if (selectedWord === name) selectedWord = null;
+  } else {
+    active.add(name);
+    selectedWord = name;
+  }
+  refreshAll();
+}
+
+function activateAll() { WORDS.forEach(w => active.add(w.name)); refreshAll(); }
+function deactivateAll() { active.clear(); selectedWord = null; refreshAll(); }
+
+function refreshAll() {
+  // Update sidebar items
+  WORDS.forEach(w => {
+    const el = document.getElementById('wi-' + w.name);
+    if (el) el.className = 'word-item' + (active.has(w.name) ? ' active' : '');
+  });
+  drawCanvas();
+  updateSelectedCard();
+  buildVecTable();
+}
+
+// ══════════════════════════════════════════════
+// CANVAS
+// ══════════════════════════════════════════════
+const CANVAS_SIZE = 540;
+const PAD = 44;
+
+function setupCanvas() {
+  const canvas = document.getElementById('mainCanvas');
+  const dpr = window.devicePixelRatio || 1;
+  const sz = Math.min(
+    document.querySelector('.plot-area').clientWidth - 80,
+    document.querySelector('.plot-area').clientHeight - 60,
+    CANVAS_SIZE
+  );
+  canvas.style.width = sz + 'px';
+  canvas.style.height = sz + 'px';
+  canvas.width = sz * dpr;
+  canvas.height = sz * dpr;
+  return { canvas, ctx: canvas.getContext('2d'), sz, dpr };
+}
+
+function toScreen(g, a, sz) {
+  const plotSz = sz - PAD * 2;
+  return {
+    x: PAD + (g - 1) / 9 * plotSz,
+    y: sz - PAD - (a - 1) / 9 * plotSz
+  };
+}
+
+function fromScreen(mx, my, sz) {
+  const plotSz = sz - PAD * 2;
+  return {
+    g: 1 + (mx - PAD) / plotSz * 9,
+    a: 1 + (sz - PAD - my) / plotSz * 9
+  };
+}
+
+function drawCanvas() {
+  const { canvas, ctx, sz, dpr } = setupCanvas();
+  ctx.scale(dpr, dpr);
+  const W = sz, H = sz;
+
+  // BG
+  ctx.fillStyle = '#080810';
+  ctx.fillRect(0, 0, W, H);
+
+  const plotSz = sz - PAD * 2;
+
+  // Grid lines
+  for (let i = 1; i <= 10; i++) {
+    const x = PAD + (i - 1) / 9 * plotSz;
+    const y = H - PAD - (i - 1) / 9 * plotSz;
+
+    ctx.beginPath();
+    ctx.moveTo(x, PAD); ctx.lineTo(x, H - PAD);
+    ctx.strokeStyle = i === 5 ? '#222230' : '#14141e';
+    ctx.lineWidth = i === 5 ? 1.5 : 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(PAD, y); ctx.lineTo(W - PAD, y);
+    ctx.strokeStyle = i === 5 ? '#222230' : '#14141e';
+    ctx.lineWidth = i === 5 ? 1.5 : 1;
+    ctx.stroke();
+  }
+
+  // Axis borders
+  ctx.strokeStyle = '#2a2a40';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(PAD, PAD); ctx.lineTo(PAD, H - PAD);
+  ctx.lineTo(W - PAD, H - PAD);
+  ctx.stroke();
+
+  // Axis tick labels
+  ctx.fillStyle = '#33334a';
+  ctx.font = `10px IBM Plex Mono`;
+  ctx.textAlign = 'center';
+  for (let i = 1; i <= 10; i++) {
+    const x = PAD + (i - 1) / 9 * plotSz;
+    ctx.fillText(i, x, H - PAD + 16);
+  }
+  ctx.textAlign = 'right';
+  for (let i = 1; i <= 10; i++) {
+    const y = H - PAD - (i - 1) / 9 * plotSz;
+    ctx.fillText(i, PAD - 8, y + 4);
+  }
+
+  // Axis labels at extremes
+  ctx.font = '8px IBM Plex Mono';
+  ctx.fillStyle = '#2a2a40';
+  ctx.textAlign = 'center';
+  ctx.fillText('MALE', PAD, H - PAD + 28);
+  ctx.fillText('FEMALE', W - PAD, H - PAD + 28);
+  ctx.save();
+  ctx.translate(16, PAD + plotSz / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillText('YOUNG', 0, 0);
+  ctx.restore();
+  ctx.save();
+  ctx.translate(16, PAD);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillText('OLD', 0, 0);
+  ctx.restore();
+
+  // Active words
+  const activeWords = WORDS.filter(w => active.has(w.name));
+
+  activeWords.forEach(w => {
+    const p = toScreen(w.g, w.a, sz);
+    const color = getColor(w);
+    const isSelected = w.name === selectedWord;
+    const isHovered = w.name === hoveredWord;
+
+    // Glow
+    if (isSelected || isHovered) {
+      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 28);
+      grad.addColorStop(0, color + '30');
+      grad.addColorStop(1, color + '00');
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 28, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Dot
+    const r = isSelected ? 9 : isHovered ? 8 : 6;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    if (isSelected) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r + 4, 0, Math.PI * 2);
+      ctx.strokeStyle = color + '60';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    // Label
+    ctx.font = isSelected ? 'bold 11px IBM Plex Mono' : '10px IBM Plex Mono';
+    ctx.fillStyle = isSelected ? '#fff' : (isHovered ? '#ddd' : color + 'cc');
+    ctx.textAlign = w.g >= 5 ? 'right' : 'left';
+    const lx = w.g >= 5 ? p.x - r - 5 : p.x + r + 5;
+    const ly = p.y - r - 5;
+    ctx.fillText(displayName(w), lx, ly);
+  });
+}
+
+// Mouse events
+function canvasMouseMove(e) {
+  const canvas = document.getElementById('mainCanvas');
+  const rect = canvas.getBoundingClientRect();
+  const sz = rect.width;
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  let found = null, bestD = Infinity;
+  WORDS.filter(w => active.has(w.name)).forEach(w => {
+    const p = toScreen(w.g, w.a, sz);
+    const d = Math.hypot(mx - p.x, my - p.y);
+    if (d < 20 && d < bestD) { bestD = d; found = w.name; }
+  });
+
+  if (found !== hoveredWord) {
+    hoveredWord = found;
+    canvas.style.cursor = found ? 'pointer' : 'default';
+    drawCanvas();
+  }
+}
+
+function canvasClick(e) {
+  if (hoveredWord) {
+    if (selectedWord === hoveredWord) {
+      selectedWord = null;
+    } else {
+      selectedWord = hoveredWord;
+    }
+    updateSelectedCard();
+    drawCanvas();
+  }
+}
+
+function updateSelectedCard() {
+  const el = document.getElementById('selectedCard');
+  if (!selectedWord) {
+    el.innerHTML = '<div class="info-hint">Click a word on the plot to see its vector.</div>';
+    return;
+  }
+  const w = WORDS.find(x => x.name === selectedWord);
+  const color = getColor(w);
+  el.innerHTML = `
+    <div class="selected-card">
+      <div class="selected-word-name" style="color:${color}">${displayName(w)}</div>
+      <div class="coord-line">
+        <span class="coord-key">gender</span>
+        <span class="coord-val">${w.g}</span>
+      </div>
+      <div class="coord-line">
+        <span class="coord-key">age</span>
+        <span class="coord-val">${w.a}</span>
+      </div>
+      <div class="coord-line" style="border:none">
+        <span class="coord-key">vector</span>
+        <span class="coord-val">[ ${w.g}, ${w.a} ]</span>
+      </div>
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════
+// VEC TABLE
+// ══════════════════════════════════════════════
+function buildVecTable() {
+  const table = document.getElementById('vecTable');
+  const maxG = 10, maxA = 10;
+
+  let html = `
+    <thead>
+      <tr>
+        <th>Word</th>
+        <th>Group</th>
+        <th class="axis-h">Gender (x)</th>
+        <th></th>
+        <th class="axis-h">Age (y)</th>
+        <th></th>
+        <th>Vector</th>
+      </tr>
+    </thead>
+    <tbody>
+  `;
+
+  GROUPS.forEach(grp => {
+    const grpWords = WORDS.filter(w => w.group === grp.id);
+    html += `<tr><td class="group-label" colspan="7">${grp.label}</td></tr>`;
+    grpWords.forEach(w => {
+      const isActive = active.has(w.name);
+      const color = grp.color;
+      const gPct = (w.g / 10 * 100).toFixed(0);
+      const aPct = (w.a / 10 * 100).toFixed(0);
+      html += `
+        <tr class="${isActive ? '' : 'inactive'}" onclick="toggleWord('${w.name}')" style="cursor:pointer">
+          <td>
+            <div class="td-word">
+              <div class="td-dot" style="background:${color}"></div>
+              ${displayName(w)}
+            </div>
+          </td>
+          <td style="color:${color};font-size:10px;letter-spacing:1px;text-transform:uppercase">${grp.label}</td>
+          <td>
+            <div class="td-bar-wrap">
+              <span class="td-num">${w.g}</span>
+              <div class="td-bar" style="width:${gPct}px;background:${color}"></div>
+            </div>
+          </td>
+          <td style="font-size:10px;color:var(--text-dim)">/10</td>
+          <td>
+            <div class="td-bar-wrap">
+              <span class="td-num">${w.a}</span>
+              <div class="td-bar" style="width:${aPct}px;background:${color}"></div>
+            </div>
+          </td>
+          <td style="font-size:10px;color:var(--text-dim)">/10</td>
+          <td style="color:var(--amber);font-weight:600;letter-spacing:1px">[ ${w.g}, ${w.a} ]</td>
+        </tr>
+      `;
+    });
+  });
+
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', (i === 0 && tab === 'space') || (i === 1 && tab === 'vectors'));
+  });
+  document.getElementById('page-space').classList.toggle('active', tab === 'space');
+  document.getElementById('page-vectors').classList.toggle('active', tab === 'vectors');
+  if (tab === 'space') setTimeout(drawCanvas, 30);
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+window.addEventListener('load', () => {
+  buildSidebar();
+  buildLegend();
+  buildVecTable();
+
+  const canvas = document.getElementById('mainCanvas');
+  canvas.addEventListener('mousemove', canvasMouseMove);
+  canvas.addEventListener('click', canvasClick);
+  canvas.addEventListener('mouseleave', () => {
+    hoveredWord = null;
+    drawCanvas();
+  });
+
+  setTimeout(drawCanvas, 50);
+});
+
+window.addEventListener('resize', () => {
+  if (document.getElementById('page-space').classList.contains('active')) drawCanvas();
+});
+</script>
+</body>
+</html>
