@@ -461,4 +461,14 @@ function analyze() {
   const driverFound = insights.filter(i=>i.tag==='driver' && i.name!=='Нейтральный текст').map(i=>i.name);
 
   let summ = `В тексте доминирует эго-состояние ${dom} (${domPct}%). `;
-  if (gameFound.length) summ += `Обнаружены признак
+  if (gameFound.length) summ += `Обнаружены признаки игры: ${gameFound.join(', ')}. `;
+  if (driverFound.length) summ += `Активны драйверы: ${driverFound.join(', ')}. `;
+  if (!gameFound.length && !driverFound.length) summ += `Явных психологических игр и активных драйверов не обнаружено. `;
+  summ += `Транзакции носят преимущественно ${txs[0].type.toLowerCase()} характер.`;
+
+  document.getElementById('summaryText').textContent = summ;
+  document.getElementById('results').classList.add('visible');
+}
+</script>
+</body>
+</html>
