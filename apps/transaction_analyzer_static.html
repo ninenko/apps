@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Транзакционный Анализ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e12;
+    --surface: #16161c;
+    --surface2: #1e1e27;
+    --border: #2a2a38;
+    --text: #e8e4dc;
+    --muted: #6b6880;
+    --accent: #c8a96e;
+    --accent2: #7eb8c4;
+    --parent: #e87c6b;
+    --adult: #7eb8c4;
+    --child: #a8c87e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header {
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 400; line-height: 1.2; margin-bottom: 10px;
+  }
+
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .subtitle { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 500px; }
+
+  .input-label {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 8px; display: block;
+  }
+
+  textarea {
+    width: 100%; min-height: 140px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 300; line-height: 1.7; padding: 16px;
+    resize: vertical; outline: none; transition: border-color 0.2s;
+  }
+
+  textarea::placeholder { color: var(--muted); }
+  textarea:focus { border-color: var(--accent); }
+
+  .analyze-btn {
+    margin-top: 12px; padding: 12px 28px;
+    background: var(--accent); color: #0e0e12;
+    border: none; border-radius: 6px;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.08em;
+    cursor: pointer; transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .analyze-btn:hover { opacity: 0.85; }
+  .analyze-btn:active { transform: scale(0.97); }
+
+  #results { display: none; margin-top: 36px; animation: fadeUp 0.4s ease; }
+  #results.visible { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; color: var(--muted);
+    text-transform: uppercase; margin: 32px 0 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Ego cards */
+  .ego-states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  .ego-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+    position: relative; overflow: hidden;
+  }
+
+  .ego-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .ego-card.P::before { background: var(--parent); }
+  .ego-card.A::before { background: var(--adult); }
+  .ego-card.C::before { background: var(--child); }
+  .ego-card.P { border-color: rgba(232,124,107,0.2); }
+  .ego-card.A { border-color: rgba(126,184,196,0.2); }
+  .ego-card.C { border-color: rgba(168,200,126,0.2); }
+
+  .ego-icon { font-size: 20px; margin-bottom: 6px; }
+  .ego-name { font-family: 'Playfair Display', serif; font-size: 15px; margin-bottom: 4px; }
+  .ego-card.P .ego-name { color: var(--parent); }
+  .ego-card.A .ego-name { color: var(--adult); }
+  .ego-card.C .ego-name { color: var(--child); }
+
+  .ego-pct { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500; margin-bottom: 8px; }
+  .ego-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+  .ego-bar-fill { height: 100%; border-radius: 2px; width: 0; transition: width 0.9s cubic-bezier(0.34,1.56,0.64,1); }
+  .P .ego-bar-fill { background: var(--parent); }
+  .A .ego-bar-fill { background: var(--adult); }
+  .C .ego-bar-fill { background: var(--child); }
+  .ego-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Phrases */
+  .phrase-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; margin-bottom: 7px;
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start;
+  }
+  .phrase-text { font-size: 13px; line-height: 1.5; font-style: italic; }
+  .phrase-q { color: var(--muted); }
+  .phrase-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+
+  .ego-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+    padding: 2px 7px; border-radius: 4px; text-transform: uppercase;
+    font-weight: 500; white-space: nowrap;
+  }
+  .badge-P { background: rgba(232,124,107,0.15); color: var(--parent); }
+  .badge-A { background: rgba(126,184,196,0.15); color: var(--adult); }
+  .badge-C { background: rgba(168,200,126,0.15); color: var(--child); }
+
+  .phrase-hint { font-size: 10px; color: var(--muted); max-width: 150px; text-align: right; line-height: 1.4; }
+
+  /* Transactions */
+  .tx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tx-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .tx-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 5px; }
+  .tx-arrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); margin-bottom: 5px; }
+  .tx-name { font-family: 'Playfair Display', serif; font-size: 14px; margin-bottom: 6px; }
+  .tx-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Insights */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .insight-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .itag { font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .itag-game    { background: rgba(200,169,110,0.15); color: var(--accent); }
+  .itag-driver  { background: rgba(126,184,196,0.15); color: var(--accent2); }
+  .itag-stroke  { background: rgba(168,200,126,0.15); color: var(--child); }
+  .itag-pos     { background: rgba(232,124,107,0.15); color: var(--parent); }
+  .insight-name { font-family: 'Playfair Display', serif; font-size: 13px; margin-bottom: 5px; }
+  .insight-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Summary */
+  .summary-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px;
+    position: relative; overflow: hidden;
+  }
+  .summary-box::before {
+    content: '"'; position: absolute; top: -8px; left: 14px;
+    font-family: 'Playfair Display', serif; font-size: 100px;
+    color: var(--accent); opacity: 0.07; line-height: 1; pointer-events: none;
+  }
+  .summary-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; line-height: 1.75; font-style: italic;
+  }
+
+  .empty { font-size: 13px; color: var(--muted); font-style: italic; padding: 4px 0; }
+
+  @media (max-width: 560px) {
+    .ego-states { grid-template-columns: 1fr; }
+    .tx-grid, .insight-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Психологический инструмент</div>
+    <h1>Транзакционный<br><em>Анализ текста</em></h1>
+    <p class="subtitle">Статический анализ эго-состояний, транзакций, игр и драйверов по Эрику Берну — без API, работает офлайн.</p>
+  </header>
+
+  <label class="input-label" for="inp">Текст для анализа</label>
+  <textarea id="inp" placeholder="Вставьте диалог, письмо или монолог. Например: «Ты снова всё сделал не так! — Извините, я исправлю. — Когда? Всегда одни обещания.»"></textarea>
+  <button class="analyze-btn" onclick="analyze()">▶ Анализировать</button>
+
+  <div id="results">
+    <div class="section-title">Эго-состояния</div>
+    <div class="ego-states" id="egoStates"></div>
+
+    <div class="section-title">Маркированные фразы</div>
+    <div id="phrases"></div>
+
+    <div class="section-title">Типы транзакций</div>
+    <div class="tx-grid" id="txGrid"></div>
+
+    <div class="section-title">Игры · Драйверы · Поглаживания</div>
+    <div class="insight-grid" id="insGrid"></div>
+
+    <div class="section-title">Итоговая интерпретация</div>
+    <div class="summary-box"><div class="summary-text" id="summaryText"></div></div>
+  </div>
+
+</div>
+
+<script>
+const MARKERS = {
+  P: {
+    critical: {
+      words: ['нельзя','запрещено','должен','должна','должны','обязан','обязана','нужно','необходимо','надо','всегда','никогда','стыдно','позор','безответственно','плохо','неправильно','неприемлемо','недопустимо','типичный','как обычно','снова','опять','сколько раз','хватит','немедленно','бездельник','лентяй','эгоист','взрослый человек','повзрослей'],
+      hint: 'критикующий Родитель'
+    },
+    nurturing: {
+      words: ['молодец','умница','я горжусь','гордость','заботься','береги','помогу','не волнуйся','всё будет','поддержу','ты справишься','я рядом','доверяю'],
+      hint: 'заботливый Родитель'
+    }
+  },
+  A: {
+    rational: {
+      words: ['давайте','предлагаю','рассмотрим','анализируем','данные','факты','информация','согласно','следовательно','таким образом','если','поэтому','причина','результат','вариант','решение','план','задача','цель','эффективно','измерим','оценим','проверим','уточним','конкретно','точнее','логично','объективно'],
+      hint: 'рациональный Взрослый'
+    }
+  },
+  C: {
+    free: {
+      words: ['хочу','не хочу','здорово','классно','круто','ура','люблю','ненавижу','весело','скучно','нравится','не нравится','обожаю','прекрасно','ужасно','интересно','восхитительно','забавно','боюсь','страшно'],
+      hint: 'свободный Ребёнок'
+    },
+    adapted: {
+      words: ['извините','простите','прошу прощения','виноват','виновата','я исправлю','постараюсь','попробую','не получается','не знаю','наверное','может быть','не уверен','не уверена','стараюсь','ладно','как скажете','понял','поняла','мне не везёт'],
+      hint: 'адаптированный Ребёнок'
+    }
+  }
+};
+
+const GAMES = [
+  { name: 'Почему бы тебе не… — Да, но', pattern: /постара|попробу|не получ|всегда так|но ведь|однако/i, desc: 'Один предлагает решения, другой их отвергает — ни одно не подходит.' },
+  { name: 'Смотри, что ты заставил меня сделать', pattern: /из-за тебя|твоя вина|ты виноват|ты виновата/i, desc: 'Перекладывание ответственности за собственные действия на другого.' },
+  { name: 'Растяпа', pattern: /снова|опять|каждый раз|вечно|всегда одно/i, desc: 'Систематическое указание на ошибки партнёра для поддержания превосходства.' },
+  { name: 'Я только пытаюсь помочь', pattern: /я же говор|я предупреждал|я хотел как лучше/i, desc: 'Помощь как инструмент контроля или демонстрации превосходства.' },
+  { name: 'Загнанная домохозяйка', pattern: /не успеваю|всё на мне|никто не помогает|я один всё делаю/i, desc: 'Накопление ролей и усилий без запроса на помощь.' }
+];
+
+const DRIVERS = [
+  { name: 'Будь совершенным', pattern: /неправильно|не так|ошибся|ошиблась|надо лучше|недостаточно|некорректно|идеально/i, desc: 'Требование безупречности — к себе или к другим.' },
+  { name: 'Торопись', pattern: /быстро|немедленно|сейчас же|срочно|опоздал|опоздала|некогда/i, desc: 'Постоянное давление времени, нетерпение к процессу.' },
+  { name: 'Старайся', pattern: /постара|попробу|сделаю всё возможное|буду стараться/i, desc: 'Усилие важнее результата; цель кажется недостижимой.' },
+  { name: 'Радуй других', pattern: /извините|как скажете|если вам удобно|не хочу мешать|не беспокойтесь обо мне/i, desc: 'Чужие потребности систематически ставятся выше собственных.' },
+  { name: 'Будь сильным', pattern: /не важно|переживу|справлюсь|всё нормально|мне не больно|не страшно/i, desc: 'Отказ признавать уязвимость или просить о поддержке.' }
+];
+
+const POSITIONS = [
+  { name: 'Я — ОК, Ты — не ОК', pattern: /ты не справляешься|я лучше|твоя проблема|сам виноват|сама виновата|ты должен был/i, desc: 'Превосходство, обвинение других; преследующая позиция.' },
+  { name: 'Я — не ОК, Ты — ОК', pattern: /я виноват|я виновата|не знаю|наверное|мне не везёт|не получается у меня/i, desc: 'Самоуничижение, зависимость, уступчивость.' },
+  { name: 'Я — ОК, Ты — ОК', pattern: /предлагаю|вместе|сотрудничество|договоримся|решим вместе|рассмотрим/i, desc: 'Зрелая партнёрская позиция; взаимное уважение.' }
+];
+
+function tokenize(text) {
+  return text.toLowerCase().split(/[\s,\.!?;:«»"'()\-–—\n\r]+/).filter(Boolean);
+}
+
+function countMarkers(text) {
+  const tokens = tokenize(text);
+  const found = { P: 0, A: 0, C: 0 };
+  for (const [state, subtypes] of Object.entries(MARKERS)) {
+    for (const { words } of Object.values(subtypes)) {
+      for (const w of words) {
+        const re = new RegExp('\\b' + w.replace(/\s+/g,'\\s+') + '\\b', 'gi');
+        const m = text.match(re);
+        if (m) found[state] += m.length;
+      }
+    }
+  }
+  return found;
+}
+
+function findSentences(text) {
+  return text.split(/(?<=[.!?…])\s+|[\n\r]+/).map(s => s.trim()).filter(s => s.length > 8);
+}
+
+function classifySentence(sent) {
+  const scores = { P: 0, A: 0, C: 0 };
+  const hints = [];
+  for (const [state, subtypes] of Object.entries(MARKERS)) {
+    for (const { words, hint } of Object.values(subtypes)) {
+      for (const w of words) {
+        const re = new RegExp('\\b' + w.replace(/\s+/g,'\\s+') + '\\b', 'gi');
+        if (re.test(sent)) {
+          scores[state]++;
+          if (!hints.includes(hint)) hints.push(hint);
+        }
+      }
+    }
+  }
+  const total = scores.P + scores.A + scores.C;
+  if (total === 0) return null;
+  const state = Object.keys(scores).reduce((a,b) => scores[a]>scores[b]?a:b);
+  return { sent, state, hint: hints[0] || '' };
+}
+
+const labels = { P: 'Родитель', A: 'Взрослый', C: 'Ребёнок' };
+const icons  = { P: '🎩', A: '🧭', C: '🌱' };
+
+function analyze() {
+  const raw = document.getElementById('inp').value.trim();
+  if (!raw) return;
+
+  const found = countMarkers(raw);
+  const total = found.P + found.A + found.C || 1;
+  const pP = Math.round(found.P / total * 100);
+  const pA = Math.round(found.A / total * 100);
+  const pC = Math.max(0, 100 - pP - pA);
+
+  // Ego cards
+  const descs = {
+    P: pP > 40 ? 'Доминирует оценочная, директивная речь' : pP > 15 ? 'Умеренное присутствие Родителя' : 'Слабое присутствие Родителя',
+    A: pA > 40 ? 'Преобладает аналитическая, объективная речь' : pA > 15 ? 'Умеренное присутствие Взрослого' : 'Слабое присутствие Взрослого',
+    C: pC > 40 ? 'Доминирует эмоциональная или зависимая речь' : pC > 15 ? 'Умеренное присутствие Ребёнка' : 'Слабое присутствие Ребёнка'
+  };
+  const pcts = { P: pP, A: pA, C: pC };
+
+  document.getElementById('egoStates').innerHTML = ['P','A','C'].map(s => `
+    <div class="ego-card ${s}">
+      <div class="ego-icon">${icons[s]}</div>
+      <div class="ego-name">${labels[s]}</div>
+      <div class="ego-pct">${pcts[s]}%</div>
+      <div class="ego-bar-track"><div class="ego-bar-fill" data-p="${pcts[s]}"></div></div>
+      <div class="ego-desc">${descs[s]}</div>
+    </div>`).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.ego-bar-fill[data-p]').forEach(el => {
+      el.style.width = el.dataset.p + '%';
+    });
+  }, 60);
+
+  // Phrases
+  const sentences = findSentences(raw);
+  const classified = sentences.map(classifySentence).filter(Boolean).slice(0,6);
+
+  document.getElementById('phrases').innerHTML = classified.length
+    ? classified.map(c => `
+      <div class="phrase-item">
+        <div class="phrase-text"><span class="phrase-q">«</span>${c.sent.length>95 ? c.sent.slice(0,95)+'…' : c.sent}<span class="phrase-q">»</span></div>
+        <div class="phrase-meta">
+          <span class="ego-badge badge-${c.state}">${labels[c.state]}</span>
+          ${c.hint ? `<div class="phrase-hint">${c.hint}</div>` : ''}
+        </div>
+      </div>`).join('')
+    : '<div class="empty">Маркерные слова не найдены в отдельных фразах</div>';
+
+  // Transactions
+  const isDialog = (raw.match(/—|–|-{2}/g) || []).length >= 2;
+  const hasP = found.P > 0, hasA = found.A > 0, hasC = found.C > 0;
+  const txs = [];
+
+  if (isDialog && hasP && hasC)
+    txs.push({ type: 'Перекрёстная', arrow: 'Р→Д / Д→Р', name: 'Родитель обращается к Ребёнку', desc: 'Один говорит с позиции власти, другой реагирует зависимо. Коммуникация асимметрична.' });
+  if (hasA && (hasP || hasC))
+    txs.push({ type: 'Дополнительная', arrow: 'Р→Р / В→В', name: 'Смешанные регистры', desc: 'В тексте присутствуют параллельные транзакции разных уровней.' });
+  if (/постара|попробу|сделаю/i.test(raw) && /всегда|опять|снова/i.test(raw))
+    txs.push({ type: 'Скрытая', arrow: 'В→В (явно) / Р→Д (скрыто)', name: 'Двойное послание', desc: 'Поверхностное содержание отличается от психологического подтекста.' });
+  if (!txs.length)
+    txs.push({ type: 'Дополнительная', arrow: 'В→В', name: 'Прямая коммуникация', desc: 'Транзакции носят прямой характер без явных перекрёстов или скрытых уровней.' });
+
+  document.getElementById('txGrid').innerHTML = txs.map(t => `
+    <div class="tx-card">
+      <div class="tx-type">${t.type}</div>
+      <div class="tx-arrow">${t.arrow}</div>
+      <div class="tx-name">${t.name}</div>
+      <div class="tx-desc">${t.desc}</div>
+    </div>`).join('');
+
+  // Insights
+  const insights = [];
+  for (const g of GAMES)
+    if (g.pattern.test(raw)) insights.push({ tag: 'game', label: 'Игра', name: g.name, desc: g.desc });
+  for (const d of DRIVERS)
+    if (d.pattern.test(raw)) insights.push({ tag: 'driver', label: 'Драйвер', name: d.name, desc: d.desc });
+  for (const p of POSITIONS)
+    if (p.pattern.test(raw)) { insights.push({ tag: 'pos', label: 'Жизненная позиция', name: p.name, desc: p.desc }); break; }
+  const hasPos = /молодец|хорошо сделал|отлично|спасибо|ценю|рад|рада/i.test(raw);
+  const hasNeg = /плохо|неприятно|обидно|ужасно/i.test(raw);
+  if (hasPos || hasNeg) insights.push({ tag: 'stroke', label: 'Поглаживание', name: hasPos ? 'Позитивное поглаживание' : 'Негативное поглаживание', desc: hasPos ? 'Признание, похвала или одобрение — форма позитивного контакта.' : 'Критика или обесценивание — тоже форма внимания в TA.' });
+  if (!insights.length) insights.push({ tag: 'driver', label: 'Драйвер', name: 'Нейтральный текст', desc: 'Явных психологических игр и драйверов не обнаружено.' });
+
+  const tagClass = { game: 'itag-game', driver: 'itag-driver', pos: 'itag-pos', stroke: 'itag-stroke' };
+  document.getElementById('insGrid').innerHTML = insights.map(i => `
+    <div class="insight-card">
+      <span class="itag ${tagClass[i.tag] || 'itag-driver'}">${i.label}</span>
+      <div class="insight-name">${i.name}</div>
+      <div class="insight-desc">${i.desc}</div>
+    </div>`).join('');
+
+  // Summary
+  const dom = pP >= pA && pP >= pC ? 'Родителя' : pA >= pP && pA >= pC ? 'Взрослого' : 'Ребёнка';
+  const domPct = dom === 'Родителя' ? pP : dom === 'Взрослого' ? pA : pC;
+  const gameFound = insights.filter(i=>i.tag==='game').map(i=>i.name);
+  const driverFound = insights.filter(i=>i.tag==='driver' && i.name!=='Нейтральный текст').map(i=>i.name);
+
+  let summ = `В тексте доминирует эго-состояние ${dom} (${domPct}%). `;
+  if (gameFound.length) summ += `Обнаружены признаки игры «${gameFound[0]}». `;
+  if (driverFound.length) summ += `Активный драйвер — «${driverFound[0]}». `;
+  summ += isDialog
+    ? 'Коммуникация диалогическая с асимметричным распределением ролей.'
+    : 'Текст монологичен — транзакции направлены внутрь или к воображаемому адресату.';
+
+  document.getElementById('summaryText').textContent = summ;
+
+  const r = document.getElementById('results');
+  r.style.display = 'block';
+  setTimeout(() => r.classList.add('visible'), 10);
+}
+
+document.getElementById('inp').addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') analyze();
+});
+</script>
+</body>
+</html>
