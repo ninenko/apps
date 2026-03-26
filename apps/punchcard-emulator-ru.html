@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эмулятор Перфокарты · Упрощённая карта IBM</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Special+Elite&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:        #080810;
+  --desk:       #0f1117;
+  --card-face:  #f4efd6;
+  --card-edge:  #c9b97c;
+  --card-line:  rgba(180,158,70,0.13);
+  --hole-on:    #130800;
+  --hole-off:   rgba(195,172,95,0.16);
+  --amber:      #c8862a;
+  --amber-lite: #f0b856;
+  --amber-dim:  rgba(200,134,42,0.3);
+  --green:      #22c55e;
+  --red:        #ef4444;
+  --panel:      #12151f;
+  --panel2:     #1a1f2e;
+  --border:     #1e2535;
+  --text:       #e8dfc8;
+  --text-dim:   #7a8a99;
+  --mono:       'IBM Plex Mono', 'Courier New', monospace;
+  --display:    'Playfair Display', Georgia, serif;
+  --type:       'Special Elite', 'Courier New', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--mono);
+  background: var(--desk);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,134,42,0.04) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.005) 3px, rgba(255,255,255,0.005) 4px);
+}
+
+/* ── HEADER ── */
+.header { text-align: center; margin-bottom: 1.5rem; position: relative; }
+
+.header-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.6rem;
+  opacity: 0.8;
+}
+
+.header h1 {
+  font-family: var(--type);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: var(--card-face);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 40px rgba(200,134,42,0.25);
+  line-height: 1.15;
+}
+
+.header-rule { width: 60px; height: 1px; background: var(--amber-dim); margin: 0.8rem auto; }
+
+.header-sub {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── ENCODING SWITCHER ── */
+.enc-switcher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 1.1rem;
+}
+
+.enc-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2e3a4a;
+}
+
+.enc-toggle {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.enc-btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #2e3a4a;
+  letter-spacing: 0.1em;
+  transition: background 0.15s, color 0.15s;
+}
+
+.enc-btn.active {
+  background: var(--panel2);
+  color: var(--amber-lite);
+}
+
+.enc-btn:hover:not(.active) { color: var(--text-dim); }
+
+.enc-badge {
+  font-size: 0.6rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+/* ── CONTROLS ── */
+.controls-wrap {
+  max-width: 860px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0 0.6rem 0 0;
+  overflow: hidden;
+}
+
+.input-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: var(--panel2);
+  padding: 0.55rem 0.7rem;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.type-input {
+  font-family: var(--type);
+  font-size: 1.05rem;
+  padding: 0.5rem 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--card-face);
+  outline: none;
+  width: 220px;
+  letter-spacing: 0.08em;
+}
+
+.type-input::placeholder {
+  color: #2e3a4a;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.char-count { font-size: 0.62rem; color: #2e3a4a; white-space: nowrap; transition: color 0.2s; }
+.char-count.near { color: var(--amber); }
+
+.btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.52rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.18s;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.btn:active { transform: scale(0.96); }
+
+.btn-translate {
+  background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.08));
+  border-color: rgba(34,197,94,0.35);
+  color: var(--green);
+}
+.btn-translate:hover {
+  background: linear-gradient(135deg, rgba(34,197,94,0.28), rgba(34,197,94,0.18));
+  border-color: rgba(34,197,94,0.7);
+  box-shadow: 0 0 16px rgba(34,197,94,0.15);
+}
+
+.btn-clear { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.25); color: #e87070; }
+.btn-clear:hover { background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.5); }
+
+.btn-random { background: rgba(200,134,42,0.08); border-color: var(--amber-dim); color: var(--amber); }
+.btn-random:hover {
+  background: rgba(200,134,42,0.2);
+  border-color: rgba(200,134,42,0.6);
+  box-shadow: 0 0 16px rgba(200,134,42,0.12);
+}
+
+/* ── CARD ── */
+.card-scene { max-width: 920px; margin: 0 auto; position: relative; }
+.card-scene::before {
+  content: '';
+  position: absolute;
+  inset: 8px 12px -8px;
+  background: rgba(200,134,42,0.06);
+  border-radius: 10px;
+  filter: blur(20px);
+  z-index: 0;
+}
+
+.card-viewport {
+  overflow-x: auto;
+  overflow-y: visible;
+  cursor: grab;
+  padding-bottom: 4px;
+  position: relative;
+  z-index: 1;
+  scrollbar-color: rgba(200,134,42,0.3) var(--panel);
+  scrollbar-width: thin;
+}
+.card-viewport:active { cursor: grabbing; }
+.card-viewport::-webkit-scrollbar { height: 4px; }
+.card-viewport::-webkit-scrollbar-track { background: var(--panel); border-radius: 2px; }
+.card-viewport::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 2px; }
+.card-viewport::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+
+.punchcard {
+  background: var(--card-face);
+  border-radius: 9px 9px 5px 5px;
+  border: 1.5px solid var(--card-edge);
+  box-shadow:
+    0 10px 60px rgba(0,0,0,0.7),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.65),
+    inset 0 -1px 0 rgba(0,0,0,0.07);
+  position: relative;
+  min-width: max-content;
+  padding: 0.4rem 0.55rem 0.5rem 0.5rem;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(180,158,70,0.07) 22px, rgba(180,158,70,0.07) 23px);
+}
+
+.punchcard::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 24px 0 0 24px;
+  border-color: transparent transparent transparent var(--desk);
+  z-index: 3;
+}
+.punchcard::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 24px; height: 24px;
+  background: linear-gradient(135deg, transparent 49%, rgba(0,0,0,0.12) 50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card-stripe {
+  height: 13px; margin-bottom: 5px;
+  display: flex; align-items: center; padding-left: 28px;
+  background: repeating-linear-gradient(90deg, rgba(180,150,60,0.11) 0, rgba(180,150,60,0.11) 7px, transparent 7px, transparent 11px);
+  border-bottom: 1px solid rgba(180,155,65,0.15);
+}
+.stripe-text {
+  font-family: var(--mono);
+  font-size: 0.39rem;
+  color: rgba(100,75,30,0.7);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+
+.columns-area { display: flex; gap: 3px; align-items: flex-start; }
+
+.bit-axis { display: flex; flex-direction: column; flex-shrink: 0; margin-right: 5px; user-select: none; }
+.bit-axis-spacer { height: 15px; }
+.bit-axis-row {
+  font-family: var(--mono);
+  font-size: 0.36rem;
+  color: rgba(120,90,35,0.75);
+  text-align: right;
+  height: 20px;
+  line-height: 20px;
+  padding-right: 3px;
+  white-space: nowrap;
+}
+.bit-axis-gap   { height: 4px; }
+.bit-axis-ascii { height: 16px; }
+.bit-axis-bin   { height: 11px; }
+.bit-axis-dec   { height: 10px; }
+
+.col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 16px; }
+.col-num {
+  font-family: var(--mono);
+  font-size: 0.36rem;
+  color: rgba(140,105,40,0.7);
+  height: 15px; line-height: 15px; text-align: center; user-select: none;
+}
+
+.holes { display: flex; flex-direction: column; gap: 2px; }
+
+.hole {
+  width: 16px; height: 20px;
+  border-radius: 3px;
+  border: 1px solid rgba(140,110,45,0.25);
+  cursor: pointer;
+  transition: transform 0.1s, background 0.1s, box-shadow 0.1s;
+  position: relative;
+}
+.hole.blank { background: var(--hole-off); }
+.hole.on {
+  background: var(--hole-on);
+  border-color: rgba(8,4,0,0.85);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.85), inset 0 -1px 1px rgba(255,150,0,0.04);
+}
+.hole:hover { transform: scale(1.16); z-index: 10; position: relative; }
+.hole.blank:hover { background: rgba(200,176,100,0.38); border-color: rgba(170,135,55,0.55); box-shadow: 0 0 5px rgba(200,170,80,0.2); }
+.hole.on:hover { background: #1e0d00; }
+
+.col-ascii {
+  font-family: var(--type);
+  font-size: 0;
+  color: #3a2508;
+  text-align: center;
+  height: 16px; line-height: 16px;
+  margin-top: 4px; width: 16px;
+  overflow: visible;
+  transition: font-size 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+  user-select: none; cursor: default;
+}
+.col-ascii.dot { font-size: 0.75rem; color: rgba(90,65,22,0.28); }
+.col-ascii.revealed { font-size: 0.85rem; font-weight: 700; color: #1e1000; }
+
+.col-bin {
+  font-family: var(--mono);
+  font-size: 0.3rem; color: rgba(160,125,50,0.6);
+  text-align: center; height: 11px; line-height: 11px;
+  letter-spacing: 0.01em; user-select: none;
+}
+.col-dec {
+  font-family: var(--mono);
+  font-size: 0.3rem; color: rgba(130,95,35,0.55);
+  text-align: center; height: 10px; line-height: 10px; user-select: none;
+}
+
+.card-bot-stripe {
+  height: 9px;
+  background: repeating-linear-gradient(90deg, rgba(180,150,60,0.08) 0, rgba(180,150,60,0.08) 7px, transparent 7px, transparent 11px);
+  border-top: 1px solid rgba(180,155,65,0.12);
+  margin-top: 4px;
+  border-radius: 0 0 4px 4px;
+}
+
+.scroll-hint {
+  text-align: center; font-size: 0.6rem; color: #1e2535;
+  margin: 0.4rem 0 0.25rem; letter-spacing: 0.22em; text-transform: uppercase; user-select: none;
+}
+
+/* ── RESULT ── */
+.result-zone {
+  max-width: 860px; margin: 1.1rem auto;
+  text-align: center; min-height: 3.5rem;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.3rem;
+}
+.result-word {
+  font-family: var(--type);
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  color: var(--card-face);
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 30px rgba(200,134,42,0.3);
+  border-bottom: 1px solid var(--amber-dim);
+  padding-bottom: 0.2rem;
+  animation: wordIn 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes wordIn { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
+.result-meta { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; }
+.result-mapping { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; justify-content: center; max-width: 860px; padding: 0.5rem 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.map-pair { display: inline-flex; align-items: center; gap: 0.2rem; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 0.2rem 0.45rem; animation: pairIn 0.25s ease-out both; }
+@keyframes pairIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.map-dec  { color: var(--amber); font-weight: 700; }
+.map-arrow { color: #2e3a4a; margin: 0 0.1rem; }
+.map-char { font-family: var(--type); font-size: 1rem; color: var(--card-face); font-weight: 700; min-width: 0.8rem; text-align: center; }
+.result-idle { font-family: var(--mono); font-size: 0.68rem; color: #2a3345; letter-spacing: 0.18em; text-transform: uppercase; }
+
+/* ── STATUS BAR ── */
+.status-bar {
+  max-width: 860px; margin: 0 auto 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+}
+.stats-group { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.stat { font-size: 0.65rem; color: var(--text-dim); display: flex; gap: 0.4rem; align-items: center; }
+.stat .lbl { color: #2e3a4a; }
+.stat .val { color: var(--amber); font-weight: 700; transition: color 0.2s; }
+.stat .val.g { color: var(--green); }
+.stat .val.r { color: var(--red); }
+.legend-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.leg { font-size: 0.62rem; color: #2e3a4a; display: flex; align-items: center; gap: 0.35rem; }
+.leg-swatch { width: 14px; height: 10px; border-radius: 2px; flex-shrink: 0; border: 1px solid rgba(140,110,45,0.25); }
+.leg-swatch.on  { background: var(--hole-on); border-color: #0a0400; }
+.leg-swatch.off { background: var(--hole-off); }
+
+/* ── INFO CARDS ── */
+.info-grid { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; }
+.info-card { background: var(--panel); border: 1px solid var(--border); border-radius: 7px; padding: 0.9rem 1rem; position: relative; overflow: hidden; }
+.info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--amber-dim), transparent); }
+.ic-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--amber); margin-bottom: 0.45rem; display: flex; align-items: center; gap: 0.4rem; }
+.ic-body { font-size: 0.75rem; color: var(--text-dim); line-height: 1.65; }
+.ic-body strong { color: var(--text); font-weight: 600; }
+
+.footer { text-align: center; margin-top: 2.5rem; font-size: 0.6rem; color: #1a2030; letter-spacing: 0.25em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">// История Программирования · Цифровые Основы</div>
+  <h1>Эмулятор Перфокарты</h1>
+  <div style="font-family:var(--type);font-size:clamp(0.85rem,2.5vw,1.1rem);color:var(--amber);letter-spacing:0.06em;margin-bottom:0.5rem;">Упрощённая программная карта IBM System/360</div>
+  <div class="header-rule"></div>
+  <div class="header-sub">Кликай на ячейки · Вводи текст · Расшифруй в символы</div>
+</div>
+
+<!-- ENCODING SWITCHER -->
+<div class="enc-switcher">
+  <span class="enc-label">Кодировка:</span>
+  <div class="enc-toggle">
+    <button class="enc-btn" id="btnLat" onclick="setEncoding('latin')">ЛАТ · ASCII</button>
+    <button class="enc-btn active" id="btnCyr" onclick="setEncoding('cyrillic')">КИР · CP1251</button>
+  </div>
+  <span class="enc-badge" id="encBadge">CP1251 · 192–255</span>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls-wrap">
+  <div class="input-group">
+    <span class="input-label">ВВОД</span>
+    <input
+      class="type-input"
+      id="typeInput"
+      type="text"
+      placeholder="печатай для пробивки…"
+      maxlength="32"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <span class="char-count" id="charCount">0/32</span>
+  </div>
+  <button class="btn btn-translate" id="translateBtn" onclick="translateCard()">▸ Расшифровать</button>
+  <button class="btn btn-random" onclick="randomCard()">⚄ Случайное</button>
+  <button class="btn btn-clear" onclick="clearCard()">✕ Очистить</button>
+</div>
+
+<!-- CARD -->
+<div class="card-scene">
+  <div class="card-viewport" id="cardViewport">
+    <div class="punchcard" id="punchcard">
+      <div class="card-stripe">
+        <span class="stripe-text" id="stripeText">IBM SYSTEM/360 · 80-COLUMN PROGRAM CARD · ИСТОРИЯ ПРОГРАММИРОВАНИЯ · 32 ИЗ 80 КОЛОНОК · КОД: CP1251</span>
+      </div>
+      <div class="columns-area" id="columnsArea"></div>
+      <div class="card-bot-stripe"></div>
+    </div>
+  </div>
+</div>
+
+<div class="scroll-hint" id="scrollHint">← тяни или прокручивай карту →</div>
+
+<!-- RESULT -->
+<div class="result-zone" id="resultZone">
+  <div class="result-idle">Пробей ячейки вручную · или напечатай выше · затем нажми «Расшифровать»</div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="stats-group">
+    <div class="stat"><span class="lbl">КОЛОНОК:</span><span class="val" id="sCols">32</span></div>
+    <div class="stat"><span class="lbl">БИТ/КОЛ:</span><span class="val">8</span></div>
+    <div class="stat"><span class="lbl">ПРОБИТО:</span><span class="val" id="sPunched">0</span></div>
+    <div class="stat"><span class="lbl">ДЕКОДИРОВАНО:</span><span class="val g" id="sDecoded">—</span></div>
+    <div class="stat"><span class="lbl">КАРТА:</span><span class="val" id="sStatus">ПУСТА</span></div>
+    <div class="stat"><span class="lbl">РЕЖИМ:</span><span class="val" id="sMode">КИР</span></div>
+  </div>
+  <div class="legend-group">
+    <div class="leg"><div class="leg-swatch on"></div>Пробито = 1</div>
+    <div class="leg"><div class="leg-swatch off"></div>Пусто = 0</div>
+  </div>
+</div>
+
+<!-- INFO GRID -->
+<div class="info-grid">
+  <div class="info-card">
+    <div class="ic-title">📐 Размер карты</div>
+    <div class="ic-body">
+      Настоящие карты IBM имели <strong>80 колонок × 12 рядов</strong>. На экране комфортно помещается <strong>32 колонки</strong> — каждая содержит <strong>8 бит = 1 байт = 1 символ</strong>.
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">🔢 Значения битов</div>
+    <div class="ic-body">
+      Верхний ряд = <strong>бит 7 (значение 128)</strong>. Нижний ряд = <strong>бит 0 (значение 1)</strong>. Сложи значения всех пробитых рядов — получишь десятичный код символа.
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">🇷🇺 Кириллица · CP1251</div>
+    <div class="ic-body">
+      В режиме <strong>КИР</strong> используется кодировка <strong>CP1251</strong> (Windows). Буква <strong>А = 192</strong>, Б = 193, ..., Я = 223. Строчные: а = 224, ..., я = 255. Всё умещается в 8 бит!
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="ic-title">🔤 Латиница · ASCII</div>
+    <div class="ic-body">
+      В режиме <strong>ЛАТ</strong> используется стандарт <strong>ASCII</strong>. Буква <strong>H = 72 = 01001000</strong>, A = 65, пробел = 32. Каждый символ — число от 0 до 127. Переключись и сравни!
+    </div>
+  </div>
+</div>
+
+<div class="footer">// punchcard-emulator-ru.html · История Программирования · Цифровые Основы</div>
+
+<script>
+const NUM_COLS = 32;
+const NUM_BITS = 8;
+const BIT_VALUES = [128, 64, 32, 16, 8, 4, 2, 1];
+const SUP = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+
+// ── CP1251 Cyrillic table (uppercase А=192..Я=223, lowercase а=224..я=255 + Ё/ё) ──
+const CP1251_TO_CHAR = {};
+const CHAR_TO_CP1251 = {};
+
+(function buildCyrillic() {
+  const upper = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  const lower = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+  for (let i = 0; i < upper.length; i++) {
+    CP1251_TO_CHAR[192 + i] = upper[i];
+    CHAR_TO_CP1251[upper[i]] = 192 + i;
+  }
+  for (let i = 0; i < lower.length; i++) {
+    CP1251_TO_CHAR[224 + i] = lower[i];
+    CHAR_TO_CP1251[lower[i]] = 224 + i;
+  }
+  // Ё = 168, ё = 184
+  CP1251_TO_CHAR[168] = 'Ё'; CHAR_TO_CP1251['Ё'] = 168;
+  CP1251_TO_CHAR[184] = 'ё'; CHAR_TO_CP1251['ё'] = 184;
+})();
+
+let card = make2D();
+let translated = false;
+let encoding = 'cyrillic'; // 'latin' | 'cyrillic'
+
+function make2D() {
+  return Array.from({length: NUM_COLS}, () => new Array(NUM_BITS).fill(0));
+}
+function sup(n) { return String(n).split('').map(d => SUP[d] || d).join(''); }
+
+// ── ENCODING SWITCH ──
+function setEncoding(enc) {
+  encoding = enc;
+  document.getElementById('btnLat').classList.toggle('active', enc === 'latin');
+  document.getElementById('btnCyr').classList.toggle('active', enc === 'cyrillic');
+  document.getElementById('encBadge').textContent = enc === 'cyrillic' ? 'CP1251 · 192–255' : 'ASCII · 32–126';
+  document.getElementById('sMode').textContent = enc === 'cyrillic' ? 'КИР' : 'ЛАТ';
+  document.getElementById('stripeText').textContent =
+    enc === 'cyrillic'
+      ? 'IBM SYSTEM/360 · 80-COLUMN PROGRAM CARD · ИСТОРИЯ ПРОГРАММИРОВАНИЯ · 32 ИЗ 80 КОЛОНОК · КОД: CP1251'
+      : 'IBM SYSTEM/360 · 80-COLUMN PROGRAM CARD · ИСТОРИЯ ПРОГРАММИРОВАНИЯ · 32 ИЗ 80 КОЛОНОК · КОД: ASCII';
+
+  // Re-encode current text
+  const val = document.getElementById('typeInput').value;
+  if (val.length > 0) encodeText(val);
+  else { card = make2D(); for (let c = 0; c < NUM_COLS; c++) refreshCol(c); resetResult(); updateStats(); }
+}
+
+// ── ENCODE TEXT ──
+function charToCode(ch) {
+  if (encoding === 'cyrillic') {
+    // Try cyrillic table first, fall back to ASCII for spaces/digits/punct
+    return CHAR_TO_CP1251[ch] || (ch.charCodeAt(0) <= 127 ? ch.charCodeAt(0) : null);
+  } else {
+    const code = ch.toUpperCase().charCodeAt(0);
+    return code <= 127 ? code : null;
+  }
+}
+
+function codeToChar(dec) {
+  if (encoding === 'cyrillic') {
+    if (CP1251_TO_CHAR[dec]) return CP1251_TO_CHAR[dec];
+    if (dec >= 32 && dec <= 126) return String.fromCharCode(dec);
+    return null;
+  } else {
+    return (dec >= 32 && dec <= 126) ? String.fromCharCode(dec) : null;
+  }
+}
+
+function encodeText(text) {
+  card = make2D();
+  const chars = text.slice(0, NUM_COLS);
+  for (let c = 0; c < chars.length; c++) {
+    const code = charToCode(chars[c]);
+    if (code !== null) {
+      for (let b = 0; b < NUM_BITS; b++) {
+        card[c][b] = (code >> (7 - b)) & 1;
+      }
+    }
+  }
+  translated = false;
+  for (let c = 0; c < NUM_COLS; c++) refreshCol(c);
+  resetResult();
+  updateStats();
+}
+
+// ── BUILD DOM ──
+function build() {
+  const area = document.getElementById('columnsArea');
+  area.innerHTML = '';
+
+  const axis = document.createElement('div');
+  axis.className = 'bit-axis';
+  const sp = document.createElement('div');
+  sp.className = 'bit-axis-spacer';
+  axis.appendChild(sp);
+  BIT_VALUES.forEach((v, i) => {
+    const r = document.createElement('div');
+    r.className = 'bit-axis-row';
+    r.textContent = `2${sup(7-i)}=${String(v).padStart(3,' ')}`;
+    axis.appendChild(r);
+  });
+  [['bit-axis-ascii',''], ['bit-axis-bin',''], ['bit-axis-dec','']].forEach(([cls]) => {
+    const d = document.createElement('div'); d.className = cls; axis.appendChild(d);
+  });
+  area.appendChild(axis);
+
+  for (let c = 0; c < NUM_COLS; c++) {
+    const col = document.createElement('div');
+    col.className = 'col'; col.id = `col-${c}`;
+    const num = document.createElement('div');
+    num.className = 'col-num';
+    num.textContent = String(c + 1).padStart(2, '0');
+    col.appendChild(num);
+    const holes = document.createElement('div');
+    holes.className = 'holes';
+    for (let b = 0; b < NUM_BITS; b++) {
+      const h = document.createElement('div');
+      h.className = 'hole blank'; h.id = `h-${c}-${b}`;
+      h.title = `Кол. ${c+1}  Бит ${7-b}  Значение ${BIT_VALUES[b]}`;
+      h.addEventListener('click', () => toggle(c, b));
+      holes.appendChild(h);
+    }
+    col.appendChild(holes);
+    const ascii = document.createElement('div'); ascii.className = 'col-ascii'; ascii.id = `a-${c}`; col.appendChild(ascii);
+    const bin = document.createElement('div'); bin.className = 'col-bin'; bin.id = `b-${c}`; bin.textContent = '00000000'; col.appendChild(bin);
+    const dec = document.createElement('div'); dec.className = 'col-dec'; dec.id = `d-${c}`; dec.textContent = '0'; col.appendChild(dec);
+    area.appendChild(col);
+  }
+  updateStats();
+}
+
+// ── TOGGLE ──
+function toggle(c, b) {
+  card[c][b] ^= 1;
+  refreshCol(c);
+  translated = false;
+  resetResult();
+  updateStats();
+}
+
+// ── REFRESH COL ──
+function refreshCol(c) {
+  let dec = 0;
+  for (let b = 0; b < NUM_BITS; b++) {
+    const h = document.getElementById(`h-${c}-${b}`);
+    if (card[c][b]) { h.className = 'hole on'; dec += BIT_VALUES[b]; }
+    else h.className = 'hole blank';
+  }
+  document.getElementById(`b-${c}`).textContent = card[c].join('');
+  document.getElementById(`d-${c}`).textContent = dec;
+  if (!translated) {
+    const aEl = document.getElementById(`a-${c}`);
+    aEl.className = dec > 0 ? 'col-ascii dot' : 'col-ascii';
+    aEl.textContent = dec > 0 ? '·' : '';
+  }
+}
+
+// ── TRANSLATE ──
+function translateCard() {
+  translated = true;
+  let word = '';
+  const mappings = [];
+  let count = 0;
+
+  for (let c = 0; c < NUM_COLS; c++) {
+    const dec = colDec(c);
+    const aEl = document.getElementById(`a-${c}`);
+    if (dec === 0) {
+      aEl.className = 'col-ascii'; aEl.textContent = '';
+    } else {
+      const ch = codeToChar(dec);
+      aEl.className = 'col-ascii revealed';
+      aEl.textContent = ch || '·';
+      word += ch || '';
+      mappings.push({ dec, ch: ch || `#${dec}` });
+      count++;
+    }
+  }
+
+  const zone = document.getElementById('resultZone');
+  if (count === 0) {
+    zone.innerHTML = `<div class="result-idle">ни одной пробитой ячейки — карта пуста</div>`;
+  } else {
+    const mapHtml = mappings.map((m, i) =>
+      `<span class="map-pair" style="animation-delay:${i*40}ms"><span class="map-dec">${m.dec}</span><span class="map-arrow">→</span><span class="map-char">${esc(m.ch)}</span></span>`
+    ).join('');
+    const label = encoding === 'cyrillic' ? 'колонок декодировано по CP1251' : 'колонок декодировано по ASCII';
+    zone.innerHTML = `
+      <div class="result-word">${esc(word) || '<span style="opacity:0.3">нет печатных символов</span>'}</div>
+      <div class="result-mapping">${mapHtml}</div>
+      <div class="result-meta">${count} ${label}</div>
+    `;
+  }
+  updateStats();
+}
+
+function resetResult() {
+  document.getElementById('resultZone').innerHTML =
+    `<div class="result-idle">Пробей ячейки или напечатай текст · затем нажми «Расшифровать»</div>`;
+  for (let c = 0; c < NUM_COLS; c++) {
+    const aEl = document.getElementById(`a-${c}`);
+    if (aEl) {
+      const dec = colDec(c);
+      aEl.className = dec > 0 ? 'col-ascii dot' : 'col-ascii';
+      aEl.textContent = dec > 0 ? '·' : '';
+    }
+  }
+}
+
+// ── CLEAR ──
+function clearCard() {
+  card = make2D();
+  translated = false;
+  document.getElementById('typeInput').value = '';
+  document.getElementById('charCount').textContent = '0/32';
+  document.getElementById('charCount').classList.remove('near');
+  for (let c = 0; c < NUM_COLS; c++) refreshCol(c);
+  resetResult();
+  updateStats();
+}
+
+// ── RANDOM ──
+function randomCard() {
+  const cyrPhrases = [
+    'ПРИВЕТ МИР', 'ПЕРФОКАРТА', 'ДВОИЧНЫЙ КОД', 'ТРАНЗИСТОР',
+    'КОМПИЛЯТОР', 'ПРОГРАММА', 'АЛГОРИТМ', 'БАЙТ', 'АССЕМБЛЕР',
+    'ФОРТРАН', 'КЛАВИАТУРА', 'ПРОЦЕССОР', 'ПАМЯТЬ', 'ЭКРАН',
+  ];
+  const latPhrases = [
+    'HELLO WORLD', 'PUNCH CARD', 'BINARY CODE', 'TRANSISTOR',
+    'COMPILER', 'ASSEMBLER', 'FORTRAN 77', 'ADA LOVELACE',
+    'GRACE HOPPER', 'KEYPUNCH', 'DIGITAL',
+  ];
+  const phrases = encoding === 'cyrillic' ? cyrPhrases : latPhrases;
+  const p = phrases[Math.floor(Math.random() * phrases.length)];
+  document.getElementById('typeInput').value = p;
+  updateCharCount(p.length);
+  encodeText(p);
+}
+
+// ── STATS ──
+function colDec(c) { return card[c].reduce((s, b, i) => s + b * BIT_VALUES[i], 0); }
+
+function updateStats() {
+  let punched = 0, chars = 0;
+  for (let c = 0; c < NUM_COLS; c++) {
+    punched += card[c].filter(Boolean).length;
+    const dec = colDec(c);
+    if (codeToChar(dec)) chars++;
+  }
+  document.getElementById('sPunched').textContent = punched;
+  document.getElementById('sDecoded').textContent = translated ? chars : '—';
+  const statusEl = document.getElementById('sStatus');
+  const labels = punched === 0 ? 'ПУСТА' : translated ? 'ПРОЧИТАНА' : 'ПРОБИТА';
+  statusEl.textContent = labels;
+  statusEl.className = 'val' + (punched === 0 ? '' : translated ? ' g' : '');
+}
+
+function updateCharCount(n) {
+  const el = document.getElementById('charCount');
+  el.textContent = `${n}/32`;
+  el.classList.toggle('near', n >= 28);
+}
+
+// ── TYPE INPUT ──
+document.getElementById('typeInput').addEventListener('input', function() {
+  updateCharCount(this.value.length);
+  if (this.value.length > 0) encodeText(this.value);
+  else { card = make2D(); for (let c = 0; c < NUM_COLS; c++) refreshCol(c); resetResult(); updateStats(); }
+});
+document.getElementById('typeInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') translateCard();
+});
+
+// ── DRAG TO SCROLL ──
+(function() {
+  const vp = document.getElementById('cardViewport');
+  let down = false, sx, sl;
+  vp.addEventListener('mousedown', e => { down=true; sx=e.pageX-vp.offsetLeft; sl=vp.scrollLeft; });
+  document.addEventListener('mouseup', () => down=false);
+  vp.addEventListener('mousemove', e => {
+    if (!down) return;
+    e.preventDefault();
+    vp.scrollLeft = sl - (e.pageX - vp.offsetLeft - sx);
+  });
+  vp.addEventListener('scroll', () => {
+    if (vp.scrollLeft > 10) document.getElementById('scrollHint').style.opacity = '0';
+  }, {once: true});
+})();
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+build();
+</script>
+</body>
+</html>
