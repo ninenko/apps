@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New School — Ivan Ninenko</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:    #050d1a;
+    --abyss:   #080f1f;
+    --navy:    #0a1628;
+    --blue:    #0d2545;
+    --mid:     #1a3a6b;
+    --ocean:   #1e5a9e;
+    --teal:    #0fa8b4;
+    --ice:     #a8dde8;
+    --foam:    #d4f0f5;
+    --white:   #f0f8ff;
+    --gold:    #f5c842;
+    --coral:   #ff7f60;
+    --text:    #c8e0f0;
+    --muted:   #6a9ab8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--teal); border-radius: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background 0.2s;
+    image-rendering: pixelated;
+  }
+  .cursor.big { transform: translate(-50%,-50%) scale(2.5); background: var(--gold); opacity: 0.5; }
+
+  /* ── SLIDESHOW ── */
+  .deck {
+    width: 100vw; height: 100vh;
+    position: relative; overflow: hidden;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(30px);
+    padding: 40px 60px;
+  }
+  .slide.active {
+    opacity: 1; pointer-events: all;
+    transform: translateY(0);
+  }
+  .slide.exit {
+    opacity: 0; transform: translateY(-30px);
+  }
+
+  /* ── STARFIELD BG ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute; border-radius: 0;
+    image-rendering: pixelated;
+    animation: twinkle var(--d, 3s) infinite var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--min, 0.2); transform: scale(1); }
+    50%      { opacity: 1;              transform: scale(1.4); }
+  }
+
+  /* ocean wave bottom */
+  .wave-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--ocean), var(--teal));
+    animation: waveShift 4s linear infinite;
+    z-index: 100;
+  }
+  @keyframes waveShift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* ── PIXEL ART WHALE (SVG-based) ── */
+  .whale-pixel {
+    image-rendering: pixelated;
+    display: block;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 20px; z-index: 200;
+    background: rgba(8,15,31,0.8); border: 1px solid var(--mid);
+    padding: 10px 24px; backdrop-filter: blur(10px);
+  }
+  .nav-btn {
+    background: none; border: 1px solid var(--mid);
+    color: var(--teal); font-family: 'DM Mono', monospace;
+    font-size: 11px; padding: 6px 14px; cursor: none;
+    transition: all 0.2s; letter-spacing: 0.1em;
+  }
+  .nav-btn:hover { background: var(--teal); color: var(--deep); border-color: var(--teal); }
+
+  .slide-counter {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.1em; min-width: 60px; text-align: center;
+  }
+
+  /* dots */
+  .dots {
+    position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px; z-index: 200;
+  }
+  .dot {
+    width: 6px; height: 6px; background: var(--mid);
+    cursor: none; transition: all 0.2s; image-rendering: pixelated;
+  }
+  .dot.active { background: var(--teal); transform: scale(1.6); }
+  .dot:hover  { background: var(--ice); }
+
+  /* ── TYPOGRAPHY ── */
+  .eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.25em; color: var(--teal); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .display {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 68px); font-weight: 900;
+    color: var(--white); line-height: 1.05;
+  }
+  .display em { font-style: italic; color: var(--teal); }
+  .display .gold { color: var(--gold); }
+  .subtitle {
+    font-size: 16px; color: var(--muted); font-weight: 300;
+    line-height: 1.6; max-width: 600px;
+  }
+  .body-text {
+    font-size: 15px; color: var(--text); font-weight: 300;
+    line-height: 1.75; max-width: 700px;
+  }
+  .callout-text {
+    font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic;
+    color: var(--ice); line-height: 1.5;
+    border-left: 3px solid var(--teal); padding-left: 24px;
+  }
+
+  /* ── LAYOUT HELPERS ── */
+  .content { position: relative; z-index: 10; width: 100%; max-width: 1100px; }
+  .two-col  { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .three-col{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: rgba(13,37,69,0.7); border: 1px solid var(--mid);
+    padding: 28px 32px; position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card:hover { border-color: var(--teal); transform: translateY(-4px); }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+  }
+  .card.c1::before { background: var(--teal); }
+  .card.c2::before { background: var(--gold); }
+  .card.c3::before { background: var(--coral); }
+
+  .card-num {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif; font-size: 20px;
+    color: var(--white); margin-bottom: 10px; font-weight: 700;
+  }
+  .card-sub {
+    font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 300;
+  }
+
+  /* whale card */
+  .whale-card {
+    background: rgba(10,22,40,0.8); border: 1px solid var(--ocean);
+    padding: 32px; display: flex; align-items: flex-start; gap: 28px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+  .whale-card:hover { border-color: var(--teal); background: rgba(26,58,107,0.4); }
+  .whale-num {
+    font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900;
+    color: var(--teal); opacity: 0.3; line-height: 1; flex-shrink: 0;
+    transition: opacity 0.3s;
+  }
+  .whale-card:hover .whale-num { opacity: 0.8; }
+  .whale-info { flex: 1; }
+  .whale-title {
+    font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .whale-desc { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+  /* stat blocks */
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900;
+    color: var(--teal); line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; margin-top: 8px; }
+
+  /* dimension table */
+  .dim-table { width: 100%; border-collapse: collapse; }
+  .dim-table th {
+    background: var(--ocean); color: var(--white);
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 12px 16px; text-align: left; font-weight: 500;
+  }
+  .dim-table td {
+    padding: 14px 16px; font-size: 13px; border-bottom: 1px solid var(--blue);
+    vertical-align: top; line-height: 1.5; color: var(--text);
+  }
+  .dim-table tr:nth-child(odd) td  { background: rgba(10,22,40,0.5); }
+  .dim-table tr:nth-child(even) td { background: rgba(26,58,107,0.25); }
+  .dim-table td:first-child {
+    font-weight: 500; color: var(--teal);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+  }
+
+  /* link pill */
+  .link-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--mid); padding: 8px 16px;
+    font-size: 12px; font-family: 'DM Mono', monospace;
+    color: var(--teal); text-decoration: none; letter-spacing: 0.05em;
+    transition: all 0.2s; margin: 6px 6px 6px 0;
+  }
+  .link-pill:hover { background: var(--teal); color: var(--deep); border-color: var(--teal); }
+  .link-pill::before { content: '↗'; font-size: 10px; }
+
+  /* divider */
+  .divider { width: 48px; height: 3px; background: var(--teal); margin: 20px 0; }
+
+  /* skill tier viz */
+  .skill-tiers { display: flex; flex-direction: column; gap: 0; width: 100%; }
+  .tier {
+    padding: 20px 28px; border-left: 4px solid transparent;
+    position: relative; transition: all 0.3s;
+    cursor: default;
+  }
+  .tier:hover { background: rgba(26,58,107,0.3); }
+  .tier.t1 { border-color: var(--muted);  background: rgba(10,22,40,0.4); }
+  .tier.t2 { border-color: var(--ocean);  background: rgba(13,37,69,0.5); }
+  .tier.t3 { border-color: var(--teal);   background: rgba(15,168,180,0.1); }
+  .tier-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .tier.t1 .tier-label { color: var(--muted); }
+  .tier.t2 .tier-label { color: var(--ocean); }
+  .tier.t3 .tier-label { color: var(--teal); }
+  .tier-text { font-size: 14px; color: var(--text); line-height: 1.5; font-weight: 300; }
+
+  /* data flow */
+  .data-row {
+    display: grid; grid-template-columns: 140px 1fr 40px 1fr;
+    gap: 0; align-items: stretch; margin-bottom: 3px;
+  }
+  .data-dim {
+    background: var(--ocean); color: var(--white);
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; display: flex; align-items: center;
+    padding: 14px 16px; font-weight: 500;
+  }
+  .data-cell {
+    background: rgba(10,22,40,0.6); font-size: 12px; color: var(--text);
+    padding: 14px 18px; line-height: 1.5; border: 1px solid var(--blue);
+    font-weight: 300;
+  }
+  .data-arrow {
+    background: rgba(26,58,107,0.5); display: flex;
+    align-items: center; justify-content: center;
+    color: var(--teal); font-size: 14px;
+  }
+
+  /* attribution */
+  .attribution {
+    position: fixed; bottom: 80px; left: 36px;
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    color: rgba(106,154,184,0.4); letter-spacing: 0.1em; z-index: 200;
+    line-height: 1.8;
+  }
+
+  /* slide-specific bg overlays */
+  .slide-cover { background: radial-gradient(ellipse at 60% 40%, rgba(30,90,158,0.15) 0%, transparent 70%); }
+  .slide-dark   { background: radial-gradient(ellipse at 30% 60%, rgba(15,168,180,0.06) 0%, transparent 70%); }
+
+  /* big quote slide */
+  .quote-slide { text-align: center; }
+  .quote-mark {
+    font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900;
+    color: var(--teal); opacity: 0.15; line-height: 0.5;
+    display: block; margin-bottom: 20px;
+  }
+  .big-quote {
+    font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 34px);
+    font-style: italic; color: var(--white); line-height: 1.45; max-width: 800px;
+    margin: 0 auto;
+  }
+  .attr { margin-top: 32px; font-size: 12px; color: var(--muted);
+    font-family: 'DM Mono', monospace; letter-spacing: 0.1em; }
+
+  /* animated entrance */
+  .slide.active .anim { animation: fadeUp 0.6s ease both; }
+  .slide.active .anim:nth-child(1) { animation-delay: 0.1s; }
+  .slide.active .anim:nth-child(2) { animation-delay: 0.2s; }
+  .slide.active .anim:nth-child(3) { animation-delay: 0.3s; }
+  .slide.active .anim:nth-child(4) { animation-delay: 0.4s; }
+  .slide.active .anim:nth-child(5) { animation-delay: 0.5s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* pixel whale canvas */
+  #whale-canvas { image-rendering: pixelated; }
+
+  /* progress bar top */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    transition: width 0.5s ease; z-index: 300;
+  }
+
+  /* mobile safety */
+  @media (max-width: 700px) {
+    .slide { padding: 24px; }
+    .two-col, .three-col { grid-template-columns: 1fr; gap: 24px; }
+    .display { font-size: 32px; }
+    .data-row { grid-template-columns: 100px 1fr; }
+    .data-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="stars" id="stars"></div>
+<div class="wave-bar"></div>
+<div class="progress-bar" id="progress"></div>
+
+<div class="attribution">
+  THE NEW SCHOOL © IVAN NINENKO 2026<br>
+  DEVELOPED THROUGH ITERATIVE DIALOGUE WITH AI
+</div>
+
+<!-- DOTS -->
+<div class="dots" id="dots"></div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn">← PREV</button>
+  <span class="slide-counter" id="counter">01 / 17</span>
+  <button class="nav-btn" id="nextBtn">NEXT →</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDES -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="deck" id="deck">
+
+  <!-- 01 COVER -->
+  <div class="slide slide-cover active" data-slide="0">
+    <div class="content">
+      <div class="two-col" style="gap:80px">
+        <div>
+          <div class="eyebrow anim">A Framework for Post-Industrial Schools</div>
+          <h1 class="display anim">The<br><em>New</em><br>School</h1>
+          <div class="divider anim"></div>
+          <p class="subtitle anim" style="max-width:420px">
+            Learn with AI. Test without AI.<br>Live with People. Know Yourself.
+          </p>
+          <div class="anim" style="margin-top:36px">
+            <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.1em">
+              IVAN NINENKO — 2026
+            </span>
+          </div>
+        </div>
+        <div class="anim" style="display:flex;justify-content:center;align-items:center">
+          <canvas id="whale-canvas" width="360" height="360" style="image-rendering:pixelated;width:360px;height:360px"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 SLIDE LIST -->
+  <div class="slide slide-dark" data-slide="1">
+    <div class="content">
+      <div class="eyebrow anim">Contents</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:36px">What this <em>deck</em> covers</h2>
+      <div class="two-col anim" style="gap:40px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">01</span><span style="font-size:14px;color:var(--text)">Cover</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">02</span><span style="font-size:14px;color:var(--text)">Contents</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">03</span><span style="font-size:14px;color:var(--text)">The Problem — Industrial Age School</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">04</span><span style="font-size:14px;color:var(--text)">IB Context — Aspiration vs Structure</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">05</span><span style="font-size:14px;color:var(--text)">Skills of the Future Report — 2017</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">06</span><span style="font-size:14px;color:var(--text)">Three Post-Industrial Shifts</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">07</span><span style="font-size:14px;color:var(--text)">The Three Whales — Overview</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">08</span><span style="font-size:14px;color:var(--text)">Whale One — Learning to Live with AI</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">09</span><span style="font-size:14px;color:var(--text)">Whale Two — Learning to Live with People</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">10</span><span style="font-size:14px;color:var(--text)">Whale Three — Learning to Live with Oneself</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">11</span><span style="font-size:14px;color:var(--text)">The Four-Dimensional Framework</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">12</span><span style="font-size:14px;color:var(--text)">From Scores to Genuine Data</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">13</span><span style="font-size:14px;color:var(--text)">Three Principles for Using Data Well</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">14</span><span style="font-size:14px;color:var(--text)">The Mentor Team — Heart of the System</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">15</span><span style="font-size:14px;color:var(--text)">Quote — Built to Make Good Humans</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">16</span><span style="font-size:14px;color:var(--text)">The Direction — What AI Makes Possible</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--blue)"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">17</span><span style="font-size:14px;color:var(--text)">Quote — The Measure of a School</span></div>
+          <div style="display:flex;gap:16px;padding:12px 0"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:28px">18</span><span style="font-size:14px;color:var(--text)">References &amp; Further Reading</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 THE PROBLEM -->
+  <div class="slide slide-dark" data-slide="2">
+    <div class="content">
+      <div class="eyebrow anim">The Challenge</div>
+      <h2 class="display anim" style="font-size:clamp(28px,4vw,52px);margin-bottom:32px">
+        The school was built<br>for a world that <em>no longer exists</em>
+      </h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">The modern school was designed for the industrial age. Age-grouped cohorts, fixed timetables, a teacher transmitting to rows of students, periodic exams collapsing everything into a single number.</p>
+          <div class="divider" style="margin-top:24px"></div>
+          <p class="body-text" style="margin-top:24px">That world is largely gone. The school remains.</p>
+        </div>
+        <div>
+          <div class="card c1">
+            <div class="card-num">THEN</div>
+            <div class="card-title">Industrial Age</div>
+            <div class="card-sub">Follow instructions reliably. Specialize narrowly. Slot into hierarchies. Produce reliable, compliant graduates.</div>
+          </div>
+          <div class="card c2" style="margin-top:16px">
+            <div class="card-num">NOW</div>
+            <div class="card-title">AI Age</div>
+            <div class="card-sub">Direct AI agents. Build genuine human trust. Know yourself deeply. Navigate infinite possibility with clarity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 IB CONTEXT -->
+  <div class="slide" data-slide="3">
+    <div class="content" style="max-width:900px">
+      <div class="eyebrow anim">IB Context</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,46px);margin-bottom:32px">
+        The aspiration is 21st century.<br>The structure is <em>not</em>.
+      </h2>
+      <p class="body-text anim">The International Baccalaureate represents one of the most serious attempts to move beyond the industrial model. Its emphasis on inquiry, international-mindedness, Theory of Knowledge, and authentic projects reflects a genuine understanding that education should develop whole human beings.</p>
+      <div class="callout-text anim" style="margin-top:36px;max-width:680px">
+        But the IB still runs on the same fundamental chassis: one teacher, one pace, and a final score that compresses months of complex learning into a number between 1 and 7.
+      </div>
+      <p class="body-text anim" style="margin-top:28px">The New School is not a departure from the IB's values. It is finally the infrastructure to fulfil them.</p>
+    </div>
+  </div>
+
+  <!-- 04 SKILLS OF THE FUTURE -->
+  <div class="slide slide-dark" data-slide="4">
+    <div class="content">
+      <div class="eyebrow anim">Research Foundation</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:28px">
+        Skills of the <em>Future</em> — 2017
+      </h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">Co-authored by Ivan Ninenko, published by Global Education Futures &amp; WorldSkills Russia. Years of foresight research. Its conclusions have only grown more relevant since.</p>
+          <a href="https://globaledufutures.org/futureskills" target="_blank" class="link-pill" style="margin-top:20px">SKILLS OF THE FUTURE REPORT</a>
+        </div>
+        <div class="skill-tiers">
+          <div class="tier t1">
+            <div class="tier-label">Context-Specific</div>
+            <div class="tier-text">Skills applied in particular jobs or domains — programming, driving, video blogging</div>
+          </div>
+          <div class="tier t2">
+            <div class="tier-label">Cross-Context</div>
+            <div class="tier-text">Skills transferable across domains — reading, teamwork, time management</div>
+          </div>
+          <div class="tier t3">
+            <div class="tier-label">Existential Skills ✦</div>
+            <div class="tier-text">Goal-setting. Honest self-reflection. The capacity to learn, unlearn, and relearn across a lifetime. The foundation without which everything else sits on sand.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 THREE SHIFTS -->
+  <div class="slide" data-slide="5">
+    <div class="content">
+      <div class="eyebrow anim">The Post-Industrial Shift</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:40px">Three shifts define what <em>comes next</em></h2>
+      <div class="three-col anim">
+        <div class="card c1">
+          <div class="card-num">SHIFT 01</div>
+          <div class="card-title">Everyone Manages AI Agents</div>
+          <div class="card-sub">Even a junior employee will be a manager from day one — setting goals, delegating to AI, judging quality. Schools train students to follow instructions. The new economy requires them to give them.</div>
+        </div>
+        <div class="card c2">
+          <div class="card-num">SHIFT 02</div>
+          <div class="card-title">Human Skills Become Scarce</div>
+          <div class="card-sub">What AI cannot do: genuine relationship, trust, negotiation, leadership, emotional presence. Not soft skills — the hard differentiator. The premium skill of the post-industrial workplace.</div>
+        </div>
+        <div class="card c3">
+          <div class="card-num">SHIFT 03</div>
+          <div class="card-title">Self-Knowledge Is a Prerequisite</div>
+          <div class="card-sub">AI creates infinite possibility. The bottleneck is no longer access — it is clarity. Without self-knowledge, abundance becomes noise. With it, it becomes fuel.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 THREE WHALES OVERVIEW -->
+  <div class="slide slide-dark" data-slide="6">
+    <div class="content" style="max-width:900px">
+      <div class="eyebrow anim">The Framework</div>
+      <h2 class="display anim" style="font-size:clamp(28px,4vw,52px);margin-bottom:12px">The Three <em>Whales</em></h2>
+      <p class="body-text anim" style="margin-bottom:40px;max-width:580px">Three foundational commitments — not separate trends but one transformation seen from three angles.</p>
+      <div class="anim">
+        <div class="whale-card">
+          <div class="whale-num">1</div>
+          <div class="whale-info">
+            <div class="whale-title">Learning to Live with AI</div>
+            <div class="whale-desc">Using AI as a dynamic learning partner; developing AI literacy, not AI dependency. Learn with AI. Test without AI.</div>
+          </div>
+        </div>
+        <div class="whale-card">
+          <div class="whale-num">2</div>
+          <div class="whale-info">
+            <div class="whale-title">Learning to Live with People</div>
+            <div class="whale-desc">Rebuilding deep human connection, collaboration, and social resilience in the age of screens and the anxious generation.</div>
+          </div>
+        </div>
+        <div class="whale-card">
+          <div class="whale-num">3</div>
+          <div class="whale-info">
+            <div class="whale-title">Learning to Live with Oneself</div>
+            <div class="whale-desc">Developing existential skills — self-awareness, emotional regulation, reflection, and the capacity to be alone without being lonely.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 WHALE ONE -->
+  <div class="slide" data-slide="7">
+    <div class="content">
+      <div class="eyebrow anim">Whale One</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:32px">Learning to Live <em>with AI</em></h2>
+      <div class="three-col anim">
+        <div style="padding:24px;border:1px solid var(--mid);border-top:3px solid var(--teal)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:0.2em;margin-bottom:12px">PRACTICE 01</div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:12px">Learn with AI,<br>Test without AI</div>
+          <div class="card-sub">During learning, AI is fully available. For demonstration, put it away and show what has genuinely become yours. Freedom requires accountability.</div>
+        </div>
+        <div style="padding:24px;border:1px solid var(--mid);border-top:3px solid var(--gold)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:0.2em;margin-bottom:12px">PRACTICE 02</div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:12px">Embed AI Across<br>School Life</div>
+          <div class="card-sub">Projects, social challenges, self-reflection. AI advice is not received as truth — it is a prompt for thinking. Literacy, not dependency.</div>
+        </div>
+        <div style="padding:24px;border:1px solid var(--mid);border-top:3px solid var(--coral)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--coral);letter-spacing:0.2em;margin-bottom:12px">PRACTICE 03</div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:12px">Intentional Space<br>Without AI</div>
+          <div class="card-sub">Deliberate protected time with no AI present. Not because AI is bad — because students need to discover who they are without it.</div>
+        </div>
+      </div>
+      <div class="callout-text anim" style="margin-top:36px">
+        We need to know what we are without AI in order to know how to live with it.
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 WHALE TWO -->
+  <div class="slide slide-dark" data-slide="8">
+    <div class="content">
+      <div class="eyebrow anim">Whale Two</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:32px">Learning to Live <em>with People</em></h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">Jonathan Haidt's research in <em>The Anxious Generation</em> documents a collapse in adolescent mental health that correlates closely with the smartphone. Anxiety, depression, and social isolation have surged as screen time displaced free play and real human relationships.</p>
+          <a href="https://en.wikipedia.org/wiki/The_Anxious_Generation" target="_blank" class="link-pill" style="margin-top:16px">THE ANXIOUS GENERATION</a>
+          <p class="body-text" style="margin-top:24px">The capacity to collaborate, to lead, to disagree well — these are learned through experience, not instruction.</p>
+          <div class="callout-text" style="margin-top:24px">
+            AI frees time for people. And it helps us design better experiences for the time we spend together.
+          </div>
+        </div>
+        <div>
+          <div style="margin-bottom:16px;padding:20px 24px;border-left:3px solid var(--teal);background:rgba(10,22,40,0.5)">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);margin-bottom:8px">PROJECTS</div>
+            <div class="card-sub">From nothing to something. The full arc of initiative, planning, struggle, and completion.</div>
+          </div>
+          <div style="margin-bottom:16px;padding:20px 24px;border-left:3px solid var(--gold);background:rgba(10,22,40,0.5)">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">CHALLENGES</div>
+            <div class="card-sub">Real stakes, real teammates. Surface who people are when things get hard.</div>
+          </div>
+          <div style="padding:20px 24px;border-left:3px solid var(--coral);background:rgba(10,22,40,0.5)">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--coral);margin-bottom:8px">GAMES</div>
+            <div class="card-sub">Rules, fairness, how to lose gracefully, how to read other people quickly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 WHALE THREE -->
+  <div class="slide" data-slide="9">
+    <div class="content">
+      <div class="eyebrow anim">Whale Three</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:32px">Learning to Live <em>with Oneself</em></h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">The 2017 Skills of the Future report called them <strong style="color:var(--teal)">existential skills</strong> — the deepest layer: goal-setting, honest self-reflection, and the capacity to learn, unlearn, and relearn across a lifetime.</p>
+          <p class="body-text" style="margin-top:20px">AI has industrialized the noise. A student lacking a strong inner compass will be swept along by whatever is loudest or most fluently written. Self-knowledge is not personal development — it is epistemic survival.</p>
+          <div class="callout-text" style="margin-top:28px">
+            In a world of infinite content and infinite advice, the person who knows themselves is the one who can navigate.
+          </div>
+        </div>
+        <div>
+          <div class="skill-tiers">
+            <div class="tier t3" style="margin-bottom:8px">
+              <div class="tier-label">Reflection as Ritual</div>
+              <div class="tier-text">Weekly mentor meetings + daily journals. Not a reflective unit — a reflective person.</div>
+            </div>
+            <div class="tier t2" style="margin-bottom:8px">
+              <div class="tier-label">Attention as a Discipline</div>
+              <div class="tier-text">Seek rather than scroll. Evaluate rather than absorb. Distinguish content created to inform from content generated to fill space.</div>
+            </div>
+            <div class="tier t1">
+              <div class="tier-label">Emotional Competence</div>
+              <div class="tier-text">Name what you feel. Understand where emotions come from. Be with difficulty rather than escape it.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 4D FRAMEWORK -->
+  <div class="slide slide-dark" data-slide="10">
+    <div class="content">
+      <div class="eyebrow anim">Curricular Foundation</div>
+      <h2 class="display anim" style="font-size:clamp(22px,3vw,40px);margin-bottom:8px">The Four-Dimensional <em>Framework</em></h2>
+      <p class="body-text anim" style="margin-bottom:28px">
+        From the Center for Curriculum Redesign. Traditional schooling is almost entirely confined to Knowledge. The New School covers all four.
+        <a href="https://4dedu.org/4d_framework/" target="_blank" class="link-pill" style="margin-left:8px">4D FRAMEWORK</a>
+      </p>
+      <table class="dim-table anim">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>What It Covers</th>
+            <th>How Cultivated in New School</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Knowledge</td>
+            <td>Traditional disciplines and interdisciplinary topics</td>
+            <td>Mostly delegated to AI-assisted learning</td>
+          </tr>
+          <tr>
+            <td>Skills</td>
+            <td>Creativity, critical thinking, communication, collaboration</td>
+            <td>Developed through human interaction, projects, games</td>
+          </tr>
+          <tr>
+            <td>Character</td>
+            <td>Curiosity, courage, resilience, ethics, leadership, mindfulness</td>
+            <td>Cultivated through mentorship, reflection, community</td>
+          </tr>
+          <tr>
+            <td>Meta-Learning</td>
+            <td>Reflection, learning strategies, growth mindset, self-awareness</td>
+            <td>Central to mentor-team rhythm and journaling</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 11 DATA -->
+  <div class="slide" data-slide="11">
+    <div class="content">
+      <div class="eyebrow anim">From Scores to Data</div>
+      <h2 class="display anim" style="font-size:clamp(22px,3vw,42px);margin-bottom:12px">Grades sort students.<br>Data <em>grows</em> them.</h2>
+      <p class="body-text anim" style="max-width:600px;margin-bottom:28px">A score from 1 to 7 cannot tell us which concepts are genuinely mastered, where a student is ready to accelerate, or what they need tomorrow. AI-assisted learning generates a continuous stream of granular data that even the best assessments never could.</p>
+      <div class="anim">
+        <div class="data-row">
+          <div class="data-dim">KNOWLEDGE</div>
+          <div class="data-cell">Topic mastery maps, concept gaps, retrieval accuracy, time-to-mastery</div>
+          <div class="data-arrow">→</div>
+          <div class="data-cell">Personalize next assignment; trigger expert lesson; identify systemic gaps</div>
+        </div>
+        <div class="data-row">
+          <div class="data-dim">SKILLS</div>
+          <div class="data-cell">Collaboration quality, communication clarity, leadership moments</div>
+          <div class="data-arrow">→</div>
+          <div class="data-cell">Coach mentor conversations; design targeted workshops; track growth</div>
+        </div>
+        <div class="data-row">
+          <div class="data-dim">CHARACTER</div>
+          <div class="data-cell">Resilience signals, initiative patterns, peer support behaviors</div>
+          <div class="data-arrow">→</div>
+          <div class="data-cell">Inform mentor 1-on-1s; recognize growth; flag concerns early</div>
+        </div>
+        <div class="data-row">
+          <div class="data-dim">META-LEARNING</div>
+          <div class="data-cell">Reflection depth, self-assessment accuracy, goal-setting follow-through</div>
+          <div class="data-arrow">→</div>
+          <div class="data-cell">Improve reflection quality; help students understand how they learn</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 DATA PRINCIPLES -->
+  <div class="slide slide-dark" data-slide="12">
+    <div class="content">
+      <div class="eyebrow anim">Data Principles</div>
+      <h2 class="display anim" style="font-size:clamp(22px,3vw,40px);margin-bottom:36px">Three principles for using <em>data well</em></h2>
+      <div class="three-col anim">
+        <div class="card c1">
+          <div class="card-num">PRINCIPLE 01</div>
+          <div class="card-title">AI Democratises Data Science</div>
+          <div class="card-sub">Until recently this required substantial investment. Now a mentor can describe a student's week in plain language and receive structured, actionable insight. Data science available to every school, not just the ones that can afford it.</div>
+        </div>
+        <div class="card c2">
+          <div class="card-num">PRINCIPLE 02</div>
+          <div class="card-title">No Data Is Perfect — And That's Fine</div>
+          <div class="card-sub">Every measurement is a projection. A projection used honestly and with humility is vastly more useful than the near-blindness of a single grade. AI makes these projections richer without changing the need for human judgment.</div>
+        </div>
+        <div class="card c3">
+          <div class="card-num">PRINCIPLE 03</div>
+          <div class="card-title">Starting Now Compounds Over Time</div>
+          <div class="card-sub">Data practices improve with time. The habits of observation and evidence-based decision-making that teachers develop now will become exponentially more powerful as AI grows more capable. The best time was ten years ago. The second best time is now.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 MENTOR TEAM -->
+  <div class="slide" data-slide="13">
+    <div class="content" style="max-width:900px">
+      <div class="eyebrow anim">The Heart of the System</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,48px);margin-bottom:32px">The Mentor <em>Team</em></h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">At the centre of the New School is not a curriculum or a platform. It is a relationship. Each student belongs to a small team of <strong style="color:var(--teal)">12–20 peers</strong> and one mentor — an adult who knows them deeply, tracks growth across all four dimensions, and holds space for regular reflection.</p>
+          <p class="body-text" style="margin-top:20px">The mentor is not a subject teacher. They are the person who notices when a student is struggling before it becomes a crisis.</p>
+        </div>
+        <div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="padding:20px;background:rgba(15,168,180,0.08);border:1px solid var(--teal);border-left:4px solid var(--teal)">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);margin-bottom:8px">DAILY</div>
+              <div class="card-sub">Brief check-in — the living pulse of relationship. Catches what is going wrong early. Gives students a daily anchor of being seen.</div>
+            </div>
+            <div style="padding:20px;background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.4);border-left:4px solid var(--gold)">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">WEEKLY</div>
+              <div class="card-sub">Longer structured reflection — what happened, what was learned, what was hard, what changed. Group becomes genuine community.</div>
+            </div>
+          </div>
+          <div class="callout-text" style="margin-top:24px;font-size:15px">
+            Daily presence, weekly depth — what turns a group of students into a genuine community.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 QUOTE SLIDE -->
+  <div class="slide quote-slide slide-dark" data-slide="14">
+    <div class="content" style="text-align:center">
+      <div class="anim">
+        <span class="quote-mark">"</span>
+      </div>
+      <p class="big-quote anim">
+        The industrial school was built to make productive workers. The new school is built to make good humans — people who can act, think, and connect in the world they inherit.
+      </p>
+    </div>
+  </div>
+
+  <!-- 15 THE DIRECTION -->
+  <div class="slide" data-slide="15">
+    <div class="content" style="max-width:900px">
+      <div class="eyebrow anim">The Direction</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:32px">What AI makes possible is <em>space</em></h2>
+      <div class="two-col anim">
+        <div>
+          <p class="body-text">Space for students to be curious without pressure. Space for real friendships to form. Space for a young person to sit quietly with the question of who they are and what they care about.</p>
+          <p class="body-text" style="margin-top:20px">Traditional schooling has been quietly crowding this space out for generations. The goal of the New School is not a higher score or a more impressive university application.</p>
+          <p class="body-text" style="margin-top:20px">It is a person who knows how to learn, how to be with others, and how to be with themselves.</p>
+        </div>
+        <div>
+          <div class="three-col" style="grid-template-columns:1fr 1fr;gap:16px">
+            <div style="padding:24px;text-align:center;background:rgba(13,37,69,0.6);border:1px solid var(--mid)">
+              <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--teal)">3</div>
+              <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:6px">WHALES</div>
+            </div>
+            <div style="padding:24px;text-align:center;background:rgba(13,37,69,0.6);border:1px solid var(--mid)">
+              <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold)">4D</div>
+              <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:6px">FRAMEWORK</div>
+            </div>
+            <div style="padding:24px;text-align:center;background:rgba(13,37,69,0.6);border:1px solid var(--mid)">
+              <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--coral)">12</div>
+              <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:6px">STUDENTS / MENTOR</div>
+            </div>
+            <div style="padding:24px;text-align:center;background:rgba(13,37,69,0.6);border:1px solid var(--mid)">
+              <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--ice)">∞</div>
+              <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:6px">POTENTIAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 FINAL QUOTE -->
+  <div class="slide quote-slide slide-dark" data-slide="16">
+    <div class="content" style="text-align:center">
+      <div class="anim">
+        <span class="quote-mark">"</span>
+      </div>
+      <p class="big-quote anim">
+        The measure of a school is not the scores students achieve.<br>It is the lives they go on to live.
+      </p>
+    </div>
+  </div>
+
+  <!-- 17 LINKS -->
+  <div class="slide" data-slide="17">
+    <div class="content" style="max-width:800px">
+      <div class="eyebrow anim">References &amp; Sources</div>
+      <h2 class="display anim" style="font-size:clamp(24px,3.5vw,44px);margin-bottom:36px">Further <em>Reading</em></h2>
+      <div style="display:flex;flex-direction:column;gap:20px" class="anim">
+        <div style="padding:28px 32px;border:1px solid var(--mid);border-left:4px solid var(--teal);background:rgba(10,22,40,0.5)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);margin-bottom:10px">CO-AUTHORED BY IVAN NINENKO, 2017</div>
+          <div style="font-size:18px;font-weight:500;color:var(--white);margin-bottom:8px">Skills of the Future</div>
+          <div class="card-sub" style="margin-bottom:12px">How to thrive in the complex new world. Global Education Futures &amp; WorldSkills Russia.</div>
+          <a href="https://globaledufutures.org/futureskills" target="_blank" class="link-pill">GLOBALEDUFUTURES.ORG</a>
+        </div>
+        <div style="padding:28px 32px;border:1px solid var(--mid);border-left:4px solid var(--gold);background:rgba(10,22,40,0.5)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:10px">JONATHAN HAIDT</div>
+          <div style="font-size:18px;font-weight:500;color:var(--white);margin-bottom:8px">The Anxious Generation</div>
+          <div class="card-sub" style="margin-bottom:12px">How the great rewiring of childhood is causing an epidemic of mental illness.</div>
+          <a href="https://en.wikipedia.org/wiki/The_Anxious_Generation" target="_blank" class="link-pill">WIKIPEDIA OVERVIEW</a>
+        </div>
+        <div style="padding:28px 32px;border:1px solid var(--mid);border-left:4px solid var(--coral);background:rgba(10,22,40,0.5)">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--coral);margin-bottom:10px">CENTER FOR CURRICULUM REDESIGN</div>
+          <div style="font-size:18px;font-weight:500;color:var(--white);margin-bottom:8px">Four-Dimensional Education</div>
+          <div class="card-sub" style="margin-bottom:12px">Knowledge, Skills, Character, Meta-Learning — the framework for 21st century education.</div>
+          <a href="https://4dedu.org/4d_framework/" target="_blank" class="link-pill">4DEDU.ORG</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<script>
+// ── CURSOR ──────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mousedown', () => cursor.classList.add('big'));
+document.addEventListener('mouseup',   () => cursor.classList.remove('big'));
+
+// ── STARS ───────────────────────────────────────────────
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() < 0.1 ? 4 : (Math.random() < 0.3 ? 2 : 1);
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%; top:${Math.random()*100}%;
+    background:${Math.random()>0.8 ? '#a8dde8' : '#c8e0f0'};
+    --d:${2+Math.random()*5}s; --delay:${Math.random()*5}s;
+    --min:${0.1+Math.random()*0.3};
+  `;
+  starsEl.appendChild(s);
+}
+
+// ── PIXEL WHALE ─────────────────────────────────────────
+const canvas = document.getElementById('whale-canvas');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+// Pixel art whale grid (0=transparent, 1=body, 2=dark, 3=eye, 4=teal, 5=white/foam)
+const whalePx = [
+  [0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,2,2,1,1,1,2,2,0,0,0,0,0,0,0,0,0],
+  [0,0,0,2,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0],
+  [0,0,2,1,1,1,1,1,1,1,1,1,2,0,0,4,4,4,0,0],
+  [0,2,1,1,1,3,1,1,1,1,1,1,1,2,0,4,4,4,4,0],
+  [0,2,1,1,1,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4],
+  [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,4,4,4,0],
+  [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0],
+  [2,1,1,1,1,5,5,1,1,1,1,1,1,1,1,1,2,0,0,0],
+  [2,1,1,1,5,5,5,5,1,1,1,1,1,1,1,2,0,0,0,0],
+  [2,1,1,1,1,5,5,1,1,1,1,1,1,1,2,2,0,0,0,0],
+  [0,2,1,1,1,1,1,1,1,1,1,1,2,2,0,0,2,0,0,0],
+  [0,0,2,1,1,1,1,1,1,1,2,2,0,0,0,0,2,2,0,0],
+  [0,0,0,2,2,1,1,2,2,2,0,0,0,0,0,0,0,2,2,0],
+  [0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
+];
+
+const colors = {
+  0: null,
+  1: '#1e5a9e',
+  2: '#0a1628',
+  3: '#f0f8ff',
+  4: '#0fa8b4',
+  5: '#d4f0f5',
+};
+
+let whaleTick = 0;
+function drawWhale(offsetY) {
+  ctx.clearRect(0, 0, 280, 280);
+  const px = 14;
+  const startX = 0;
+  const startY = Math.sin(offsetY * 0.02) * 6;
+  for (let r = 0; r < whalePx.length; r++) {
+    for (let c = 0; c < whalePx[r].length; c++) {
+      const v = whalePx[r][c];
+      if (v === 0 || !colors[v]) continue;
+      ctx.fillStyle = colors[v];
+      ctx.fillRect(startX + c * px, startY + 50 + r * px, px, px);
+    }
+  }
+  // bubbles
+  const bubbles = [[180, 80],[190,55],[200,68],[175,40]];
+  bubbles.forEach(([bx, by], i) => {
+    const bo = Math.sin((offsetY + i * 30) * 0.03) * 4;
+    ctx.fillStyle = 'rgba(168, 221, 232, 0.5)';
+    const s = [4,3,2,4][i];
+    ctx.fillRect(bx, by + bo, s, s);
+  });
+}
+
+function animateWhale() {
+  whaleTick++;
+  drawWhale(whaleTick);
+  requestAnimationFrame(animateWhale);
+}
+animateWhale();
+
+// ── SLIDESHOW ────────────────────────────────────────────
+const slides  = Array.from(document.querySelectorAll('.slide'));
+const dotsEl  = document.getElementById('dots');
+const counter = document.getElementById('counter');
+const progress= document.getElementById('progress');
+const total   = slides.length;
+let current   = 0;
+
+// Build dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  if (n === current) return;
+  slides[current].classList.remove('active');
+  slides[current].classList.add('exit');
+  setTimeout(() => slides[current < n ? current : n].classList.remove('exit'), 700);
+  const old = current;
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  setTimeout(() => slides[old].classList.remove('exit'), 700);
+  updateUI();
+}
+
+function updateUI() {
+  const dots = dotsEl.querySelectorAll('.dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  progress.style.width = ((current + 1) / total * 100) + '%';
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); goTo(current - 1); }
+});
+
+// Touch swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
+});
+
+// Link clicks must not bubble to cursor handler
+document.querySelectorAll('a').forEach(a => {
+  a.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  a.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+
+updateUI();
+</script>
+</body>
+</html>
