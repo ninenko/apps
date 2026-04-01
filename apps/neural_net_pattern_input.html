@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Network Pattern Input</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 2rem;
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 4px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab.active {
+    background: #fff;
+    color: #111;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── PAGE 1 ── */
+  h1 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #aaa;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .label-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 200px;
+    margin: 0 auto 6px;
+  }
+
+  .plabel {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    font-family: monospace;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .pixel {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s, transform 0.08s;
+  }
+
+  .pixel:hover { transform: scale(1.04); border-color: #bbb; }
+  .pixel.on { background: #111; border-color: #111; }
+
+  .result {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
+    margin: 1.5rem 0 0.3rem;
+    min-height: 28px;
+    text-align: center;
+  }
+
+  .values {
+    font-size: 12px;
+    color: #aaa;
+    font-family: monospace;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  button {
+    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  button:hover { background: #f5f5f5; }
+  button:active { transform: scale(0.97); }
+
+  /* ── PAGE 2 ── */
+  .net-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  svg#net {
+    width: 100%;
+    height: 340px;
+    display: block;
+  }
+
+  .node-label {
+    font-size: 11px;
+    fill: #aaa;
+    text-anchor: middle;
+    font-family: monospace;
+  }
+
+  .node-circle {
+    stroke-width: 1.5;
+    transition: fill 0.2s, stroke 0.2s;
+  }
+
+  .node-id {
+    font-size: 11px;
+    font-weight: 500;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+
+  .conn {
+    stroke-width: 1.5;
+    transition: stroke 0.2s, opacity 0.2s;
+  }
+
+  .output-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-anchor: start;
+    dominant-baseline: middle;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(0)">Pattern input</button>
+    <button class="tab" onclick="switchTab(1)">Network activation</button>
+  </div>
+
+  <!-- PAGE 1: Pattern input -->
+  <div class="page active" id="page0">
+    <h1>Pattern Input</h1>
+    <div class="label-grid">
+      <div class="plabel">I-1</div><div class="plabel">I-2</div>
+    </div>
+    <div class="grid" id="grid">
+      <div class="pixel" onclick="toggle(0)"></div>
+      <div class="pixel" onclick="toggle(1)"></div>
+      <div class="pixel" onclick="toggle(2)"></div>
+      <div class="pixel" onclick="toggle(3)"></div>
+    </div>
+    <div class="label-grid">
+      <div class="plabel">I-3</div><div class="plabel">I-4</div>
+    </div>
+
+    <div class="result" id="result">Expected output: —</div>
+    <div class="values"><span style="color:#bbb">Input values</span> <span id="values">[0, 0, 0, 0]</span></div>
+
+    <div class="btn-row">
+      <button onclick="reset()">Reset</button>
+      <button onclick="randomize()">Random</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Network activation -->
+  <div class="page" id="page1">
+    <svg id="net" viewBox="0 0 360 340"></svg>
+  </div>
+</div>
+
+<script>
+const state = [0,0,0,0];
+
+// Weights: input->hidden  [H1, H2, H3, H4]
+const W_IH = [
+  [+2, -1, +2, -1],  // I-1
+  [+2, -1, -1, +2],  // I-2
+  [-1, +2, +2, -1],  // I-3
+  [-1, +2, -1, +2],  // I-4
+];
+
+// Weights: hidden->output  [O1, O2]
+const W_HO = [
+  [+1, -1],  // H-1
+  [+1, -1],  // H-2
+  [-1, +1],  // H-3
+  [-1, +1],  // H-4
+];
+
+const THRESH_H = 2.5;
+const THRESH_O = 0.5;
+
+function computeNetwork(s) {
+  const hSum = [0,0,0,0];
+  for (let h = 0; h < 4; h++)
+    for (let i = 0; i < 4; i++)
+      hSum[h] += s[i] * W_IH[i][h];
+  const hActive = hSum.map(v => v > THRESH_H ? 1 : 0);
+
+  const oSum = [0,0];
+  for (let o = 0; o < 2; o++)
+    for (let h = 0; h < 4; h++)
+      oSum[o] += hActive[h] * W_HO[h][o];
+  const oActive = oSum.map(v => v > THRESH_O ? 1 : 0);
+
+  return { hActive, oActive, hSum, oSum };
+}
+
+function expectedOutput(s) {
+  const { oActive } = computeNetwork(s);
+  const sum = s.reduce((a,b)=>a+b,0);
+  if (sum === 0) return '—';
+  if (oActive[0] && oActive[1]) return 'Horizontal! + Vertical!';
+  if (oActive[0]) return 'Horizontal!';
+  if (oActive[1]) return 'Vertical!';
+  return 'Silence';
+}
+
+function toggle(i) { state[i] = state[i] ? 0 : 1; render(); }
+function reset() { state.fill(0); render(); }
+function randomize() { for(let i=0;i<4;i++) state[i]=Math.random()>0.5?1:0; render(); }
+
+function render() {
+  document.querySelectorAll('.pixel').forEach((p,i) => p.classList.toggle('on', state[i]===1));
+  document.getElementById('result').textContent = 'Expected output: ' + expectedOutput(state);
+  document.getElementById('values').textContent = '['+state.join(', ')+']';
+  drawNetwork();
+}
+
+// ── NETWORK DRAWING ──────────────────────────────────────────────
+
+const NODE_R = 18;
+const COLS = { I: 40, H: 160, O: 280 };
+const ROWS = {
+  I: [50, 130, 210, 290],
+  H: [80, 170, 220, 310],  // adjusted spacing
+  O: [130, 230],
+};
+
+// Recompute H rows to be evenly spaced
+ROWS.H = [60, 140, 220, 300];
+ROWS.O = [130, 230];
+
+function nodeColor(active) {
+  return active ? '#111' : '#e8e8e8';
+}
+function nodeStroke(active) {
+  return active ? '#111' : '#ccc';
+}
+function nodeTextColor(active) {
+  return active ? '#fff' : '#aaa';
+}
+function connColor(active, weight) {
+  if (!active) return '#e8e8e8';
+  return weight > 0 ? '#111' : '#999';
+}
+function connDash(weight) {
+  return weight < 0 ? '4,3' : 'none';
+}
+
+function drawNetwork() {
+  const svg = document.getElementById('net');
+  svg.innerHTML = '';
+
+  const net = computeNetwork(state);
+  const { hActive, oActive } = net;
+  const iActive = state;
+
+  const ns = 'http://www.w3.org/2000/svg';
+
+  function el(tag, attrs) {
+    const e = document.createElementNS(ns, tag);
+    for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+    return e;
+  }
+
+  // Draw connections first (behind nodes)
+  // Input -> Hidden
+  for (let i = 0; i < 4; i++) {
+    for (let h = 0; h < 4; h++) {
+      const w = W_IH[i][h];
+      const active = iActive[i] === 1;
+      const line = el('line', {
+        x1: COLS.I + NODE_R, y1: ROWS.I[i],
+        x2: COLS.H - NODE_R, y2: ROWS.H[h],
+        stroke: connColor(active, w),
+        'stroke-width': active ? 2 : 1,
+        'stroke-dasharray': connDash(w),
+        opacity: active ? 1 : 0.3,
+      });
+      svg.appendChild(line);
+    }
+  }
+
+  // Hidden -> Output
+  for (let h = 0; h < 4; h++) {
+    for (let o = 0; o < 2; o++) {
+      const w = W_HO[h][o];
+      const active = hActive[h] && oActive[o];
+      const line = el('line', {
+        x1: COLS.H + NODE_R, y1: ROWS.H[h],
+        x2: COLS.O - NODE_R, y2: ROWS.O[o],
+        stroke: connColor(active, w),
+        'stroke-width': active ? 2 : 1,
+        'stroke-dasharray': connDash(w),
+        opacity: active ? 1 : 0.3,
+      });
+      svg.appendChild(line);
+    }
+  }
+
+  // Draw nodes
+  function drawNode(x, y, label, active) {
+    const g = el('g', {});
+    const c = el('circle', {
+      cx: x, cy: y, r: NODE_R,
+      fill: nodeColor(active),
+      stroke: nodeStroke(active),
+      'stroke-width': 1.5,
+    });
+    const t = el('text', {
+      x, y,
+      fill: nodeTextColor(active),
+      'font-size': 11,
+      'font-family': 'monospace',
+      'font-weight': '500',
+      'text-anchor': 'middle',
+      'dominant-baseline': 'middle',
+    });
+    t.textContent = label;
+    g.appendChild(c);
+    g.appendChild(t);
+    svg.appendChild(g);
+  }
+
+  // Layer labels
+  function layerLabel(x, text) {
+    const t = el('text', {
+      x, y: 16,
+      fill: '#ccc',
+      'font-size': 10,
+      'font-family': 'system-ui, sans-serif',
+      'text-anchor': 'middle',
+      'letter-spacing': '0.05em',
+    });
+    t.textContent = text;
+    svg.appendChild(t);
+  }
+
+  layerLabel(COLS.I, 'INPUT');
+  layerLabel(COLS.H, 'HIDDEN');
+  layerLabel(COLS.O, 'OUTPUT');
+
+  // Input nodes
+  for (let i = 0; i < 4; i++)
+    drawNode(COLS.I, ROWS.I[i], `I-${i+1}`, iActive[i]);
+
+  // Hidden nodes
+  for (let h = 0; h < 4; h++)
+    drawNode(COLS.H, ROWS.H[h], `H-${h+1}`, hActive[h]);
+
+  // Output nodes
+  for (let o = 0; o < 2; o++)
+    drawNode(COLS.O, ROWS.O[o], `O-${o+1}`, oActive[o]);
+
+  // Output labels
+  const outLabels = ['Horizontal!', 'Vertical!'];
+  for (let o = 0; o < 2; o++) {
+    const t = el('text', {
+      x: COLS.O + NODE_R + 8,
+      y: ROWS.O[o],
+      fill: oActive[o] ? '#111' : '#ccc',
+      'font-size': 11,
+      'font-family': 'system-ui, sans-serif',
+      'font-weight': oActive[o] ? '500' : '400',
+      'dominant-baseline': 'middle',
+    });
+    t.textContent = outLabels[o];
+    svg.appendChild(t);
+  }
+}
+
+function switchTab(i) {
+  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+  document.querySelectorAll('.page').forEach((p,j) => p.classList.toggle('active', i===j));
+  if (i===1) drawNetwork();
+}
+
+render();
+</script>
+</body>
+</html>
