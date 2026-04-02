@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Результаты — Нейронауки и эмоциональный интеллект</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f14;
+    --surface: #17171f;
+    --surface2: #1e1e2a;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0eff5;
+    --muted: rgba(240,239,245,0.45);
+    --accent: #7c6cff;
+    --accent2: #b09fff;
+    --gold: #f0c060;
+    --gold2: #f5d48a;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,108,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(240,192,96,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 460px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .header {
+    margin-bottom: 2.5rem;
+  }
+
+  .course-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(124,108,255,0.3);
+    border-radius: 100px;
+    padding: 4px 12px;
+    margin-bottom: 1rem;
+  }
+  .course-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .lookup-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]::placeholder { color: rgba(240,239,245,0.2); font-weight: 400; font-size: 16px; letter-spacing: 0; }
+  input[type="text"]:focus { border-color: var(--accent); }
+
+  .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #6a5af0; }
+  .btn:active { transform: scale(0.97); }
+
+  .error {
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 10px;
+    min-height: 18px;
+    font-weight: 500;
+  }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    animation: fadeUp 0.35s ease both;
+  }
+
+  .result-header {
+    background: linear-gradient(135deg, #1a1830 0%, #1e1e2a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .id-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+  .id-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  .grade-badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .badge-excellent { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
+  .badge-good      { background: rgba(124,108,255,0.15); color: var(--accent2); border: 1px solid rgba(124,108,255,0.25); }
+  .badge-ok        { background: rgba(251,191,36,0.15); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
+  .badge-fail      { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+
+  .sections {
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .section-item { }
+
+  .section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .section-name {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .section-score {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .section-max {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .bar-track {
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.7s cubic-bezier(0.16,1,0.3,1);
+    width: 0;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 1.75rem;
+  }
+
+  .total-row {
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(124,108,255,0.05);
+  }
+
+  .total-left .lbl {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .total-score {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .total-max {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .total-pct {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .midterm-note {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="course-tag">Весна 2026</div>
+    <h1 class="title">Нейронауки и эмоциональный интеллект</h1>
+    <p class="subtitle">Оценка к середине курса&nbsp;— введите свой студенческий ID, чтобы увидеть личные результаты.</p>
+  </div>
+
+  <div class="lookup-card">
+    <label for="id-input">Студенческий ID</label>
+    <div class="input-row">
+      <input type="text" id="id-input" placeholder="" maxlength="6" inputmode="numeric" autocomplete="off" />
+      <button class="btn" onclick="lookup()">Найти</button>
+    </div>
+    <p class="error" id="err-msg"></p>
+  </div>
+
+  <div class="result-card hidden" id="result">
+    <div class="result-header">
+      <div>
+        <div class="id-label">ID студента</div>
+        <div class="id-value" id="r-id"></div>
+      </div>
+      <div class="grade-badge" id="r-badge"></div>
+    </div>
+
+    <div class="sections">
+      <div class="section-item">
+        <div class="section-top">
+          <span class="section-name">Тесты</span>
+          <span class="section-score" id="r-tests"></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="bar-tests" style="background: var(--green);"></div></div>
+      </div>
+      <div class="section-item">
+        <div class="section-top">
+          <span class="section-name">Посещаемость <span class="section-max">/ 5 баллов</span></span>
+          <span class="section-score" id="r-att"></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="bar-att" style="background: var(--accent2);"></div></div>
+      </div>
+      <div class="section-item">
+        <div class="section-top">
+          <span class="section-name">Промежуточный экзамен <span class="section-max">/ 20 баллов</span></span>
+          <span class="section-score" id="r-mid"></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="bar-mid" style="background: var(--gold);"></div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="total-row">
+      <div class="total-left">
+        <div class="lbl">Итого</div>
+        <div><span class="total-score" id="r-total"></span><span class="total-max"> / 40</span></div>
+      </div>
+      <div class="total-pct" id="r-pct"></div>
+    </div>
+
+    <p class="midterm-note">Промежуточная оценка — итоговые баллы могут измениться.</p>
+  </div>
+</div>
+
+<script>
+const data = {
+  1592:{tests:95.17,att:100,mid:100,total:39,pct:98},
+  1533:{tests:97.67,att:89, mid:100,total:39,pct:98},
+  1989:{tests:85.67,att:100,mid:89, total:36,pct:90},
+  1876:{tests:92.67,att:100,mid:97, total:38,pct:95},
+  1769:{tests:92.33,att:100,mid:100,total:39,pct:98},
+  2057:{tests:84.83,att:100,mid:100,total:38,pct:95},
+  1831:{tests:75.17,att:89, mid:95, total:35,pct:88},
+  2062:{tests:57.83,att:78, mid:0,  total:13,pct:33},
+  1543:{tests:92.83,att:100,mid:90, total:37,pct:93},
+  1477:{tests:87.67,att:100,mid:85, total:35,pct:88},
+  1481:{tests:96.50,att:100,mid:98, total:39,pct:98},
+  1654:{tests:87.83,att:100,mid:89, total:36,pct:90},
+  1622:{tests:92.67,att:89, mid:100,total:38,pct:95},
+  1608:{tests:95.17,att:100,mid:100,total:39,pct:98},
+  1463:{tests:90.33,att:100,mid:70, total:33,pct:83},
+  1455:{tests:97.67,att:100,mid:100,total:40,pct:100},
+  1710:{tests:39.33,att:100,mid:78, total:27,pct:68},
+  1488:{tests:100.0,att:100,mid:96, total:39,pct:98},
+  1719:{tests:76.17,att:100,mid:95, total:35,pct:88},
+  1964:{tests:80.67,att:100,mid:85, total:34,pct:85},
+  1452:{tests:93.00,att:100,mid:93, total:38,pct:95},
+  1740:{tests:82.00,att:100,mid:75, total:32,pct:80},
+  1255:"1592"
+};
+
+function getBadge(pct) {
+  if (pct >= 90) return {text:"Отлично", cls:"badge-excellent"};
+  if (pct >= 75) return {text:"Хорошо", cls:"badge-good"};
+  if (pct >= 60) return {text:"Удовл.", cls:"badge-ok"};
+  return {text:"Слабо", cls:"badge-fail"};
+}
+
+function lookup() {
+  const raw = document.getElementById('id-input').value.trim();
+  const err = document.getElementById('err-msg');
+  const res = document.getElementById('result');
+  err.textContent = '';
+
+  if (!raw) { err.textContent = 'Введите студенческий ID.'; return; }
+  let id = parseInt(raw);
+  if (isNaN(id)) { err.textContent = 'ID должен быть числом.'; return; }
+
+  let entry = data[id];
+  if (typeof entry === 'string') entry = data[parseInt(entry)];
+  if (!entry) { err.textContent = 'Запись не найдена. Проверьте ID и попробуйте снова.'; res.classList.add('hidden'); return; }
+
+  const testsPts = Math.round(entry.tests / 100 * 15);
+  const testsPct = Math.round(entry.tests);
+  const attPts = Math.round(entry.att / 100 * 5);
+  const attPct = Math.round(entry.att);
+  const midPct = Math.round(entry.mid / 20 * 100);
+
+  document.getElementById('r-id').textContent = id;
+  document.getElementById('r-tests').textContent = testsPts + ' б. / ' + testsPct + '%';
+  document.getElementById('r-att').textContent = attPts + ' б. / ' + attPct + '%';
+  document.getElementById('r-mid').textContent = entry.mid + ' б. / ' + midPct + '%';
+  document.getElementById('r-total').textContent = entry.total;
+  document.getElementById('r-pct').textContent = entry.pct + '%';
+
+  const b = getBadge(entry.pct);
+  const badgeEl = document.getElementById('r-badge');
+  badgeEl.textContent = b.text;
+  badgeEl.className = 'grade-badge ' + b.cls;
+
+  res.classList.remove('hidden');
+
+  setTimeout(() => {
+    document.getElementById('bar-tests').style.width = Math.min(entry.tests,100) + '%';
+    document.getElementById('bar-att').style.width = entry.att + '%';
+    document.getElementById('bar-mid').style.width = (entry.mid / 20 * 100) + '%';
+  }, 50);
+}
+
+document.getElementById('id-input').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
+</script>
+</body>
+</html>
