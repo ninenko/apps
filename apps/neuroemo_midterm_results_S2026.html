@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Результаты — Нейронауки и эмоциональный интеллект</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #17171f;
+    --surface2: #1e1e2a;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0eff5;
+    --muted: rgba(240,239,245,0.45);
+    --accent: #7c6cff;
+    --accent2: #b09fff;
+    --gold: #f0c060;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --radius: 16px;
+  }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,108,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(240,192,96,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container { width: 100%; max-width: 500px; animation: fadeUp 0.5s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .header { margin-bottom: 2.5rem; }
+  .course-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent2); border: 1px solid rgba(124,108,255,0.3);
+    border-radius: 100px; padding: 4px 12px; margin-bottom: 1rem;
+  }
+  .course-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; line-height: 1.25;
+    color: var(--text); margin-bottom: 0.5rem;
+  }
+  .subtitle { font-size: 13px; color: var(--muted); font-weight: 400; line-height: 1.6; }
+  .lookup-card {
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem;
+  }
+  label {
+    display: block; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .input-row { display: flex; gap: 10px; }
+  input[type="text"] {
+    flex: 1; background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 10px; color: var(--text); font-family: 'Manrope', sans-serif;
+    font-size: 20px; font-weight: 600; letter-spacing: 0.06em;
+    padding: 12px 16px; outline: none; transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--accent); }
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+    padding: 0 20px; cursor: pointer; transition: background 0.2s, transform 0.1s;
+  }
+  .btn:hover { background: #6a5af0; }
+  .btn:active { transform: scale(0.97); }
+  .error { font-size: 13px; color: var(--red); margin-top: 10px; min-height: 18px; font-weight: 500; }
+
+  /* Result card */
+  .result-card {
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: var(--radius); overflow: hidden;
+    animation: fadeUp 0.35s ease both;
+  }
+  .result-header {
+    background: linear-gradient(135deg, #1a1830 0%, #1e1e2a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .id-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .id-value { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
+
+  /* Sections */
+  .section-block {
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.75rem; cursor: pointer; user-select: none;
+    transition: background 0.15s;
+  }
+  .section-header:hover { background: rgba(255,255,255,0.03); }
+  .section-title-wrap { display: flex; align-items: center; gap: 10px; }
+  .section-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .section-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .section-max-label { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .section-score-wrap { display: flex; align-items: center; gap: 10px; }
+  .section-score { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .chevron { font-size: 12px; color: var(--muted); transition: transform 0.25s; }
+  .chevron.open { transform: rotate(180deg); }
+  .bar-row { padding: 0 1.75rem 10px; }
+  .bar-track { height: 4px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; transition: width 0.7s cubic-bezier(0.16,1,0.3,1); width: 0; }
+
+  /* Detail panels */
+  .detail-panel {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1);
+    background: rgba(0,0,0,0.2);
+  }
+  .detail-panel.open { max-height: 600px; }
+  .detail-inner { padding: 0.75rem 1.75rem 1.25rem; }
+  .detail-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label { font-size: 13px; color: var(--muted); }
+  .detail-val { font-size: 13px; font-weight: 600; color: var(--text); }
+  .detail-pct { font-size: 11px; color: var(--muted); margin-left: 6px; }
+
+  /* Midterm sub-rows */
+  .mid-sub { display: flex; flex-direction: column; gap: 2px; }
+  .mid-sub-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .mid-sub-row:last-child { border-bottom: none; }
+  .mid-sub-label { font-size: 13px; color: var(--muted); }
+  .mid-sub-val { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  /* Total */
+  .total-row {
+    padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(124,108,255,0.05);
+  }
+  .total-left .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
+  .total-score { font-size: 32px; font-weight: 800; color: var(--text); line-height: 1; }
+  .total-max { font-size: 15px; font-weight: 400; color: var(--muted); }
+  .total-pct { font-size: 36px; font-weight: 800; color: var(--gold); line-height: 1; }
+  .midterm-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 1rem; font-style: italic; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="course-tag">Весна 2026</div>
+    <h1 class="title">Нейронауки и эмоциональный интеллект</h1>
+    <p class="subtitle">Оценка к середине курса&nbsp;— введите свой студенческий ID, чтобы увидеть личные результаты.</p>
+  </div>
+
+  <div class="lookup-card">
+    <label for="id-input">Студенческий ID</label>
+    <div class="input-row">
+      <input type="text" id="id-input" placeholder="" maxlength="6" inputmode="numeric" autocomplete="off" />
+      <button class="btn" onclick="lookup()">Найти</button>
+    </div>
+    <p class="error" id="err-msg"></p>
+  </div>
+
+  <div class="result-card hidden" id="result">
+    <div class="result-header">
+      <div>
+        <div class="id-label">ID студента</div>
+        <div class="id-value" id="r-id"></div>
+      </div>
+    </div>
+
+    <!-- TESTS -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('tests-detail', this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--green);"></div>
+          <span class="section-name">Тесты <span class="section-max-label">/ 15 б.</span></span>
+        </div>
+        <div class="section-score-wrap">
+          <span class="section-score" id="r-tests"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-tests" style="background:var(--green);"></div></div></div>
+      <div class="detail-panel" id="tests-detail">
+        <div class="detail-inner" id="tests-detail-inner"></div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('att-detail', this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--accent2);"></div>
+          <span class="section-name">Посещаемость <span class="section-max-label">/ 5 б.</span></span>
+        </div>
+        <div class="section-score-wrap">
+          <span class="section-score" id="r-att"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-att" style="background:var(--accent2);"></div></div></div>
+      <div class="detail-panel" id="att-detail">
+        <div class="detail-inner" id="att-detail-inner"></div>
+      </div>
+    </div>
+
+    <!-- MIDTERM -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('mid-detail', this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--gold);"></div>
+          <span class="section-name">Промежуточный экзамен <span class="section-max-label">/ 20 б.</span></span>
+        </div>
+        <div class="section-score-wrap">
+          <span class="section-score" id="r-mid"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-mid" style="background:var(--gold);"></div></div></div>
+      <div class="detail-panel" id="mid-detail">
+        <div class="detail-inner" id="mid-detail-inner"></div>
+      </div>
+    </div>
+
+    <div class="total-row">
+      <div class="total-left">
+        <div class="lbl">Итого</div>
+        <div><span class="total-score" id="r-total"></span><span class="total-max"> / 40</span></div>
+      </div>
+      <div class="total-pct" id="r-pct"></div>
+    </div>
+
+    <p class="midterm-note">Промежуточная оценка — итоговые баллы могут измениться.</p>
+  </div>
+</div>
+
+<script>
+const data = {
+  1592:{tests:[100,71,100,100,100,100], att:100, midTest:80, midOpen:30, midTotal:100, total:39, pct:98},
+  1533:{tests:[100,100,100,100,86,100], att:89,  midTest:80, midOpen:30, midTotal:100, total:39, pct:98},
+  1989:{tests:[100,71,86,71,86,100],   att:100, midTest:68, midOpen:21, midTotal:89,  total:36, pct:90},
+  1876:{tests:[100,70,86,100,100,100], att:100, midTest:76, midOpen:21, midTotal:97,  total:38, pct:95},
+  1769:{tests:[83,71,100,100,100,100], att:100, midTest:80, midOpen:21, midTotal:100, total:39, pct:98},
+  2057:{tests:[67,70,86,86,100,100],   att:100, midTest:80, midOpen:20, midTotal:100, total:38, pct:95},
+  1831:{tests:[83,86,71,70,71,70],     att:89,  midTest:72, midOpen:23, midTotal:95,  total:35, pct:88},
+  2062:{tests:[33,86,0,57,71,100],     att:78,  midTest:null, midOpen:null, midTotal:0,   total:13, pct:33},
+  1543:{tests:[100,100,86,71,100,100], att:100, midTest:72, midOpen:18, midTotal:90,  total:37, pct:93},
+  1477:{tests:[69,100,100,100,71,86],  att:100, midTest:60, midOpen:25, midTotal:85,  total:35, pct:88},
+  1481:{tests:[null,null,100,100,100,86], att:100, midTest:76, midOpen:22, midTotal:98,  total:39, pct:98},
+  1654:{tests:[100,70,100,71,86,100],  att:100, midTest:68, midOpen:21, midTotal:89,  total:36, pct:90},
+  1622:{tests:[100,100,100,100,86,70], att:89,  midTest:80, midOpen:25, midTotal:100, total:38, pct:95},
+  1608:{tests:[100,71,100,100,100,100],att:100, midTest:80, midOpen:28, midTotal:100, total:39, pct:98},
+  1463:{tests:[100,70,100,100,86,86],  att:100, midTest:60, midOpen:16, midTotal:76,  total:33, pct:83},
+  1455:{tests:[100,100,100,100,86,100],att:100, midTest:80, midOpen:24, midTotal:100, total:40, pct:100},
+  1710:{tests:[35,29,57,29,29,57],     att:100, midTest:60, midOpen:18, midTotal:78,  total:27, pct:68},
+  1488:{tests:[0,14,0,0,100,100],      att:100, midTest:72, midOpen:24, midTotal:96,  total:39, pct:98},
+  1719:{tests:[0,71,100,100,86,100],   att:100, midTest:72, midOpen:23, midTotal:95,  total:35, pct:88},
+  1964:{tests:[85,71,100,71,86,71],    att:100, midTest:64, midOpen:21, midTotal:85,  total:34, pct:85},
+  1452:{tests:[null,null,86,100,100,86],att:100, midTest:72, midOpen:21, midTotal:93,  total:38, pct:95},
+  1740:{tests:[35,57,100,100,100,100], att:100, midTest:56, midOpen:19, midTotal:75,  total:32, pct:80},
+  1255: "1592"
+};
+
+const testNames = [
+  "Тест 1: Нейрон (05 февр.)",
+  "Тест 2: Нейромедиаторы (12 февр.)",
+  "Тест 3: Триединый мозг (19 февр.)",
+  "Тест 4: ЦНС и ПНС (26 февр.)",
+  "Тест 5: Разделы мозга (05 мар.)",
+  "Тест 6: Эндокринная система (12 мар.)"
+];
+
+function toggle(id, header) {
+  const panel = document.getElementById(id);
+  const chev = header.querySelector('.chevron');
+  panel.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function pctColor(p) {
+  if (p === null) return 'var(--muted)';
+  if (p >= 80) return 'var(--green)';
+  if (p >= 60) return 'var(--amber)';
+  return 'var(--red)';
+}
+
+function lookup() {
+  const raw = document.getElementById('id-input').value.trim();
+  const err = document.getElementById('err-msg');
+  const res = document.getElementById('result');
+  err.textContent = '';
+
+  if (!raw) { err.textContent = 'Введите студенческий ID.'; return; }
+  let id = parseInt(raw);
+  if (isNaN(id)) { err.textContent = 'ID должен быть числом.'; return; }
+
+  let entry = data[id];
+  if (typeof entry === 'string') entry = data[parseInt(entry)];
+  if (!entry) { err.textContent = 'Запись не найдена. Проверьте ID и попробуйте снова.'; res.classList.add('hidden'); return; }
+
+  // Computed
+  const testsAvg = entry.tests.filter(v => v !== null);
+  const testsPctAvg = Math.round(testsAvg.reduce((a,b)=>a+b,0)/testsAvg.length);
+  const testsPts = Math.round(testsPctAvg / 100 * 15);
+  const attPts = Math.round(entry.att / 100 * 5);
+  const attPct = Math.round(entry.att);
+  const midPts = Math.round(entry.midTotal / 100 * 20);
+  const midPct = Math.round(entry.midTotal);
+
+  document.getElementById('r-id').textContent = id;
+  document.getElementById('r-tests').textContent = testsPts + ' б. / ' + testsPctAvg + '%';
+  document.getElementById('r-att').textContent = attPts + ' б. / ' + attPct + '%';
+  document.getElementById('r-mid').textContent = midPts + ' б. / ' + midPct + '%';
+  document.getElementById('r-total').textContent = entry.total;
+  document.getElementById('r-pct').textContent = entry.pct + '%';
+
+  res.classList.remove('hidden');
+
+  setTimeout(() => {
+    document.getElementById('bar-tests').style.width = testsPctAvg + '%';
+    document.getElementById('bar-att').style.width = entry.att + '%';
+    document.getElementById('bar-mid').style.width = entry.midTotal + '%';
+  }, 50);
+
+  // Tests detail
+  let testsHtml = '';
+  entry.tests.forEach((v, i) => {
+    const disp = v === null ? '—' : v + '%';
+    const col = v === null ? 'var(--muted)' : pctColor(v);
+    testsHtml += `<div class="detail-row"><span class="detail-label">${testNames[i]}</span><span class="detail-val" style="color:${col}">${disp}</span></div>`;
+  });
+  document.getElementById('tests-detail-inner').innerHTML = testsHtml;
+
+  // Att detail
+  const attDisp = entry.att + '%';
+  document.getElementById('att-detail-inner').innerHTML =
+    `<div class="detail-row"><span class="detail-label">Процент посещаемости</span><span class="detail-val" style="color:${pctColor(entry.att)}">${attDisp}</span></div>
+     <div class="detail-row"><span class="detail-label">Баллы за посещаемость</span><span class="detail-val">${attPts} / 5</span></div>`;
+
+  // Midterm detail
+  let midHtml = '';
+  if (entry.midTest === null) {
+    midHtml = `<div class="detail-row"><span class="detail-label">Не явился на экзамен</span><span class="detail-val" style="color:var(--red)">—</span></div>`;
+  } else {
+    const tPct = Math.round(entry.midTest / 80 * 100);
+    const oPct = Math.round(entry.midOpen / 30 * 100);
+    midHtml = `
+      <div class="detail-row"><span class="detail-label">Тестовая часть (макс. 80)</span><span class="detail-val" style="color:${pctColor(tPct)}">${entry.midTest} б. / ${tPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Открытые вопросы (макс. 30)</span><span class="detail-val" style="color:${pctColor(oPct)}">${entry.midOpen} б. / ${oPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Итого (макс. 100)</span><span class="detail-val">${entry.midTotal} б. / ${midPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Зачтено в итоговый балл</span><span class="detail-val">${midPts} / 20</span></div>`;
+  }
+  document.getElementById('mid-detail-inner').innerHTML = midHtml;
+}
+
+document.getElementById('id-input').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
+</script>
+</body>
+</html>
