@@ -1518,34 +1518,53 @@ body::before {
 
 <!-- NAV -->
 <div class="nav">
-  <button class="nav-btn" onclick="prevSlide()">◄ НАЗАД</button>
-  <span class="nav-counter" id="navCounter">1 / 9</span>
-  <button class="nav-btn" onclick="nextSlide()">ВПЕРЁД ►</button>
+  <button class="nav-btn" id="btnPrev">◄ НАЗАД</button>
+  <span class="nav-counter" id="navCounter">1 / 15</span>
+  <button class="nav-btn" id="btnNext">ВПЕРЁД ►</button>
 </div>
 
 <script>
 // ══ SLIDE NAVIGATION ══
-const slides = document.querySelectorAll('.slide');
-let cur = 0;
+var slides = [];
+var cur = 0;
+
+function initSlides() {
+  slides = Array.from(document.querySelectorAll('.slide'));
+  cur = 0;
+  updateCounter();
+
+  document.getElementById('btnPrev').addEventListener('click', prevSlide);
+  document.getElementById('btnNext').addEventListener('click', nextSlide);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
+  });
+}
+
+function updateCounter() {
+  var el = document.getElementById('navCounter');
+  if (el) el.textContent = (cur + 1) + ' / ' + slides.length;
+}
 
 function goTo(n) {
+  if (!slides.length) return;
   slides[cur].classList.remove('active');
   cur = (n + slides.length) % slides.length;
   slides[cur].classList.add('active');
-  document.getElementById('navCounter').textContent = (cur+1) + ' / ' + slides.length;
-  // trigger XP bar animation when slide 7 becomes active
-  if (cur === 6) setTimeout(() => animateXP(), 300);
-  // init snakes when navigating to that slide
-  const snakesSlide = document.getElementById('s5b');
-  if (snakesSlide && slides[cur] === snakesSlide) snakesInit();
+  updateCounter();
+  // XP bar on progress slide
+  var xpSlide = document.getElementById('s6');
+  if (xpSlide && slides[cur] === xpSlide) setTimeout(function(){ animateXP && animateXP(); }, 300);
+  // Init snakes when on that slide
+  var snakesSlide = document.getElementById('s5b');
+  if (snakesSlide && slides[cur] === snakesSlide) { if (typeof snakesInit === 'function') snakesInit(); }
 }
+
 function nextSlide() { goTo(cur + 1); }
 function prevSlide() { goTo(cur - 1); }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
-});
+document.addEventListener('DOMContentLoaded', initSlides);
 
 // ══ КНБ GAME ══
 const KNB_MODE = {
@@ -1580,21 +1599,4 @@ function buildKNB() {
     const beaten = mode.options.find(o => o.id === opt.beats);
     const div = document.createElement('div');
     div.className = 'knb-rule-item';
-    div.innerHTML = `${opt.emoji} ${opt.label} <span>→</span> ${beaten.emoji} ${beaten.label}`;
-    rulesEl.appendChild(div);
-  });
-}
-
-function selectKNB(id) {
-  knbPlayerChoice = id;
-  document.querySelectorAll('.knb-choice').forEach(el => {
-    el.classList.toggle('selected', el.dataset.id === id);
-  });
-}
-
-function knbFight() {
-  if (!knbPlayerChoice) {
-    document.getElementById('knbResult').innerHTML = '<div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ<br>СНАЧАЛА!</div>';
-    return;
-  }
-  const cpuOpt = mode.options[Math.floor(Math.random() * m
+    div.innerHTML = `${opt.emoji} ${opt.label} <span>→</span> ${beaten.emoji} ${beaten.l
