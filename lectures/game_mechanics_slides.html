@@ -846,48 +846,60 @@ body::before {
     font-family: var(--pixel); font-size: clamp(0.6rem,1.2vw,0.85rem);
     line-height: 2; color: var(--green); margin-bottom: 4px; text-align: center;
   }
-  .snakes-sub { font-size: 0.88rem; color: var(--muted); font-weight: 600; margin-bottom: 14px; text-align: center; }
-  .snakes-layout { display: flex; gap: 16px; width: 100%; max-width: 860px; align-items: flex-start; }
-  .snakes-left { flex-shrink: 0; }
-  .snakes-board-wrap { display: flex; gap: 12px; align-items: flex-start; }
-  #snakesCanvas { border: 3px solid var(--border); box-shadow: var(--shadow); image-rendering: pixelated; }
-  .snakes-controls { display: flex; flex-direction: column; gap: 8px; width: 150px; }
+  .snakes-sub { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-align: center; }
+  .snakes-layout { display: flex; gap: 12px; width: 100%; max-width: 860px; align-items: flex-start; }
+  .snakes-left { flex-shrink: 0; display: flex; gap: 10px; align-items: flex-start; }
+  #snakesCanvas { border: 3px solid var(--border); box-shadow: var(--shadow); image-rendering: pixelated; display: block; }
+  .snakes-controls { display: flex; flex-direction: column; gap: 5px; width: 150px; }
   .snakes-player { font-family: var(--pixel); font-size: 0.38rem; line-height: 2; color: var(--muted); }
   .snakes-btn {
-    font-family: var(--pixel); font-size: 0.45rem; line-height: 2;
+    font-family: var(--pixel); font-size: 0.42rem; line-height: 2;
     background: var(--green); color: white; border: 3px solid var(--border);
-    box-shadow: var(--shadow-sm); padding: 8px; cursor: pointer; transition: transform 0.1s;
+    box-shadow: var(--shadow-sm); padding: 7px 10px; cursor: pointer; transition: transform 0.1s;
+    width: 100%;
   }
   .snakes-btn:hover { background: #136b2e; }
   .snakes-btn:active { transform: translate(2px,2px); box-shadow: none; }
   .snakes-btn:disabled { background: #aaa; cursor: default; }
   .snakes-question-area {
     background: var(--bg2); border: 2px solid var(--border);
-    box-shadow: var(--shadow-sm); padding: 8px;
+    box-shadow: var(--shadow-sm); padding: 7px;
   }
-  .snakes-q { font-size: 0.75rem; font-weight: 700; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
-  .snakes-answers { display: flex; flex-direction: column; gap: 4px; }
+  .snakes-q { font-size: 0.72rem; font-weight: 700; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+  .snakes-answers { display: flex; flex-direction: column; gap: 3px; }
   .snakes-ans {
-    font-size: 0.72rem; font-weight: 700; padding: 4px 6px;
+    font-size: 0.7rem; font-weight: 700; padding: 4px 6px;
     background: var(--panel); border: 2px solid var(--border);
     cursor: pointer; transition: background 0.1s;
   }
   .snakes-ans:hover { background: var(--cyan); color: white; }
-  .snakes-log { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); line-height: 1.5; min-height: 40px; }
-  .snakes-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-  .snakes-rules-box, .snakes-tip-box, .snakes-subj-box {
-    background: var(--panel); border: 3px solid var(--border); box-shadow: var(--shadow); padding: 12px 14px;
+  .snakes-log {
+    font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    line-height: 1.4; min-height: 36px;
+    background: var(--bg2); border: 2px solid var(--border); padding: 6px;
+  }
+  .snakes-right { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .snakes-info-row { display: flex; gap: 8px; align-items: flex-start; }
+  .snakes-rules-box { flex-shrink: 0; }
+  .snakes-rules-box, .snakes-tip-box, .snakes-subj-box, .snakes-wiki-box {
+    background: var(--panel); border: 3px solid var(--border); box-shadow: var(--shadow); padding: 7px 10px;
   }
   .snakes-rules-title, .snakes-tip-title, .snakes-subj-title {
-    font-family: var(--pixel); font-size: 0.4rem; line-height: 2; margin-bottom: 6px;
+    font-family: var(--pixel); font-size: 0.38rem; line-height: 2; margin-bottom: 4px;
   }
   .snakes-rules-title { color: var(--green); }
   .snakes-tip-title { color: var(--gold); }
   .snakes-subj-title { color: var(--purple); }
-  .snakes-rule { font-size: 0.78rem; font-weight: 600; color: var(--text); padding: 2px 0; }
-  .snakes-tip-text { font-size: 0.82rem; font-weight: 600; color: var(--muted); line-height: 1.5; }
-  .snakes-subj-row { font-size: 0.78rem; font-weight: 600; color: var(--text); padding: 2px 0; border-bottom: 1px dashed #ddd; }
+  .snakes-rule { font-size: 0.76rem; font-weight: 600; color: var(--text); padding: 1px 0; }
+  .snakes-tip-text { font-size: 0.78rem; font-weight: 600; color: var(--muted); line-height: 1.5; }
+  .snakes-subj-row { font-size: 0.76rem; font-weight: 600; color: var(--text); padding: 2px 0; border-bottom: 1px dashed #ddd; }
   .snakes-subj-row:last-child { border: none; }
+  .snakes-wiki-link {
+    display: inline-block; margin-top: 6px;
+    font-size: 0.76rem; font-weight: 700; color: var(--cyan);
+    text-decoration: none; border-bottom: 2px solid var(--cyan);
+  }
+  .snakes-wiki-link:hover { color: var(--text); border-color: var(--text); }
 </style>
 </head>
 <body>
@@ -1289,41 +1301,50 @@ body::before {
     <div class="snakes-title">4.4 ЗМЕИ И ЛЕСТНИЦЫ</div>
     <div class="snakes-sub">Повторение · закрепление · работа с ошибкой без стресса</div>
     <div class="snakes-layout">
+      <!-- LEFT: board + controls -->
       <div class="snakes-left">
-        <!-- Interactive board -->
-        <div class="snakes-board-wrap">
-          <canvas id="snakesCanvas" width="340" height="340"></canvas>
-          <div class="snakes-controls">
-            <div class="snakes-player" id="snakesPlayerInfo">Ход: <span id="snakesPlayerName">Игрок 1</span></div>
-            <button class="snakes-btn" id="snakesRollBtn" onclick="snakesRoll()">🎲 БРОСИТЬ КУБ</button>
-            <div class="snakes-question-area" id="snakesQArea" style="display:none">
-              <div class="snakes-q" id="snakesQ"></div>
-              <div class="snakes-answers" id="snakesAnswers"></div>
-            </div>
-            <div class="snakes-log" id="snakesLog"></div>
+        <canvas id="snakesCanvas" width="240" height="240"></canvas>
+        <div class="snakes-controls">
+          <div class="snakes-player">Ход: <span id="snakesPlayerName">Игрок 1</span></div>
+          <button class="snakes-btn" id="snakesRollBtn" onclick="snakesRoll()">🎲 БРОСИТЬ КУБ</button>
+          <div class="snakes-question-area" id="snakesQArea" style="display:none">
+            <div class="snakes-q" id="snakesQ"></div>
+            <div class="snakes-answers" id="snakesAnswers"></div>
           </div>
+          <div class="snakes-log" id="snakesLog">Нажми кубик чтобы начать</div>
         </div>
       </div>
+      <!-- RIGHT: two columns of info -->
       <div class="snakes-right">
-        <div class="snakes-rules-box">
-          <div class="snakes-rules-title">📋 ПРАВИЛА</div>
-          <div class="snakes-rule">🎲 Бросаешь кубик — узнаёшь клетку</div>
-          <div class="snakes-rule">❓ На клетке — вопрос по теме</div>
-          <div class="snakes-rule">✅ Правильно → идёшь вперёд</div>
-          <div class="snakes-rule">🪜 Лестница → прыжок вперёд</div>
-          <div class="snakes-rule">🐍 Змея → откат назад</div>
-          <div class="snakes-rule">🏆 Цель — клетка 25</div>
-        </div>
-        <div class="snakes-tip-box">
-          <div class="snakes-tip-title">💡 КЛЮЧЕВОЕ УЛУЧШЕНИЕ</div>
-          <div class="snakes-tip-text">Случайность определяет <strong>клетку</strong>. Знание определяет <strong>результат</strong>. Откат — часть игры, не провал.</div>
-        </div>
-        <div class="snakes-subj-box">
-          <div class="snakes-subj-title">📚 ПРИМЕНЕНИЕ</div>
-          <div class="snakes-subj-row"><b>История</b> — клетки по хронологии</div>
-          <div class="snakes-subj-row"><b>Язык</b> — правила орфографии</div>
-          <div class="snakes-subj-row"><b>Биология</b> — этапы процесса</div>
-          <div class="snakes-subj-row"><b>Любой предмет</b> — поле на доске, без технологий</div>
+        <div class="snakes-info-row">
+          <div class="snakes-rules-box">
+            <div class="snakes-rules-title">📋 ПРАВИЛА</div>
+            <div class="snakes-rule">🎲 Кубик → клетка на поле</div>
+            <div class="snakes-rule">❓ На клетке — вопрос по теме</div>
+            <div class="snakes-rule">✅ Верно → идёшь дальше</div>
+            <div class="snakes-rule">❌ Неверно → откат на 2 клетки</div>
+            <div class="snakes-rule">🪜 Лестница → прыжок вперёд</div>
+            <div class="snakes-rule">🐍 Змея → откат назад</div>
+            <div class="snakes-rule">🏆 Цель — клетка 25</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+            <div class="snakes-tip-box">
+              <div class="snakes-tip-title">💡 КЛЮЧЕВОЕ</div>
+              <div class="snakes-tip-text">Случайность определяет <strong>клетку</strong>. Знание определяет <strong>результат</strong>.</div>
+            </div>
+            <div class="snakes-subj-box">
+              <div class="snakes-subj-title">📚 ПРИМЕНЕНИЕ</div>
+              <div class="snakes-subj-row"><b>История</b> — хронология</div>
+              <div class="snakes-subj-row"><b>Язык</b> — орфография</div>
+              <div class="snakes-subj-row"><b>Биология</b> — этапы процесса</div>
+              <div class="snakes-subj-row"><b>Любой предмет</b> — поле на доске</div>
+            </div>
+            <div class="snakes-wiki-box">
+              <div class="snakes-subj-title">📖 СПРАВКА</div>
+              <div class="snakes-tip-text">Возникла в Индии (Gyan Chaupar). Змеи — пороки, лестницы — добродетели.</div>
+              <a class="snakes-wiki-link" href="https://en.wikipedia.org/wiki/Snakes_and_ladders" target="_blank">→ Wikipedia</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1632,44 +1653,4 @@ function memClick(el, i) {
       a.el.classList.remove('revealed','wrong'); b.el.classList.remove('revealed','wrong');
       memFlipped = []; memLocked = false;
       document.getElementById('memStatus').textContent = 'ПРОДОЛЖАЙ...';
-    }, 1000);
-  }
-}
-
-initMem();
-
-// ══ XP BAR ══
-let xp = 0;
-const XP_MAX = 100;
-
-function animateXP() {
-  xp = 0;
-  document.getElementById('xpBar').style.width = '0%';
-  document.getElementById('xpVal').textContent = '0 / 100 XP';
-}
-
-function addXP() {
-  xp = Math.min(xp + 15, XP_MAX);
-  document.getElementById('xpBar').style.width = xp + '%';
-  document.getElementById('xpVal').textContent = xp + ' / 100 XP';
-  if (xp >= XP_MAX) document.getElementById('xpVal').textContent = '100 / 100 XP  ★ УРОВЕНЬ ВЫШЕ!';
-}
-
-// ══ BADGES ══
-const BADGES = ['🙋 Задал вопрос','🤝 Помог другому','🔎 Нашёл ошибку','💬 Объяснил словами'];
-let badgeIdx = 0;
-
-function earnBadge() {
-  const grid = document.getElementById('badgeGrid');
-  const all = grid.querySelectorAll('.badge');
-  if (badgeIdx < all.length) {
-    all[badgeIdx].classList.add('earned');
-    badgeIdx++;
-  } else {
-    all.forEach(b => b.classList.remove('earned'));
-    badgeIdx = 0;
-  }
-}
-</script>
-</body>
-</html>
+  
