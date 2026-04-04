@@ -1545,4 +1545,459 @@ body::before {
           <div class="q-num">03</div>
           <div>
             <div class="q-text">Какой продукт должен получиться?</div>
-            <div class="q-sub">Устный аргуме
+            <div class="q-sub">Устный аргумент · письменный текст · схема · решение задачи</div>
+          </div>
+        </div>
+        <div class="q-step danger">
+          <div class="q-num">!</div>
+          <div>
+            <div class="q-text">Нет ответа на первый вопрос?</div>
+            <div class="q-sub">Игра будет развлечением, а не обучением. Сначала — когнитивное действие.</div>
+          </div>
+        </div>
+      </div>
+      <div class="choose-right">
+        <div class="combo-box">
+          <div class="combo-title">⚡ КОМБИНАЦИИ МЕХАНИК</div>
+          <div class="combo-row">
+            <span class="combo-a">Драфт</span><span class="combo-plus">+</span>
+            <span class="combo-b">Ролевая</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Выбрал роль — отстаивай её</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Мемори</span><span class="combo-plus">+</span>
+            <span class="combo-b">Таймер</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Найди пару за 45 секунд</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Чёрный ящик</span><span class="combo-plus">+</span>
+            <span class="combo-b">Значки</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Очко — за точный вопрос</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Квест</span><span class="combo-plus">+</span>
+            <span class="combo-b">Дерево</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Загадка открывает следующую зону</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SLIDE 9: ФИНАЛ ══════════════════ -->
+  <div class="slide slide-final" id="s8">
+    <div class="corner-decor corner-tl" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-tr" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-bl" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-br" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="final-title">МЕХАНИКА — ЭТО НЕ РАЗВЛЕЧЕНИЕ ПОВЕРХ УЧЁБЫ.<br>ЭТО ОРГАНИЗАЦИЯ МЫШЛЕНИЯ.</div>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">🔄</span>
+        <div class="principle-text">Механика нейтральна — подставь любой предмет</div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">🧠</span>
+        <div class="principle-text">Без когнитивного действия — нет механики, есть только игра</div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">⚡</span>
+        <div class="principle-text">Механик много. Выбери нужную — и встрой в урок</div>
+      </div>
+    </div>
+    <div class="final-cta">ВЫБЕРИТЕ ОДНУ МЕХАНИКУ И ПОПРОБУЙТЕ НА СЛЕДУЮЩЕЙ НЕДЕЛЕ →</div>
+  </div>
+
+
+  <!-- ══════════════════ SLIDE 6b: ЗМЕИ И ЛЕСТНИЦЫ ══════════════════ -->
+  <div class="slide slide-snakes" id="s5b">
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="slide-num">07 / 13</div>
+    <div class="snakes-title">4.4 ЗМЕИ И ЛЕСТНИЦЫ</div>
+    <div class="snakes-sub">Повторение · закрепление · работа с ошибкой без стресса</div>
+    <div class="snakes-layout">
+      <div class="snakes-left">
+        <!-- Interactive board -->
+        <div class="snakes-board-wrap">
+          <canvas id="snakesCanvas" width="340" height="340"></canvas>
+          <div class="snakes-controls">
+            <div class="snakes-player" id="snakesPlayerInfo">Ход: <span id="snakesPlayerName">Игрок 1</span></div>
+            <button class="snakes-btn" id="snakesRollBtn" onclick="snakesRoll()">🎲 БРОСИТЬ КУБ</button>
+            <div class="snakes-question-area" id="snakesQArea" style="display:none">
+              <div class="snakes-q" id="snakesQ"></div>
+              <div class="snakes-answers" id="snakesAnswers"></div>
+            </div>
+            <div class="snakes-log" id="snakesLog"></div>
+          </div>
+        </div>
+      </div>
+      <div class="snakes-right">
+        <div class="snakes-rules-box">
+          <div class="snakes-rules-title">📋 ПРАВИЛА</div>
+          <div class="snakes-rule">🎲 Бросаешь кубик — узнаёшь клетку</div>
+          <div class="snakes-rule">❓ На клетке — вопрос по теме</div>
+          <div class="snakes-rule">✅ Правильно → идёшь вперёд</div>
+          <div class="snakes-rule">🪜 Лестница → прыжок вперёд</div>
+          <div class="snakes-rule">🐍 Змея → откат назад</div>
+          <div class="snakes-rule">🏆 Цель — клетка 25</div>
+        </div>
+        <div class="snakes-tip-box">
+          <div class="snakes-tip-title">💡 КЛЮЧЕВОЕ УЛУЧШЕНИЕ</div>
+          <div class="snakes-tip-text">Случайность определяет <strong>клетку</strong>. Знание определяет <strong>результат</strong>. Откат — часть игры, не провал.</div>
+        </div>
+        <div class="snakes-subj-box">
+          <div class="snakes-subj-title">📚 ПРИМЕНЕНИЕ</div>
+          <div class="snakes-subj-row"><b>История</b> — клетки по хронологии</div>
+          <div class="snakes-subj-row"><b>Язык</b> — правила орфографии</div>
+          <div class="snakes-subj-row"><b>Биология</b> — этапы процесса</div>
+          <div class="snakes-subj-row"><b>Любой предмет</b> — поле на доске, без технологий</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SLIDE: АУКЦИОН + ДРАФТ ══════════════════ -->
+  <div class="slide" id="s_auct">
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="slide-num">08 / 13</div>
+    <div class="more-title">1.2–1.4 АУКЦИОН · ГОЛОСОВАНИЕ · ДРАФТ</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="more-card" style="border-color:var(--coral)">
+        <div class="more-card-header">
+          <span class="more-card-icon">💰</span>
+          <div class="more-card-name">АУКЦИОН</div>
+        </div>
+        <div class="more-card-cog">ставки · оценка риска · ограниченный ресурс</div>
+        <div class="more-card-examples">
+          <div class="more-ex">У каждого 5 жетонов</div>
+          <div class="more-ex">Ставь на аргумент или причину</div>
+          <div class="more-ex">Чем выше ставка — тем сильнее обоснование</div>
+          <div class="more-ex" style="background:#fff3f3">История: кто виновник войны?</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🗳️</span>
+          <div class="more-card-name">ГОЛОСОВАНИЕ / РЕЙТИНГ</div>
+        </div>
+        <div class="more-card-cog">критериальное суждение · сопоставление</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Лучший аргумент · лучшая работа</div>
+          <div class="more-ex">Критерии формулируют сами ученики</div>
+          <div class="more-ex">Пеер-ревью — анонимно</div>
+          <div class="more-ex" style="background:#f0f8ff">Любой предмет, любой возраст</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--purple)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🃏</span>
+          <div class="more-card-name">ДРАФТ</div>
+        </div>
+        <div class="more-card-cog">стратегия · выбор по кругу</div>
+        <div class="more-card-examples">
+          <div class="more-ex">12 тем на доске — берём по очереди</div>
+          <div class="more-ex">Стратегия: взять лучшее, оставить слабое</div>
+          <div class="more-ex">Потом: почему эта тема осталась?</div>
+          <div class="more-ex" style="background:#f5f0ff">Язык, литература, проекты</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SLIDE: ВРЕМЯ И ТЕМП ══════════════════ -->
+  <div class="slide" id="s_time">
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="slide-num">09 / 13</div>
+    <div class="more-title" style="color:var(--coral)">6. ВРЕМЯ И ТЕМП</div>
+    <div class="more-grid" style="grid-template-columns:repeat(2,1fr);max-width:700px">
+      <div class="more-card" style="border-color:var(--coral)">
+        <div class="more-card-header">
+          <span class="more-card-icon">⏱️</span>
+          <div class="more-card-name">ТАЙМЕР / БЛИЦ</div>
+        </div>
+        <div class="more-card-cog">быстрое решение · без бумажки</div>
+        <div class="more-card-examples">
+          <div class="more-ex">30 сек — один аргумент</div>
+          <div class="more-ex">10 сек на пару — разделить и решить</div>
+          <div class="more-ex">Только то, что уже знаешь</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:#888">
+        <div class="more-card-header">
+          <span class="more-card-icon">🔄</span>
+          <div class="more-card-name">РАУНДЫ / ТУРЫ</div>
+        </div>
+        <div class="more-card-cog">симметричные отрезки · ротация ролей</div>
+        <div class="more-card-examples">
+          <div class="more-ex">В каждом раунде — шанс изменить расклад</div>
+          <div class="more-ex">Структурированные дебаты</div>
+          <div class="more-ex">Ротация: говорящий → слушающий → арбитр</div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:700px;width:100%;margin-top:16px">
+      <div class="warning-box" style="border-color:var(--coral)">
+        <div class="warning-title" style="color:var(--coral)">⚠ ОСТОРОЖНО: ТЁМНАЯ СТОРОНА</div>
+        <div class="warning-text" style="color:#7a1111">Дефицит времени создаёт тревогу, а не азарт — особенно у тревожных учеников. Используйте таймер как инструмент <strong>темпа</strong>, а не как угрозу. Работает краткосрочно, не строит долгосрочной вовлечённости.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SLIDE: МАФИЯ + ДЕТЕКТИВ ══════════════════ -->
+  <div class="slide" id="s_mafia">
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="slide-num">10 / 13</div>
+    <div class="more-title">3.3–3.4 ДЕТЕКТИВ · МАФИЯ</div>
+    <div style="display:flex;gap:20px;width:100%;max-width:860px;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+        <div class="more-card" style="border-color:var(--cyan)">
+          <div class="more-card-header">
+            <span class="more-card-icon">🕵️</span>
+            <div class="more-card-name">ДЕТЕКТИВ / CLUE</div>
+          </div>
+          <div class="more-card-cog">разные источники → единая картина</div>
+          <div class="more-card-examples">
+            <div class="more-ex">История: у каждой группы — свой документ</div>
+            <div class="more-ex">Вместе: что случилось и почему?</div>
+            <div class="more-ex">Дебаты: найди разрыв в логике оппонента</div>
+          </div>
+        </div>
+        <div class="more-card" style="border-color:var(--coral)">
+          <div class="more-card-header">
+            <span class="more-card-icon">🎭</span>
+            <div class="more-card-name">МАФИЯ / AMONG US</div>
+          </div>
+          <div class="more-card-cog">скрытая роль · критическое мышление</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Часть знает истину — остальные ищут</div>
+            <div class="more-ex">История: роль в событии, один знает правду</div>
+            <div class="more-ex">Задаём вопросы → вычисляем через логику</div>
+          </div>
+        </div>
+      </div>
+      <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
+        <div class="pbox" style="border-color:var(--gold)">
+          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--gold);margin-bottom:8px">КОГНИТИВНАЯ РАБОТА</div>
+          <div style="font-size:0.88rem;font-weight:600;color:var(--text);line-height:1.6">
+            Постановка <strong>точного вопроса</strong><br>
+            Выдвижение и проверка <strong>гипотез</strong><br>
+            Логическое <strong>исключение</strong><br>
+            Анализ <strong>противоречий</strong>
+          </div>
+        </div>
+        <div class="pbox">
+          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--purple);margin-bottom:8px">ПОЧЕМУ РАБОТАЕТ</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--muted);line-height:1.5">Скрытая информация создаёт настоящий мотив узнать ответ — не потому что «надо», а потому что интересно кто виновник.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn" onclick="prevSlide()">◄ НАЗАД</button>
+  <span class="nav-counter" id="navCounter">1 / 9</span>
+  <button class="nav-btn" onclick="nextSlide()">ВПЕРЁД ►</button>
+</div>
+
+<script>
+// ══ SLIDE NAVIGATION ══
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('navCounter').textContent = (cur+1) + ' / ' + slides.length;
+  // trigger XP bar animation when slide 7 becomes active
+  if (cur === 6) setTimeout(() => animateXP(), 300);
+  // init snakes when navigating to that slide
+  const snakesSlide = document.getElementById('s5b');
+  if (snakesSlide && slides[cur] === snakesSlide) snakesInit();
+}
+function nextSlide() { goTo(cur + 1); }
+function prevSlide() { goTo(cur - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
+});
+
+// ══ КНБ GAME ══
+const KNB_MODE = {
+  rhet: {
+    label: 'РИТОРИКА',
+    options: [
+      { id: 'emo',  label: 'Эмоция',    emoji: '❤️', beats: 'auth', reason: 'Эмоциональный призыв перебивает авторитет: личная история убеждает сильнее звания.' },
+      { id: 'log',  label: 'Логика',    emoji: '🧮', beats: 'emo',  reason: 'Чёткий аргумент с фактами нейтрализует эмоцию — показывает, что чувство ошибочно.' },
+      { id: 'auth', label: 'Авторитет', emoji: '🎓', beats: 'log',  reason: 'Ссылка на признанный источник закрывает логическую цепочку — «эксперты согласны».' },
+    ]
+  }
+};
+
+let knbPlayerChoice = null;
+const mode = KNB_MODE.rhet;
+
+function buildKNB() {
+  const choicesEl = document.getElementById('playerChoices');
+  choicesEl.innerHTML = '';
+  mode.options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'knb-choice';
+    btn.dataset.id = opt.id;
+    btn.innerHTML = `<span class="knb-choice-emoji">${opt.emoji}</span><span>${opt.label}</span>`;
+    btn.onclick = () => selectKNB(opt.id);
+    choicesEl.appendChild(btn);
+  });
+
+  const rulesEl = document.getElementById('knbRules');
+  rulesEl.innerHTML = '';
+  mode.options.forEach(opt => {
+    const beaten = mode.options.find(o => o.id === opt.beats);
+    const div = document.createElement('div');
+    div.className = 'knb-rule-item';
+    div.innerHTML = `${opt.emoji} ${opt.label} <span>→</span> ${beaten.emoji} ${beaten.label}`;
+    rulesEl.appendChild(div);
+  });
+}
+
+function selectKNB(id) {
+  knbPlayerChoice = id;
+  document.querySelectorAll('.knb-choice').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
+  });
+}
+
+function knbFight() {
+  if (!knbPlayerChoice) {
+    document.getElementById('knbResult').innerHTML = '<div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ<br>СНАЧАЛА!</div>';
+    return;
+  }
+  const cpuOpt = mode.options[Math.floor(Math.random() * mode.options.length)];
+  const playerOpt = mode.options.find(o => o.id === knbPlayerChoice);
+
+  let title, explain, emoji;
+  if (playerOpt.beats === cpuOpt.id) {
+    emoji = '🏆'; title = 'ПОБЕДА!';
+    explain = playerOpt.reason;
+  } else if (cpuOpt.beats === playerOpt.id) {
+    emoji = '💥'; title = 'ПРОИГРЫШ!';
+    explain = cpuOpt.reason;
+  } else {
+    emoji = '🤝'; title = 'НИЧЬЯ!';
+    explain = 'Одинаковые позиции.';
+  }
+
+  document.getElementById('knbResult').innerHTML = `
+    <div class="knb-result-emoji">${emoji}</div>
+    <div class="knb-result-title">ВЫ: ${playerOpt.emoji} ${playerOpt.label}<br>ПК:  ${cpuOpt.emoji} ${cpuOpt.label}<br>${title}</div>
+    <div class="knb-result-explain">${explain}</div>
+  `;
+}
+
+buildKNB();
+
+// ══ MEMORY GAME ══
+const MEM_PAIRS = [
+  ['🫁 Лёгкие',    'Газообмен'],
+  ['❤️ Сердце',    'Перекачка крови'],
+  ['🧠 Мозг',      'Управление телом'],
+  ['🦷 Желудок',   'Переваривание пищи'],
+];
+
+let memCards = [], memFlipped = [], memMatched = 0, memLocked = false;
+
+function initMem() {
+  memFlipped = []; memMatched = 0; memLocked = false;
+  document.getElementById('memStatus').textContent = 'НАЖМИТЕ НА КАРТОЧКУ';
+
+  const items = [];
+  MEM_PAIRS.forEach((pair, pi) => {
+    items.push({ text: pair[0], pair: pi });
+    items.push({ text: pair[1], pair: pi });
+  });
+  memCards = items.sort(() => Math.random() - 0.5);
+
+  const grid = document.getElementById('memGrid');
+  grid.innerHTML = '';
+  memCards.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'mem-card';
+    el.textContent = '?';
+    el.dataset.index = i;
+    el.onclick = () => memClick(el, i);
+    grid.appendChild(el);
+  });
+}
+
+function memClick(el, i) {
+  if (memLocked || el.classList.contains('revealed') || el.classList.contains('matched')) return;
+  el.textContent = memCards[i].text;
+  el.classList.add('revealed');
+  memFlipped.push({ el, i });
+  if (memFlipped.length < 2) return;
+
+  memLocked = true;
+  const [a, b] = memFlipped;
+  if (memCards[a.i].pair === memCards[b.i].pair) {
+    a.el.classList.add('matched'); b.el.classList.add('matched');
+    memMatched++;
+    memFlipped = []; memLocked = false;
+    document.getElementById('memStatus').textContent = memMatched === MEM_PAIRS.length
+      ? '✓ ВСЕ ПАРЫ НАЙДЕНЫ!' : `ПАРА НАЙДЕНА! (${memMatched}/${MEM_PAIRS.length})`;
+  } else {
+    a.el.classList.add('wrong'); b.el.classList.add('wrong');
+    document.getElementById('memStatus').textContent = 'НЕ СОВПАДАЕТ — ЗАПОМНИ ПОЗИЦИИ';
+    setTimeout(() => {
+      a.el.textContent = '?'; b.el.textContent = '?';
+      a.el.classList.remove('revealed','wrong'); b.el.classList.remove('revealed','wrong');
+      memFlipped = []; memLocked = false;
+      document.getElementById('memStatus').textContent = 'ПРОДОЛЖАЙ...';
+    }, 1000);
+  }
+}
+
+initMem();
+
+// ══ XP BAR ══
+let xp = 0;
+const XP_MAX = 100;
+
+function animateXP() {
+  xp = 0;
+  document.getElementById('xpBar').style.width = '0%';
+  document.getElementById('xpVal').textContent = '0 / 100 XP';
+}
+
+function addXP() {
+  xp = Math.min(xp + 15, XP_MAX);
+  document.getElementById('xpBar').style.width = xp + '%';
+  document.getElementById('xpVal').textContent = xp + ' / 100 XP';
+  if (xp >= XP_MAX) document.getElementById('xpVal').textContent = '100 / 100 XP  ★ УРОВЕНЬ ВЫШЕ!';
+}
+
+// ══ BADGES ══
+const BADGES = ['🙋 Задал вопрос','🤝 Помог другому','🔎 Нашёл ошибку','💬 Объяснил словами'];
+let badgeIdx = 0;
+
+function earnBadge() {
+  const grid = document.getElementById('badgeGrid');
+  const all = grid.querySelectorAll('.badge');
+  if (badgeIdx < all.length) {
+    all[badgeIdx].classList.add('earned');
+    badgeIdx++;
+  } else {
+    all.forEach(b => b.classList.remove('earned'));
+    badgeIdx = 0;
+  }
+}
+</script>
+</body>
+</html>
