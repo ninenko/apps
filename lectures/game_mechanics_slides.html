@@ -931,6 +931,7 @@ body::before {
 <div class="deck" id="deck">
 
 <div class="slide slide-title active" id="s0">
+    <div class="slide-num">01 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
     <div class="corner-decor corner-bl"></div>
@@ -948,9 +949,10 @@ body::before {
   </div>
 
 <div class="slide slide-what" id="s1">
+    <div class="slide-num">02 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">02 / 15</div>
+    
     <div class="headline">ЧТО ТАКОЕ ИГРОВАЯ МЕХАНИКА?</div>
     <div class="mechanics-grid">
       <div class="mech-card">
@@ -974,50 +976,11 @@ body::before {
     </div>
   </div>
 
-<div class="slide slide-knb" id="s2">
-    <div class="corner-decor corner-tl"></div>
-    <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">03 / 15</div>
-    <div class="slide-title-bar">1.1 КАМЕНЬ — НОЖНИЦЫ — БУМАГА</div>
-    <div class="slide-sub">Кольцевое решение · выбор одновременный · победитель объясняет почему</div>
-
-    <div class="knb-arena">
-      <!-- Left: player choices -->
-      <div class="knb-panel">
-        <div class="knb-panel-title" style="color:var(--cyan)">▶ ВЫ ВЫБИРАЕТЕ</div>
-        <div class="knb-choices" id="playerChoices"></div>
-      </div>
-
-      <!-- Middle: fight + result -->
-      <div class="knb-vs">
-        <div class="knb-vs-label">VS</div>
-        <button class="knb-fight-btn" onclick="knbFight()">СЫГРАТЬ!</button>
-        <div class="knb-result" id="knbResult">
-          <div class="knb-result-emoji">❓</div>
-          <div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ</div>
-        </div>
-      </div>
-
-      <!-- Right: rules + adaptations -->
-      <div class="knb-right">
-        <div class="knb-rule-box">
-          <div class="knb-rule-title">⚔ КОЛЬЦО БИЁ Т КОГ О</div>
-          <div id="knbRules"></div>
-        </div>
-        <div class="knb-adapt-box">
-          <div class="knb-adapt-title">📚 АДАПТАЦИИ</div>
-          <div class="adapt-row"><span class="adapt-subj">История</span><span class="adapt-desc">Меч → Золото → Перо → Меч</span></div>
-          <div class="adapt-row"><span class="adapt-subj">Язык</span><span class="adapt-desc">Факт → Ценность → Эмоция → Факт</span></div>
-          <div class="adapt-row"><span class="adapt-subj">Риторика</span><span class="adapt-desc">Эмоция → Логика → Авторитет → Эмоция</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 <div class="slide" id="s3">
+    <div class="slide-num">03 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">04 / 15</div>
+    
     <div class="families-title">7 СЕМЕЙСТВ МЕХАНИК</div>
     <div class="families-grid">
       <div class="family-tile" style="border-color:var(--coral)">
@@ -1067,10 +1030,101 @@ body::before {
     </div>
   </div>
 
-<div class="slide slide-memory" id="s4">
+<div class="slide slide-knb" id="s2">
+    <div class="slide-num">04 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">05 / 15</div>
+    
+    <div class="slide-title-bar">1.1 КАМЕНЬ — НОЖНИЦЫ — БУМАГА</div>
+    <div class="slide-sub">Кольцевое решение · выбор одновременный · победитель объясняет почему</div>
+
+    <div class="knb-arena">
+      <!-- Left: player choices -->
+      <div class="knb-panel">
+        <div class="knb-panel-title" style="color:var(--cyan)">▶ ВЫ ВЫБИРАЕТЕ</div>
+        <div class="knb-choices" id="playerChoices"></div>
+      </div>
+
+      <!-- Middle: fight + result -->
+      <div class="knb-vs">
+        <div class="knb-vs-label">VS</div>
+        <button class="knb-fight-btn" onclick="knbFight()">СЫГРАТЬ!</button>
+        <div class="knb-result" id="knbResult">
+          <div class="knb-result-emoji">❓</div>
+          <div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ</div>
+        </div>
+      </div>
+
+      <!-- Right: rules + adaptations -->
+      <div class="knb-right">
+        <div class="knb-rule-box">
+          <div class="knb-rule-title">⚔ КОЛЬЦО БИЁ Т КОГ О</div>
+          <div id="knbRules"></div>
+        </div>
+        <div class="knb-adapt-box">
+          <div class="knb-adapt-title">📚 АДАПТАЦИИ</div>
+          <div class="adapt-row"><span class="adapt-subj">История</span><span class="adapt-desc">Меч → Золото → Перо → Меч</span></div>
+          <div class="adapt-row"><span class="adapt-subj">Язык</span><span class="adapt-desc">Факт → Ценность → Эмоция → Факт</span></div>
+          <div class="adapt-row"><span class="adapt-subj">Риторика</span><span class="adapt-desc">Эмоция → Логика → Авторитет → Эмоция</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s_auct">
+    <div class="slide-num">05 / 16</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title">1.2–1.4 АУКЦИОН · ГОЛОСОВАНИЕ · ДРАФТ</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="more-card" style="border-color:var(--coral)">
+        <div class="more-card-header">
+          <span class="more-card-icon">💰</span>
+          <div class="more-card-name">АУКЦИОН</div>
+        </div>
+        <div class="more-card-cog">ставки · оценка риска · ограниченный ресурс</div>
+        <div class="more-card-examples">
+          <div class="more-ex">У каждого 5 жетонов</div>
+          <div class="more-ex">Ставь на аргумент или причину</div>
+          <div class="more-ex">Чем выше ставка — тем сильнее обоснование</div>
+          <div class="more-ex" style="background:#fff3f3">История: кто виновник войны?</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🗳️</span>
+          <div class="more-card-name">ГОЛОСОВАНИЕ / РЕЙТИНГ</div>
+        </div>
+        <div class="more-card-cog">критериальное суждение · сопоставление</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Лучший аргумент · лучшая работа</div>
+          <div class="more-ex">Критерии формулируют сами ученики</div>
+          <div class="more-ex">Пеер-ревью — анонимно</div>
+          <div class="more-ex" style="background:#f0f8ff">Любой предмет, любой возраст</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--purple)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🃏</span>
+          <div class="more-card-name">ДРАФТ</div>
+        </div>
+        <div class="more-card-cog">стратегия · выбор по кругу</div>
+        <div class="more-card-examples">
+          <div class="more-ex">12 тем на доске — берём по очереди</div>
+          <div class="more-ex">Стратегия: взять лучшее, оставить слабое</div>
+          <div class="more-ex">Потом: почему эта тема осталась?</div>
+          <div class="more-ex" style="background:#f5f0ff">Язык, литература, проекты</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide slide-memory" id="s4">
+    <div class="slide-num">06 / 16</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
     <div class="slide-title-bar">2.1 МЕМОРИ — ПОПРОБУЙТЕ ПРЯМО СЕЙЧАС</div>
     <div class="slide-sub">Биология: найди пары — орган + функция</div>
     <div class="memory-layout">
@@ -1096,9 +1150,10 @@ body::before {
   </div>
 
 <div class="slide" id="s5">
+    <div class="slide-num">07 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">06 / 15</div>
+    
     <div class="more-title" style="color:var(--cyan)">3. ДЕДУКЦИЯ И СКРЫТАЯ ИНФОРМАЦИЯ</div>
     <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Гипотеза · вопрос · логическое исключение</div>
     <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
@@ -1135,10 +1190,62 @@ body::before {
     </div>
   </div>
 
-<div class="slide" id="s5c">
+<div class="slide" id="s_mafia">
+    <div class="slide-num">08 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">07 / 15</div>
+    
+    <div class="more-title">3.3–3.4 ДЕТЕКТИВ · МАФИЯ</div>
+    <div style="display:flex;gap:20px;width:100%;max-width:860px;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+        <div class="more-card" style="border-color:var(--cyan)">
+          <div class="more-card-header">
+            <span class="more-card-icon">🕵️</span>
+            <div class="more-card-name">ДЕТЕКТИВ / CLUE</div>
+          </div>
+          <div class="more-card-cog">разные источники → единая картина</div>
+          <div class="more-card-examples">
+            <div class="more-ex">История: у каждой группы — свой документ</div>
+            <div class="more-ex">Вместе: что случилось и почему?</div>
+            <div class="more-ex">Дебаты: найди разрыв в логике оппонента</div>
+          </div>
+        </div>
+        <div class="more-card" style="border-color:var(--coral)">
+          <div class="more-card-header">
+            <span class="more-card-icon">🎭</span>
+            <div class="more-card-name">МАФИЯ / AMONG US</div>
+          </div>
+          <div class="more-card-cog">скрытая роль · критическое мышление</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Часть знает истину — остальные ищут</div>
+            <div class="more-ex">История: роль в событии, один знает правду</div>
+            <div class="more-ex">Задаём вопросы → вычисляем через логику</div>
+          </div>
+        </div>
+      </div>
+      <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
+        <div class="pbox" style="border-color:var(--gold)">
+          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--gold);margin-bottom:8px">КОГНИТИВНАЯ РАБОТА</div>
+          <div style="font-size:0.88rem;font-weight:600;color:var(--text);line-height:1.6">
+            Постановка <strong>точного вопроса</strong><br>
+            Выдвижение и проверка <strong>гипотез</strong><br>
+            Логическое <strong>исключение</strong><br>
+            Анализ <strong>противоречий</strong>
+          </div>
+        </div>
+        <div class="pbox">
+          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--purple);margin-bottom:8px">ПОЧЕМУ РАБОТАЕТ</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--muted);line-height:1.5">Скрытая информация создаёт настоящий мотив узнать ответ — не потому что «надо», а потому что интересно кто виновник.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s5c">
+    <div class="slide-num">09 / 16</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
     <div class="more-title" style="color:var(--gold)">4. ПОСТРОЕНИЕ И УПРАВЛЕНИЕ РЕСУРСАМИ</div>
     <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Долгосрочный прогресс · планирование · причинно-следственные связи</div>
     <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
@@ -1175,50 +1282,11 @@ body::before {
     </div>
   </div>
 
-<div class="slide" id="s5d">
-    <div class="corner-decor corner-tl"></div>
-    <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">08 / 15</div>
-    <div class="more-title" style="color:var(--green)">5. НАРРАТИВ И РОЛЕВАЯ ИГРА</div>
-    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Эмпатия · перспектива · принятие решений в чужой логике</div>
-    <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
-      <div class="more-card" style="border-color:var(--green)">
-        <div class="more-card-header"><span class="more-card-icon">🎭</span><div class="more-card-name">РОЛЕВАЯ ИГРА</div></div>
-        <div class="more-card-cog">персонаж · позиция · цель</div>
-        <div class="more-card-examples">
-          <div class="more-ex">История: симуляция переговоров, мирный договор</div>
-          <div class="more-ex">Язык: дебаты — у каждой стороны свои аргументы</div>
-          <div class="more-ex">Этика: действуй как персонаж — что выбираешь и почему?</div>
-          <div class="more-ex">Цель: отстоять позицию или достичь цели</div>
-        </div>
-      </div>
-      <div class="more-card" style="border-color:var(--green)">
-        <div class="more-card-header"><span class="more-card-icon">🔀</span><div class="more-card-name">НАРРАТИВНЫЕ РАЗВИЛКИ</div></div>
-        <div class="more-card-cog">решение → последствия · альтернативная история</div>
-        <div class="more-card-examples">
-          <div class="more-ex">«Что было бы, если…» — выбираешь за персонажа</div>
-          <div class="more-ex">История идёт по одному из нескольких путей</div>
-          <div class="more-ex">Финал: почему реальная история пошла иначе?</div>
-          <div class="more-ex">Этика, история, литература, обществознание</div>
-        </div>
-      </div>
-      <div class="more-card" style="border-color:var(--green)">
-        <div class="more-card-header"><span class="more-card-icon">🧩</span><div class="more-card-name">ПАЗЛ / ДЖИГСОУ</div></div>
-        <div class="more-card-cog">часть → объяснение другим · без тебя нет целого</div>
-        <div class="more-card-examples">
-          <div class="more-ex">Каждая группа — эксперты по своему фрагменту</div>
-          <div class="more-ex">Перемешиваемся: объясни своё новым партнёрам</div>
-          <div class="more-ex">Без твоей части группа не сложит картину</div>
-          <div class="more-ex">Работает на любом предмете с делимым материалом</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 <div class="slide slide-snakes" id="s5b">
+    <div class="slide-num">10 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">09 / 15</div>
+    
     <div class="snakes-title">4.4 ЗМЕИ И ЛЕСТНИЦЫ</div>
     <div class="snakes-sub">Повторение · закрепление · работа с ошибкой без стресса</div>
     <div class="snakes-layout">
@@ -1275,58 +1343,100 @@ body::before {
     </div>
   </div>
 
-<div class="slide" id="s_auct">
+  <div class="slide" id="s_mono">
+    <div class="slide-num">11 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">10 / 15</div>
-    <div class="more-title">1.2–1.4 АУКЦИОН · ГОЛОСОВАНИЕ · ДРАФТ</div>
-    <div class="more-grid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="more-card" style="border-color:var(--coral)">
-        <div class="more-card-header">
-          <span class="more-card-icon">💰</span>
-          <div class="more-card-name">АУКЦИОН</div>
+    <div class="more-title" style="color:var(--coral)">4. МОНОПОЛИЯ — РАЗБОР МЕХАНИКИ</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:16px;text-align:center">Почему классическая Монополия — плохой пример геймификации</div>
+    <div style="display:flex;gap:16px;width:100%;max-width:900px;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="more-card" style="border-color:var(--coral)">
+          <div class="more-card-header"><span class="more-card-icon">⚠️</span><div class="more-card-name">ПРОБЛЕМА МЕХАНИКИ</div></div>
+          <div class="more-card-cog">лидер закрепляется · шансов отыграться мало</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Кто вырвался вперёд — получает больше ресурсов</div>
+            <div class="more-ex">Больше ресурсов → ещё легче побеждать</div>
+            <div class="more-ex">Отстающий теряет мотивацию и выбывает психологически</div>
+            <div class="more-ex">Игра затягивается: победитель известен задолго до конца</div>
+          </div>
         </div>
-        <div class="more-card-cog">ставки · оценка риска · ограниченный ресурс</div>
-        <div class="more-card-examples">
-          <div class="more-ex">У каждого 5 жетонов</div>
-          <div class="more-ex">Ставь на аргумент или причину</div>
-          <div class="more-ex">Чем выше ставка — тем сильнее обоснование</div>
-          <div class="more-ex" style="background:#fff3f3">История: кто виновник войны?</div>
-        </div>
-      </div>
-      <div class="more-card" style="border-color:var(--cyan)">
-        <div class="more-card-header">
-          <span class="more-card-icon">🗳️</span>
-          <div class="more-card-name">ГОЛОСОВАНИЕ / РЕЙТИНГ</div>
-        </div>
-        <div class="more-card-cog">критериальное суждение · сопоставление</div>
-        <div class="more-card-examples">
-          <div class="more-ex">Лучший аргумент · лучшая работа</div>
-          <div class="more-ex">Критерии формулируют сами ученики</div>
-          <div class="more-ex">Пеер-ревью — анонимно</div>
-          <div class="more-ex" style="background:#f0f8ff">Любой предмет, любой возраст</div>
+        <div class="more-card" style="border-color:var(--green)">
+          <div class="more-card-header"><span class="more-card-icon">💡</span><div class="more-card-name">ЗАМЫСЕЛ АВТОРА</div></div>
+          <div class="more-card-cog">Элизабет Мэги, 1903 — игра как критика</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Элизабет Мэги создала «Игру домовладельца» в 1903 году</div>
+            <div class="more-ex">Цель: показать, что монополия — это плохо для общества</div>
+            <div class="more-ex">Игрок должен был почувствовать несправедливость на себе</div>
+            <div class="more-ex">Паркер Бразерс купили патент в 1935 и убрали критический смысл</div>
+          </div>
         </div>
       </div>
-      <div class="more-card" style="border-color:var(--purple)">
-        <div class="more-card-header">
-          <span class="more-card-icon">🃏</span>
-          <div class="more-card-name">ДРАФТ</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="more-card" style="border-color:var(--cyan)">
+          <div class="more-card-header"><span class="more-card-icon">🏫</span><div class="more-card-name">КАК АДАПТИРОВАТЬ ДЛЯ УРОКА</div></div>
+          <div class="more-card-cog">убери накопление · добавь пересборку</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Клетки = темы урока, а не собственность</div>
+            <div class="more-ex">Попал на клетку → ответь на вопрос → двигайся</div>
+            <div class="more-ex">Нет накопления ресурсов — каждый ход независим</div>
+            <div class="more-ex">Так механика поля работает, а эффект монополии исчезает</div>
+          </div>
         </div>
-        <div class="more-card-cog">стратегия · выбор по кругу</div>
+        <div class="pbox" style="background:var(--text);border-color:var(--border)">
+          <div style="font-family:var(--pixel);font-size:0.4rem;line-height:2;color:#ffd700;margin-bottom:6px">► ВЫВОД</div>
+          <div style="font-size:0.82rem;font-weight:600;color:var(--bg);line-height:1.5">Механика игрового поля хороша. Механика накопления монополии — нет. В классе используй поле без накопления: ученик отвечает на вопрос, двигается вперёд — и это всё.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s5d">
+    <div class="slide-num">12 / 16</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title" style="color:var(--green)">5. НАРРАТИВ И РОЛЕВАЯ ИГРА</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Эмпатия · перспектива · принятие решений в чужой логике</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🎭</span><div class="more-card-name">РОЛЕВАЯ ИГРА</div></div>
+        <div class="more-card-cog">персонаж · позиция · цель</div>
         <div class="more-card-examples">
-          <div class="more-ex">12 тем на доске — берём по очереди</div>
-          <div class="more-ex">Стратегия: взять лучшее, оставить слабое</div>
-          <div class="more-ex">Потом: почему эта тема осталась?</div>
-          <div class="more-ex" style="background:#f5f0ff">Язык, литература, проекты</div>
+          <div class="more-ex">История: симуляция переговоров, мирный договор</div>
+          <div class="more-ex">Язык: дебаты — у каждой стороны свои аргументы</div>
+          <div class="more-ex">Этика: действуй как персонаж — что выбираешь и почему?</div>
+          <div class="more-ex">Цель: отстоять позицию или достичь цели</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🔀</span><div class="more-card-name">НАРРАТИВНЫЕ РАЗВИЛКИ</div></div>
+        <div class="more-card-cog">решение → последствия · альтернативная история</div>
+        <div class="more-card-examples">
+          <div class="more-ex">«Что было бы, если…» — выбираешь за персонажа</div>
+          <div class="more-ex">История идёт по одному из нескольких путей</div>
+          <div class="more-ex">Финал: почему реальная история пошла иначе?</div>
+          <div class="more-ex">Этика, история, литература, обществознание</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🧩</span><div class="more-card-name">ПАЗЛ / ДЖИГСОУ</div></div>
+        <div class="more-card-cog">часть → объяснение другим · без тебя нет целого</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Каждая группа — эксперты по своему фрагменту</div>
+          <div class="more-ex">Перемешиваемся: объясни своё новым партнёрам</div>
+          <div class="more-ex">Без твоей части группа не сложит картину</div>
+          <div class="more-ex">Работает на любом предмете с делимым материалом</div>
         </div>
       </div>
     </div>
   </div>
 
 <div class="slide" id="s_time">
+    <div class="slide-num">13 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">11 / 15</div>
+    
     <div class="more-title" style="color:var(--coral)">6. ВРЕМЯ И ТЕМП</div>
     <div class="more-grid" style="grid-template-columns:repeat(2,1fr);max-width:700px">
       <div class="more-card" style="border-color:var(--coral)">
@@ -1362,60 +1472,11 @@ body::before {
     </div>
   </div>
 
-<div class="slide" id="s_mafia">
-    <div class="corner-decor corner-tl"></div>
-    <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">12 / 15</div>
-    <div class="more-title">3.3–3.4 ДЕТЕКТИВ · МАФИЯ</div>
-    <div style="display:flex;gap:20px;width:100%;max-width:860px;align-items:flex-start">
-      <div style="flex:1;display:flex;flex-direction:column;gap:14px">
-        <div class="more-card" style="border-color:var(--cyan)">
-          <div class="more-card-header">
-            <span class="more-card-icon">🕵️</span>
-            <div class="more-card-name">ДЕТЕКТИВ / CLUE</div>
-          </div>
-          <div class="more-card-cog">разные источники → единая картина</div>
-          <div class="more-card-examples">
-            <div class="more-ex">История: у каждой группы — свой документ</div>
-            <div class="more-ex">Вместе: что случилось и почему?</div>
-            <div class="more-ex">Дебаты: найди разрыв в логике оппонента</div>
-          </div>
-        </div>
-        <div class="more-card" style="border-color:var(--coral)">
-          <div class="more-card-header">
-            <span class="more-card-icon">🎭</span>
-            <div class="more-card-name">МАФИЯ / AMONG US</div>
-          </div>
-          <div class="more-card-cog">скрытая роль · критическое мышление</div>
-          <div class="more-card-examples">
-            <div class="more-ex">Часть знает истину — остальные ищут</div>
-            <div class="more-ex">История: роль в событии, один знает правду</div>
-            <div class="more-ex">Задаём вопросы → вычисляем через логику</div>
-          </div>
-        </div>
-      </div>
-      <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-        <div class="pbox" style="border-color:var(--gold)">
-          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--gold);margin-bottom:8px">КОГНИТИВНАЯ РАБОТА</div>
-          <div style="font-size:0.88rem;font-weight:600;color:var(--text);line-height:1.6">
-            Постановка <strong>точного вопроса</strong><br>
-            Выдвижение и проверка <strong>гипотез</strong><br>
-            Логическое <strong>исключение</strong><br>
-            Анализ <strong>противоречий</strong>
-          </div>
-        </div>
-        <div class="pbox">
-          <div style="font-family:var(--pixel);font-size:0.42rem;line-height:2;color:var(--purple);margin-bottom:8px">ПОЧЕМУ РАБОТАЕТ</div>
-          <div style="font-size:0.85rem;font-weight:600;color:var(--muted);line-height:1.5">Скрытая информация создаёт настоящий мотив узнать ответ — не потому что «надо», а потому что интересно кто виновник.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 <div class="slide" id="s6">
+    <div class="slide-num">14 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">13 / 15</div>
+    
     <div class="prog-title">7. ПРОГРЕСС И ОБРАТНАЯ СВЯЗЬ</div>
     <div class="prog-layout">
       <div class="prog-left">
@@ -1455,9 +1516,10 @@ body::before {
   </div>
 
 <div class="slide" id="s7">
+    <div class="slide-num">15 / 16</div>
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
-    <div class="slide-num">14 / 15</div>
+    
     <div class="choose-title">КАК ВЫБИРАТЬ МЕХАНИКУ</div>
     <div class="choose-layout">
       <div class="choose-left">
@@ -1499,106 +1561,4 @@ body::before {
             <span class="combo-desc">Выбрал роль — отстаивай её</span>
           </div>
           <div class="combo-row">
-            <span class="combo-a">Мемори</span><span class="combo-plus">+</span>
-            <span class="combo-b">Таймер</span><span class="combo-arrow">→</span>
-            <span class="combo-desc">Найди пару за 45 секунд</span>
-          </div>
-          <div class="combo-row">
-            <span class="combo-a">Чёрный ящик</span><span class="combo-plus">+</span>
-            <span class="combo-b">Значки</span><span class="combo-arrow">→</span>
-            <span class="combo-desc">Очко — за точный вопрос</span>
-          </div>
-          <div class="combo-row">
-            <span class="combo-a">Квест</span><span class="combo-plus">+</span>
-            <span class="combo-b">Дерево</span><span class="combo-arrow">→</span>
-            <span class="combo-desc">Загадка открывает следующую зону</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="slide slide-final" id="s8">
-    <div class="slide-num">15 / 15</div>
-    <div class="corner-decor corner-tl" style="background:rgba(255,255,255,0.15)"></div>
-    <div class="corner-decor corner-tr" style="background:rgba(255,255,255,0.15)"></div>
-    <div class="corner-decor corner-bl" style="background:rgba(255,255,255,0.15)"></div>
-    <div class="corner-decor corner-br" style="background:rgba(255,255,255,0.15)"></div>
-    <div class="final-title">МЕХАНИКА — ЭТО НЕ РАЗВЛЕЧЕНИЕ ПОВЕРХ УЧЁБЫ.<br>ЭТО ОРГАНИЗАЦИЯ МЫШЛЕНИЯ.</div>
-    <div class="principle-grid">
-      <div class="principle-card">
-        <span class="principle-icon">🔄</span>
-        <div class="principle-text">Механика нейтральна — подставь любой предмет</div>
-      </div>
-      <div class="principle-card">
-        <span class="principle-icon">🧠</span>
-        <div class="principle-text">Без когнитивного действия — нет механики, есть только игра</div>
-      </div>
-      <div class="principle-card">
-        <span class="principle-icon">⚡</span>
-        <div class="principle-text">Механик много. Выбери нужную — и встрой в урок</div>
-      </div>
-    </div>
-    <div class="final-cta">ВЫБЕРИТЕ ОДНУ МЕХАНИКУ И ПОПРОБУЙТЕ НА СЛЕДУЮЩЕЙ НЕДЕЛЕ →</div>
-  </div>
-
-</div><!-- /deck -->
-
-<!-- NAV -->
-<div class="nav-wrap">
-  <div class="nav-dots" id="navDots"></div>
-  <div class="nav">
-    <button class="nav-btn" id="btnPrev">◄ НАЗАД</button>
-    <span class="nav-counter" id="navCounter">1 / 15</span>
-    <button class="nav-btn" id="btnNext">ВПЕРЁД ►</button>
-  </div>
-</div>
-
-<script>
-// ══ SLIDE NAVIGATION ══
-var slides = [];
-var cur = 0;
-
-function initSlides() {
-  slides = Array.from(document.querySelectorAll('.slide'));
-  cur = 0;
-  buildDots();
-  updateCounter();
-
-  document.getElementById('btnPrev').addEventListener('click', prevSlide);
-  document.getElementById('btnNext').addEventListener('click', nextSlide);
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
-  });
-}
-
-function buildDots() {
-  var container = document.getElementById('navDots');
-  if (!container) return;
-  container.innerHTML = '';
-  slides.forEach(function(_, i) {
-    var d = document.createElement('div');
-    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
-    d.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
-    container.appendChild(d);
-  });
-}
-
-function updateCounter() {
-  var el = document.getElementById('navCounter');
-  if (el) el.textContent = (cur + 1) + ' / ' + slides.length;
-  // update dots
-  var dots = document.querySelectorAll('.nav-dot');
-  dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
-}
-
-function goTo(n) {
-  if (!slides.length) return;
-  slides[cur].classList.remove('active');
-  slides[cur].style.opacity = '0';
-  slides[cur].style.pointerEvents = 'none';
-  cur = (n + slides.length) % slides.length;
-  slides[cur].classList.add('active');
- 
+            <span class="
