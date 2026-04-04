@@ -900,6 +900,30 @@ body::before {
     text-decoration: none; border-bottom: 2px solid var(--cyan);
   }
   .snakes-wiki-link:hover { color: var(--text); border-color: var(--text); }
+
+  /* ── NAV WRAP + DOTS ── */
+  .nav-wrap {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; padding-bottom: 10px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .nav-dots {
+    display: flex; gap: 5px; align-items: center;
+    pointer-events: all;
+  }
+  .nav-dot {
+    width: 12px; height: 12px;
+    border: 2px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-dot:hover { background: var(--muted); transform: scale(1.2); }
+  .nav-dot.active { background: var(--text); transform: scale(1.15); }
+  .nav { pointer-events: all; }
 </style>
 </head>
 <body>
@@ -1115,7 +1139,7 @@ body::before {
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
     <div class="slide-num">07 / 15</div>
-    <div class="more-title"> style="color:var(--gold)">4. ПОСТРОЕНИЕ И УПРАВЛЕНИЕ РЕСУРСАМИ</div>
+    <div class="more-title" style="color:var(--gold)">4. ПОСТРОЕНИЕ И УПРАВЛЕНИЕ РЕСУРСАМИ</div>
     <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Долгосрочный прогресс · планирование · причинно-следственные связи</div>
     <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
       <div class="more-card" style="border-color:var(--gold)">
@@ -1155,7 +1179,7 @@ body::before {
     <div class="corner-decor corner-tl"></div>
     <div class="corner-decor corner-tr"></div>
     <div class="slide-num">08 / 15</div>
-    <div class="more-title"> style="color:var(--green)">5. НАРРАТИВ И РОЛЕВАЯ ИГРА</div>
+    <div class="more-title" style="color:var(--green)">5. НАРРАТИВ И РОЛЕВАЯ ИГРА</div>
     <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Эмпатия · перспектива · принятие решений в чужой логике</div>
     <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
       <div class="more-card" style="border-color:var(--green)">
@@ -1237,9 +1261,13 @@ body::before {
               <div class="snakes-subj-row"><b>Любой предмет</b> — поле на доске</div>
             </div>
             <div class="snakes-wiki-box">
-              <div class="snakes-subj-title">📖 СПРАВКА</div>
-              <div class="snakes-tip-text">Возникла в Индии (Gyan Chaupar). Змеи — пороки, лестницы — добродетели.</div>
-              <a class="snakes-wiki-link" href="https://en.wikipedia.org/wiki/Snakes_and_ladders" target="_blank">→ Wikipedia</a>
+              <div class="snakes-subj-title">📖 ИСТОРИЯ ИГРЫ</div>
+              <div class="snakes-tip-text">
+                Игра возникла в Индии около <strong>II века н.э.</strong> под названием <em>Gyan Chaupar</em> («игра знания»). Змеи символизировали пороки — гордыню, гнев, алчность. Лестницы — добродетели: смирение, щедрость, веру. Цель была философской: показать, что путь к освобождению непрямой.
+                <br><br>
+                В XIX веке британские колонизаторы завезли игру в Европу, где она стала детской настольной игрой и утратила моральный смысл. Сегодня это одна из самых распространённых игр в мире.
+              </div>
+              <a class="snakes-wiki-link" href="https://en.wikipedia.org/wiki/Snakes_and_ladders" target="_blank">→ Wikipedia: Snakes and Ladders</a>
             </div>
           </div>
         </div>
@@ -1517,10 +1545,13 @@ body::before {
 </div><!-- /deck -->
 
 <!-- NAV -->
-<div class="nav">
-  <button class="nav-btn" id="btnPrev">◄ НАЗАД</button>
-  <span class="nav-counter" id="navCounter">1 / 15</span>
-  <button class="nav-btn" id="btnNext">ВПЕРЁД ►</button>
+<div class="nav-wrap">
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav">
+    <button class="nav-btn" id="btnPrev">◄ НАЗАД</button>
+    <span class="nav-counter" id="navCounter">1 / 15</span>
+    <button class="nav-btn" id="btnNext">ВПЕРЁД ►</button>
+  </div>
 </div>
 
 <script>
@@ -1531,6 +1562,7 @@ var cur = 0;
 function initSlides() {
   slides = Array.from(document.querySelectorAll('.slide'));
   cur = 0;
+  buildDots();
   updateCounter();
 
   document.getElementById('btnPrev').addEventListener('click', prevSlide);
@@ -1542,61 +1574,31 @@ function initSlides() {
   });
 }
 
+function buildDots() {
+  var container = document.getElementById('navDots');
+  if (!container) return;
+  container.innerHTML = '';
+  slides.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
+    container.appendChild(d);
+  });
+}
+
 function updateCounter() {
   var el = document.getElementById('navCounter');
   if (el) el.textContent = (cur + 1) + ' / ' + slides.length;
+  // update dots
+  var dots = document.querySelectorAll('.nav-dot');
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
 }
 
 function goTo(n) {
   if (!slides.length) return;
   slides[cur].classList.remove('active');
+  slides[cur].style.opacity = '0';
+  slides[cur].style.pointerEvents = 'none';
   cur = (n + slides.length) % slides.length;
   slides[cur].classList.add('active');
-  updateCounter();
-  // XP bar on progress slide
-  var xpSlide = document.getElementById('s6');
-  if (xpSlide && slides[cur] === xpSlide) setTimeout(function(){ animateXP && animateXP(); }, 300);
-  // Init snakes when on that slide
-  var snakesSlide = document.getElementById('s5b');
-  if (snakesSlide && slides[cur] === snakesSlide) { if (typeof snakesInit === 'function') snakesInit(); }
-}
-
-function nextSlide() { goTo(cur + 1); }
-function prevSlide() { goTo(cur - 1); }
-
-document.addEventListener('DOMContentLoaded', initSlides);
-
-// ══ КНБ GAME ══
-const KNB_MODE = {
-  rhet: {
-    label: 'РИТОРИКА',
-    options: [
-      { id: 'emo',  label: 'Эмоция',    emoji: '❤️', beats: 'auth', reason: 'Эмоциональный призыв перебивает авторитет: личная история убеждает сильнее звания.' },
-      { id: 'log',  label: 'Логика',    emoji: '🧮', beats: 'emo',  reason: 'Чёткий аргумент с фактами нейтрализует эмоцию — показывает, что чувство ошибочно.' },
-      { id: 'auth', label: 'Авторитет', emoji: '🎓', beats: 'log',  reason: 'Ссылка на признанный источник закрывает логическую цепочку — «эксперты согласны».' },
-    ]
-  }
-};
-
-let knbPlayerChoice = null;
-const mode = KNB_MODE.rhet;
-
-function buildKNB() {
-  const choicesEl = document.getElementById('playerChoices');
-  choicesEl.innerHTML = '';
-  mode.options.forEach(opt => {
-    const btn = document.createElement('div');
-    btn.className = 'knb-choice';
-    btn.dataset.id = opt.id;
-    btn.innerHTML = `<span class="knb-choice-emoji">${opt.emoji}</span><span>${opt.label}</span>`;
-    btn.onclick = () => selectKNB(opt.id);
-    choicesEl.appendChild(btn);
-  });
-
-  const rulesEl = document.getElementById('knbRules');
-  rulesEl.innerHTML = '';
-  mode.options.forEach(opt => {
-    const beaten = mode.options.find(o => o.id === opt.beats);
-    const div = document.createElement('div');
-    div.className = 'knb-rule-item';
-    div.innerHTML = `${opt.emoji} ${opt.label} <span>→</span> ${beaten.emoji} ${beaten.l
+ 
