@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игровые механики в образовании</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg:       #F5F0E8;
+  --bg2:      #EDE8DC;
+  --panel:    #FFFFFF;
+  --border:   #2C2C2C;
+  --text:     #1A1A2E;
+  --muted:    #5A5A7A;
+  --cyan:     #0099CC;
+  --gold:     #CC8800;
+  --green:    #1A8A3C;
+  --coral:    #CC3333;
+  --purple:   #6633AA;
+  --pixel:    'Press Start 2P', monospace;
+  --body:     'Nunito', sans-serif;
+  --mono:     'VT323', monospace;
+  --shadow:   4px 4px 0px #2C2C2C;
+  --shadow-sm:2px 2px 0px #2C2C2C;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: var(--body);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ── PIXEL GRID BG ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(44,44,44,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(44,44,44,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SLIDES ── */
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+.slide.active { opacity: 1; pointer-events: all; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  z-index: 100;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 8px 16px;
+  image-rendering: pixelated;
+}
+.nav-btn {
+  font-family: var(--pixel);
+  font-size: 0.55rem;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  letter-spacing: 0;
+  image-rendering: pixelated;
+}
+.nav-btn:hover { background: var(--cyan); }
+.nav-btn:active { transform: translate(2px,2px); }
+.nav-counter {
+  font-family: var(--mono);
+  font-size: 1.2rem;
+  color: var(--muted);
+  min-width: 60px; text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ── PIXEL BOX ── */
+.pbox {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px 28px;
+}
+.pbox-sm {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 12px 16px;
+}
+
+/* ── PIXEL TAG ── */
+.tag {
+  display: inline-block;
+  font-family: var(--pixel);
+  font-size: 0.45rem;
+  padding: 4px 8px;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0;
+}
+.tag-cyan   { background: var(--cyan);   color: #fff; }
+.tag-gold   { background: var(--gold);   color: #fff; }
+.tag-green  { background: var(--green);  color: #fff; }
+.tag-coral  { background: var(--coral);  color: #fff; }
+.tag-purple { background: var(--purple); color: #fff; }
+
+/* ── PIXEL CORNER DECORATIONS ── */
+.corner-decor {
+  position: absolute;
+  width: 16px; height: 16px;
+  background: var(--border);
+}
+.corner-tl { top: 16px; left: 16px; }
+.corner-tr { top: 16px; right: 16px; }
+.corner-bl { bottom: 60px; left: 16px; }
+.corner-br { bottom: 60px; right: 16px; }
+
+/* ════════════════════════════════
+   SLIDE 1 — TITLE
+════════════════════════════════ */
+.slide-title {
+  background: var(--text);
+  color: var(--bg);
+}
+.slide-title::before { display: none; }
+
+.slide-title .big-title {
+  font-family: var(--pixel);
+  font-size: clamp(1rem, 2.8vw, 1.8rem);
+  line-height: 2;
+  text-align: center;
+  color: #00CCFF;
+  text-shadow: 3px 3px 0 #005577;
+  margin-bottom: 20px;
+}
+.slide-title .sub {
+  font-family: var(--mono);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: #AACCDD;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+}
+.slide-title .pixel-chars {
+  display: flex; gap: 32px; justify-content: center; margin-bottom: 40px;
+}
+.pixel-char {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.pixel-char-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(2px 2px 0 rgba(0,200,255,0.5));
+}
+.pixel-char-label {
+  font-family: var(--pixel);
+  font-size: 0.35rem;
+  color: #88BBCC;
+  letter-spacing: 0;
+}
+.slide-title .muza-label {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: #556677;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+/* Title scanlines */
+.slide-title::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.03) 3px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* ════════════════════════════════
+   SLIDE 2 — WHAT IS MECHANIC
+════════════════════════════════ */
+.slide-what .headline {
+  font-family: var(--pixel);
+  font-size: clamp(0.65rem, 1.4vw, 0.95rem);
+  line-height: 2.2;
+  color: var(--cyan);
+  text-shadow: 2px 2px 0 rgba(0,153,204,0.2);
+  margin-bottom: 28px;
+  text-align: center;
+}
+.mechanics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%; max-width: 820px;
+  margin-bottom: 24px;
+}
+.mech-card {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 18px 14px;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+.mech-card:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 6px 6px 0 var(--border);
+}
+.mech-card-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+.mech-card-title {
+  font-family: var(--pixel);
+  font-size: 0.45rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.mech-card-desc {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.key-idea {
+  max-width: 820px; width: 100%;
+  background: var(--text);
+  color: var(--bg);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px 24px;
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ════════════════════════════════
+   SLIDE 3 — КНБ INTERACTIVE
+════════════════════════════════ */
+.slide-knb .slide-title-bar {
+  font-family: var(--pixel);
+  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+  line-height: 2;
+  color: var(--coral);
+  margin-bottom: 6px;
+  text-align: center;
+}
+.slide-knb .slide-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.knb-arena {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%; max-width: 900px;
+}
+
+.knb-panel {
+  flex: 1;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.knb-panel-title {
+  font-family: var(--pixel);
+  font-size: 0.45rem;
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+.knb-choices {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.knb-choice {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.knb-choice:hover {
+  background: var(--cyan);
+  color: white;
+  transform: translate(-1px,-1px);
+  box-shadow: 3px 3px 0 var(--border);
+}
+.knb-choice.selected {
+  background: var(--text);
+  color: var(--bg);
+}
+.knb-choice-emoji { font-size: 1.4rem; }
+
+.knb-vs {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding-top: 40px;
+}
+.knb-vs-label {
+  font-family: var(--pixel);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.knb-fight-btn {
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+  background: var(--coral);
+  color: white;
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 10px 16px;
+  cursor: pointer;
+  letter-spacing: 0;
+  transition: transform 0.1s, box-shadow 0.1s;
+  line-height: 1.8;
+}
+.knb-fight-btn:hover { background: #aa1111; }
+.knb-fight-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--border); }
+
+.knb-result {
+  min-height: 80px;
+  background: var(--bg2);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.knb-result-emoji { font-size: 2rem; }
+.knb-result-title {
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+  line-height: 1.8;
+}
+.knb-result-explain {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.knb-right {
+  width: 280px; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.knb-rule-box {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.knb-rule-title {
+  font-family: var(--pixel);
+  font-size: 0.42rem;
+  line-height: 2;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.knb-rule-item {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 4px 0;
+  border-bottom: 1px dashed #ccc;
+  color: var(--text);
+}
+.knb-rule-item:last-child { border: none; }
+.knb-rule-item span { color: var(--green); font-weight: 800; }
+
+.knb-adapt-box {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.knb-adapt-title {
+  font-family: var(--pixel);
+  font-size: 0.42rem;
+  line-height: 2;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+.adapt-row {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 5px 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 0.8rem;
+}
+.adapt-row:last-child { border: none; }
+.adapt-subj { font-weight: 800; color: var(--text); min-width: 60px; }
+.adapt-desc { color: var(--muted); }
+
+/* ════════════════════════════════
+   SLIDE 4 — 7 FAMILIES OVERVIEW
+════════════════════════════════ */
+.families-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+  line-height: 2;
+  color: var(--text);
+  margin-bottom: 24px;
+  text-align: center;
+}
+.families-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%; max-width: 880px;
+  margin-bottom: 16px;
+}
+.family-tile {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.family-tile:hover {
+  transform: translate(-2px,-4px);
+  box-shadow: 6px 8px 0 var(--border);
+}
+.family-tile-num {
+  position: absolute; top: -2px; left: -2px;
+  font-family: var(--pixel);
+  font-size: 0.35rem;
+  background: var(--text);
+  color: var(--bg);
+  padding: 2px 5px;
+}
+.family-tile-icon { font-size: 1.8rem; margin-bottom: 6px; display: block; }
+.family-tile-name {
+  font-family: var(--pixel);
+  font-size: 0.38rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.family-tile-cog {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.families-bottom {
+  width: 100%; max-width: 880px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* ════════════════════════════════
+   SLIDE 5 — MEMORY INTERACTIVE
+════════════════════════════════ */
+.slide-memory .slide-title-bar {
+  font-family: var(--pixel);
+  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+  line-height: 2;
+  color: var(--purple);
+  margin-bottom: 6px; text-align: center;
+}
+.slide-memory .slide-sub {
+  font-size: 0.9rem; color: var(--muted);
+  margin-bottom: 16px; text-align: center; font-weight: 600;
+}
+
+.memory-layout {
+  display: flex; gap: 20px; width: 100%; max-width: 900px; align-items: flex-start;
+}
+.memory-main { flex: 1; }
+.memory-right { width: 240px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+
+.mem-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.mem-card {
+  aspect-ratio: 1;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 800;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--pixel);
+  font-size: 0.6rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: 4px;
+  transition: transform 0.12s;
+  user-select: none;
+}
+.mem-card:hover:not(.revealed):not(.matched) { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
+.mem-card.revealed { background: var(--bg2); color: var(--text); cursor: default; }
+.mem-card.matched  { background: var(--green); color: white; cursor: default; opacity: 0.7; }
+.mem-card.wrong    { background: var(--coral); color: white; }
+
+.mem-status {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 1px;
+  min-height: 24px;
+}
+
+.mem-info {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.mem-info-title {
+  font-family: var(--pixel);
+  font-size: 0.4rem;
+  line-height: 2;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+.mem-info-text { font-size: 0.82rem; font-weight: 600; color: var(--muted); line-height: 1.5; }
+
+.mem-subjects {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.mem-sub-title {
+  font-family: var(--pixel);
+  font-size: 0.4rem;
+  line-height: 2;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.mem-sub-row {
+  font-size: 0.8rem; padding: 4px 0;
+  border-bottom: 1px dashed #ccc;
+  display: flex; gap: 6px;
+}
+.mem-sub-row:last-child { border: none; }
+.mem-sub-s { font-weight: 800; min-width: 70px; }
+.mem-sub-d { color: var(--muted); }
+
+/* ════════════════════════════════
+   SLIDE 6 — MORE MECHANICS
+════════════════════════════════ */
+.more-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.55rem, 1.1vw, 0.8rem);
+  line-height: 2;
+  color: var(--text);
+  margin-bottom: 20px; text-align: center;
+}
+.more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%; max-width: 900px;
+}
+.more-card {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  transition: transform 0.15s;
+}
+.more-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--border); }
+.more-card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  padding-bottom: 8px; border-bottom: 2px solid var(--border);
+}
+.more-card-icon { font-size: 1.6rem; }
+.more-card-name {
+  font-family: var(--pixel);
+  font-size: 0.42rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+.more-card-cog {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.more-card-examples { display: flex; flex-direction: column; gap: 4px; }
+.more-ex {
+  font-size: 0.78rem;
+  padding: 3px 8px;
+  background: var(--bg2);
+  border-left: 3px solid var(--border);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ════════════════════════════════
+   SLIDE 7 — PROGRESS & FEEDBACK
+════════════════════════════════ */
+.prog-layout {
+  display: flex; gap: 20px; width: 100%; max-width: 900px; align-items: flex-start;
+}
+.prog-left { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+.prog-right { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; }
+
+.prog-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.55rem, 1.1vw, 0.8rem);
+  line-height: 2;
+  color: var(--green);
+  margin-bottom: 16px; text-align: center;
+}
+
+.prog-item {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+}
+.prog-item-name {
+  font-family: var(--pixel);
+  font-size: 0.42rem;
+  line-height: 2; margin-bottom: 6px;
+  color: var(--text);
+}
+.prog-item-desc { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+/* XP bar demo */
+.xp-demo { margin-top: 10px; }
+.xp-label {
+  font-family: var(--pixel);
+  font-size: 0.38rem;
+  line-height: 2;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.xp-bar-wrap {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  height: 18px; position: relative; overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 1s ease;
+  position: relative;
+}
+.xp-bar-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    90deg, transparent, transparent 8px,
+    rgba(255,255,255,0.2) 8px, rgba(255,255,255,0.2) 10px
+  );
+}
+.xp-val {
+  font-family: var(--mono);
+  font-size: 0.9rem; color: var(--muted);
+  margin-top: 4px; text-align: right;
+}
+
+/* Badge demo */
+.badge-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.badge {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 6px 10px;
+  font-size: 0.75rem; font-weight: 700;
+  display: flex; align-items: center; gap: 5px;
+  cursor: default;
+  transition: transform 0.1s;
+}
+.badge:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
+.badge.earned { background: var(--gold); color: white; border-color: #886600; }
+
+.warning-box {
+  background: #FFF8E6;
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow);
+  padding: 12px 16px;
+}
+.warning-title {
+  font-family: var(--pixel);
+  font-size: 0.4rem; line-height: 2;
+  color: var(--gold); margin-bottom: 6px;
+}
+.warning-text { font-size: 0.82rem; font-weight: 600; color: #775500; }
+
+/* ════════════════════════════════
+   SLIDE 8 — HOW TO CHOOSE
+════════════════════════════════ */
+.choose-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+  line-height: 2;
+  color: var(--text); margin-bottom: 20px; text-align: center;
+}
+.choose-layout {
+  display: flex; gap: 20px; width: 100%; max-width: 900px;
+}
+.choose-left { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.choose-right { width: 300px; flex-shrink: 0; }
+
+.q-step {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.q-num {
+  font-family: var(--pixel);
+  font-size: 1.2rem;
+  color: var(--cyan);
+  min-width: 32px;
+  line-height: 1;
+  margin-top: 2px;
+}
+.q-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.q-sub { font-size: 0.82rem; font-weight: 600; color: var(--muted); margin-top: 2px; }
+.q-step.danger { border-color: var(--coral); }
+.q-step.danger .q-num { color: var(--coral); }
+
+.combo-box {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  height: 100%;
+}
+.combo-title {
+  font-family: var(--pixel);
+  font-size: 0.42rem; line-height: 2;
+  color: var(--purple); margin-bottom: 10px;
+}
+.combo-row {
+  display: flex; gap: 6px; align-items: center;
+  padding: 6px 0; border-bottom: 1px dashed #ccc; font-size: 0.82rem;
+}
+.combo-row:last-child { border: none; }
+.combo-a { font-weight: 800; color: var(--cyan); }
+.combo-plus { color: var(--muted); font-weight: 700; }
+.combo-b { font-weight: 800; color: var(--purple); }
+.combo-arrow { color: var(--muted); }
+.combo-desc { color: var(--text); font-weight: 600; }
+
+/* ════════════════════════════════
+   SLIDE 9 — FINAL
+════════════════════════════════ */
+.slide-final {
+  background: var(--text);
+  color: var(--bg);
+}
+.slide-final::before { display: none; }
+.slide-final .final-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.65rem, 1.4vw, 1rem);
+  line-height: 2.2;
+  color: #00CCFF;
+  text-shadow: 3px 3px 0 #005577;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 820px; width: 100%; margin-bottom: 28px;
+}
+.principle-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.15);
+  padding: 18px 14px;
+  text-align: center;
+}
+.principle-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+.principle-text {
+  font-size: 0.88rem; font-weight: 700;
+  color: rgba(255,255,255,0.85); line-height: 1.4;
+}
+.final-cta {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  color: #AACCDD;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* ── PIXEL DECORATIONS on slides ── */
+.slide-num {
+  position: absolute; top: 18px; right: 20px;
+  font-family: var(--pixel);
+  font-size: 0.4rem;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+.slide-title .slide-num { color: #445566; }
+.slide-final .slide-num { color: #445566; }
+
+  /* ════ SNAKES SLIDE ════ */
+  .snakes-title {
+    font-family: var(--pixel); font-size: clamp(0.6rem,1.2vw,0.85rem);
+    line-height: 2; color: var(--green); margin-bottom: 4px; text-align: center;
+  }
+  .snakes-sub { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-align: center; }
+  .snakes-layout { display: flex; gap: 12px; width: 100%; max-width: 860px; align-items: flex-start; }
+  .snakes-left { flex-shrink: 0; display: flex; gap: 10px; align-items: flex-start; }
+  #snakesCanvas { border: 3px solid var(--border); box-shadow: var(--shadow); image-rendering: pixelated; display: block; }
+  .snakes-controls { display: flex; flex-direction: column; gap: 5px; width: 150px; }
+  .snakes-player { font-family: var(--pixel); font-size: 0.38rem; line-height: 2; color: var(--muted); }
+  .snakes-btn {
+    font-family: var(--pixel); font-size: 0.42rem; line-height: 2;
+    background: var(--green); color: white; border: 3px solid var(--border);
+    box-shadow: var(--shadow-sm); padding: 7px 10px; cursor: pointer; transition: transform 0.1s;
+    width: 100%;
+  }
+  .snakes-btn:hover { background: #136b2e; }
+  .snakes-btn:active { transform: translate(2px,2px); box-shadow: none; }
+  .snakes-btn:disabled { background: #aaa; cursor: default; }
+  .snakes-question-area {
+    background: var(--bg2); border: 2px solid var(--border);
+    box-shadow: var(--shadow-sm); padding: 7px;
+  }
+  .snakes-q { font-size: 0.72rem; font-weight: 700; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+  .snakes-answers { display: flex; flex-direction: column; gap: 3px; }
+  .snakes-ans {
+    font-size: 0.7rem; font-weight: 700; padding: 4px 6px;
+    background: var(--panel); border: 2px solid var(--border);
+    cursor: pointer; transition: background 0.1s;
+  }
+  .snakes-ans:hover { background: var(--cyan); color: white; }
+  .snakes-log {
+    font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    line-height: 1.4; min-height: 36px;
+    background: var(--bg2); border: 2px solid var(--border); padding: 6px;
+  }
+  .snakes-right { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .snakes-info-row { display: flex; gap: 8px; align-items: flex-start; }
+  .snakes-rules-box { flex-shrink: 0; }
+  .snakes-rules-box, .snakes-tip-box, .snakes-subj-box, .snakes-wiki-box {
+    background: var(--panel); border: 3px solid var(--border); box-shadow: var(--shadow); padding: 7px 10px;
+  }
+  .snakes-rules-title, .snakes-tip-title, .snakes-subj-title {
+    font-family: var(--pixel); font-size: 0.38rem; line-height: 2; margin-bottom: 4px;
+  }
+  .snakes-rules-title { color: var(--green); }
+  .snakes-tip-title { color: var(--gold); }
+  .snakes-subj-title { color: var(--purple); }
+  .snakes-rule { font-size: 0.76rem; font-weight: 600; color: var(--text); padding: 1px 0; }
+  .snakes-tip-text { font-size: 0.78rem; font-weight: 600; color: var(--muted); line-height: 1.5; }
+  .snakes-subj-row { font-size: 0.76rem; font-weight: 600; color: var(--text); padding: 2px 0; border-bottom: 1px dashed #ddd; }
+  .snakes-subj-row:last-child { border: none; }
+  .snakes-wiki-link {
+    display: inline-block; margin-top: 6px;
+    font-size: 0.76rem; font-weight: 700; color: var(--cyan);
+    text-decoration: none; border-bottom: 2px solid var(--cyan);
+  }
+  .snakes-wiki-link:hover { color: var(--text); border-color: var(--text); }
+
+  /* ── NAV WRAP + DOTS ── */
+  .nav-wrap {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; padding-bottom: 10px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .nav-dots {
+    display: flex; gap: 5px; align-items: center;
+    pointer-events: all;
+  }
+  .nav-dot {
+    width: 12px; height: 12px;
+    border: 2px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-dot:hover { background: var(--muted); transform: scale(1.2); }
+  .nav-dot.active { background: var(--text); transform: scale(1.15); }
+  .nav { pointer-events: all; }
+
+  .snakes-history-bar {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    max-width: 860px;
+    margin-top: 10px;
+    background: var(--panel);
+    border: 3px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 10px 16px;
+    flex-wrap: nowrap;
+  }
+  .snakes-history-label {
+    font-family: var(--pixel);
+    font-size: 0.38rem;
+    line-height: 2;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .snakes-history-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<div class="slide slide-title active" id="s0">
+    <div class="slide-num">01 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="corner-decor corner-bl"></div>
+    <div class="corner-decor corner-br"></div>
+    <div class="big-title">ИГРОВЫЕ МЕХАНИКИ<br>В ОБРАЗОВАНИИ</div>
+    <div class="pixel-chars">
+      <div class="pixel-char"><span class="pixel-char-icon">⚔️</span><span class="pixel-char-label">КНБ</span></div>
+      <div class="pixel-char"><span class="pixel-char-icon">🃏</span><span class="pixel-char-label">МЕМОРИ</span></div>
+      <div class="pixel-char"><span class="pixel-char-icon">🔍</span><span class="pixel-char-label">ДЕДУКЦИЯ</span></div>
+      <div class="pixel-char"><span class="pixel-char-icon">🏰</span><span class="pixel-char-label">КВЕСТ</span></div>
+      <div class="pixel-char"><span class="pixel-char-icon">⏱️</span><span class="pixel-char-label">ТАЙМЕР</span></div>
+    </div>
+    <div class="sub">ТИПОЛОГИЯ · ЛОГИКА · АДАПТАЦИИ ДЛЯ УРОКА</div>
+    <div class="muza-label">МА «ПЕДАГОГИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ В УСЛОВИЯХ ИЗМЕНЕНИЙ» — МУЦА</div>
+  </div>
+
+<div class="slide slide-what" id="s1">
+    <div class="slide-num">02 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="headline">ЧТО ТАКОЕ ИГРОВАЯ МЕХАНИКА?</div>
+    <div class="mechanics-grid">
+      <div class="mech-card">
+        <span class="mech-card-icon">🃏</span>
+        <div class="mech-card-title">МЕМОРИ</div>
+        <div class="mech-card-desc">Не про карточки.<br>Про <strong>парное сопоставление</strong>.</div>
+      </div>
+      <div class="mech-card">
+        <span class="mech-card-icon">✌️</span>
+        <div class="mech-card-title">КНБ</div>
+        <div class="mech-card-desc">Не про жесты.<br>Про <strong>решение в условиях неопределённости</strong>.</div>
+      </div>
+      <div class="mech-card">
+        <span class="mech-card-icon">🔍</span>
+        <div class="mech-card-title">УГАДАЙ КТО</div>
+        <div class="mech-card-desc">Не про угадывание.<br>Про <strong>выдвижение гипотез</strong>.</div>
+      </div>
+    </div>
+    <div class="key-idea">
+      ► МЕХАНИКА = ПРАВИЛО, КОТОРОЕ ОРГАНИЗУЕТ МЫШЛЕНИЕ.<br>КОНТЕНТ — ЛЮБОЙ. МЕХАНИКА — НЕИЗМЕННА.
+    </div>
+  </div>
+
+<div class="slide" id="s3">
+    <div class="slide-num">03 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="families-title">5 СЕМЕЙСТВ МЕХАНИК + 2 ПАРАМЕТРА ВОВЛЕЧЕНИЯ</div>
+    <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center;letter-spacing:1px">СЕМЕЙСТВА — определяют тип игровой ситуации</div>
+    <div class="families-grid">
+      <div class="family-tile" style="border-color:var(--coral)">
+        <span class="family-tile-num" style="background:var(--coral)">01</span>
+        <span class="family-tile-icon">⚔️</span>
+        <div class="family-tile-name">СОРЕВНОВАНИЕ<br>И ВЫБОР</div>
+        <div class="family-tile-cog">решение · обоснование</div>
+      </div>
+      <div class="family-tile" style="border-color:var(--purple)">
+        <span class="family-tile-num" style="background:var(--purple)">02</span>
+        <span class="family-tile-icon">🃏</span>
+        <div class="family-tile-name">ПАМЯТЬ И<br>СОВПАДЕНИЕ</div>
+        <div class="family-tile-cog">узнавание · сопоставление</div>
+      </div>
+      <div class="family-tile" style="border-color:var(--cyan)">
+        <span class="family-tile-num" style="background:var(--cyan)">03</span>
+        <span class="family-tile-icon">🔍</span>
+        <div class="family-tile-name">ДЕДУКЦИЯ И<br>СКРЫТАЯ ИНФО</div>
+        <div class="family-tile-cog">гипотеза · исключение</div>
+      </div>
+      <div class="family-tile" style="border-color:var(--gold)">
+        <span class="family-tile-num" style="background:var(--gold)">04</span>
+        <span class="family-tile-icon">🏗️</span>
+        <div class="family-tile-name">ПОСТРОЕНИЕ<br>И РЕСУРСЫ</div>
+        <div class="family-tile-cog">планирование · система</div>
+      </div>
+      <div class="family-tile" style="border-color:var(--green)">
+        <span class="family-tile-num" style="background:var(--green)">05</span>
+        <span class="family-tile-icon">🎭</span>
+        <div class="family-tile-name">НАРРАТИВ И<br>РОЛЕВАЯ ИГРА</div>
+        <div class="family-tile-cog">эмпатия · перспектива</div>
+      </div>
+    </div>
+    <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin:12px 0 10px;text-align:center;letter-spacing:1px;border-top:2px dashed #ccc;padding-top:12px">ПАРАМЕТРЫ — накладываются на любое семейство</div>
+    <div style="display:flex;gap:12px;width:100%;max-width:880px;justify-content:center">
+      <div class="family-tile" style="border-color:#888;border-style:dashed;max-width:200px;flex:1">
+        <span class="family-tile-num" style="background:#888">П1</span>
+        <span class="family-tile-icon">⏱️</span>
+        <div class="family-tile-name">ВРЕМЯ<br>И ТЕМП</div>
+        <div class="family-tile-cog">добавь к любой игре</div>
+      </div>
+      <div class="family-tile" style="border-color:#2E7D32;border-style:dashed;max-width:200px;flex:1">
+        <span class="family-tile-num" style="background:#2E7D32">П</span>
+        <span class="family-tile-icon">📊</span>
+        <div class="family-tile-name">ПРОГРЕСС И<br>ОБРАТНАЯ СВЯЗЬ</div>
+        <div class="family-tile-cog">добавь к любой игре</div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide slide-knb" id="s2">
+    <div class="slide-num">04 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="slide-title-bar">СЕМЕЙСТВО 1 · КАМЕНЬ — НОЖНИЦЫ — БУМАГА</div>
+    <div class="slide-sub">Кольцевое решение · выбор одновременный · победитель объясняет почему</div>
+
+    <div class="knb-arena">
+      <!-- Left: player choices -->
+      <div class="knb-panel">
+        <div class="knb-panel-title" style="color:var(--cyan)">▶ ВЫ ВЫБИРАЕТЕ</div>
+        <div class="knb-choices" id="playerChoices"></div>
+      </div>
+
+      <!-- Middle: fight + result -->
+      <div class="knb-vs">
+        <div class="knb-vs-label">VS</div>
+        <button class="knb-fight-btn" onclick="knbFight()">СЫГРАТЬ!</button>
+        <div class="knb-result" id="knbResult">
+          <div class="knb-result-emoji">❓</div>
+          <div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ</div>
+        </div>
+      </div>
+
+      <!-- Right: rules + adaptations -->
+      <div class="knb-right">
+        <div class="knb-rule-box">
+          <div class="knb-rule-title">⚔ КОЛЬЦО БИЁ Т КОГ О</div>
+          <div id="knbRules"></div>
+        </div>
+        <div class="knb-adapt-box">
+          <div class="knb-adapt-title">📚 АДАПТАЦИИ</div>
+          <div class="adapt-row"><span class="adapt-subj">История</span><span class="adapt-desc">Меч → Золото → Перо → Меч</span></div>
+          <div class="adapt-row"><span class="adapt-subj">Язык</span><span class="adapt-desc">Факт → Ценность → Эмоция → Факт</span></div>
+          <div class="adapt-row"><span class="adapt-subj">Риторика</span><span class="adapt-desc">Эмоция → Логика → Авторитет → Эмоция</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s_auct">
+    <div class="slide-num">05 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title">СЕМЕЙСТВО 1 · АУКЦИОН · ГОЛОСОВАНИЕ · ДРАФТ</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="more-card" style="border-color:var(--coral)">
+        <div class="more-card-header">
+          <span class="more-card-icon">💰</span>
+          <div class="more-card-name">АУКЦИОН</div>
+        </div>
+        <div class="more-card-cog">ставки · оценка риска · ограниченный ресурс</div>
+        <div class="more-card-examples">
+          <div class="more-ex">У каждого 5 жетонов</div>
+          <div class="more-ex">Ставь на аргумент или причину</div>
+          <div class="more-ex">Чем выше ставка — тем сильнее обоснование</div>
+          <div class="more-ex" style="background:#fff3f3">История: кто виновник войны?</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🗳️</span>
+          <div class="more-card-name">ГОЛОСОВАНИЕ / РЕЙТИНГ</div>
+        </div>
+        <div class="more-card-cog">критериальное суждение · сопоставление</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Лучший аргумент · лучшая работа</div>
+          <div class="more-ex">Критерии формулируют сами ученики</div>
+          <div class="more-ex">Пеер-ревью — анонимно</div>
+          <div class="more-ex" style="background:#f0f8ff">Любой предмет, любой возраст</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--purple)">
+        <div class="more-card-header">
+          <span class="more-card-icon">🃏</span>
+          <div class="more-card-name">ДРАФТ</div>
+        </div>
+        <div class="more-card-cog">стратегия · выбор по кругу</div>
+        <div class="more-card-examples">
+          <div class="more-ex">12 тем на доске — берём по очереди</div>
+          <div class="more-ex">Стратегия: взять лучшее, оставить слабое</div>
+          <div class="more-ex">Потом: почему эта тема осталась?</div>
+          <div class="more-ex" style="background:#f5f0ff">Язык, литература, проекты</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide slide-memory" id="s4">
+    <div class="slide-num">06 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="slide-title-bar">СЕМЕЙСТВО 2 · МЕМОРИ — ПОПРОБУЙТЕ ПРЯМО СЕЙЧАС</div>
+    <div class="slide-sub">Биология: найди пары — орган + функция</div>
+    <div class="memory-layout">
+      <div class="memory-main">
+        <div class="mem-grid" id="memGrid"></div>
+        <div class="mem-status" id="memStatus">НАЖМИТЕ НА КАРТОЧКУ</div>
+        <button class="nav-btn" style="margin-top:8px;width:100%" onclick="initMem()">↺ НОВАЯ ИГРА</button>
+        <div class="mem-subjects" style="margin-top:8px">
+          <div class="mem-sub-title">📚 ПРЕДМЕТЫ</div>
+          <div class="mem-sub-row"><span class="mem-sub-s">История</span><span class="mem-sub-d">дата ↔ событие</span></div>
+          <div class="mem-sub-row"><span class="mem-sub-s">Язык</span><span class="mem-sub-d">слово ↔ перевод</span></div>
+          <div class="mem-sub-row"><span class="mem-sub-s">Биология</span><span class="mem-sub-d">орган ↔ функция</span></div>
+          <div class="mem-sub-row"><span class="mem-sub-s">Химия</span><span class="mem-sub-d">элемент ↔ свойство</span></div>
+          <div class="mem-sub-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:4px">
+            <span class="mem-sub-s" style="color:var(--cyan)">🎮 Игра</span>
+            <span class="mem-sub-d"><a href="memory_neurons.html" target="_blank" style="color:var(--cyan);font-weight:700;text-decoration:none;border-bottom:1px solid var(--cyan)">Мемори — Нейроны →</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="memory-right">
+        <div class="mem-info">
+          <div class="mem-info-title">КАК РАБОТАЕТ</div>
+          <div class="mem-info-text">Карточки рубашкой вниз. Открываешь две — если пара, остаются. Нет — переворачиваются. Запоминай положение!</div>
+        </div>
+        <div class="mem-info" style="border-color:var(--purple)">
+          <div class="mem-info-title" style="color:var(--purple)">🧠 ПОЧЕМУ РАБОТАЕТ</div>
+          <div class="mem-info-text">Мемори активирует <strong>эпизодическую память</strong> — мы запоминаем не только содержание, но и <em>где</em> лежала карточка. Повторные открытия без штрафа создают безопасную петлю: ошибся → запомнил → нашёл. Каждое совпадение даёт мгновенное подтверждение — «я знаю». Это и есть когнитивная работа механики: <strong>узнавание + сопоставление</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s5">
+    <div class="slide-num">07 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title" style="color:var(--cyan)">СЕМЕЙСТВО 3 · ДЕДУКЦИЯ И СКРЫТАЯ ИНФОРМАЦИЯ</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Гипотеза · вопрос · логическое исключение</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header"><span class="more-card-icon">🔍</span><div class="more-card-name">УГАДАЙ КТО / ЧТО</div></div>
+        <div class="more-card-cog">карточка на лбу · да/нет вопросы</div>
+        <div class="more-card-examples">
+          <div class="more-ex">История: угадай личность (правитель? до 18 века?)</div>
+          <div class="more-ex">Биология: угадай организм (млекопитающее? хищник?)</div>
+          <div class="more-ex">Литература: угадай персонажа (главный? честный?)</div>
+          <div class="more-ex">Победитель объясняет логику вычисления</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header"><span class="more-card-icon">📦</span><div class="more-card-name">ЧЁРНЫЙ ЯЩИК</div></div>
+        <div class="more-card-cog">скрытый предмет · гипотезы</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Учитель прячет предмет, связанный с темой</div>
+          <div class="more-ex">Ученики задают вопросы — только да/нет</div>
+          <div class="more-ex">Оценка: точность вопроса, а не угадывание</div>
+          <div class="more-ex">Химия: что за вещество? Физика: что за явление?</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--cyan)">
+        <div class="more-card-header"><span class="more-card-icon">🐘</span><div class="more-card-name">ИГРА «СЛОН»</div></div>
+        <div class="more-card-cog">скрытый объект · командное исследование · голосование</div>
+        <div class="more-card-examples">
+          <div class="more-ex">В парке появился объект в непроницаемом тумане</div>
+          <div class="more-ex">Вы — спецагенты с уникальным оборудованием на карточках</div>
+          <div class="more-ex">По очереди: выбираешь карточку → ведущий описывает результат</div>
+          <div class="more-ex">4–10 ходов. Объект мог взорваться — игра заканчивается</div>
+          <div class="more-ex">Финал: голосуем — опасен ли объект? Верно → повышение</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="slide" id="s5c">
+    <div class="slide-num">08 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title" style="color:var(--gold)">СЕМЕЙСТВО 4 · ПОСТРОЕНИЕ И УПРАВЛЕНИЕ РЕСУРСАМИ</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Долгосрочный прогресс · планирование · причинно-следственные связи</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
+      <div class="more-card" style="border-color:var(--gold)">
+        <div class="more-card-header"><span class="more-card-icon">🏗️</span><div class="more-card-name">ДЕРЕВО НАВЫКОВ</div></div>
+        <div class="more-card-cog">RPG-карта курса · нельзя перепрыгнуть</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Базовая зона → продвинутая → босс-задание</div>
+          <div class="more-ex">Каждое достижение открывает следующую ветку</div>
+          <div class="more-ex">Ученик видит свой путь через тему целиком</div>
+          <div class="more-ex">Математика: сложение → умножение → уравнения</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--gold)">
+        <div class="more-card-header"><span class="more-card-icon">🗺️</span><div class="more-card-name">КВЕСТ / ESCAPE ROOM</div></div>
+        <div class="more-card-cog">цепочка загадок · итоговый урок</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Загадка 1 открывает загадку 2 → финал</div>
+          <div class="more-ex">Биология: фотосинтез → клетка → дыхание</div>
+          <div class="more-ex">История: карта + документ + дата = ответ</div>
+          <div class="more-ex">Работает как повторение всей темы разом</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--gold)">
+        <div class="more-card-header"><span class="more-card-icon">🐍</span><div class="more-card-name">ЗМЕИ И ЛЕСТНИЦЫ</div></div>
+        <div class="more-card-cog">поле · вопрос · откат без стресса</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Кубик → клетка. Ответ → результат</div>
+          <div class="more-ex">Лестница: верно → прыжок вперёд</div>
+          <div class="more-ex">Змея: неверно → откат — часть игры, не провал</div>
+          <div class="more-ex">Поле рисуется на доске, технологий не нужно</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide slide-snakes" id="s5b">
+    <div class="slide-num">09 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="snakes-title">СЕМЕЙСТВО 4 · ЗМЕИ И ЛЕСТНИЦЫ</div>
+    <div class="snakes-sub">Повторение · закрепление · работа с ошибкой без стресса</div>
+    <div class="snakes-layout">
+      <!-- LEFT: board + controls -->
+      <div class="snakes-left">
+        <canvas id="snakesCanvas" width="240" height="240"></canvas>
+        <div class="snakes-controls">
+          <div class="snakes-player">Ход: <span id="snakesPlayerName">Игрок 1</span></div>
+          <button class="snakes-btn" id="snakesRollBtn" onclick="snakesRoll()">🎲 БРОСИТЬ КУБ</button>
+          <div class="snakes-question-area" id="snakesQArea" style="display:none">
+            <div class="snakes-q" id="snakesQ"></div>
+            <div class="snakes-answers" id="snakesAnswers"></div>
+          </div>
+          <div class="snakes-log" id="snakesLog">Нажми кубик чтобы начать</div>
+        </div>
+      </div>
+      <!-- RIGHT: rules + применение -->
+      <div class="snakes-right">
+        <div class="snakes-info-row">
+          <div class="snakes-rules-box">
+            <div class="snakes-rules-title">📋 ПРАВИЛА</div>
+            <div class="snakes-rule">🎲 Кубик → клетка на поле</div>
+            <div class="snakes-rule">❓ На клетке — вопрос по теме</div>
+            <div class="snakes-rule">✅ Верно → идёшь дальше</div>
+            <div class="snakes-rule">❌ Неверно → откат на 2 клетки</div>
+            <div class="snakes-rule">🪜 Лестница → прыжок вперёд</div>
+            <div class="snakes-rule">🐍 Змея → откат назад</div>
+            <div class="snakes-rule">🏆 Цель — клетка 25</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+            <div class="snakes-tip-box">
+              <div class="snakes-tip-title">💡 КЛЮЧЕВОЕ</div>
+              <div class="snakes-tip-text">Случайность определяет <strong>клетку</strong>. Знание определяет <strong>результат</strong>.</div>
+            </div>
+            <div class="snakes-subj-box">
+              <div class="snakes-subj-title">📚 ПРИМЕНЕНИЕ</div>
+              <div class="snakes-subj-row"><b>История</b> — хронология</div>
+              <div class="snakes-subj-row"><b>Язык</b> — орфография</div>
+              <div class="snakes-subj-row"><b>Биология</b> — этапы процесса</div>
+              <div class="snakes-subj-row"><b>Любой предмет</b> — поле на доске</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- HISTORY: full-width below board -->
+    <div class="snakes-history-bar">
+      <span class="snakes-history-label">📖 ИСТОРИЯ</span>
+      <span class="snakes-history-text">Возникла в Индии (~II в. н.э.) — <em>Gyan Chaupar</em> («игра знания»). Змеи = пороки (гордыня, гнев, алчность). Лестницы = добродетели (смирение, щедрость). В XIX веке британцы завезли в Европу — игра стала детской и утратила философский смысл. Сегодня одна из самых распространённых в мире.</span>
+      <a class="snakes-wiki-link" href="https://en.wikipedia.org/wiki/Snakes_and_ladders" target="_blank" style="white-space:nowrap">→ Wikipedia</a>
+    </div>
+  </div>
+
+  <div class="slide" id="s_mono">
+    <div class="slide-num">10 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="more-title" style="color:var(--coral)">СЕМЕЙСТВО 4 · МОНОПОЛИЯ — РАЗБОР МЕХАНИКИ</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:16px;text-align:center">Почему классическая Монополия — плохой пример геймификации</div>
+    <div style="display:flex;gap:16px;width:100%;max-width:900px;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="more-card" style="border-color:var(--coral)">
+          <div class="more-card-header"><span class="more-card-icon">⚠️</span><div class="more-card-name">ПРОБЛЕМА МЕХАНИКИ</div></div>
+          <div class="more-card-cog">лидер закрепляется · шансов отыграться мало</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Кто вырвался вперёд — получает больше ресурсов</div>
+            <div class="more-ex">Больше ресурсов → ещё легче побеждать</div>
+            <div class="more-ex">Отстающий теряет мотивацию и выбывает психологически</div>
+            <div class="more-ex">Игра затягивается: победитель известен задолго до конца</div>
+          </div>
+        </div>
+        <div class="more-card" style="border-color:var(--green)">
+          <div class="more-card-header"><span class="more-card-icon">💡</span><div class="more-card-name">ЗАМЫСЕЛ АВТОРА</div></div>
+          <div class="more-card-cog">Элизабет Мэги, 1903 — игра как критика</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Элизабет Мэги создала «Игру домовладельца» в 1903 году</div>
+            <div class="more-ex">Цель: показать, что монополия — это плохо для общества</div>
+            <div class="more-ex">Игрок должен был почувствовать несправедливость на себе</div>
+            <div class="more-ex">Паркер Бразерс купили патент в 1935 и убрали критический смысл</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="more-card" style="border-color:var(--cyan)">
+          <div class="more-card-header"><span class="more-card-icon">🏫</span><div class="more-card-name">КАК АДАПТИРОВАТЬ ДЛЯ УРОКА</div></div>
+          <div class="more-card-cog">убери накопление · добавь пересборку</div>
+          <div class="more-card-examples">
+            <div class="more-ex">Клетки = темы урока, а не собственность</div>
+            <div class="more-ex">Попал на клетку → ответь на вопрос → двигайся</div>
+            <div class="more-ex">Сделай накопление более равномерным — дай шанс догнать лидера</div>
+            <div class="more-ex">Или откажись от накопления полностью — поле без ресурсов работает</div>
+          </div>
+        </div>
+        <div class="pbox" style="background:var(--text);border-color:var(--border)">
+          <div style="font-family:var(--pixel);font-size:0.4rem;line-height:2;color:#ffd700;margin-bottom:6px">► ВЫВОД</div>
+          <div style="font-size:0.82rem;font-weight:600;color:var(--bg);line-height:1.5">Механика игрового поля хороша. Механика накопления монополии — нет. В классе используй поле без накопления: ученик отвечает на вопрос, двигается вперёд — и это всё.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s5d">
+    <div class="slide-num">11 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title" style="color:var(--green)">СЕМЕЙСТВО 5 · НАРРАТИВ И РОЛЕВАЯ ИГРА</div>
+    <div style="font-size:0.82rem;color:var(--muted);font-weight:600;margin-bottom:14px;text-align:center">Эмпатия · перспектива · принятие решений в чужой логике</div>
+    <div class="more-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px">
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🎭</span><div class="more-card-name">РОЛЕВАЯ ИГРА</div></div>
+        <div class="more-card-cog">персонаж · позиция · цель</div>
+        <div class="more-card-examples">
+          <div class="more-ex">История: симуляция переговоров, мирный договор</div>
+          <div class="more-ex">Язык: дебаты — у каждой стороны свои аргументы</div>
+          <div class="more-ex">Этика: действуй как персонаж — что выбираешь и почему?</div>
+          <div class="more-ex">Цель: отстоять позицию или достичь цели</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🔀</span><div class="more-card-name">НАРРАТИВНЫЕ РАЗВИЛКИ</div></div>
+        <div class="more-card-cog">решение → последствия · альтернативная история</div>
+        <div class="more-card-examples">
+          <div class="more-ex">«Что было бы, если…» — выбираешь за персонажа</div>
+          <div class="more-ex">История идёт по одному из нескольких путей</div>
+          <div class="more-ex">Финал: почему реальная история пошла иначе?</div>
+          <div class="more-ex">Этика, история, литература, обществознание</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:var(--green)">
+        <div class="more-card-header"><span class="more-card-icon">🧩</span><div class="more-card-name">ПАЗЛ / ДЖИГСОУ</div></div>
+        <div class="more-card-cog">часть → объяснение другим · без тебя нет целого</div>
+        <div class="more-card-examples">
+          <div class="more-ex">Каждая группа — эксперты по своему фрагменту</div>
+          <div class="more-ex">Перемешиваемся: объясни своё новым партнёрам</div>
+          <div class="more-ex">Без твоей части группа не сложит картину</div>
+          <div class="more-ex">Работает на любом предмете с делимым материалом</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s_time">
+    <div class="slide-num">12 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="more-title" style="color:#888">ПАРАМЕТР · ВРЕМЯ И ТЕМП</div>
+    <div class="more-grid" style="grid-template-columns:repeat(2,1fr);max-width:700px">
+      <div class="more-card" style="border-color:var(--coral)">
+        <div class="more-card-header">
+          <span class="more-card-icon">⏱️</span>
+          <div class="more-card-name">ТАЙМЕР / БЛИЦ</div>
+        </div>
+        <div class="more-card-cog">быстрое решение · без бумажки</div>
+        <div class="more-card-examples">
+          <div class="more-ex">30 сек — один аргумент</div>
+          <div class="more-ex">10 сек на пару — разделить и решить</div>
+          <div class="more-ex">Только то, что уже знаешь</div>
+        </div>
+      </div>
+      <div class="more-card" style="border-color:#888">
+        <div class="more-card-header">
+          <span class="more-card-icon">🔄</span>
+          <div class="more-card-name">РАУНДЫ / ТУРЫ</div>
+        </div>
+        <div class="more-card-cog">симметричные отрезки · ротация ролей</div>
+        <div class="more-card-examples">
+          <div class="more-ex">В каждом раунде — шанс изменить расклад</div>
+          <div class="more-ex">Структурированные дебаты</div>
+          <div class="more-ex">Ротация: говорящий → слушающий → арбитр</div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:700px;width:100%;margin-top:16px">
+      <div class="warning-box" style="border-color:var(--coral)">
+        <div class="warning-title" style="color:var(--coral)">⚠ ОСТОРОЖНО: ТЁМНАЯ СТОРОНА</div>
+        <div class="warning-text" style="color:#7a1111">Дефицит времени создаёт тревогу, а не азарт — особенно у тревожных учеников. Используйте таймер как инструмент <strong>темпа</strong>, а не как угрозу. Работает краткосрочно, не строит долгосрочной вовлечённости.</div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s6">
+    <div class="slide-num">13 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="prog-title" style="color:#2E7D32">ПАРАМЕТР ВОВЛЕЧЕНИЯ · ПРОГРЕСС И ОБРАТНАЯ СВЯЗЬ</div>
+    <div class="prog-layout">
+      <div class="prog-left">
+        <div class="prog-item">
+          <div class="prog-item-name">📊 ПОЛОСКА ПРОГРЕССА</div>
+          <div class="prog-item-desc">Ученик видит путь: сколько пройдено, сколько осталось.</div>
+          <div class="xp-demo">
+            <div class="xp-label">ПРОГРЕСС УЧЕНИКА ▼</div>
+            <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xpBar" style="width:0%"></div></div>
+            <div class="xp-val" id="xpVal">0 / 100 XP</div>
+            <button class="nav-btn" style="margin-top:8px;font-size:0.45rem" onclick="addXP()">+ ДОБАВИТЬ XP</button>
+          </div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-item-name">🏷️ ЗНАЧКИ / ДОСТИЖЕНИЯ</div>
+          <div class="prog-item-desc">Конкретный поступок → видный символ.</div>
+          <div class="badge-grid" id="badgeGrid">
+            <div class="badge">🙋 Задал вопрос</div>
+            <div class="badge">🤝 Помог другому</div>
+            <div class="badge">🔎 Нашёл ошибку</div>
+            <div class="badge">💬 Объяснил словами</div>
+          </div>
+          <button class="nav-btn" style="margin-top:10px;font-size:0.45rem" onclick="earnBadge()">ПОЛУЧИТЬ ЗНАЧОК</button>
+        </div>
+      </div>
+      <div class="prog-right">
+        <div class="warning-box">
+          <div class="warning-title">⚠ ОСТОРОЖНО</div>
+          <div class="warning-text">Публичный рейтинг давит на слабых учеников.<br><br>Лучше работает <strong>личный прогресс</strong>: оцениваешь себя вчерашнего, а не соседа.<br><br>Очки — за действие, не за результат: за попытку, за вопрос, за помощь.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-item-name">⚡ МГНОВЕННАЯ ОС</div>
+          <div class="prog-item-desc">Сразу: верно / неверно / можно лучше. Обратная связь = информация для следующего шага, не штраф.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide" id="s7">
+    <div class="slide-num">14 / 15</div>
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    
+    <div class="choose-title">КАК ВЫБИРАТЬ МЕХАНИКУ</div>
+    <div class="choose-layout">
+      <div class="choose-left">
+        <div class="q-step">
+          <div class="q-num">01</div>
+          <div>
+            <div class="q-text">Что должен делать ученик?</div>
+            <div class="q-sub">Сравнивать · объяснять · запоминать · выбирать · строить нарратив</div>
+          </div>
+        </div>
+        <div class="q-step">
+          <div class="q-num">02</div>
+          <div>
+            <div class="q-text">Сколько времени на игру?</div>
+            <div class="q-sub">5 мин → КНБ · таймер. 20 мин → мемори · ролевая. Урок → квест · джигсоу</div>
+          </div>
+        </div>
+        <div class="q-step">
+          <div class="q-num">03</div>
+          <div>
+            <div class="q-text">Какой продукт должен получиться?</div>
+            <div class="q-sub">Устный аргумент · письменный текст · схема · решение задачи</div>
+          </div>
+        </div>
+        <div class="q-step danger">
+          <div class="q-num">!</div>
+          <div>
+            <div class="q-text">Нет ответа на первый вопрос?</div>
+            <div class="q-sub">Игра будет развлечением, а не обучением. Сначала — когнитивное действие.</div>
+          </div>
+        </div>
+      </div>
+      <div class="choose-right">
+        <div class="combo-box">
+          <div class="combo-title">⚡ КОМБИНАЦИИ МЕХАНИК</div>
+          <div class="combo-row">
+            <span class="combo-a">Драфт</span><span class="combo-plus">+</span>
+            <span class="combo-b">Ролевая</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Выбрал роль — отстаивай её</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Мемори</span><span class="combo-plus">+</span>
+            <span class="combo-b">Таймер</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Найди пару за 45 секунд</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Чёрный ящик</span><span class="combo-plus">+</span>
+            <span class="combo-b">Значки</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Очко — за точный вопрос</span>
+          </div>
+          <div class="combo-row">
+            <span class="combo-a">Квест</span><span class="combo-plus">+</span>
+            <span class="combo-b">Дерево</span><span class="combo-arrow">→</span>
+            <span class="combo-desc">Загадка открывает следующую зону</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="slide slide-final" id="s8">
+    <div class="slide-num">15 / 15</div>
+    
+    <div class="corner-decor corner-tl" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-tr" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-bl" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="corner-decor corner-br" style="background:rgba(255,255,255,0.15)"></div>
+    <div class="final-title">МЕХАНИКА — ЭТО НЕ РАЗВЛЕЧЕНИЕ ПОВЕРХ УЧЁБЫ.<br>ЭТО ОРГАНИЗАЦИЯ МЫШЛЕНИЯ.</div>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">🔄</span>
+        <div class="principle-text">Механика нейтральна — подставь любой предмет</div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">🧠</span>
+        <div class="principle-text">Без когнитивного действия — нет механики, есть только игра</div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">⚡</span>
+        <div class="principle-text">Механик много. Выбери нужную — и встрой в урок</div>
+      </div>
+    </div>
+    <div class="final-cta">ВЫБЕРИТЕ ОДНУ МЕХАНИКУ И ПОПРОБУЙТЕ НА СЛЕДУЮЩЕЙ НЕДЕЛЕ →</div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav">
+    <button class="nav-btn" id="btnPrev">◄ НАЗАД</button>
+    <span class="nav-counter" id="navCounter">1 / 15</span>
+    <button class="nav-btn" id="btnNext">ВПЕРЁД ►</button>
+  </div>
+</div>
+
+<script>
+// ══ SLIDE NAVIGATION ══
+var slides = [];
+var cur = 0;
+
+function initSlides() {
+  slides = Array.from(document.querySelectorAll('.slide'));
+  cur = 0;
+  buildDots();
+  updateCounter();
+
+  document.getElementById('btnPrev').addEventListener('click', prevSlide);
+  document.getElementById('btnNext').addEventListener('click', nextSlide);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
+  });
+}
+
+function buildDots() {
+  var container = document.getElementById('navDots');
+  if (!container) return;
+  container.innerHTML = '';
+  slides.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
+    container.appendChild(d);
+  });
+}
+
+function updateCounter() {
+  var el = document.getElementById('navCounter');
+  if (el) el.textContent = (cur + 1) + ' / ' + slides.length;
+  // update dots
+  var dots = document.querySelectorAll('.nav-dot');
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
+}
+
+function goTo(n) {
+  if (!slides.length) return;
+  slides[cur].classList.remove('active');
+  slides[cur].style.opacity = '0';
+  slides[cur].style.pointerEvents = 'none';
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  slides[cur].style.opacity = '1';
+  slides[cur].style.pointerEvents = 'all';
+  updateCounter();
+  // XP bar on progress slide
+  var xpSlide = document.getElementById('s6');
+  if (xpSlide && slides[cur] === xpSlide) setTimeout(function(){ animateXP && animateXP(); }, 300);
+  // Init snakes when on that slide
+  var snakesSlide = document.getElementById('s5b');
+  if (snakesSlide && slides[cur] === snakesSlide) { if (typeof snakesInit === 'function') snakesInit(); }
+}
+
+function nextSlide() { goTo(cur + 1); }
+function prevSlide() { goTo(cur - 1); }
+
+document.addEventListener('DOMContentLoaded', initSlides);
+
+// ══ КНБ GAME ══
+const KNB_MODE = {
+  rhet: {
+    label: 'РИТОРИКА',
+    options: [
+      { id: 'emo',  label: 'Эмоция',    emoji: '❤️', beats: 'auth', reason: 'Эмоциональный призыв перебивает авторитет: личная история убеждает сильнее звания.' },
+      { id: 'log',  label: 'Логика',    emoji: '🧮', beats: 'emo',  reason: 'Чёткий аргумент с фактами нейтрализует эмоцию — показывает, что чувство ошибочно.' },
+      { id: 'auth', label: 'Авторитет', emoji: '🎓', beats: 'log',  reason: 'Ссылка на признанный источник закрывает логическую цепочку — «эксперты согласны».' },
+    ]
+  }
+};
+
+let knbPlayerChoice = null;
+const mode = KNB_MODE.rhet;
+
+function buildKNB() {
+  const choicesEl = document.getElementById('playerChoices');
+  choicesEl.innerHTML = '';
+  mode.options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'knb-choice';
+    btn.dataset.id = opt.id;
+    btn.innerHTML = `<span class="knb-choice-emoji">${opt.emoji}</span><span>${opt.label}</span>`;
+    btn.onclick = () => selectKNB(opt.id);
+    choicesEl.appendChild(btn);
+  });
+
+  const rulesEl = document.getElementById('knbRules');
+  rulesEl.innerHTML = '';
+  mode.options.forEach(opt => {
+    const beaten = mode.options.find(o => o.id === opt.beats);
+    const div = document.createElement('div');
+    div.className = 'knb-rule-item';
+    div.innerHTML = `${opt.emoji} ${opt.label} <span>→</span> ${beaten.emoji} ${beaten.label}`;
+    rulesEl.appendChild(div);
+  });
+}
+
+function selectKNB(id) {
+  knbPlayerChoice = id;
+  document.querySelectorAll('.knb-choice').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
+  });
+}
+
+function knbFight() {
+  if (!knbPlayerChoice) {
+    document.getElementById('knbResult').innerHTML = '<div class="knb-result-title">ВЫБЕРИТЕ<br>ПОЗИЦИЮ<br>СНАЧАЛА!</div>';
+    return;
+  }
+  const cpuOpt = mode.options[Math.floor(Math.random() * mode.options.length)];
+  const playerOpt = mode.options.find(o => o.id === knbPlayerChoice);
+
+  let title, explain, emoji;
+  if (playerOpt.beats === cpuOpt.id) {
+    emoji = '🏆'; title = 'ПОБЕДА!';
+    explain = playerOpt.reason;
+  } else if (cpuOpt.beats === playerOpt.id) {
+    emoji = '💥'; title = 'ПРОИГРЫШ!';
+    explain = cpuOpt.reason;
+  } else {
+    emoji = '🤝'; title = 'НИЧЬЯ!';
+    explain = 'Одинаковые позиции.';
+  }
+
+  document.getElementById('knbResult').innerHTML = `
+    <div class="knb-result-emoji">${emoji}</div>
+    <div class="knb-result-title">ВЫ: ${playerOpt.emoji} ${playerOpt.label}<br>ПК:  ${cpuOpt.emoji} ${cpuOpt.label}<br>${title}</div>
+    <div class="knb-result-explain">${explain}</div>
+  `;
+}
+
+buildKNB();
+
+// ══ MEMORY GAME ══
+const MEM_PAIRS = [
+  ['🫁 Лёгкие',    'Газообмен'],
+  ['❤️ Сердце',    'Перекачка крови'],
+  ['🧠 Мозг',      'Управление телом'],
+  ['🦷 Желудок',   'Переваривание пищи'],
+];
+
+let memCards = [], memFlipped = [], memMatched = 0, memLocked = false;
+
+function initMem() {
+  memFlipped = []; memMatched = 0; memLocked = false;
+  document.getElementById('memStatus').textContent = 'НАЖМИТЕ НА КАРТОЧКУ';
+
+  const items = [];
+  MEM_PAIRS.forEach((pair, pi) => {
+    items.push({ text: pair[0], pair: pi });
+    items.push({ text: pair[1], pair: pi });
+  });
+  memCards = items.sort(() => Math.random() - 0.5);
+
+  const grid = document.getElementById('memGrid');
+  grid.innerHTML = '';
+  memCards.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'mem-card';
+    el.textContent = '?';
+    el.dataset.index = i;
+    el.onclick = () => memClick(el, i);
+    grid.appendChild(el);
+  });
+}
+
+function memClick(el, i) {
+  if (memLocked || el.classList.contains('revealed') || el.classList.contains('matched')) return;
+  el.textContent = memCards[i].text;
+  el.classList.add('revealed');
+  memFlipped.push({ el, i });
+  if (memFlipped.length < 2) return;
+
+  memLocked = true;
+  const [a, b] = memFlipped;
+  if (memCards[a.i].pair === memCards[b.i].pair) {
+    a.el.classList.add('matched'); b.el.classList.add('matched');
+    memMatched++;
+    memFlipped = []; memLocked = false;
+    document.getElementById('memStatus').textContent = memMatched === MEM_PAIRS.length
+      ? '✓ ВСЕ ПАРЫ НАЙДЕНЫ!' : `ПАРА НАЙДЕНА! (${memMatched}/${MEM_PAIRS.length})`;
+  } else {
+    a.el.classList.add('wrong'); b.el.classList.add('wrong');
+    document.getElementById('memStatus').textContent = 'НЕ СОВПАДАЕТ — ЗАПОМНИ ПОЗИЦИИ';
+    setTimeout(() => {
+      a.el.textContent = '?'; b.el.textContent = '?';
+      a.el.classList.remove('revealed','wrong'); b.el.classList.remove('revealed','wrong');
+      memFlipped = []; memLocked = false;
+      document.getElementById('memStatus').textContent = 'ПРОДОЛЖАЙ...';
+    }, 1000);
+  }
+}
+
+initMem();
+
+// ══════════ SNAKES AND LADDERS ══════════
+var _snkPos = [0,0], _snkCur = 0, _snkWaiting = false, _snkCvs = null, _snkCtx = null;
+
+var _CELL = 48;
+var _LADDERS = {3:14, 8:22, 16:21};
+var _SNAKES  = {20:7, 17:4, 24:11};
+var _SQ = [
+  {q:'Что такое игровая механика?', a:['Правило взаимодействия','Только очки','Вид урока'], c:0},
+  {q:'КНБ — это механика...', a:['Памяти','Соревнования и выбора','Дедукции'], c:1},
+  {q:'Мемори тренирует...', a:['Скорость чтения','Парное сопоставление','Ролевое мышление'], c:1},
+  {q:'Победитель в КНБ должен...', a:['Молчать','Объяснить почему','Сыграть ещё раз'], c:1},
+  {q:'Без когнитивного действия игра — это...', a:['Квест','Просто развлечение','Дерево навыков'], c:1},
+  {q:'Джигсоу — метод...', a:['Соревнования','Совместного изучения','Таймера'], c:1},
+];
+
+function _snkXY(n) {
+  if (n < 1) n = 1; if (n > 25) n = 25;
+  var i = n - 1, row = Math.floor(i/5);
+  var col = (row%2===0) ? i%5 : 4-(i%5);
+  return {x: col*_CELL, y: (4-row)*_CELL};
+}
+
+function _snkDraw() {
+  if (!_snkCtx) return;
+  var ctx = _snkCtx;
+  ctx.clearRect(0,0,240,240);
+  var pal = ['#E8F5E9','#FFF8E1','#E3F2FD','#F3E5F5','#FCE4EC'];
+  for (var n=1; n<=25; n++) {
+    var p = _snkXY(n);
+    ctx.fillStyle = pal[(n-1)%5];
+    ctx.fillRect(p.x+1, p.y+1, _CELL-2, _CELL-2);
+    ctx.strokeStyle='#2C2C2C'; ctx.lineWidth=1.5;
+    ctx.strokeRect(p.x+1, p.y+1, _CELL-2, _CELL-2);
+    ctx.fillStyle='#999'; ctx.font='bold 8px Consolas';
+    ctx.fillText(n, p.x+3, p.y+11);
+  }
+  // ladders
+  ctx.lineWidth=4; ctx.strokeStyle='#2E7D32'; ctx.setLineDash([]);
+  for (var f in _LADDERS) {
+    var a=_snkXY(+f), b=_snkXY(_LADDERS[f]);
+    ctx.beginPath(); ctx.moveTo(a.x+_CELL/2,a.y+_CELL/2); ctx.lineTo(b.x+_CELL/2,b.y+_CELL/2); ctx.stroke();
+    ctx.font='12px serif'; ctx.fillText('🪜', a.x+_CELL/2-7, a.y+_CELL/2+5);
+  }
+  // snakes
+  ctx.strokeStyle='#C62828'; ctx.setLineDash([5,3]);
+  for (var s in _SNAKES) {
+    var a=_snkXY(+s), b=_snkXY(_SNAKES[s]);
+    ctx.beginPath(); ctx.moveTo(a.x+_CELL/2,a.y+_CELL/2); ctx.lineTo(b.x+_CELL/2,b.y+_CELL/2); ctx.stroke();
+    ctx.font='12px serif'; ctx.fillText('🐍', a.x+_CELL/2-7, a.y+_CELL/2+5);
+  }
+  ctx.setLineDash([]);
+  // goal
+  var g=_snkXY(25); ctx.font='16px serif'; ctx.fillText('🏆',g.x+_CELL/2-9,g.y+_CELL/2+7);
+  // players
+  [0,1].forEach(function(pi){
+    var pp=_snkXY(Math.max(1,_snkPos[pi]));
+    var ox = pi===0 ? -9 : 9;
+    ctx.beginPath();
+    ctx.arc(pp.x+_CELL/2+ox, pp.y+_CELL*0.65, 8, 0, Math.PI*2);
+    ctx.fillStyle = pi===0?'#0099CC':'#CC8800';
+    ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 8px Consolas';
+    ctx.textAlign='center';
+    ctx.fillText(pi+1, pp.x+_CELL/2+ox, pp.y+_CELL*0.65+3);
+    ctx.textAlign='left';
+  });
+}
+
+function _snkLog(msg) {
+  var el=document.getElementById('snakesLog'); if(el) el.textContent=msg;
+}
+
+function snakesInit() {
+  _snkCvs = document.getElementById('snakesCanvas');
+  if (!_snkCvs) return;
+  _snkCtx = _snkCvs.getContext('2d');
+  _snkPos=[0,0]; _snkCur=0; _snkWaiting=false;
+  document.getElementById('snakesPlayerName').textContent='Игрок 1';
+  _snkLog('Нажми кубик чтобы начать');
+  var btn=document.getElementById('snakesRollBtn');
+  btn.disabled=false; btn.textContent='🎲 БРОСИТЬ КУБ';
+  btn.onclick=snakesRoll;
+  document.getElementById('snakesQArea').style.display='none';
+  _snkDraw();
+}
+
+function snakesRoll() {
+  if (_snkWaiting) return;
+  var isFirst = _snkPos[0] === 0 && _snkPos[1] === 0 && _snkCur === 0;
+  var roll = isFirst ? 3 : Math.floor(Math.random()*6)+1;
+  var p=_snkCur;
+  var np=Math.min(_snkPos[p]+roll, 25);
+  _snkPos[p]=np; _snkDraw();
+  _snkLog('Игрок '+(p+1)+': кубик='+roll+' → клетка '+np);
+  if (np>=25) { _snkWin(p); return; }
+  var q=_SQ[Math.floor(Math.random()*_SQ.length)];
+  document.getElementById('snakesQ').textContent=q.q;
+  var el=document.getElementById('snakesAnswers'); el.innerHTML='';
+  q.a.forEach(function(ans,ai){
+    var btn=document.createElement('div');
+    btn.className='snakes-ans'; btn.textContent=ans;
+    (function(correct,pos,player){ btn.onclick=function(){ snakesAnswer(correct,pos,player); }; })(ai===q.c,np,p);
+    el.appendChild(btn);
+  });
+  document.getElementById('snakesQArea').style.display='block';
+  document.getElementById('snakesRollBtn').disabled=true;
+  _snkWaiting=true;
+}
+
+function snakesAnswer(correct,landedPos,p) {
+  document.getElementById('snakesQArea').style.display='none';
+  _snkWaiting=false;
+  var msg='';
+  if (correct) {
+    msg='✅ Верно!';
+    if (_LADDERS[landedPos]) { _snkPos[p]=_LADDERS[landedPos]; msg+=' 🪜 Лестница → '+_snkPos[p]+'!'; }
+  } else {
+    msg='❌ Неверно.';
+    if (_SNAKES[landedPos]) { _snkPos[p]=_SNAKES[landedPos]; msg+=' 🐍 Змея → '+_snkPos[p]+'!'; }
+    else { _snkPos[p]=Math.max(1,landedPos-2); msg+=' Откат на 2 клетки.'; }
+  }
+  _snkLog(msg); _snkDraw();
+  if (_snkPos[p]>=25) { _snkWin(p); return; }
+  _snkCur=(_snkCur+1)%2;
+  document.getElementById('snakesPlayerName').textContent='Игрок '+(_snkCur+1);
+  document.getElementById('snakesRollBtn').disabled=false;
+}
+
+function _snkWin(p) {
+  _snkLog('🏆 Игрок '+(p+1)+' победил!'); _snkDraw();
+  var btn=document.getElementById('snakesRollBtn');
+  btn.textContent='↺ НОВАЯ ИГРА'; btn.disabled=false; btn.onclick=snakesInit;
+}
+
+
+// ══ XP BAR ══
+let xp = 0;
+const XP_MAX = 100;
+
+function animateXP() {
+  xp = 0;
+  document.getElementById('xpBar').style.width = '0%';
+  document.getElementById('xpVal').textContent = '0 / 100 XP';
+}
+
+function addXP() {
+  xp = Math.min(xp + 15, XP_MAX);
+  document.getElementById('xpBar').style.width = xp + '%';
+  document.getElementById('xpVal').textContent = xp + ' / 100 XP';
+  if (xp >= XP_MAX) document.getElementById('xpVal').textContent = '100 / 100 XP  ★ УРОВЕНЬ ВЫШЕ!';
+}
+
+// ══ BADGES ══
+const BADGES = ['🙋 Задал вопрос','🤝 Помог другому','🔎 Нашёл ошибку','💬 Объяснил словами'];
+let badgeIdx = 0;
+
+function earnBadge() {
+  const grid = document.getElementById('badgeGrid');
+  const all = grid.querySelectorAll('.badge');
+  if (badgeIdx < all.length) {
+    all[badgeIdx].classList.add('earned');
+    badgeIdx++;
+  } else {
+    all.forEach(b => b.classList.remove('earned'));
+    badgeIdx = 0;
+  }
+}
+</script>
+</body>
+</html>
