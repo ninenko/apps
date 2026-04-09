@@ -37,14 +37,16 @@
   }
   body::before {
     content: '';
-    position: fixed; top: -200px; left: -200px;
+    position: fixed;
+    top: -200px; left: -200px;
     width: 600px; height: 600px;
     background: radial-gradient(circle, rgba(124,108,255,0.12) 0%, transparent 70%);
     pointer-events: none;
   }
   body::after {
     content: '';
-    position: fixed; bottom: -150px; right: -100px;
+    position: fixed;
+    bottom: -150px; right: -100px;
     width: 500px; height: 500px;
     background: radial-gradient(circle, rgba(240,192,96,0.07) 0%, transparent 70%);
     pointer-events: none;
@@ -97,6 +99,7 @@
   .btn:active { transform: scale(0.97); }
   .error { font-size: 13px; color: var(--red); margin-top: 10px; min-height: 18px; font-weight: 500; }
 
+  /* Result card */
   .result-card {
     background: var(--surface); border: 1px solid var(--border2);
     border-radius: var(--radius); overflow: hidden;
@@ -106,11 +109,15 @@
     background: linear-gradient(135deg, #1a1830 0%, #1e1e2a 100%);
     border-bottom: 1px solid var(--border);
     padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
   }
   .id-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
   .id-value { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
 
-  .section-block { border-bottom: 1px solid var(--border); }
+  /* Sections */
+  .section-block {
+    border-bottom: 1px solid var(--border);
+  }
   .section-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 1.75rem; cursor: pointer; user-select: none;
@@ -129,12 +136,13 @@
   .bar-track { height: 4px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 99px; transition: width 0.7s cubic-bezier(0.16,1,0.3,1); width: 0; }
 
+  /* Detail panels */
   .detail-panel {
     max-height: 0; overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1);
     background: rgba(0,0,0,0.2);
   }
-  .detail-panel.open { max-height: 700px; }
+  .detail-panel.open { max-height: 600px; }
   .detail-inner { padding: 0.75rem 1.75rem 1.25rem; }
   .detail-row {
     display: flex; justify-content: space-between; align-items: center;
@@ -143,15 +151,16 @@
   .detail-row:last-child { border-bottom: none; }
   .detail-label { font-size: 13px; color: var(--muted); }
   .detail-val { font-size: 13px; font-weight: 600; color: var(--text); }
+  .detail-pct { font-size: 11px; color: var(--muted); margin-left: 6px; }
 
-  .bonus-tag {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
-    background: rgba(240,192,96,0.15); color: var(--gold);
-    border: 1px solid rgba(240,192,96,0.3);
-    border-radius: 100px; padding: 2px 7px; margin-left: 6px;
-    vertical-align: middle;
-  }
+  /* Midterm sub-rows */
+  .mid-sub { display: flex; flex-direction: column; gap: 2px; }
+  .mid-sub-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .mid-sub-row:last-child { border-bottom: none; }
+  .mid-sub-label { font-size: 13px; color: var(--muted); }
+  .mid-sub-val { font-size: 13px; font-weight: 600; color: var(--text); }
 
+  /* Total */
   .total-row {
     padding: 1.25rem 1.75rem;
     display: flex; align-items: center; justify-content: space-between;
@@ -170,7 +179,7 @@
   <div class="header">
     <div class="course-tag">Весна 2026</div>
     <h1 class="title">Нейронауки и эмоциональный интеллект</h1>
-    <p class="subtitle">Оценка к середине курса&nbsp;— введите свой студенческий ID, чтобы увидеть личные результаты.<br><span style="color:var(--accent2);font-style:italic;">Для демо введите любой номер от 1 до 9.</span></p>
+    <p class="subtitle">Оценка к середине курса&nbsp;— введите свой студенческий ID, чтобы увидеть личные результаты.</p>
   </div>
 
   <div class="lookup-card">
@@ -184,8 +193,10 @@
 
   <div class="result-card hidden" id="result">
     <div class="result-header">
-      <div class="id-label">ID студента</div>
-      <div class="id-value" id="r-id"></div>
+      <div>
+        <div class="id-label">ID студента</div>
+        <div class="id-value" id="r-id"></div>
+      </div>
     </div>
 
     <!-- TESTS -->
@@ -229,7 +240,7 @@
       <div class="section-header" onclick="toggle('mid-detail', this)">
         <div class="section-title-wrap">
           <div class="section-dot" style="background:var(--gold);"></div>
-          <span class="section-name">Midterm <span class="section-max-label">/ 20 б.</span></span>
+          <span class="section-name">Промежуточный экзамен <span class="section-max-label">/ 20 б.</span></span>
         </div>
         <div class="section-score-wrap">
           <span class="section-score" id="r-mid"></span>
@@ -255,38 +266,28 @@
 </div>
 
 <script>
-// midOpen is raw score out of 30 (20 base + 10 bonus)
 const data = {
-  1:{tests:[35,57,100,100,100,100],att:100,midTest:56,midOpen:19,midTotal:75,total:32,pct:80},
-  2:{tests:[35,29,57,29,29,57],att:100,midTest:60,midOpen:18,midTotal:78,total:27,pct:68},
-  3:{tests:[83,71,100,100,100,100],att:100,midTest:80,midOpen:21,midTotal:101,total:39,pct:98},
-  4:{tests:[null,null,100,100,100,86],att:100,midTest:76,midOpen:22,midTotal:98,total:39,pct:98},
-  5:{tests:[100,100,100,100,100,70],att:89,midTest:80,midOpen:25,midTotal:105,total:38,pct:95},
-  6:{tests:[83,86,71,70,71,70],att:89,midTest:72,midOpen:23,midTotal:95,total:34,pct:85},
-  7:{tests:[100,71,86,71,86,100],att:100,midTest:68,midOpen:21,midTotal:89,total:36,pct:90},
-  8:{tests:[33,86,0,57,71,100],att:78,midTest:null,midOpen:null,midTotal:0,total:13,pct:32},
-  9:{tests:[100,71,100,100,100,100],att:100,midTest:80,midOpen:30,midTotal:110,total:39,pct:98},
   1592:{tests:[100,71,100,100,100,100], att:100, midTest:80, midOpen:30, midTotal:100, total:39, pct:98},
-  1533:{tests:[100,100,100,100,100,100],att:89,  midTest:80, midOpen:30, midTotal:100, total:39, pct:98},
+  1533:{tests:[100,100,100,100,86,100], att:89,  midTest:80, midOpen:30, midTotal:100, total:39, pct:98},
   1989:{tests:[100,71,86,71,86,100],   att:100, midTest:68, midOpen:21, midTotal:89,  total:36, pct:90},
   1876:{tests:[100,70,86,100,100,100], att:100, midTest:76, midOpen:21, midTotal:97,  total:38, pct:95},
   1769:{tests:[83,71,100,100,100,100], att:100, midTest:80, midOpen:21, midTotal:100, total:39, pct:98},
   2057:{tests:[67,70,86,86,100,100],   att:100, midTest:80, midOpen:20, midTotal:100, total:38, pct:95},
   1831:{tests:[83,86,71,70,71,70],     att:89,  midTest:72, midOpen:23, midTotal:95,  total:35, pct:88},
-  2062:{tests:[33,86,0,57,71,100],     att:78,  midTest:null, midOpen:null, midTotal:0, total:13, pct:33},
+  2062:{tests:[33,86,0,57,71,100],     att:78,  midTest:null, midOpen:null, midTotal:0,   total:13, pct:33},
   1543:{tests:[100,100,86,71,100,100], att:100, midTest:72, midOpen:18, midTotal:90,  total:37, pct:93},
   1477:{tests:[69,100,100,100,71,86],  att:100, midTest:60, midOpen:25, midTotal:85,  total:35, pct:88},
-  1481:{tests:[null,null,100,100,100,86],att:100,midTest:76, midOpen:22, midTotal:98,  total:39, pct:98},
+  1481:{tests:[null,null,100,100,100,86], att:100, midTest:76, midOpen:22, midTotal:98,  total:39, pct:98},
   1654:{tests:[100,70,100,71,86,100],  att:100, midTest:68, midOpen:21, midTotal:89,  total:36, pct:90},
-  1622:{tests:[100,100,100,100,100,70],att:89,  midTest:80, midOpen:25, midTotal:100, total:39, pct:98},
+  1622:{tests:[100,100,100,100,86,70], att:89,  midTest:80, midOpen:25, midTotal:100, total:38, pct:95},
   1608:{tests:[100,71,100,100,100,100],att:100, midTest:80, midOpen:28, midTotal:100, total:39, pct:98},
   1463:{tests:[100,70,100,100,86,86],  att:100, midTest:60, midOpen:16, midTotal:76,  total:33, pct:83},
-  1455:{tests:[100,100,100,100,100,100],att:100, midTest:80, midOpen:24, midTotal:100, total:40, pct:100},
+  1455:{tests:[100,100,100,100,86,100],att:100, midTest:80, midOpen:24, midTotal:100, total:40, pct:100},
   1710:{tests:[35,29,57,29,29,57],     att:100, midTest:60, midOpen:18, midTotal:78,  total:27, pct:68},
   1488:{tests:[0,14,0,0,100,100],      att:100, midTest:72, midOpen:24, midTotal:96,  total:39, pct:98},
   1719:{tests:[0,71,100,100,86,100],   att:100, midTest:72, midOpen:23, midTotal:95,  total:35, pct:88},
   1964:{tests:[85,71,100,71,86,71],    att:100, midTest:64, midOpen:21, midTotal:85,  total:34, pct:85},
-  1452:{tests:[null,null,86,100,100,86],att:100,midTest:72, midOpen:21, midTotal:93,  total:38, pct:95},
+  1452:{tests:[null,null,86,100,100,86],att:100, midTest:72, midOpen:21, midTotal:93,  total:38, pct:95},
   1740:{tests:[35,57,100,100,100,100], att:100, midTest:56, midOpen:19, midTotal:75,  total:32, pct:80},
   1255: "1592"
 };
@@ -328,12 +329,12 @@ function lookup() {
   if (typeof entry === 'string') entry = data[parseInt(entry)];
   if (!entry) { err.textContent = 'Запись не найдена. Проверьте ID и попробуйте снова.'; res.classList.add('hidden'); return; }
 
-  const validTests = entry.tests.filter(v => v !== null);
-  const testsPctAvg = Math.round(validTests.reduce((a,b)=>a+b,0) / validTests.length);
+  // Computed
+  const testsAvg = entry.tests.filter(v => v !== null);
+  const testsPctAvg = Math.round(testsAvg.reduce((a,b)=>a+b,0)/testsAvg.length);
   const testsPts = Math.round(testsPctAvg / 100 * 15);
   const attPts = Math.round(entry.att / 100 * 5);
   const attPct = Math.round(entry.att);
-  // midTotal is out of 100 (test 80 + open 20 base, bonus up to +10)
   const midPts = Math.round(entry.midTotal / 100 * 20);
   const midPct = Math.round(entry.midTotal);
 
@@ -347,23 +348,24 @@ function lookup() {
   res.classList.remove('hidden');
 
   setTimeout(() => {
-    document.getElementById('bar-tests').style.width = Math.min(testsPctAvg, 100) + '%';
+    document.getElementById('bar-tests').style.width = testsPctAvg + '%';
     document.getElementById('bar-att').style.width = entry.att + '%';
-    document.getElementById('bar-mid').style.width = Math.min(entry.midTotal, 100) + '%';
+    document.getElementById('bar-mid').style.width = entry.midTotal + '%';
   }, 50);
 
   // Tests detail
   let testsHtml = '';
   entry.tests.forEach((v, i) => {
     const disp = v === null ? '—' : v + '%';
-    const col  = v === null ? 'var(--muted)' : pctColor(v);
+    const col = v === null ? 'var(--muted)' : pctColor(v);
     testsHtml += `<div class="detail-row"><span class="detail-label">${testNames[i]}</span><span class="detail-val" style="color:${col}">${disp}</span></div>`;
   });
   document.getElementById('tests-detail-inner').innerHTML = testsHtml;
 
-  // Attendance detail
+  // Att detail
+  const attDisp = entry.att + '%';
   document.getElementById('att-detail-inner').innerHTML =
-    `<div class="detail-row"><span class="detail-label">Процент посещаемости</span><span class="detail-val" style="color:${pctColor(entry.att)}">${entry.att}%</span></div>
+    `<div class="detail-row"><span class="detail-label">Процент посещаемости</span><span class="detail-val" style="color:${pctColor(entry.att)}">${attDisp}</span></div>
      <div class="detail-row"><span class="detail-label">Баллы за посещаемость</span><span class="detail-val">${attPts} / 5</span></div>`;
 
   // Midterm detail
@@ -371,31 +373,13 @@ function lookup() {
   if (entry.midTest === null) {
     midHtml = `<div class="detail-row"><span class="detail-label">Не явился на экзамен</span><span class="detail-val" style="color:var(--red)">—</span></div>`;
   } else {
-    const tPct  = Math.round(entry.midTest / 80 * 100);
-    // Open-ended: base 20, bonus up to +10 → max raw = 30
-    const openBase  = Math.min(entry.midOpen, 20);
-    const openBonus = Math.max(0, entry.midOpen - 20);
-    const openPct   = Math.round(openBase / 20 * 100);
-    const hasBonus  = openBonus > 0;
-    const bonusTag  = hasBonus ? `<span class="bonus-tag">+${openBonus} бонус</span>` : '';
-
+    const tPct = Math.round(entry.midTest / 80 * 100);
+    const oPct = Math.round(entry.midOpen / 30 * 100);
     midHtml = `
-      <div class="detail-row">
-        <span class="detail-label">Тестовая часть (макс. 80)</span>
-        <span class="detail-val" style="color:${pctColor(tPct)}">${entry.midTest} б. / ${tPct}%</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Открытые вопросы (макс. 20 + 10 бонус)${bonusTag}</span>
-        <span class="detail-val" style="color:${pctColor(openPct)}">${entry.midOpen} б. / ${openPct}%</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Итого (макс. 100)</span>
-        <span class="detail-val">${Math.min(entry.midTotal,100)} б. / ${Math.min(midPct,100)}%</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Зачтено в итоговый балл</span>
-        <span class="detail-val">${midPts} / 20</span>
-      </div>`;
+      <div class="detail-row"><span class="detail-label">Тестовая часть (макс. 80)</span><span class="detail-val" style="color:${pctColor(tPct)}">${entry.midTest} б. / ${tPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Открытые вопросы (макс. 30)</span><span class="detail-val" style="color:${pctColor(oPct)}">${entry.midOpen} б. / ${oPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Итого (макс. 100)</span><span class="detail-val">${entry.midTotal} б. / ${midPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Зачтено в итоговый балл</span><span class="detail-val">${midPts} / 20</span></div>`;
   }
   document.getElementById('mid-detail-inner').innerHTML = midHtml;
 }
