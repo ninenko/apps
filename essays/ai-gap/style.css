@@ -526,6 +526,21 @@ section:last-of-type { border-bottom: none; }
   margin: 0 0.4em;
 }
 
+.hero-byline .byline-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.575rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 0.45em 0;
+}
+
+.hero-byline .byline-dims {
+  color: var(--accent);
+  letter-spacing: 0.09em;
+  margin: 0;
+}
+
 /* --- Gap Page Hero ---------------------------------------- */
 .gap-hero {
   padding: 5rem 0 3rem;
