@@ -374,7 +374,7 @@
     </div>
 
     <div class="discuss-links reveal">
-      <a href="https://t.me/ne_ravno_42/145" target="_blank" rel="noopener" class="discuss-link">
+      <a href="https://t.me/ne_ravno_42/146" target="_blank" rel="noopener" class="discuss-link">
         <span class="discuss-link-label">RU</span>
         <span class="discuss-link-text">
           <span class="en">In Russian — Telegram channel</span>
@@ -441,7 +441,8 @@
   }
 
   // Restore saved language preference
-  const savedLang = localStorage.getItem('lang');
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const savedLang = urlLang || localStorage.getItem('lang');
   if (savedLang === 'ru') setLang('ru');
 </script>
 

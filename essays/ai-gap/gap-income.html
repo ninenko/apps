@@ -469,7 +469,8 @@
     });
     localStorage.setItem('lang', lang);
   }
-  const savedLang = localStorage.getItem('lang');
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const savedLang = urlLang || localStorage.getItem('lang');
   if (savedLang === 'ru') setLang('ru');
 </script>
 </body>
