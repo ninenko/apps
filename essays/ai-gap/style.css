@@ -650,13 +650,6 @@ section:last-of-type { border-bottom: none; }
   border-left-color: var(--accent);
 }
 
-/* Language switching for nav links */
-.section-nav a.ru { display: none; }
-body.ru-on .section-nav a.en { display: none; }
-body.ru-on .section-nav a.ru { display: block; }
-.section-nav-title.ru { display: none; }
-body.ru-on .section-nav-title.en { display: none; }
-body.ru-on .section-nav-title.ru { display: block; }
 
 /* --- Exec Summary ----------------------------------------- */
 .exec-summary {
