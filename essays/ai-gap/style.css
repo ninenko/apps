@@ -835,6 +835,15 @@ footer .footer-inner {
 footer a { color: var(--muted); border-bottom: 0.5px solid var(--dim); }
 footer a:hover { color: var(--accent); }
 
+.footer-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-sep { color: var(--dim); }
+
 /* --- Divider ---------------------------------------------- */
 .divider {
   border: none;
