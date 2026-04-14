@@ -108,6 +108,8 @@ body.ru-on span.ru { display: inline; }
 body.ru-on span.en { display: none; }
 body.ru-on td.ru { display: table-cell; }
 body.ru-on td.en { display: none; }
+body.ru-on th.ru { display: table-cell; }
+body.ru-on th.en { display: none; }
 
 /* --- Section Labels --------------------------------------- */
 .section-label {
