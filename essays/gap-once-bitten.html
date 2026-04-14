@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Once Bitten Problem in AI Adoption — AI Adoption Gap</title>
+  <meta name="description" content="People who tried early AI tools and left disappointed are now a substantial barrier segment. Their resistance is not ignorance — it is the predictable consequence of negative first experiences.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Hero -->
+<div class="gap-hero">
+  <div class="container-gap">
+    <a href="index.html" class="gap-hero-back">
+      <span class="en">← Back to overview</span>
+      <span class="ru">← К обзору</span>
+    </a>
+    <p class="gap-num">
+      <span class="en">06 / ONCE BITTEN</span>
+      <span class="ru">06 / ОБЖЁГШИЕСЯ</span>
+    </p>
+    <h1>
+      <span class="en">The Once Bitten, Twice Shy Problem</span>
+      <span class="ru">Обжёгшись на молоке, дуют на воду</span>
+    </h1>
+    <p class="sub">
+      <span class="en">Evidence, Data, and Understanding of Causes</span>
+      <span class="ru">Данные, доказательства и понимание причин</span>
+    </p>
+    <div class="gap-headline-stat">
+      <div class="stat">42%</div>
+      <div class="stat-label">
+        <span class="en">of companies abandoned most AI initiatives in 2025</span>
+        <span class="ru">компаний свернули большинство ИИ-инициатив в 2025</span>
+      </div>
+      <div class="stat-source">Enterprise AI adoption surveys, 2024–2025; up from 17% in 2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="gap-layout">
+
+  <!-- Content -->
+  <main class="gap-content">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <p class="part-header en">Executive Summary</p>
+      <p class="part-header ru">Краткое резюме</p>
+      <div class="exec-summary">
+        <ul>
+          <li class="en">People who tried early AI tools and left disappointed are now a substantial barrier segment for modern AI adoption. Their resistance is not ignorance — it is the predictable psychological consequence of negative first experiences with a category that has since transformed.</li>
+          <li class="ru">Люди, попробовавшие ранние инструменты ИИ и оставшиеся разочарованными, сегодня составляют значительный сегмент сопротивления. Их позиция — не невежество, а предсказуемое психологическое последствие негативного первого опыта с категорией, которая с тех пор кардинально изменилась.</li>
+          <li class="en">Ipsos (July 2024) offers the most granular segmentation of non-users: <strong>26%</strong> don't trust AI as accurate or useful — the trust-deficit segment most likely containing tried-and-disappointed users.</li>
+          <li class="ru">Ipsos (июль 2024) даёт наиболее детальную сегментацию неиспользующих ИИ: <strong>26%</strong> не доверяют ИИ как точному или полезному — сегмент с дефицитом доверия, в котором вероятнее всего находятся те, кто попробовал и разочаровался.</li>
+          <li class="en">At the enterprise level, <strong>95%</strong> of AI pilots delivered no measurable P&L impact (MIT NANDA), and <strong>42%</strong> of companies abandoned most AI initiatives in 2025 — up from 17% in 2024.</li>
+          <li class="ru">На корпоративном уровне <strong>95%</strong> пилотных проектов ИИ не показали измеримого влияния на прибыль (MIT NANDA), а <strong>42%</strong> компаний свернули большинство ИИ-инициатив в 2025 году — вдвое больше, чем в 2024 (17%).</li>
+          <li class="en">Andrej Karpathy named the core mechanism: <strong>recency and tier of use</strong> — people's views are anchored to whichever old, free model they last touched, while capabilities have leapt forward by orders of magnitude.</li>
+          <li class="ru">Андрей Карпатый назвал ключевой механизм: <strong>давность и уровень использования</strong> — представления людей закреплены на старой бесплатной модели, которую они в последний раз пробовали, тогда как возможности выросли на порядки.</li>
+          <li class="en">A decade of underwhelming voice assistants (Siri, Alexa, Cortana) pre-trained millions of users to expect failure from the entire "AI" category — creating a <strong>disappointment transfer</strong> to architecturally unrelated LLMs.</li>
+          <li class="ru">Десятилетие неоправдавших ожидания голосовых помощников (Siri, Alexa, Cortana) сформировало у миллионов пользователей ожидание провала от всей категории «ИИ» — создав <strong>перенос разочарования</strong> на архитектурно не связанные LLM.</li>
+          <li class="en">The most effective re-engagement strategy is the <strong>"Model Update" signal</strong> — explicitly communicating that the technology has fundamentally changed, not merely improved (Pareek et al., ACM FAccT, 2024).</li>
+          <li class="ru">Наиболее эффективная стратегия повторного вовлечения — <strong>сигнал «обновление модели»</strong>: явное сообщение о том, что технология принципиально изменилась, а не просто стала лучше (Pareek et al., ACM FAccT, 2024).</li>
+          <li class="en">The once-bitten effect is not demographically neutral — it acts as a <strong>multiplier of other gaps</strong>. Groups already underrepresented in AI adoption (women, older adults, lower-income users) were disproportionately routed into worse first experiences, face compounding confidence barriers, and have thinner peer networks of power users who could correct their priors. The result is an intersection, not a sum.</li>
+          <li class="ru">Эффект «обжёгшегося» не является демографически нейтральным — он действует как <strong>множитель других разрывов</strong>. Группы, уже недостаточно представленные в освоении ИИ (женщины, пожилые люди, пользователи с низким доходом), непропорционально часто получали худший первый опыт, сталкиваются с накапливающимися барьерами уверенности и имеют более тонкие сети знакомых-экспертов, которые могли бы скорректировать их ожидания. Результат — не сумма барьеров, а их пересечение.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section id="part1">
+      <p class="part-header en">Part 1 — The Evidence</p>
+      <p class="part-header ru">Часть 1 — Доказательства</p>
+
+      <h2 id="s1-1">
+        <span class="en">1.1 Scale of the Segment</span>
+        <span class="ru">1.1 Масштаб сегмента</span>
+      </h2>
+      <p class="en">Survey data increasingly captures the tried-and-abandoned population, though the segmentation remains surprisingly underdeveloped. Most major surveys ask "have you ever used AI" — they do not distinguish active users from people who tried once and stopped. The actual burned-user segment is almost certainly larger than the available estimates suggest.</p>
+      <p class="ru">Данные опросов всё чаще фиксируют сегмент попробовавших и бросивших, хотя сегментация остаётся удивительно неразвитой. Большинство крупных опросов спрашивают «использовали ли вы когда-либо ИИ» — но не различают активных пользователей и тех, кто попробовал один раз и остановился. Реальный размер сегмента разочарованных почти наверняка больше, чем показывают имеющиеся оценки.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Segment</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Сегмент</th><th class="ru">Показатель</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Non-users who don't trust AI as accurate/useful</td><td class="en"><strong>26%</strong></td><td class="en">Ipsos, July 2024</td>
+              <td class="ru">Неиспользующие, не доверяющие точности ИИ</td><td class="ru"><strong>26%</strong></td><td class="ru">Ipsos, июль 2024</td></tr>
+          <tr><td class="en">Non-users: "no need"</td><td class="en"><strong>33%</strong></td><td class="en">Ipsos, July 2024</td>
+              <td class="ru">Неиспользующие: «нет необходимости»</td><td class="ru"><strong>33%</strong></td><td class="ru">Ipsos, июль 2024</td></tr>
+          <tr><td class="en">Non-users: "see no benefit"</td><td class="en"><strong>19%</strong></td><td class="en">Ipsos, July 2024</td>
+              <td class="ru">Неиспользующие: «не вижу пользы»</td><td class="ru"><strong>19%</strong></td><td class="ru">Ipsos, июль 2024</td></tr>
+          <tr><td class="en">AI pilots with no measurable P&L impact</td><td class="en"><strong>95%</strong></td><td class="en">MIT NANDA Initiative</td>
+              <td class="ru">Пилотные проекты ИИ без влияния на прибыль</td><td class="ru"><strong>95%</strong></td><td class="ru">MIT NANDA Initiative</td></tr>
+          <tr><td class="en">Companies abandoning most AI initiatives (2025)</td><td class="en"><strong>42%</strong></td><td class="en">Enterprise surveys, 2025 (up from 17% in 2024)</td>
+              <td class="ru">Компании, свернувшие большинство ИИ-инициатив (2025)</td><td class="ru"><strong>42%</strong></td><td class="ru">Опросы, 2025 (рост с 17% в 2024)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-2">
+        <span class="en">1.2 The Karpathy Diagnosis: Recency and Tier of Use</span>
+        <span class="ru">1.2 Диагноз Карпатого: давность и уровень использования</span>
+      </h2>
+      <p class="en">On approximately April 8–9, 2026, Andrej Karpathy posted a thread on X that named the phenomenon precisely. He described two groups now speaking past each other.</p>
+      <p class="ru">Примерно 8–9 апреля 2026 года Андрей Карпатый опубликовал тред в X, точно назвавший этот феномен. Он описал две группы, которые перестали слышать друг друга.</p>
+
+      <div class="callout">
+        <p class="en"><em>"Judging by my tl there is a growing gap in understanding of AI capability. The first issue I think is around recency and tier of use. I think a lot of people tried the free tier of ChatGPT somewhere last year and allowed it to inform their views on AI a little too much."</em><br>— Andrej Karpathy, X (formerly Twitter), April 2026</p>
+        <p class="ru"><em>«Судя по моей ленте, разрыв в понимании возможностей ИИ растёт. Первая проблема — давность и уровень использования. Многие попробовали бесплатную версию ChatGPT где-то в прошлом году и позволили этому опыту слишком сильно сформировать их представление об ИИ.»</em><br>— Андрей Карпатый, X (бывш. Twitter), апрель 2026</p>
+      </div>
+
+      <p class="en">The first group — disappointed early triers — sampled free-tier ChatGPT, hit hallucinations and limitations, and formed lasting negative opinions based on old, deprecated models. The second group — power users paying $200/month for frontier models — watches AI systems solve in minutes what would normally take days. For this group, Karpathy coined the term <em>AI Psychosis</em>.</p>
+      <p class="ru">Первая группа — разочарованные ранние пользователи — попробовала бесплатный ChatGPT, столкнулась с галлюцинациями и ограничениями и сформировала устойчивое негативное мнение на основе устаревших моделей. Вторая группа — продвинутые пользователи, платящие $200/месяц за передовые модели — наблюдает, как ИИ за минуты решает задачи, на которые обычно уходят дни. Для этой группы Карпатый ввёл термин <em>AI Psychosis</em>.</p>
+
+      <p class="en">Karpathy identified the core driver as <strong>recency and tier of use</strong> — people's views are anchored to whichever old, free model they last touched. Capabilities are also <strong>peaky</strong>: concentrated in code and math, not general search or writing. Non-technical users who tried AI for everyday tasks got the weakest version of the experience.</p>
+      <p class="ru">Карпатый определил ключевой фактор — <strong>давность и уровень использования</strong>: представления людей закреплены на той старой бесплатной модели, с которой они последний раз взаимодействовали. Возможности ИИ также <strong>неравномерны</strong>: сконцентрированы в программировании и математике, а не в обычном поиске или письме. Нетехнические пользователи, пробовавшие ИИ для повседневных задач, получили самую слабую версию опыта.</p>
+
+      <h2 id="s1-3">
+        <span class="en">1.3 The Voice Assistant Legacy</span>
+        <span class="ru">1.3 Наследие голосовых помощников</span>
+      </h2>
+      <p class="en">The tried-and-abandoned segment did not form only with ChatGPT. A decade of underwhelming AI assistants pre-trained millions of users to expect failure from the entire category.</p>
+      <p class="ru">Сегмент попробовавших и бросивших сформировался не только из-за ChatGPT. Десятилетие разочаровывающих ИИ-ассистентов приучило миллионы пользователей ожидать провала от всей категории.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Product</th><th class="en">Outcome</th><th class="en">Source</th>
+            <th class="ru">Продукт</th><th class="ru">Результат</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Amazon Alexa</td><td class="en">On track to lose <strong>$10B in 2022</strong>; employees called it a "colossal failure of imagination"</td><td class="en">Business Insider, 2022</td>
+              <td class="ru">Amazon Alexa</td><td class="ru">Убытки до <strong>$10 млрд в 2022</strong>; сотрудники называли «колоссальным провалом воображения»</td><td class="ru">Business Insider, 2022</td></tr>
+          <tr><td class="en">Cortana, Bixby</td><td class="en">Failed to gain traction; fewer Americans used voice assistants in 2021 than 2020</td><td class="en">Industry reports, 2021</td>
+              <td class="ru">Cortana, Bixby</td><td class="ru">Не завоевали аудиторию; в 2021 голосовыми помощниками пользовались реже, чем в 2020</td><td class="ru">Отраслевые отчёты, 2021</td></tr>
+          <tr><td class="en">Satya Nadella's verdict</td><td class="en"><strong>"Dumb as a rock"</strong> — Microsoft CEO's summary of pre-LLM assistants</td><td class="en">Public statement</td>
+              <td class="ru">Вердикт Сатьи Наделлы</td><td class="ru"><strong>«Тупые как пробка»</strong> — резюме CEO Microsoft о помощниках до эпохи LLM</td><td class="ru">Публичное заявление</td></tr>
+        </tbody>
+      </table>
+
+      <p class="en">When ChatGPT arrived using fundamentally different LLM architecture, it entered a market where the consumer concept of "AI assistant" had been shaped by years of command-and-control systems that could barely handle compound requests. This created a <strong>disappointment transfer problem</strong>: users who had been burned by Siri, Alexa, and Cortana grouped all AI under the same failing category label — and applied their negative priors to LLMs that are architecturally unrelated.</p>
+      <p class="ru">Когда ChatGPT появился на принципиально другой архитектуре LLM, он вышел на рынок, где потребительское понятие «ИИ-ассистент» было сформировано годами командно-управляемых систем, едва справлявшихся с составными запросами. Это создало <strong>проблему переноса разочарования</strong>: пользователи, обжёгшиеся на Siri, Alexa и Cortana, объединили весь ИИ под одним ярлыком провала — и перенесли негативные ожидания на архитектурно не связанные LLM.</p>
+
+      <h2 id="s1-4">
+        <span class="en">1.4 The Abandonment Lifecycle (HCI Evidence)</span>
+        <span class="ru">1.4 Жизненный цикл отказа (данные HCI)</span>
+      </h2>
+      <p class="en">Human-Computer Interaction researchers have extensively documented the adoption-to-abandonment pipeline. The foundational study is Cho et al. (2019) at ACM DIS, which tracked eight first-time Amazon Echo households over 12 weeks and identified five phases:</p>
+      <p class="ru">Исследователи человеко-компьютерного взаимодействия (HCI) подробно задокументировали путь от принятия к отказу. Основополагающее исследование — Cho и др. (2019) на ACM DIS, которое отслеживало восемь семей с Amazon Echo в течение 12 недель и выделило пять фаз:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Phase</th><th class="en">Description</th>
+            <th class="ru">Фаза</th><th class="ru">Описание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">1. Curiosity</td><td class="en">Initial excitement and exploration</td>
+              <td class="ru">1. Любопытство</td><td class="ru">Первоначальный интерес и исследование</td></tr>
+          <tr><td class="en">2. Experimentation</td><td class="en">Testing capabilities and limits</td>
+              <td class="ru">2. Экспериментирование</td><td class="ru">Проверка возможностей и границ</td></tr>
+          <tr><td class="en">3. Frustration</td><td class="en">Encountering failures, limitations, and errors</td>
+              <td class="ru">3. Разочарование</td><td class="ru">Столкновение с ошибками, ограничениями и сбоями</td></tr>
+          <tr><td class="en">4. Routinization or Abandonment</td><td class="en">Either narrow use develops or device is abandoned</td>
+              <td class="ru">4. Рутинизация или отказ</td><td class="ru">Либо формируется узкое применение, либо устройство забрасывается</td></tr>
+          <tr><td class="en">5. Residual Attitude</td><td class="en">Lasting impression shapes future technology evaluation</td>
+              <td class="ru">5. Остаточная установка</td><td class="ru">Сформировавшееся впечатление влияет на оценку будущих технологий</td></tr>
+        </tbody>
+      </table>
+
+      <p class="en">The core driver across all studies: <strong>mismatch between conversational expectations and actual capabilities</strong>. Trajkova and Martin-Hammond (ACM CHI, 2020) found older adults concluded Alexa was "a toy." Carnegie Mellon's 2024 CHI paper identified six downstream harms from voice assistant errors, including emotional harm and identity-related microaggressions — particularly affecting non-standard English speakers.</p>
+      <p class="ru">Ключевой фактор во всех исследованиях: <strong>несоответствие между ожиданиями от разговорного интерфейса и реальными возможностями</strong>. Trajkova и Martin-Hammond (ACM CHI, 2020) обнаружили, что пожилые люди сочли Alexa «игрушкой». Исследование Carnegie Mellon (CHI, 2024) выявило шесть типов вреда от ошибок голосовых помощников, включая эмоциональный ущерб и микроагрессии по отношению к носителям нестандартного английского.</p>
+    </section>
+
+    <!-- PART 2 -->
+    <section id="part2">
+      <p class="part-header en">Part 2 — Understanding the Causes</p>
+      <p class="part-header ru">Часть 2 — Понимание причин</p>
+
+      <p class="en">The persistence of burned-user resistance is not mysterious. It sits at the intersection of at least six well-documented psychological mechanisms that individually are robust — and collectively create a trap. No single mechanism is specific to AI. Together they produce an outcome that is: <strong>the people most likely to benefit from modern AI are among the least likely to try it again.</strong></p>
+      <p class="ru">Устойчивость сопротивления обжёгшихся пользователей не загадка. Она находится на пересечении как минимум шести хорошо задокументированных психологических механизмов, каждый из которых по отдельности надёжен, а вместе они создают ловушку. Ни один механизм не специфичен для ИИ. Вместе они приводят к результату: <strong>люди, которые больше всего выиграли бы от современного ИИ, с наименьшей вероятностью попробуют его снова.</strong></p>
+
+      <details>
+        <summary>
+          <h3 id="s2-1">
+            <span class="en">2.1 Algorithm Aversion — The Foundational Framework</span>
+            <span class="ru">2.1 Алгоритмическая неприязнь — базовая концепция</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en">The most directly relevant academic concept is <strong>algorithm aversion</strong>, coined by Dietvorst, Simmons, and Massey (2015, Journal of Experimental Psychology: General). Their experiments showed that people who observe an algorithm make errors become significantly less willing to use it — <strong>even when the algorithm still outperforms human judgment by 13–97%</strong>. A single machine mistake signals to users that the system is irrevocably flawed.</p>
+          <p class="ru">Наиболее релевантная научная концепция — <strong>алгоритмическая неприязнь</strong> (algorithm aversion), введённая Dietvorst, Simmons и Massey (2015, Journal of Experimental Psychology: General). Их эксперименты показали, что люди, наблюдавшие ошибку алгоритма, значительно менее склонны его использовать — <strong>даже когда алгоритм всё ещё превосходит человеческое суждение на 13–97%</strong>. Одна ошибка машины сигнализирует пользователю, что система непоправимо ущербна.</p>
+
+          <p class="en">Follow-up research identified two paths out. Berger et al. (2021): <strong>demonstrating that the algorithm can learn from mistakes</strong> resolves aversion. Reich, Kaju, and Maglio (Oklahoma State, 2022): consumers fundamentally expect algorithms cannot learn — simply relabeling a system as a <em>machine learning</em> algorithm increased trust by implying capacity for improvement.</p>
+          <p class="ru">Последующие исследования выявили два выхода. Berger и др. (2021): <strong>демонстрация того, что алгоритм может учиться на ошибках</strong>, снимает неприязнь. Reich, Kaju и Maglio (Oklahoma State, 2022): потребители по умолчанию считают, что алгоритмы не учатся — простое переименование системы в алгоритм <em>машинного обучения</em> повышало доверие, подразумевая способность к улучшению.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-2">
+            <span class="en">2.2 The Six-Mechanism Cascade</span>
+            <span class="ru">2.2 Каскад из шести механизмов</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en">Once a negative impression forms, a cascade of reinforcing mechanisms locks it in:</p>
+          <p class="ru">После формирования негативного впечатления каскад подкрепляющих механизмов закрепляет его:</p>
+          <table>
+            <thead>
+              <tr>
+                <th class="en">Mechanism</th><th class="en">How it works</th>
+                <th class="ru">Механизм</th><th class="ru">Как работает</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="en">1. Anchoring bias</td><td class="en">First impression disproportionately shapes all subsequent evaluation</td>
+                  <td class="ru">1. Эффект якоря</td><td class="ru">Первое впечатление непропорционально влияет на всю дальнейшую оценку</td></tr>
+              <tr><td class="en">2. Confirmation bias</td><td class="en">Users seek evidence that confirms their negative view; ignore counter-evidence</td>
+                  <td class="ru">2. Предвзятость подтверждения</td><td class="ru">Пользователи ищут подтверждение негативного мнения; игнорируют обратное</td></tr>
+              <tr><td class="en">3. Status quo bias</td><td class="en">"I've already decided AI isn't for me" — the cost of changing position exceeds perceived benefit</td>
+                  <td class="ru">3. Предвзятость статус-кво</td><td class="ru">«Я уже решил, что ИИ не для меня» — цена пересмотра превышает видимую пользу</td></tr>
+              <tr><td class="en">4. Category-level judgment</td><td class="en">One bad experience with Siri/Alexa/ChatGPT taints the entire "AI" label</td>
+                  <td class="ru">4. Суждение на уровне категории</td><td class="ru">Один плохой опыт с Siri/Alexa/ChatGPT компрометирует весь ярлык «ИИ»</td></tr>
+              <tr><td class="en">5. Social reinforcement</td><td class="en">Burned users share stories in peer networks, creating group-level resistance</td>
+                  <td class="ru">5. Социальное подкрепление</td><td class="ru">Обжёгшиеся делятся историями в своём кругу, создавая групповое сопротивление</td></tr>
+              <tr><td class="en">6. Avoidance loop</td><td class="en">Those who avoid re-trying never encounter improved versions — their anchor remains frozen in time</td>
+                  <td class="ru">6. Петля избегания</td><td class="ru">Те, кто избегает повторных попыток, не сталкиваются с улучшенными версиями — их якорь остаётся замороженным во времени</td></tr>
+            </tbody>
+          </table>
+
+          <p class="en">A 2024 case study in the Journal of Decision Systems documented this exact dynamic at DB Schenker: <em>users hesitate to use the system after encountering negative experiences. This reluctance persists even when the issues have been addressed and fixed.</em></p>
+          <p class="ru">Кейс 2024 года в Journal of Decision Systems задокументировал эту динамику в DB Schenker: <em>пользователи избегают системы после негативного опыта. Нежелание сохраняется даже когда проблемы были устранены и исправлены.</em></p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-3">
+            <span class="en">2.3 Academic Frameworks</span>
+            <span class="ru">2.3 Академические теории</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en"><strong>Expectation-Confirmation Theory</strong> (Bhattacherjee, 2001; MIS Quarterly, 7,900+ citations). Users form expectations → use the technology → compare performance against expectations → when negative disconfirmation occurs, they form lower perceived usefulness and satisfaction → discontinuance. Bhattacherjee specifically addressed the <em>acceptance-discontinuance anomaly</em>: why users who initially adopt technology subsequently abandon it.</p>
+          <p class="ru"><strong>Теория подтверждения ожиданий</strong> (Bhattacherjee, 2001; MIS Quarterly, 7 900+ цитирований). Пользователи формируют ожидания → используют технологию → сравнивают с ожиданиями → при негативном опровержении формируется низкая оценка полезности и удовлетворённости → отказ. Bhattacherjee специально описал <em>аномалию принятия-прекращения</em>: почему пользователи, изначально принявшие технологию, впоследствии от неё отказываются.</p>
+
+          <p class="en"><strong>Innovation Resistance Theory</strong> (Ram & Sheth, 1989). Resistance is not merely the absence of adoption — it is a distinct psychological state requiring separate theoretical treatment. Five barriers: usage (conflicts with workflow), value (not worth the change), risk, tradition, and image. The key insight: <strong>consumers have an inherent desire for psychological equilibrium.</strong></p>
+          <p class="ru"><strong>Теория сопротивления инновациям</strong> (Ram & Sheth, 1989). Сопротивление — не просто отсутствие внедрения, а самостоятельное психологическое состояние, требующее отдельного теоретического подхода. Пять барьеров: использование (конфликт с рабочим процессом), ценность (не стоит перемен), риск, традиция и имидж. Ключевое наблюдение: <strong>потребители стремятся к психологическому равновесию.</strong></p>
+
+          <p class="en"><strong>Trust Repair Research</strong> (Pareek, Velloso & Goncalves, ACM FAccT, 2024). Once trust is eroded by AI errors, accuracy improvement alone leads to partial but not total trust recovery. The most effective trust repair strategy was the <strong>Model Update signal</strong> — telling users the AI model was upgraded. This intervention restored trust <em>above</em> pre-violation levels. Implication: communicating that modern LLMs are architecturally different from Siri-era AI may be the most effective re-engagement strategy.</p>
+          <p class="ru"><strong>Исследование восстановления доверия</strong> (Pareek, Velloso & Goncalves, ACM FAccT, 2024). После подрыва доверия ошибками ИИ одно лишь повышение точности ведёт к частичному, но не полному восстановлению доверия. Наиболее эффективной стратегией оказался <strong>сигнал «обновление модели»</strong> — информирование пользователей о принципиальном обновлении. Этот приём восстановил доверие <em>выше</em> уровня до нарушения. Вывод: сообщение о том, что современные LLM архитектурно отличаются от ИИ эпохи Siri, — возможно, самая эффективная стратегия повторного вовлечения.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-4">
+            <span class="en">2.4 Why the Trap Is Self-Reinforcing</span>
+            <span class="ru">2.4 Почему ловушка самоподкрепляющаяся</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en">The burned-user problem has a structural feature that makes it uniquely persistent: <strong>the people who avoid re-trying AI are the ones whose mental model of AI is most outdated</strong>. Time does not help — it makes the problem worse, because the gap between what they remember and what exists grows with every model generation. Meanwhile, their peer networks contain other burned users who reinforce the shared negative narrative.</p>
+          <p class="ru">Проблема обжёгшихся пользователей обладает структурной особенностью, делающей её уникально устойчивой: <strong>люди, избегающие повторных попыток, — это те, чья ментальная модель ИИ наиболее устарела</strong>. Время не помогает — оно усугубляет проблему, потому что разрыв между тем, что они помнят, и тем, что существует, растёт с каждым поколением моделей. Тем временем их окружение состоит из таких же разочарованных, подкрепляющих общий негативный нарратив.</p>
+
+          <p class="en">This dynamic has no analogue in the other five gaps. The gender gap is driven by confidence, not past failure. The income gap is about access. The language gap is about genuine current quality failure. The age gap includes technology history but is primarily about socialization. The education gap tracks institutional exposure. Only the once-bitten gap is driven by <strong>a specific past experience that has since become empirically false</strong> — and persists precisely because the correction mechanism (re-trying) is blocked by the injury itself.</p>
+          <p class="ru">У этой динамики нет аналогов среди других пяти разрывов. Гендерный разрыв обусловлен уверенностью, а не прошлым провалом. Разрыв по доходам — это вопрос доступа. Языковой разрыв — о реальных текущих проблемах с качеством. Возрастной разрыв включает историю технологий, но в основном связан с социализацией. Разрыв по образованию зависит от институционального опыта. Только разрыв обжёгшихся обусловлен <strong>конкретным прошлым опытом, который с тех пор стал эмпирически ложным</strong>, — и сохраняется именно потому, что механизм коррекции (повторная попытка) заблокирован самой травмой.</p>
+
+          <p class="en">But while the once-bitten <em>mechanism</em> is unique, its <em>distribution</em> is not. It does not fall evenly across demographics — it concentrates in the same groups already facing the other gaps, where it functions not as an additional burden but as an amplifier of existing ones.</p>
+          <p class="ru">Однако хотя <em>механизм</em> «обжёгшегося» уникален, его <em>распределение</em> — нет. Он распределяется неравномерно — концентрируется именно в тех группах, которые уже сталкиваются с другими разрывами, и там функционирует не как дополнительная нагрузка, а как усилитель существующих.</p>
+        </div>
+      </details>
+      <details>
+        <summary>
+          <h3 id="s2-5">
+            <span class="en">2.5 The Multiplier Effect: Once-Bitten Amplifies Other Gaps</span>
+            <span class="ru">2.5 Эффект множителя: «обжёгшиеся» усиливают другие разрывы</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en">The six mechanisms in 2.2 are not demographically neutral. Their intensity depends on structural conditions that vary systematically across the other five gaps in this report. Being burned by early AI does not hit all groups equally — it concentrates in the same populations that already face gender, age, income, and language disadvantages. The once-bitten effect does not merely add to existing gaps; it multiplies them.</p>
+          <p class="ru">Шесть механизмов из раздела 2.2 не нейтральны демографически. Их интенсивность зависит от структурных условий, которые систематически различаются между пятью другими разрывами этого доклада. Негативный первый опыт с ИИ бьёт не по всем одинаково — он концентрируется именно в тех группах, которые уже сталкиваются с гендерным, возрастным, доходным и языковым неравенством. Эффект «обжёгшегося» не просто прибавляется к существующим разрывам — он их перемножает.</p>
+
+          <p class="en">Four pathways operate simultaneously:</p>
+          <p class="ru">Действуют четыре одновременных пути:</p>
+
+          <p class="en"><strong>1. Selection into worse first experiences.</strong> The income gap routes lower-earning users disproportionately into free-tier tools — precisely the layer Karpathy identified as generating the most disappointment. Older adults were concentrated in voice assistant interfaces: the Cho et al. (2019) study that documented the abandonment lifecycle specifically tracked older adult households, who concluded devices were "a toy." Non-standard English speakers received demonstrably worse voice assistant outputs — Carnegie Mellon's 2024 CHI paper documented emotional harm and identity microaggressions from these errors. Each of these groups entered the AI category through its worst door, then formed their lasting impression from that entry point.</p>
+          <p class="ru"><strong>1. Отбор в более плохой первый опыт.</strong> Разрыв по доходам направляет пользователей с низким доходом непропорционально в бесплатные инструменты — именно тот уровень, который Карпатый назвал источником наибольшего разочарования. Пожилые пользователи концентрировались в голосовых интерфейсах: исследование Cho и др. (2019), задокументировавшее жизненный цикл отказа, отслеживало именно домохозяйства пожилых людей — они называли устройства «игрушками». Носители нестандартного английского получали заметно худшее качество от голосовых помощников: исследование Carnegie Mellon (CHI, 2024) зафиксировало эмоциональный ущерб и микроагрессию. Каждая из этих групп входила в категорию «ИИ» через худшую дверь и формировала устойчивое впечатление именно на основе этого входа.</p>
+
+          <p class="en"><strong>2. Compounding with the confidence barrier.</strong> Algorithm aversion works partly by making users blame the tool when it fails. But the gender gap research shows that women's lower AI self-efficacy (self-assessed knowledge explains ~75% of the gender gap, HBS 2024) creates a double attribution problem: when an AI tool fails, women with low tech self-efficacy are more likely to attribute the failure both to the tool and to themselves. This double attribution makes aversion stronger and re-engagement harder. The injury compounds the pre-existing wound — not additively, but multiplicatively, because the self-attribution blocks the most direct re-engagement pathway: being shown the tool works. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Plausible · underresearched</span></p>
+          <p class="ru"><strong>2. Сложение с барьером уверенности.</strong> Алгоритмическая неприязнь отчасти работает так: когда инструмент даёт сбой, пользователь винит инструмент. Но исследование гендерного разрыва показывает, что низкая самооценка женщин в отношении ИИ (самооценка знаний объясняет ~75% гендерного разрыва, HBS 2024) создаёт двойную проблему атрибуции: когда инструмент ИИ даёт сбой, женщины с низкой технической самоэффективностью склонны обвинять и инструмент, и себя одновременно. Эта двойная атрибуция делает неприязнь сильнее, а повторное вовлечение — труднее. Травма усугубляет существующую рану — не аддитивно, а мультипликативно, поскольку самообвинение блокирует самый прямой путь к повторному вовлечению: просто показать, что инструмент работает. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Вероятно · недоисследовано</span></p>
+
+          <p class="en"><strong>3. Thinner peer networks of power users.</strong> Section 3.2 identifies trusted peer testimonials as the highest-leverage re-engagement vector. But the social networks of lower-income, older, less-educated, and female populations are systematically less likely to contain heavy AI power users — the people who could demonstrate frontier capabilities and challenge an outdated mental model. The trust-repair pathway that research says works best is, for exactly these groups, least available. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Plausible · underresearched</span></p>
+          <p class="ru"><strong>3. Более тонкие сети пользователей-экспертов.</strong> Раздел 3.2 называет доверенные отзывы коллег наиболее эффективным вектором повторного вовлечения. Но социальные сети людей с низким доходом, пожилых, менее образованных и женщин систематически с меньшей вероятностью включают активных пользователей ИИ — тех, кто мог бы продемонстрировать возможности передовых моделей и оспорить устаревшую ментальную модель. Путь восстановления доверия, который исследования признают наиболее эффективным, для именно этих групп наименее доступен. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Вероятно · недоисследовано</span></p>
+
+          <p class="en"><strong>4. The language gap's frozen-clock problem.</strong> AI quality for non-English languages has improved faster, in relative terms, than for English — the gap between GPT-3-era Kyrgyz or Turkish outputs and current frontier model outputs is substantially larger than the equivalent gap for English. This means a non-English speaker who tried AI in 2022 and found it useless for their language is now operating on a mental model that is more outdated, not less, than an English-speaking skeptic from the same period. Yet the correction mechanism — trying a new model, ideally at the premium tier where multilingual performance is strongest — requires exactly the behaviors that once-bitten skeptics are least likely to perform: proactive re-engagement and willingness to pay. The skeptic does not regularly audit new model generations. The premium paywall, which in low-income language communities carries additional purchasing-power friction, blocks the tier where the language gap has actually narrowed most. The result is a sealed loop: the language gap burned them, the avoidance loop keeps them away, and the premium barrier ensures the improvement is invisible. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Plausible · underresearched</span></p>
+          <p class="ru"><strong>4. Проблема остановившихся часов в языковом разрыве.</strong> Качество ИИ для неанглоязычных языков улучшилось быстрее, в относительном выражении, чем для английского — разрыв между выводами GPT-3 на кыргызском или турецком и нынешними передовыми моделями существенно больше, чем аналогичный разрыв для английского. Это означает: неанглоязычный пользователь, попробовавший ИИ в 2022 году и нашедший его бесполезным для своего языка, сегодня работает с ментальной моделью, которая устарела <em>сильнее</em>, а не меньше, чем у англоязычного скептика того же периода. Но механизм коррекции — попробовать новую модель, желательно на премиум-уровне, где многоязычные возможности наиболее сильны, — требует именно тех действий, которые обжёгшиеся скептики с наименьшей вероятностью совершат: проактивного повторного взаимодействия и готовности платить. Скептик не проверяет регулярно новые поколения моделей. Платный барьер — который в малодоходных языковых сообществах несёт дополнительное трение покупательной способности — блокирует именно тот уровень, где языковой разрыв реально сократился. Результат — запечатанный цикл: языковой разрыв обжёг их, петля избегания удерживает в стороне, а ценовой барьер гарантирует, что улучшение остаётся невидимым. <span style="background:rgba(158,43,37,0.1); color:#9e2b25; padding:0.2rem 0.5rem; border-radius:3px; border:1px solid rgba(158,43,37,0.3); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;">Вероятно · недоисследовано</span></p>
+
+          <div class="callout">
+            <p class="en"><em>The practical implication: demographic groups already underrepresented in AI adoption are not facing a single barrier that sums with the once-bitten effect. They are facing an intersection where the once-bitten mechanism is simultaneously stronger (worse first experiences), harder to override (confidence compounding), less correctable (thinner peer networks), and — for non-English speakers specifically — self-sealing: the very improvements that should draw them back are locked behind the premium tier they are least likely to reach. Treating these as additive problems will systematically underestimate the difficulty of closing the gap.</em></p>
+            <p class="ru"><em>Практическое следствие: демографические группы, уже недостаточно представленные в освоении ИИ, сталкиваются не с одним барьером, который складывается с эффектом «обжёгшегося». Они находятся на пересечении, где механизм «обжёгшегося» одновременно сильнее (хуже первый опыт), труднее преодолим (сложение с дефицитом уверенности), менее поддаётся коррекции (более тонкие сети) — а для неанглоязычных пользователей ещё и самозапечатывается: именно те улучшения, которые должны были бы вернуть их, заперты за премиум-барьером, до которого они доберутся с наименьшей вероятностью. Рассмотрение этих барьеров как аддитивных систематически недооценивает сложность закрытия разрыва.</em></p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- PART 3 -->
+    <section id="part3">
+      <p class="part-header en">Part 3 — Synthesis and Interventions</p>
+      <p class="part-header ru">Часть 3 — Синтез и рекомендации</p>
+
+      <h2 id="s3-1">
+        <span class="en">3.1 The Self-Reinforcing Cycle</span>
+        <span class="ru">3.1 Самоподкрепляющийся цикл</span>
+      </h2>
+
+      <p class="en">The burned-user trap is not a single barrier — it is a self-reinforcing loop that becomes harder to exit the longer it persists: negative first experience → anchored negative impression → avoidance of re-engagement → impression remains frozen → peer reinforcement of shared narrative → category-level rejection of "AI" as a whole → growing gap between remembered AI and actual AI → re-engagement becomes increasingly unlikely with each passing model generation.</p>
+      <p class="ru">Ловушка обжёгшихся — не единичный барьер, а самоподкрепляющийся цикл, из которого тем труднее выйти, чем дольше он длится: негативный первый опыт → закреплённое негативное впечатление → избегание повторного взаимодействия → впечатление остаётся замороженным → социальное подкрепление общего нарратива → отторжение всей категории «ИИ» → разрыв между запомненным ИИ и реальным ИИ растёт → повторное вовлечение становится всё менее вероятным с каждым поколением моделей.</p>
+
+      <p class="en">This loop does not operate in isolation from the other five gaps — it intersects with them as a multiplier. Women's lower AI self-efficacy makes a failed experience more psychologically costly, because failure gets attributed both to the tool and to the self. Older adults were routed into the voice assistant interfaces that generated the most disappointment — the Cho et al. abandonment lifecycle was literally studied in older adult households. Lower-income users landed on free-tier tools with the worst capability-to-expectation ratio. The burned-user mechanism is, in each case, amplifying a pre-existing disadvantage. Which means that closing the gender, age, and income gaps without addressing the once-bitten effect will be slower than models predict — and that addressing the once-bitten effect in these specific populations requires interventions that are sensitive to their other gap dimensions simultaneously.</p>
+      <p class="ru">Этот цикл не работает изолированно от других пяти разрывов — он пересекается с ними как множитель. Более низкая самооценка женщин в отношении ИИ делает неудачный опыт психологически более дорогостоящим: провал приписывается и инструменту, и себе. Пожилые пользователи были направлены к голосовым интерфейсам, породившим наибольшее разочарование — жизненный цикл отказа, задокументированный Cho и др., буквально изучался на домохозяйствах пожилых людей. Пользователи с низким доходом попали на бесплатные инструменты с наихудшим соотношением возможностей и ожиданий. Механизм «обжёгшегося» в каждом из этих случаев усиливает уже существующее неравенство. Это означает: закрытие гендерного, возрастного и доходного разрывов без работы с эффектом «обжёгшегося» будет медленнее, чем предсказывают модели, — а его преодоление в этих конкретных группах требует одновременно чувствительных к другим разрывам вмешательств.</p>
+
+      <h2>
+        <span class="en">3.2 What Works — Evidence-Based Interventions</span>
+        <span class="ru">3.2 Что работает — доказательные методы</span>
+      </h2>
+
+      <ul>
+        <li class="en"><strong>The "Model Update" signal</strong> is the highest-leverage messaging intervention. Explicitly communicating that the technology has fundamentally changed — not merely improved — disrupts category-level judgment. It works because it bypasses the update-within-a-rejected-category problem and restarts evaluation from scratch. (Pareek et al., 2024; Reich et al., 2022.)</li>
+        <li class="ru"><strong>Сигнал «обновление модели»</strong> — наиболее эффективный коммуникационный приём. Явное сообщение о том, что технология принципиально изменилась, а не просто стала лучше, нарушает суждение на уровне категории. Это работает потому, что минует проблему обновления внутри отвергнутой категории и запускает оценку заново. (Pareek et al., 2024; Reich et al., 2022.)</li>
+        <li class="en"><strong>Demonstrate learning ability.</strong> Showing that the AI can improve from mistakes resolves aversion more effectively than demonstrating current accuracy. Users expect algorithms not to learn — proving they can is counter-expectation and attention-grabbing. (Berger et al., 2021.)</li>
+        <li class="ru"><strong>Продемонстрируйте способность к обучению.</strong> Показать, что ИИ может учиться на ошибках, снимает неприязнь эффективнее, чем демонстрация текущей точности. Пользователи ожидают, что алгоритмы не учатся — доказательство обратного ломает ожидание и привлекает внимание. (Berger et al., 2021.)</li>
+        <li class="en"><strong>Hands-on, low-stakes, personally relevant first tasks.</strong> The binding constraint is the negative anchor, not skill or access. Abstract capability demonstrations don't move it — personally experiencing success on a task that matters to the individual does.</li>
+        <li class="ru"><strong>Практические, безрисковые, лично значимые первые задачи.</strong> Главное ограничение — негативный якорь, а не навык или доступ. Абстрактные демонстрации возможностей не работают — работает личный опыт успеха в задаче, которая важна конкретному человеку.</li>
+        <li class="en"><strong>Trusted messengers, not tech companies.</strong> Burned users have low trust in technology company marketing by definition. Peer testimonials from similar-profile individuals carry more weight. (EY/Microsoft/OpenAI, N=2,515, 2025.)</li>
+        <li class="ru"><strong>Доверенные посредники, а не технологические компании.</strong> Обжёгшиеся по определению мало доверяют маркетингу технологических компаний. Отзывы от людей со схожим профилем имеют больший вес. (EY/Microsoft/OpenAI, N=2 515, 2025.)</li>
+        <li class="en"><strong>Separate LLMs from the Siri/Alexa category explicitly.</strong> The disappointment transfer problem requires active counter-messaging. Reframing current AI as a fundamentally different technology — not a better version of what failed them — is necessary to break the category-level rejection.</li>
+        <li class="ru"><strong>Явно отделите LLM от категории Siri/Alexa.</strong> Проблема переноса разочарования требует активной контркоммуникации. Переосмысление текущего ИИ как принципиально другой технологии — а не улучшенной версии того, что подвело, — необходимо для преодоления отторжения на уровне категории.</li>
+      </ul>
+
+      <h2>
+        <span class="en">3.3 What Does Not Work</span>
+        <span class="ru">3.3 Что не работает</span>
+      </h2>
+
+      <ul>
+        <li class="en"><strong>General AI awareness campaigns.</strong> Burned users are already aware — that's what makes them burned rather than oblivious. Information provision does not move anchored judgments.</li>
+        <li class="ru"><strong>Общие кампании по повышению осведомлённости об ИИ.</strong> Обжёгшиеся и так в курсе — именно это отличает их от неосведомлённых. Информирование не сдвигает закреплённые суждения.</li>
+        <li class="en"><strong>Accuracy metrics and benchmark comparisons.</strong> Users with algorithm aversion are not responding to rational evidence; they are responding to past personal experience. Showing GPT-5 benchmarks to someone who remembers Siri getting their calendar wrong achieves very little.</li>
+        <li class="ru"><strong>Метрики точности и сравнения бенчмарков.</strong> Пользователи с алгоритмической неприязнью реагируют не на рациональные доказательства, а на прошлый личный опыт. Показывать бенчмарки GPT-5 человеку, помнящему, как Siri путала его календарь, практически бесполезно.</li>
+        <li class="en"><strong>Product improvement alone, without communication.</strong> The most insidious feature of the burned-user problem is that the people least likely to encounter any re-engagement message are precisely the ones who need it most — they've already tuned out.</li>
+        <li class="ru"><strong>Улучшение продукта само по себе, без коммуникации.</strong> Самая коварная черта проблемы обжёгшихся: люди, которые менее всего вероятно увидят сообщение о повторном вовлечении, — именно те, кому оно нужнее всего. Они уже отключились.</li>
+      </ul>
+
+      <h2>
+        <span class="en">3.4 The Research Gap</span>
+        <span class="ru">3.4 Пробел в исследованиях</span>
+      </h2>
+
+      <p class="en">Despite the rich theoretical landscape, <strong>no published study has specifically tracked burned AI users longitudinally</strong> — measuring initial experience, reasons for abandonment, resistance to re-engagement, and what interventions successfully bring them back. The never-tried versus tried-and-abandoned distinction has enormous practical implications for adoption strategy but remains remarkably underdeveloped as a formal research segmentation.</p>
+      <p class="ru">Несмотря на богатый теоретический ландшафт, <strong>ни одно опубликованное исследование не отслеживало обжёгшихся пользователей ИИ лонгитюдно</strong> — не измеряло первоначальный опыт, причины отказа, сопротивление повторному вовлечению и какие интервенции успешно возвращают таких пользователей. Различие между «никогда не пробовавшими» и «попробовавшими и бросившими» имеет огромное практическое значение для стратегии внедрения, но остаётся поразительно неразвитым как формальная исследовательская сегментация.</p>
+
+      <p class="en">The specific hypothesis that prior disappointment with Siri/Alexa-generation AI creates measurable resistance to ChatGPT/LLM adoption — a disappointment transfer across architecturally distinct technologies grouped under the same consumer label — remains formally untested. The psychological mechanisms are individually well-established. Their compound effect on AI re-adoption is a clear research gap.</p>
+      <p class="ru">Конкретная гипотеза о том, что разочарование в ИИ поколения Siri/Alexa создаёт измеримое сопротивление к внедрению ChatGPT/LLM — перенос разочарования между архитектурно различными технологиями, объединёнными под одним потребительским ярлыком, — остаётся формально не проверенной. Психологические механизмы по отдельности хорошо задокументированы. Их совокупное влияние на повторное внедрение ИИ — явный пробел в исследованиях.</p>
+    </section>
+
+    <!-- SOURCES -->
+    <section id="sources" class="sources-section">
+      <p class="part-header en">Selected Sources</p>
+      <p class="part-header ru">Избранные источники</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Authors / Source</th><th class="en">Year</th><th class="en">Title / Publication</th>
+            <th class="ru">Авторы</th><th class="ru">Год</th><th class="ru">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Dietvorst, Simmons & Massey</td><td class="en">2015</td><td class="en">Algorithm Aversion: People Erroneously Avoid Algorithms After Seeing Them Err. <em>J. Experimental Psychology: General</em></td>
+              <td class="ru">Dietvorst, Simmons & Massey</td><td class="ru">2015</td><td class="ru">Algorithm Aversion. <em>J. Exp. Psychology: General</em></td></tr>
+          <tr><td class="en">Bhattacherjee</td><td class="en">2001</td><td class="en">Understanding Information Systems Continuance. <em>MIS Quarterly</em>, 7,900+ citations</td>
+              <td class="ru">Bhattacherjee</td><td class="ru">2001</td><td class="ru">Understanding IS Continuance. <em>MIS Quarterly</em>, 7 900+ цит.</td></tr>
+          <tr><td class="en">Ram & Sheth</td><td class="en">1989</td><td class="en">Consumer Resistance to Innovations: The Marketing Problem and its Solutions. <em>Journal of Consumer Marketing</em></td>
+              <td class="ru">Ram & Sheth</td><td class="ru">1989</td><td class="ru">Consumer Resistance to Innovations. <em>J. Consumer Marketing</em></td></tr>
+          <tr><td class="en">Pareek, Velloso & Goncalves</td><td class="en">2024</td><td class="en">Trust Repair After AI Errors. <em>ACM FAccT</em></td>
+              <td class="ru">Pareek, Velloso & Goncalves</td><td class="ru">2024</td><td class="ru">Trust Repair After AI Errors. <em>ACM FAccT</em></td></tr>
+          <tr><td class="en">Berger et al.</td><td class="en">2021</td><td class="en">Can Algorithms Learn from Mistakes? Resolving Algorithm Aversion</td>
+              <td class="ru">Berger et al.</td><td class="ru">2021</td><td class="ru">Can Algorithms Learn from Mistakes?</td></tr>
+          <tr><td class="en">Cho et al.</td><td class="en">2019</td><td class="en">Adoption-to-Abandonment Pipeline in Smart Speaker Use. <em>ACM DIS</em></td>
+              <td class="ru">Cho et al.</td><td class="ru">2019</td><td class="ru">Adoption-to-Abandonment Pipeline. <em>ACM DIS</em></td></tr>
+          <tr><td class="en">Karpathy, Andrej</td><td class="en">April 2026</td><td class="en">Thread on AI capability gap. <em>X (formerly Twitter)</em></td>
+              <td class="ru">Карпатый, Андрей</td><td class="ru">апрель 2026</td><td class="ru">Тред о разрыве в понимании ИИ. <em>X (бывш. Twitter)</em></td></tr>
+          <tr><td class="en">Ipsos</td><td class="en">July 2024</td><td class="en">Global Views on AI: Non-user Segmentation</td>
+              <td class="ru">Ipsos</td><td class="ru">июль 2024</td><td class="ru">Global Views on AI: Segmentation</td></tr>
+          <tr><td class="en">MIT NANDA Initiative</td><td class="en">2025</td><td class="en">AI Pilot Outcomes Research</td>
+              <td class="ru">MIT NANDA Initiative</td><td class="ru">2025</td><td class="ru">AI Pilot Outcomes Research</td></tr>
+          <tr><td class="en">Trajkova & Martin-Hammond</td><td class="en">2020</td><td class="en">Older Adults and Voice Assistants. <em>ACM CHI</em></td>
+              <td class="ru">Trajkova & Martin-Hammond</td><td class="ru">2020</td><td class="ru">Older Adults and Voice Assistants. <em>ACM CHI</em></td></tr>
+          <tr><td class="en">Reich, Kaju & Maglio</td><td class="en">2022</td><td class="en">Machine Learning Labels and Trust. <em>Oklahoma State University</em></td>
+              <td class="ru">Reich, Kaju & Maglio</td><td class="ru">2022</td><td class="ru">Machine Learning Labels and Trust. <em>Oklahoma State Univ.</em></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Prev/Next -->
+    <div class="gap-nav">
+      <a href="gap-education.html">
+        <span class="en">← Education Gap</span>
+        <span class="ru">← Разрыв по образованию</span>
+      </a>
+      <span class="spacer"></span>
+      <a href="methodology.html">
+        <span class="en">Methodology →</span>
+        <span class="ru">Методология →</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Right-side Navigator -->
+  <nav class="section-nav">
+    <p class="section-nav-title en">Contents</p>
+    <p class="section-nav-title ru">Содержание</p>
+    <a href="#summary" class="en">Executive Summary</a>
+    <a href="#summary" class="ru">Резюме</a>
+    <a href="#s1-1" class="en">1.1 Scale</a>
+    <a href="#s1-1" class="ru">1.1 Масштаб</a>
+    <a href="#s1-2" class="en">1.2 Karpathy</a>
+    <a href="#s1-2" class="ru">1.2 Карпатый</a>
+    <a href="#s1-3" class="en">1.3 Voice Legacy</a>
+    <a href="#s1-3" class="ru">1.3 Помощники</a>
+    <a href="#s1-4" class="en">1.4 HCI Evidence</a>
+    <a href="#s1-4" class="ru">1.4 Данные HCI</a>
+    <a href="#s2-1" class="en">2.1 Algorithm Aversion</a>
+    <a href="#s2-1" class="ru">2.1 Неприязнь</a>
+    <a href="#s2-2" class="en">2.2 Six Mechanisms</a>
+    <a href="#s2-2" class="ru">2.2 Шесть механизмов</a>
+    <a href="#s2-3" class="en">2.3 Frameworks</a>
+    <a href="#s2-3" class="ru">2.3 Теории</a>
+    <a href="#s2-4" class="en">2.4 Self-Reinforcing</a>
+    <a href="#s2-4" class="ru">2.4 Самоподкрепление</a>
+    <a href="#s2-5" class="en">2.5 Gap Multiplier</a>
+    <a href="#s2-5" class="ru">2.5 Множитель разрывов</a>
+    <a href="#part3" class="en">Synthesis</a>
+    <a href="#part3" class="ru">Синтез</a>
+    <a href="#sources" class="en">Sources</a>
+    <a href="#sources" class="ru">Источники</a>
+  </nav>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html">
+        <span class="en">← All gaps</span>
+        <span class="ru">← Все разрывы</span>
+      </a>
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const sections = document.querySelectorAll('section[id], h2[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector('.section-nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+</body>
+</html>

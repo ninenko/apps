@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gender Gap in AI Adoption — AI Adoption Gap</title>
+  <meta name="description" content="Women are 22% less likely to adopt generative AI. Evidence, data, and causes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Hero -->
+<div class="gap-hero">
+  <div class="container-gap">
+    <a href="index.html" class="gap-hero-back">
+      <span class="en">← Back to overview</span>
+      <span class="ru">← К обзору</span>
+    </a>
+    <p class="gap-num">
+      <span class="en">01 / GENDER GAP</span>
+      <span class="ru">01 / ГЕНДЕРНЫЙ РАЗРЫВ</span>
+    </p>
+    <h1>
+      <span class="en">The Gender Gap in AI Adoption</span>
+      <span class="ru">Гендерный разрыв во внедрении ИИ</span>
+    </h1>
+    <p class="sub">
+      <span class="en">Evidence, Data, and Understanding of Causes</span>
+      <span class="ru">Данные, доказательства и понимание причин</span>
+    </p>
+    <div class="gap-headline-stat">
+      <div class="stat">22%</div>
+      <div class="stat-label">
+        <span class="en">Lower odds of AI adoption — women vs. men</span>
+        <span class="ru">Меньше шансов освоить ИИ — женщины vs. мужчины</span>
+      </div>
+      <div class="stat-source">HBS meta-analysis, 18 studies, 143,008 people, 25 countries, 2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="gap-layout">
+
+  <!-- Content -->
+  <main class="gap-content">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <p class="part-header en">Executive Summary</p>
+      <p class="part-header ru">Краткое резюме</p>
+      <div class="exec-summary">
+        <ul>
+          <li class="en">Women are <strong>~22% less likely</strong> than men to adopt generative AI — consistent across 18 studies, 25 countries, and 143,000+ individuals (Harvard Business School, 2024).</li>
+          <li class="ru">Женщины на <strong>~22% реже</strong> мужчин осваивают генеративный ИИ — устойчивый результат в 18 исследованиях, 25 странах, свыше 143 000 человек (Гарвардская школа бизнеса, 2024).</li>
+          <li class="en">The divide shows up in usage rates, enthusiasm, trust, workplace support, and downstream outcomes like productivity and career advancement.</li>
+          <li class="ru">Разрыв проявляется в показателях использования, энтузиазме, доверии, поддержке на рабочем месте и последующих результатах — производительности и карьерном росте.</li>
+          <li class="en">Driven primarily by <strong>self-assessed knowledge and confidence</strong>, not by access, income, or education — self-assessed knowledge alone explains ~75% of the gap (BIS, 2024).</li>
+          <li class="ru">Главная причина — <strong>самооценка знаний и уверенность</strong>, а не доступ, доход или образование: самооценка знаний объясняет ~75% разрыва (BIS, 2024).</li>
+          <li class="en">At least one common assumption is falsified: pure digital literacy interventions <strong>widen</strong> the gap, not close it.</li>
+          <li class="ru">Как минимум одно расхожее предположение опровергнуто: чистые меры по повышению цифровой грамотности <strong>увеличивают</strong> разрыв, а не сокращают его.</li>
+          <li class="en">Without deliberate intervention, AI may amplify existing gender inequalities rather than reduce them.</li>
+          <li class="ru">Без целенаправленного вмешательства ИИ рискует усилить существующее гендерное неравенство, а не сократить его.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section id="part1">
+      <p class="part-header en">Part 1 — The Evidence</p>
+      <p class="part-header ru">Часть 1 — Доказательства</p>
+
+      <h2 id="s1-1">
+        <span class="en">1.1 Key Numbers at a Glance</span>
+        <span class="ru">1.1 Ключевые цифры</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Statistic</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Показатель</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Lower odds of using generative AI, women vs. men</td><td class="en"><strong>22%</strong></td><td class="en">HBS meta-analysis, 2024</td>
+              <td class="ru">Меньше шансов использовать генеративный ИИ, женщины vs. мужчины</td><td class="ru"><strong>22%</strong></td><td class="ru">Мета-анализ HBS, 2024</td></tr>
+          <tr><td class="en">Men vs. women who used gen-AI in prior 12 months (US)</td><td class="en"><strong>50% vs. 37%</strong></td><td class="en">NY Fed / BIS, 2024</td>
+              <td class="ru">Мужчины vs. женщины, использовавшие ген-ИИ за 12 месяцев (США)</td><td class="ru"><strong>50% vs. 37%</strong></td><td class="ru">NY Fed / BIS, 2024</td></tr>
+          <tr><td class="en">Gen-AI adoption: men vs. women (UK)</td><td class="en"><strong>43% vs. 28%</strong></td><td class="en">Deloitte, 2024</td>
+              <td class="ru">Освоение ген-ИИ: мужчины vs. женщины (Великобритания)</td><td class="ru"><strong>43% vs. 28%</strong></td><td class="ru">Deloitte, 2024</td></tr>
+          <tr><td class="en">Daily AI use at work: men vs. women</td><td class="en"><strong>33% vs. 27%</strong></td><td class="en">Lean In, 2025</td>
+              <td class="ru">Ежедневное использование ИИ на работе: мужчины vs. женщины</td><td class="ru"><strong>33% vs. 27%</strong></td><td class="ru">Lean In, 2025</td></tr>
+          <tr><td class="en">Share of gender gap explained by self-assessed knowledge alone</td><td class="en"><strong>~75%</strong></td><td class="en">BIS Working Paper, 2024</td>
+              <td class="ru">Доля гендерного разрыва, объясняемая самооценкой знаний</td><td class="ru"><strong>~75%</strong></td><td class="ru">BIS Working Paper, 2024</td></tr>
+          <tr><td class="en">Higher productivity gain: male vs. female academics after ChatGPT</td><td class="en"><strong>+6.4 pp</strong></td><td class="en">PNAS Nexus, 2025</td>
+              <td class="ru">Бо́льший рост производительности: мужчины vs. женщины в науке</td><td class="ru"><strong>+6,4 п.п.</strong></td><td class="ru">PNAS Nexus, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-2">
+        <span class="en">1.2 Global Adoption Rates</span>
+        <span class="ru">1.2 Глобальные показатели освоения</span>
+      </h2>
+      <p class="en">The gender gap in AI adoption is not a US anomaly — it appears consistently across geographies.</p>
+      <p class="ru">Гендерный разрыв в освоении ИИ — не американская аномалия: он устойчиво проявляется в разных странах.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Study / Source</th><th class="en">Men</th><th class="en">Women</th>
+            <th class="ru">Исследование</th><th class="ru">Мужчины</th><th class="ru">Женщины</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">US — NY Fed (2024, N≈890)</td><td class="en">50%</td><td class="en">37%</td>
+              <td class="ru">США — NY Fed (2024, N≈890)</td><td class="ru">50%</td><td class="ru">37%</td></tr>
+          <tr><td class="en">UK — Deloitte (2024)</td><td class="en">43%</td><td class="en">28%</td>
+              <td class="ru">Великобритания — Deloitte (2024)</td><td class="ru">43%</td><td class="ru">28%</td></tr>
+          <tr><td class="en">Global — Oliver Wyman Forum (2024, N=25,000, 16 countries)</td><td class="en">~58% weekly</td><td class="en">~51% weekly</td>
+              <td class="ru">Глобально — Oliver Wyman Forum (2024, N=25 000, 16 стран)</td><td class="ru">~58% еженед.</td><td class="ru">~51% еженед.</td></tr>
+          <tr><td class="en">Denmark — Humlum & Vestergaard (2025, N=18,000)</td><td class="en">Baseline</td><td class="en">16–20 pp lower</td>
+              <td class="ru">Дания — Humlum & Vestergaard (2025, N=18 000)</td><td class="ru">Базис</td><td class="ru">На 16–20 п.п. ниже</td></tr>
+          <tr><td class="en">HBS meta-analysis (18 studies, 143,008 people, 25 countries)</td><td class="en">Odds ratio baseline</td><td class="en">22% lower odds</td>
+              <td class="ru">Мета-анализ HBS (18 исследований, 143 008 чел., 25 стран)</td><td class="ru">Базовый OR</td><td class="ru">На 22% ниже</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="en"><strong>Exception:</strong> BCG survey of San Francisco tech workers found senior women in technical roles were 12–16% <em>more</em> likely to use generative AI than male counterparts. Junior women in non-technical roles were 21% less likely — pointing to seniority and professional confidence as powerful moderators. The gap is not fixed by gender; it is moderated by context.</p>
+        <p class="ru"><strong>Исключение:</strong> Опрос BCG среди техработников Сан-Франциско показал: старшие женщины на технических должностях на 12–16% <em>чаще</em> используют генеративный ИИ, чем их коллеги-мужчины. Младшие женщины на нетехнических должностях — на 21% реже. Это указывает на стаж и профессиональную уверенность как мощные модераторы.</p>
+      </div>
+
+      <h2 id="s1-3">
+        <span class="en">1.3 Attitudes and Emotional Responses</span>
+        <span class="ru">1.3 Отношение и эмоциональные реакции</span>
+      </h2>
+      <p class="en">The gap is not just behavioral — it reflects deeply different emotional orientations. The optimism gap persists even among AI experts.</p>
+      <p class="ru">Разрыв не только поведенческий — он отражает глубоко различные эмоциональные установки. Разрыв в оптимизме сохраняется даже среди экспертов по ИИ.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Attitude</th><th class="en">Men</th><th class="en">Women</th><th class="en">Source</th>
+            <th class="ru">Установка</th><th class="ru">Мужчины</th><th class="ru">Женщины</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">More excited than concerned about AI</td><td class="en">15%</td><td class="en">7%</td><td class="en">Pew, 2025</td>
+              <td class="ru">Больше воодушевлены, чем обеспокоены</td><td class="ru">15%</td><td class="ru">7%</td><td class="ru">Pew, 2025</td></tr>
+          <tr><td class="en">More concerned than excited about AI</td><td class="en">46%</td><td class="en">55%</td><td class="en">Pew, 2025</td>
+              <td class="ru">Больше обеспокоены, чем воодушевлены</td><td class="ru">46%</td><td class="ru">55%</td><td class="ru">Pew, 2025</td></tr>
+          <tr><td class="en">AI will have positive impact on the US</td><td class="en">22%</td><td class="en">12%</td><td class="en">Pew, 2025</td>
+              <td class="ru">ИИ окажет позитивное воздействие</td><td class="ru">22%</td><td class="ru">12%</td><td class="ru">Pew, 2025</td></tr>
+          <tr><td class="en">Feel "energized" about AI at work</td><td class="en">26%</td><td class="en">20%</td><td class="en">Lean In, 2025</td>
+              <td class="ru">Чувствуют «заряд энергии» от ИИ на работе</td><td class="ru">26%</td><td class="ru">20%</td><td class="ru">Lean In, 2025</td></tr>
+          <tr><td class="en">Worry AI use feels like "cheating"</td><td class="en">43%</td><td class="en">~50%</td><td class="en">CNBC/SurveyMonkey, 2026</td>
+              <td class="ru">Беспокоятся, что использование ИИ — «читерство»</td><td class="ru">43%</td><td class="ru">~50%</td><td class="ru">CNBC/SurveyMonkey, 2026</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-4">
+        <span class="en">1.4 The Workplace Feedback Loop</span>
+        <span class="ru">1.4 Петля обратной связи на рабочем месте</span>
+      </h2>
+      <p class="en">Organizational dynamics actively reinforce individual-level differences, creating a self-compounding cycle.</p>
+      <p class="ru">Организационная динамика активно усиливает индивидуальные различия, создавая самовоспроизводящийся цикл.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Workplace Factor</th><th class="en">Men</th><th class="en">Women</th><th class="en">Source</th>
+            <th class="ru">Фактор</th><th class="ru">Мужчины</th><th class="ru">Женщины</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Daily AI use at work</td><td class="en">33%</td><td class="en">27%</td><td class="en">Lean In, 2025</td>
+              <td class="ru">Ежедневное использование ИИ</td><td class="ru">33%</td><td class="ru">27%</td><td class="ru">Lean In, 2025</td></tr>
+          <tr><td class="en">Praised by colleagues for AI use</td><td class="en">23%</td><td class="en">18%</td><td class="en">Lean In, 2025</td>
+              <td class="ru">Коллеги хвалят за использование ИИ</td><td class="ru">23%</td><td class="ru">18%</td><td class="ru">Lean In, 2025</td></tr>
+          <tr><td class="en">Encouraged by manager to use AI</td><td class="en">37%</td><td class="en">30%</td><td class="en">Lean In, 2025</td>
+              <td class="ru">Руководитель поощряет использование ИИ</td><td class="ru">37%</td><td class="ru">30%</td><td class="ru">Lean In, 2025</td></tr>
+          <tr><td class="en">Received company-sponsored AI training</td><td class="en">Higher</td><td class="en">35% less likely</td><td class="en">Accenture, 2024</td>
+              <td class="ru">Получили корпоративное обучение ИИ</td><td class="ru">Чаще</td><td class="ru">На 35% реже</td><td class="ru">Accenture, 2024</td></tr>
+        </tbody>
+      </table>
+      <div class="kyrgyz-note">
+        <span class="en">This dynamic is particularly visible in contexts like Kyrgyzstan, where women's professional autonomy is more constrained — the feedback loop between managerial encouragement and adoption is likely tighter and harder to interrupt.</span>
+        <span class="ru">Эта динамика особенно заметна в таких контекстах, как Кыргызстан, где профессиональная самостоятельность женщин более ограничена — петля обратной связи между поощрением руководства и освоением ИИ, вероятно, теснее и труднее прерывается.</span>
+      </div>
+
+      <h2 id="s1-5">
+        <span class="en">1.5 Self-Assessed Knowledge and AI Literacy</span>
+        <span class="ru">1.5 Самооценка знаний и ИИ-грамотность</span>
+      </h2>
+      <p class="en">Self-assessed AI knowledge is the single largest explained driver — accounting for ~75% of the gap. Crucially, this is about confidence, not demonstrated ability.</p>
+      <p class="ru">Самооценка знаний об ИИ — единственный наиболее значимый объясняющий фактор, объясняющий ~75% разрыва. Принципиально важно: речь идёт об уверенности, а не о реальных способностях.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;">Only <strong>0.2%</strong> of female LinkedIn members listed AI skills vs. <strong>0.4%</strong> of men — a 138% gap in AI literacy signaling (OECD/LinkedIn, 2023).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Лишь <strong>0,2%</strong> участниц LinkedIn указали навыки ИИ против <strong>0,4%</strong> мужчин — разрыв 138% в сигнализировании ИИ-грамотности (OECD/LinkedIn, 2023).</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>43%</strong> of women said they don't use AI because they "don't know what it is" vs. <strong>32%</strong> of men (Australian media literacy study, 2024).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>43%</strong> женщин не используют ИИ, потому что «не знают, что это такое», против <strong>32%</strong> мужчин (Австралия, 2024).</li>
+        <li class="en" style="margin-bottom:0.5rem;">Post-intervention, <strong>gender differences in AI literacy scores disappear</strong> (Kong et al., 2023; Kim & Kwon, 2024) — the gap is malleable, not fixed.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">После вмешательства <strong>гендерные различия в ИИ-грамотности исчезают</strong> (Kong et al., 2023; Kim & Kwon, 2024) — разрыв пластичен, а не фиксирован.</li>
+      </ul>
+
+      <h2 id="s1-6">
+        <span class="en">1.6 Structural Vulnerability: Job Displacement Risk</span>
+        <span class="ru">1.6 Структурная уязвимость: риск вытеснения</span>
+      </h2>
+      <p class="en">Women's concerns are grounded in occupational reality. Their roles face disproportionately higher disruption from AI automation.</p>
+      <p class="ru">Опасения женщин обоснованы профессиональной реальностью. Их должности непропорционально сильнее затронуты автоматизацией ИИ.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Risk Factor</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Фактор риска</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">AI disruption risk: female- vs. male-dominated occupations</td><td class="en"><strong>29% vs. 16%</strong></td><td class="en">ILO, 2025</td>
+              <td class="ru">Риск вытеснения: женские vs. мужские профессии</td><td class="ru"><strong>29% vs. 16%</strong></td><td class="ru">ILO, 2025</td></tr>
+          <tr><td class="en">Women's jobs facing significant AI exposure (high-income countries)</td><td class="en"><strong>41% of women's jobs</strong></td><td class="en">WEF/LinkedIn, 2025</td>
+              <td class="ru">Должности женщин под значительным воздействием ИИ</td><td class="ru"><strong>41% должностей</strong></td><td class="ru">WEF/LinkedIn, 2025</td></tr>
+          <tr><td class="en">Share of 6.1M workers facing high AI exposure + low adaptive capacity who are women</td><td class="en"><strong>86%</strong></td><td class="en">Brookings, 2025</td>
+              <td class="ru">Доля женщин среди 6,1 млн работников с высоким ИИ-риском и низкой адаптивностью</td><td class="ru"><strong>86%</strong></td><td class="ru">Brookings, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-7">
+        <span class="en">1.7 Downstream Consequences</span>
+        <span class="ru">1.7 Последствия разрыва</span>
+      </h2>
+      <p class="en">The adoption gap is already translating into measurable performance divergence.</p>
+      <p class="ru">Разрыв в освоении уже превращается в измеримые различия в результатах.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;">After ChatGPT's emergence, male researchers' productivity gain was <strong>6.4 pp higher</strong> than female researchers' (Tang et al., PNAS Nexus, 2025).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">После появления ChatGPT рост производительности учёных-мужчин оказался на <strong>6,4 п.п. выше</strong>, чем у коллег-женщин (Tang et al., PNAS Nexus, 2025).</li>
+        <li class="en" style="margin-bottom:0.5rem;">In an RCT with 17,000 Kenyan entrepreneurs given free ChatGPT access, women were still <strong>13% less likely</strong> to engage (HBS, 2024).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">В RCT с 17 000 кенийских предпринимателей с бесплатным ChatGPT женщины всё равно на <strong>13% реже</strong> его использовали (HBS, 2024).</li>
+        <li class="en" style="margin-bottom:0.5rem;">Oxford Internet Institute found that digital literacy improvements <strong>widened</strong> the gap — men's usage jumped from 19% to 43%, women's from 17% to 29% (Stephany & Duszynski, 2026).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Oxford Internet Institute обнаружил: повышение цифровой грамотности <strong>увеличивает</strong> разрыв — использование ИИ мужчинами выросло с 19% до 43%, женщинами — с 17% до 29% (Stephany & Duszynski, 2026).</li>
+      </ul>
+    </section>
+
+    <!-- PART 2 -->
+    <section id="part2">
+      <p class="part-header en">Part 2 — Understanding the Causes</p>
+      <p class="part-header ru">Часть 2 — Понимание причин</p>
+      <p class="en">No single explanation suffices. The gap is driven by interlocking structural, institutional, psychological, and historical factors.</p>
+      <p class="ru">Ни одного объяснения недостаточно. Разрыв обусловлен взаимосвязанными структурными, институциональными, психологическими и историческими факторами.</p>
+
+      <h2 id="s2-1">
+        <span class="en">2.1 Structural and Material Causes</span>
+        <span class="ru">2.1 Структурные и материальные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Occupational exposure asymmetry <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Асимметрия профессионального воздействия <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Female-dominated occupations face objectively higher AI disruption risk (29% vs. 16%, ILO 2025), while AI tools were designed primarily around the workflows of male-dominated fields. The asymmetry is structural: AI augments the work it was designed for.</p>
+          <p class="ru">Профессии с преобладанием женщин объективно подвержены большему риску вытеснения ИИ (29% vs. 16%, ILO 2025), тогда как инструменты ИИ проектировались прежде всего под рабочие процессы мужских профессий. Асимметрия структурна: ИИ усиливает ту работу, под которую был создан.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Resource and training constraints <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Ресурсные ограничения и обучение <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Women are <strong>35% less likely</strong> to receive company-sponsored AI training (Accenture, 2024) and less likely to have discretionary time to experiment. Access to AI tools is not the binding constraint — institutional investment is.</p>
+          <p class="ru">Женщины на <strong>35% реже</strong> получают корпоративное обучение ИИ (Accenture, 2024) и реже располагают свободным временем для экспериментов. Ограничивающий фактор — не доступ к инструментам ИИ, а институциональные инвестиции.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">System design exclusion <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Исключение через дизайн систем <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">AI systems were built predominantly by a ~70–78% male workforce. This shapes which tasks tools handle well and whose communication styles they understand. 44% of 133 AI systems analyzed showed gender bias (UC Berkeley Haas, 2019).</p>
+          <p class="ru">Системы ИИ созданы преимущественно мужчинами (~70–78% рабочей силы). Это определяет, с какими задачами инструменты справляются лучше и чьи стили коммуникации понимают. 44% из 133 проанализированных ИИ-систем показали гендерную предвзятость (UC Berkeley Haas, 2019).</p>
+        </div>
+      </details>
+
+      <h2 id="s2-2">
+        <span class="en">2.2 Institutional and Systemic Causes</span>
+        <span class="ru">2.2 Институциональные и системные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">The training and recognition feedback loop <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Петля обучения и признания <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Companies invest training resources where they see the highest current usage; current usage is higher among men; therefore training flows disproportionately to men; therefore their usage grows faster. This is self-reinforcing without deliberate correction.</p>
+          <p class="ru">Компании вкладывают ресурсы в обучение там, где видят наибольшее текущее использование; использование выше среди мужчин; следовательно, обучение непропорционально достаётся мужчинам — и их использование растёт быстрее. Без сознательного вмешательства цикл самовоспроизводится.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Representation in production <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Представленность в производстве <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">UNESCO's 2019 report <em>I'd Blush If I Could</em> documented how AI voice assistants were systematically designed with female names, voices, and submissive response patterns — positioning women as the helpful service layer, not the powerful user.</p>
+          <p class="ru">Доклад ЮНЕСКО 2019 года <em>I'd Blush If I Could</em> зафиксировал: ИИ-голосовые помощники систематически создавались с женскими именами, голосами и покорными моделями ответов — позиционируя женщин как полезный сервисный слой, а не как мощного пользователя.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-3">
+        <span class="en">2.3 Psychological Causes</span>
+        <span class="ru">2.3 Психологические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">The confidence gap (not a knowledge gap) <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Разрыв в уверенности (не в знаниях) <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Self-assessed AI knowledge explains ~75% of the adoption gap (BIS, 2024). Men systematically overestimate their tech abilities; women systematically underestimate theirs — even at equivalent actual competence levels (British Cohort Study 1970, IZA 2025; N=17,000+). Impostors syndrome is disproportionately prevalent in STEM: 97.5% of women in STEM graduate programs report moderate-to-severe impostor experiences (Shin, 2025).</p>
+          <p class="ru">Самооценка знаний об ИИ объясняет ~75% разрыва в освоении (BIS, 2024). Мужчины систематически переоценивают свои технические способности; женщины — систематически недооценивают, даже при равных реальных компетенциях (British Cohort Study 1970, IZA 2025; N=17 000+). Синдром самозванца непропорционально распространён в STEM: 97,5% женщин в аспирантуре STEM сообщают об умеренных или тяжёлых его проявлениях (Shin, 2025).</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Risk perception: rational, not irrational <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Восприятие риска: рациональное, а не иррациональное <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Women are <strong>11% more likely</strong> to perceive AI's risks as outweighing benefits (Borwein et al., PNAS Nexus, 2026; N≈3,000). When an experiment <strong>guaranteed net positive employment effects</strong>, the gender gap in AI support <strong>disappeared entirely</strong>. Women's skepticism is evidence-responsive, not irrational.</p>
+          <p class="ru">Женщины на <strong>11% чаще</strong> считают, что риски ИИ перевешивают выгоды (Borwein et al., PNAS Nexus, 2026; N≈3000). Когда эксперимент <strong>гарантировал чистый положительный эффект для занятости</strong>, гендерный разрыв в поддержке ИИ <strong>полностью исчез</strong>. Скептицизм женщин — доказательно-обоснованный, а не иррациональный.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Gendered adoption pathways (UTAUT) <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Гендерные пути освоения (UTAUT) <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Men and women reach the same adoption decision through <em>different</em> psychological routes. Men's adoption is driven more by perceived <strong>usefulness</strong> and play. Women's adoption is driven more by <strong>ease of use</strong> and social influence. Implication: generic "AI is useful" messaging targets men's pathway only. Effective outreach to women requires social proof, community, and ease-of-use framing.</p>
+          <p class="ru">Мужчины и женщины приходят к одному и тому же решению об освоении ИИ через <em>разные</em> психологические пути. Освоение мужчинами больше определяется воспринимаемой <strong>пользой</strong> и игровым мотивом. Освоение женщинами — <strong>лёгкостью использования</strong> и социальным влиянием. Вывод: стандартные сообщения «ИИ полезен» адресованы только мужскому пути. Эффективное обращение к женщинам требует социальных доказательств, сообщества и акцента на простоте.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-4">
+        <span class="en">2.4 Cultural and Historical Causes</span>
+        <span class="ru">2.4 Культурные и исторические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">The 1984 inflection point <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Переломный момент 1984 года <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">In <strong>1984</strong>, women earned <strong>37%</strong> of US computer science degrees — the historical peak. The subsequent collapse to ~18% coincided with personal computers being marketed as "boys' toys." Women's representation in biology, chemistry, and mathematics continued <em>rising</em> during the same period, isolating the cause to computing's cultural coding, not innate aptitude (Margolis & Fisher, MIT Press, 2002).</p>
+          <p class="ru">В <strong>1984</strong> году женщины получали <strong>37%</strong> дипломов по информатике в США — исторический максимум. Последующее падение до ~18% совпало с появлением персональных компьютеров, которые продавались как «игрушки для мальчиков». При этом представленность женщин в биологии, химии и математике в тот же период продолжала <em>расти</em> — это изолирует причину в культурном кодировании вычислений, а не в врождённых способностях (Margolis & Fisher, MIT Press, 2002).</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Goal congruity: who AI is "for" <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Конгруэнтность целей: для кого ИИ <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Computer science and AI are perceived as <em>least compatible</em> with communal goals (helping others, working with people) — goals more central to women's gender identity. Countries requiring mandatory STEM coursework show smaller gender disparities, but gaps closed fully only when women found a <strong>culture of belonging</strong> — not just skills.</p>
+          <p class="ru">Информатика и ИИ воспринимаются как <em>наименее совместимые</em> с коммунальными целями (помощь другим, работа с людьми) — целями, более значимыми для женской гендерной идентичности. Страны с обязательным курсом STEM показывают меньшие гендерные различия, но разрывы закрывались полностью только там, где женщины находили <strong>культуру принадлежности</strong> — а не просто навыки.</p>
+        </div>
+      </details>
+
+    </section>
+
+    <!-- PART 3 -->
+    <section id="part3">
+      <p class="part-header en">Part 3 — Synthesis</p>
+      <p class="part-header ru">Часть 3 — Синтез</p>
+
+      <h2 id="s3-1">
+        <span class="en">The mechanisms are interlocking</span>
+        <span class="ru">Механизмы взаимосвязаны</span>
+      </h2>
+      <p class="en">The gender AI gap is a <strong>system</strong>: historical socialization creates early experience deficits → lower self-efficacy → amplified AI anxiety → reduced adoption → limited skill development → widened productivity gap → reinforced rational concern about AI's economic threat → further reduced engagement. Structural barriers produce psychological anxiety; psychological anxiety reinforces institutional underinvestment; institutional underinvestment deepens historical disadvantage.</p>
+      <p class="ru">Гендерный ИИ-разрыв — это <strong>система</strong>: историческая социализация создаёт дефицит раннего опыта → низкая самоэффективность → усиленная ИИ-тревога → меньшее освоение → ограниченное развитие навыков → расширение разрыва в производительности → усиление рационального беспокойства об экономических угрозах ИИ → ещё меньшее вовлечение. Структурные барьеры порождают психологическую тревогу; тревога закрепляет институциональное недовложение; недовложение углубляет историческое неравенство.</p>
+
+      <h2>
+        <span class="en">What the evidence suggests about intervention</span>
+        <span class="ru">Что данные говорят о вмешательстве</span>
+      </h2>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Optimism shifts outperform skills training.</strong> Increasing societal AI optimism raised young women's AI use from 13% to 33%; pure digital literacy improvements paradoxically widened the gap (Stephany & Duszynski, 2026).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Изменение оптимизма эффективнее обучения навыкам.</strong> Рост общественного оптимизма в отношении ИИ поднял использование ИИ среди молодых женщин с 13% до 33%; чистое повышение цифровой грамотности парадоксально расширило разрыв (Stephany & Duszynski, 2026).</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Outcome certainty closes the gap.</strong> When experiments guaranteed net positive employment effects, gender skepticism disappeared (Borwein et al., 2026).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Определённость результата закрывает разрыв.</strong> Когда эксперименты гарантировали чистый положительный эффект для занятости, гендерный скептицизм исчезал (Borwein et al., 2026).</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>What does not work:</strong> Generic digital literacy programs that provide capability without cultural belonging. The Oxford Internet Institute finding — that men benefit proportionally more from the same literacy intervention — should be required reading for anyone designing AI upskilling programs.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Что не работает:</strong> Стандартные программы цифровой грамотности, дающие компетентность без культуры принадлежности. Данные Oxford Internet Institute о том, что мужчины пропорционально больше выигрывают от одних и тех же программ, должны быть обязательным чтением для всех, кто проектирует программы повышения ИИ-квалификации.</li>
+      </ul>
+
+      <h2>
+        <span class="en">The open question</span>
+        <span class="ru">Открытый вопрос</span>
+      </h2>
+      <p class="en">Is the gender AI gap closing or widening? The picture is genuinely mixed. OpenAI reported approximate gender parity in active ChatGPT users by mid-2025, but personal-use gaps widened in UK panel data between 2023 and 2024. The most concerning evidence is downstream: AI may already be functioning as a <strong>multiplier of existing advantage</strong>. A 6.4 pp productivity divergence between male and female researchers, emerging within months of a single tool's release, is not a rounding error. It is the early signal of a trajectory.</p>
+      <p class="ru">Гендерный ИИ-разрыв сужается или расширяется? Картина неоднозначна. OpenAI сообщила о примерном гендерном паритете среди активных пользователей ChatGPT к середине 2025 года, однако в британских панельных данных разрыв в личном использовании увеличился между 2023 и 2024 годами. Наиболее тревожные свидетельства — последующие: ИИ, возможно, уже функционирует как <strong>усилитель существующих преимуществ</strong>. Разрыв в производительности на 6,4 п.п. между учёными-мужчинами и женщинами, возникший в течение нескольких месяцев после появления одного инструмента, — не погрешность округления. Это ранний сигнал траектории.</p>
+    </section>
+
+    <!-- Sources -->
+    <section id="sources" class="sources-section">
+      <h2>
+        <span class="en">Sources</span>
+        <span class="ru">Источники</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Authors</th><th class="en">Year</th><th class="en">Title / Journal</th>
+            <th class="ru">Авторы</th><th class="ru">Год</th><th class="ru">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Otis et al.</td><td>2024</td><td><a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=65588" target="_blank" rel="noopener">Global Evidence on Gender Gaps and Generative AI. HBS Working Paper 25-023</a></td></tr>
+          <tr><td>Aldasoro et al.</td><td>2024</td><td><a href="https://www.bis.org/publ/work1197.htm" target="_blank" rel="noopener">The gen AI gender gap. BIS Working Paper No. 1197</a></td></tr>
+          <tr><td>Borwein et al.</td><td>2026</td><td><a href="https://doi.org/10.1093/pnasnexus/pgaf399" target="_blank" rel="noopener">Explaining women's skepticism toward AI. PNAS Nexus</a></td></tr>
+          <tr><td>Tang et al.</td><td>2025</td><td><a href="https://doi.org/10.1093/pnasnexus/pgae0XX" target="_blank" rel="noopener">Gender disparities in the impact of generative AI. PNAS Nexus</a></td></tr>
+          <tr><td>Humlum & Vestergaard</td><td>2025</td><td><a href="https://www.pnas.org/doi/10.1073/pnas.2413844122" target="_blank" rel="noopener">The labor market effects of AI. PNAS</a></td></tr>
+          <tr><td>Stephany & Duszynski</td><td>2026</td><td><a href="https://arxiv.org/abs/2601.03880" target="_blank" rel="noopener">Women Worry, Men Adopt. arXiv 2601.03880</a></td></tr>
+          <tr><td>Lean In</td><td>2025</td><td><a href="https://leanin.org/research/women-and-ai" target="_blank" rel="noopener">Women and AI: The Gender Gap in AI Adoption and Recognition</a></td></tr>
+          <tr><td>Pew Research Center</td><td>2025</td><td><a href="https://www.pewresearch.org/internet/2025/04/03/how-the-u-s-public-and-ai-experts-view-artificial-intelligence/" target="_blank" rel="noopener">How the US Public and AI Experts View AI. N=5,410 + 1,013 experts</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Prev/Next -->
+    <div class="gap-nav">
+      <a href="index.html">
+        <span class="en">← Back to overview</span>
+        <span class="ru">← К обзору</span>
+      </a>
+      <span class="spacer"></span>
+      <a href="gap-income.html">
+        <span class="en">Income Gap →</span>
+        <span class="ru">Разрыв по доходам →</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Right-side Navigator -->
+  <nav class="section-nav">
+    <p class="section-nav-title en">Contents</p>
+    <p class="section-nav-title ru">Содержание</p>
+    <a href="#summary" class="en">Executive Summary</a>
+    <a href="#summary" class="ru">Резюме</a>
+    <a href="#s1-1" class="en">1.1 Key Numbers</a>
+    <a href="#s1-1" class="ru">1.1 Цифры</a>
+    <a href="#s1-2" class="en">1.2 Adoption Rates</a>
+    <a href="#s1-2" class="ru">1.2 Освоение</a>
+    <a href="#s1-3" class="en">1.3 Attitudes</a>
+    <a href="#s1-3" class="ru">1.3 Отношение</a>
+    <a href="#s1-4" class="en">1.4 Feedback Loop</a>
+    <a href="#s1-4" class="ru">1.4 Петля</a>
+    <a href="#s1-5" class="en">1.5 AI Literacy</a>
+    <a href="#s1-5" class="ru">1.5 Грамотность</a>
+    <a href="#s1-6" class="en">1.6 Vulnerability</a>
+    <a href="#s1-6" class="ru">1.6 Уязвимость</a>
+    <a href="#s1-7" class="en">1.7 Consequences</a>
+    <a href="#s1-7" class="ru">1.7 Последствия</a>
+    <a href="#s2-1" class="en">2.1 Structural</a>
+    <a href="#s2-1" class="ru">2.1 Структурные</a>
+    <a href="#s2-2" class="en">2.2 Institutional</a>
+    <a href="#s2-2" class="ru">2.2 Институциональные</a>
+    <a href="#s2-3" class="en">2.3 Psychological</a>
+    <a href="#s2-3" class="ru">2.3 Психологические</a>
+    <a href="#s2-4" class="en">2.4 Cultural</a>
+    <a href="#s2-4" class="ru">2.4 Культурные</a>
+    <a href="#part3" class="en">Synthesis</a>
+    <a href="#part3" class="ru">Синтез</a>
+    <a href="#sources" class="en">Sources</a>
+    <a href="#sources" class="ru">Источники</a>
+  </nav>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html">
+        <span class="en">← All gaps</span>
+        <span class="ru">← Все разрывы</span>
+      </a>
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const sections = document.querySelectorAll('section[id], h2[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector('.section-nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+</body>
+</html>

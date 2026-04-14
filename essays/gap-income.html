@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Income Gap in AI Adoption — AI Adoption Gap</title>
+  <meta name="description" content="The wealthiest Americans are nearly 4× more likely to use AI professionally. Evidence, data, and causes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Hero -->
+<div class="gap-hero">
+  <div class="container-gap">
+    <a href="index.html" class="gap-hero-back">
+      <span class="en">← Back to overview</span>
+      <span class="ru">← К обзору</span>
+    </a>
+    <p class="gap-num">
+      <span class="en">02 / INCOME GAP</span>
+      <span class="ru">02 / РАЗРЫВ ПО ДОХОДАМ</span>
+    </p>
+    <h1>
+      <span class="en">The Income Gap in AI Adoption</span>
+      <span class="ru">Разрыв по доходам во внедрении ИИ</span>
+    </h1>
+    <p class="sub">
+      <span class="en">Evidence, Data, and Understanding of Causes</span>
+      <span class="ru">Данные, доказательства и понимание причин</span>
+    </p>
+    <div class="gap-headline-stat">
+      <div class="stat">9→34%</div>
+      <div class="stat-label">
+        <span class="en">Professional AI use — earners under $30K vs. $100K+</span>
+        <span class="ru">Профессиональное использование ИИ — доход до $30K vs. $100K+</span>
+      </div>
+      <div class="stat-source">Brookings / NORC AmeriSpeak, N=1,163, US, June 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="gap-layout">
+  <main class="gap-content">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <p class="part-header en">Executive Summary</p>
+      <p class="part-header ru">Краткое резюме</p>
+      <div class="exec-summary">
+        <ul>
+          <li class="en">The wealthiest Americans are <strong>nearly 4× more likely</strong> to use generative AI professionally than the poorest — 34% at $100K+ vs. 9% under $30K (Brookings/NORC, 2025).</li>
+          <li class="ru">Самые состоятельные американцы <strong>почти в 4 раза чаще</strong> используют генеративный ИИ профессионально, чем самые бедные — 34% при доходе $100K+ против 9% ниже $30K (Brookings/NORC, 2025).</li>
+          <li class="en">Across OECD nations, the income gap runs approximately <strong>21 percentage points</strong> — identical in magnitude to the education gap (OECD, 2026).</li>
+          <li class="ru">Среди стран ОЭСР разрыв по доходам составляет около <strong>21 процентного пункта</strong> — столько же, сколько образовательный разрыв (ОЭСР, 2026).</li>
+          <li class="en">The paradox at the heart of this gap: AI delivers its <strong>largest productivity gains to the lowest-skilled workers</strong> — the very people least likely to have access (Brynjolfsson et al., QJE, 2025).</li>
+          <li class="ru">Парадокс в сердце этого разрыва: ИИ обеспечивает <strong>наибольший рост производительности наименее квалифицированным работникам</strong> — именно тем, у кого меньше всего доступа к нему (Brynjolfsson et al., QJE, 2025).</li>
+          <li class="en">Workers with AI skills earn a <strong>56% wage premium</strong> over peers in the same roles without AI skills — up from 25% in 2023 (PwC, 2024).</li>
+          <li class="ru">Работники с навыками ИИ зарабатывают на <strong>56% больше</strong> коллег без них на тех же должностях — против 25% в 2023 году (PwC, 2024).</li>
+          <li class="en"><strong>71%</strong> of UK's bottom income quartile and <strong>65%</strong> of American bottom income quartile believe they "will be left behind" from AI's benefits (Edelman, 2025).</li>
+          <li class="ru"><strong>71%</strong> беднейшего квартиля в Великобритании и <strong>65%</strong> в США считают, что останутся «позади» от выгод ИИ (Edelman, 2025).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section id="part1">
+      <p class="part-header en">Part 1 — The Evidence</p>
+      <p class="part-header ru">Часть 1 — Доказательства</p>
+
+      <h2 id="s1-1">
+        <span class="en">1.1 Key Numbers at a Glance</span>
+        <span class="ru">1.1 Ключевые цифры</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Statistic</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Показатель</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Professional AI use: under $30K vs. $100K+</td><td class="en"><strong>9% vs. 34%</strong></td><td class="en">Brookings/NORC, 2025</td>
+              <td class="ru">Профессиональное использование: до $30K vs. $100K+</td><td class="ru"><strong>9% vs. 34%</strong></td><td class="ru">Brookings/NORC, 2025</td></tr>
+          <tr><td class="en">OECD income gap in AI use</td><td class="en"><strong>~21 pp</strong></td><td class="en">OECD, January 2026</td>
+              <td class="ru">Разрыв в использовании ИИ по доходу (ОЭСР)</td><td class="ru"><strong>~21 п.п.</strong></td><td class="ru">ОЭСР, январь 2026</td></tr>
+          <tr><td class="en">AI awareness gap: upper vs. lower income (US)</td><td class="en"><strong>52% vs. 15%</strong></td><td class="en">Pew, N=11,004, 2023</td>
+              <td class="ru">Разрыв в осведомлённости об ИИ: высокий vs. низкий доход</td><td class="ru"><strong>52% vs. 15%</strong></td><td class="ru">Pew, N=11 004, 2023</td></tr>
+          <tr><td class="en">AI wage premium over same-role peers without AI skills</td><td class="en"><strong>56%</strong></td><td class="en">PwC Jobs Barometer, 2024</td>
+              <td class="ru">Надбавка к зарплате за навыки ИИ</td><td class="ru"><strong>56%</strong></td><td class="ru">PwC Jobs Barometer, 2024</td></tr>
+          <tr><td class="en">Productivity boost for novice/low-skilled workers vs. top performers</td><td class="en"><strong>34% vs. minimal</strong></td><td class="en">Brynjolfsson et al., QJE 2025</td>
+              <td class="ru">Рост производительности: новички/низкоквалиф. vs. лучшие</td><td class="ru"><strong>34% vs. минимально</strong></td><td class="ru">Brynjolfsson et al., QJE 2025</td></tr>
+          <tr><td class="en">Teen AI use: households $75K+ vs. under $75K</td><td class="en"><strong>62% vs. 52%</strong></td><td class="en">Pew, N=1,458, Fall 2025</td>
+              <td class="ru">Использование ИИ подростками: семьи $75K+ vs. ниже</td><td class="ru"><strong>62% vs. 52%</strong></td><td class="ru">Pew, N=1 458, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-2">
+        <span class="en">1.2 Global and Cross-Group Adoption Rates</span>
+        <span class="ru">1.2 Глобальные и межгрупповые показатели освоения</span>
+      </h2>
+      <p class="en">The income-AI adoption gradient is consistent across geographies, though a striking reversal emerges at the country level.</p>
+      <p class="ru">Градиент освоения ИИ по доходу устойчив в разных странах, хотя на уровне государств обнаруживается примечательное обращение тенденции.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Context</th><th class="en">Finding</th><th class="en">Source</th>
+            <th class="ru">Контекст</th><th class="ru">Результат</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">US professional AI use by income</td><td class="en"><strong>9%</strong> (&lt;$30K) → <strong>~15%</strong> ($30–60K) → <strong>~25%</strong> ($60–100K) → <strong>34%</strong> ($100K+)</td><td class="en">Brookings/NORC, 2025</td>
+              <td class="ru">Профессиональное использование ИИ по доходу (США)</td><td class="ru"><strong>9%</strong> (&lt;$30K) → <strong>~15%</strong> ($30–60K) → <strong>~25%</strong> ($60–100K) → <strong>34%</strong> ($100K+)</td><td class="ru">Brookings/NORC, 2025</td></tr>
+          <tr><td class="en">OECD (38 countries): employed vs. retired AI use</td><td class="en"><strong>41.1%</strong> employed vs. <strong>12.5%</strong> retired/inactive</td><td class="en">OECD, 2026</td>
+              <td class="ru">ОЭСР: занятые vs. вышедшие на пенсию</td><td class="ru"><strong>41,1%</strong> занятые vs. <strong>12,5%</strong> пенсионеры</td><td class="ru">ОЭСР, 2026</td></tr>
+          <tr><td class="en">Global: middle-income economies' share of AI traffic</td><td class="en"><strong>50%+</strong> of global traffic despite smaller economic size</td><td class="en">IMF, 2024</td>
+              <td class="ru">Глобально: доля AI-трафика в среднедоходных экономиках</td><td class="ru"><strong>Более 50%</strong> глобального трафика</td><td class="ru">МВФ, 2024</td></tr>
+          <tr><td class="en">Regular AI use: emerging vs. advanced economies</td><td class="en"><strong>80%</strong> emerging vs. <strong>58%</strong> advanced</td><td class="en">KPMG/Melbourne, N=48,340, 2025</td>
+              <td class="ru">Регулярное использование ИИ: развивающиеся vs. развитые экономики</td><td class="ru"><strong>80%</strong> развивающиеся vs. <strong>58%</strong> развитые</td><td class="ru">KPMG/Melbourne, N=48 340, 2025</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <p class="en"><strong>Key moderator:</strong> Race and income interact in complex ways. Black (35%) and Hispanic (33%) US teens use AI chatbots daily at <em>higher</em> rates than White teens (22%), despite being disproportionately in lower-income brackets (Pew, N=1,458, Fall 2025). Motivation, peer effects, or specific use cases may override income barriers for free-tier tools.</p>
+        <p class="ru"><strong>Ключевой модератор:</strong> Раса и доход взаимодействуют сложным образом. Чернокожие (35%) и латиноамериканские (33%) подростки в США используют ИИ-чат-ботов ежедневно <em>чаще</em>, чем белые (22%), несмотря на непропорциональное представительство в низкодоходных группах (Pew, N=1 458, 2025). Мотивация, влияние сверстников или конкретные сценарии использования могут преодолевать барьеры дохода для бесплатных инструментов.</p>
+      </div>
+
+      <h2 id="s1-3">
+        <span class="en">1.3 Attitudes and Emotional Responses</span>
+        <span class="ru">1.3 Отношение и эмоциональные реакции</span>
+      </h2>
+      <p class="en">Lower-income groups are sometimes simultaneously more fearful <em>and</em> more hopeful about AI, while being far less likely to use it.</p>
+      <p class="ru">Низкодоходные группы порой одновременно и больше опасаются ИИ, <em>и</em> больше надеются на него — при этом значительно реже его используя.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Attitude</th><th class="en">Higher income</th><th class="en">Lower income</th><th class="en">Source</th>
+            <th class="ru">Установка</th><th class="ru">Высокий доход</th><th class="ru">Низкий доход</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Excited about future AI use at work</td><td class="en">39%</td><td class="en">24%</td><td class="en">Pew, 2024</td>
+              <td class="ru">Воодушевлены будущим ИИ на работе</td><td class="ru">39%</td><td class="ru">24%</td><td class="ru">Pew, 2024</td></tr>
+          <tr><td class="en">AI trust (&gt;$80K vs. &lt;$40K)</td><td class="en">34%</td><td class="en">26%</td><td class="en">YouGov, 2025</td>
+              <td class="ru">Доверяют ИИ</td><td class="ru">34%</td><td class="ru">26%</td><td class="ru">YouGov, 2025</td></tr>
+          <tr><td class="en">Believe AI will increase job opportunities in their field (&lt;$30K vs. BA+)</td><td class="en">10%</td><td class="en">15.6% (slightly more optimistic)</td><td class="en">Brookings/NORC, 2025</td>
+              <td class="ru">Верят в рост возможностей занятости от ИИ</td><td class="ru">10%</td><td class="ru">15,6% (чуть оптимистичнее)</td><td class="ru">Brookings/NORC, 2025</td></tr>
+          <tr><td class="en">"Will be left behind" by AI benefits</td><td class="en">Lower</td><td class="en">71% (UK) / 65% (US) bottom quartile</td><td class="en">Edelman, 2025</td>
+              <td class="ru">«Останутся позади» от выгод ИИ</td><td class="ru">Ниже</td><td class="ru">71% (Великобритания) / 65% (США)</td><td class="ru">Edelman, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-4">
+        <span class="en">1.4 The Feedback Loop</span>
+        <span class="ru">1.4 Петля обратной связи</span>
+      </h2>
+      <p class="en">The income-AI gap is not static. Multiple dynamics cause it to compound over time.</p>
+      <p class="ru">Доходный ИИ-разрыв не статичен. Несколько механизмов обеспечивают его накопление.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Training follows hierarchy, not need.</strong> Only 51% of non-managers have L&D resources vs. 72% of senior executives (PwC, N=49,843). Only 25% of companies planned AI training in 2024.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Обучение следует за иерархией, а не за потребностью.</strong> Только 51% неруководителей имеют доступ к ресурсам обучения против 72% топ-менеджеров (PwC, N=49 843). Лишь 25% компаний планировали обучение ИИ в 2024 году.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Early adoption compounds.</strong> Daily GenAI users report 92% productivity gains vs. 58% for infrequent users (PwC, 2025). AI "power users" save over 30 minutes per day (Microsoft, 2025).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Раннее освоение накапливается.</strong> Ежедневные пользователи GenAI сообщают о росте производительности на 92% против 58% у нечастых пользователей (PwC, 2025). «Продвинутые пользователи» экономят более 30 минут в день (Microsoft, 2025).</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>The projected gain distribution is stark.</strong> The top income quintile is estimated to capture over 50% of GenAI economic gains, while the bottom quintile receives under 5% (Tenacity, 2025).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Прогнозируемое распределение выгод разительно.</strong> Верхний доходный квинтиль, по оценкам, получит более 50% экономических выгод от GenAI, а нижний — менее 5% (Tenacity, 2025).</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>The paywall creates a capability chasm.</strong> For complex professional use cases — job applications, business plans, deep research — premium AI versions (from $20/month) significantly outperform free tiers. These are exactly the use cases most relevant to economic mobility.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Платный доступ создаёт пропасть компетентности.</strong> Для сложных профессиональных сценариев — поиска работы, бизнес-планов, глубоких исследований — платные версии ИИ (от $20/мес.) значительно превосходят бесплатные. Именно это — сценарии, наиболее важные для экономической мобильности.</li>
+      </ul>
+
+      <h2 id="s1-5">
+        <span class="en">1.5 The Knowledge and Literacy Dimension</span>
+        <span class="ru">1.5 Знания и грамотность</span>
+      </h2>
+      <p class="en">The income-AI gap operates at three distinct levels — access, confidence, and skill — each contributing independently.</p>
+      <p class="ru">Доходный ИИ-разрыв действует на трёх уровнях: доступ, уверенность и навык — каждый вносит независимый вклад.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Level</th><th class="en">How it shows up</th><th class="en">Evidence</th>
+            <th class="ru">Уровень</th><th class="ru">Проявление</th><th class="ru">Свидетельство</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Access</td><td class="en">28% of adults earning &lt;$30K are smartphone-only internet users; 50% of US colleges don't provide institutional GenAI access</td><td class="en">Pew, 2023</td>
+              <td class="ru">Доступ</td><td class="ru">28% взрослых с доходом &lt;$30K — пользователи интернета только со смартфона</td><td class="ru">Pew, 2023</td></tr>
+          <tr><td class="en">Confidence</td><td class="en">Only 24% of US adults think AI will personally benefit them vs. 76% of AI experts</td><td class="en">Pew, 2025</td>
+              <td class="ru">Уверенность</td><td class="ru">Только 24% взрослых в США считают, что ИИ принесёт им личную пользу, против 76% экспертов</td><td class="ru">Pew, 2025</td></tr>
+          <tr><td class="en">Genuine skill</td><td class="en">High-tenure AI users achieve ~4pp higher task success rates than new users (Anthropic Economic Index, 2026)</td><td class="en">Anthropic, 2026</td>
+              <td class="ru">Реальный навык</td><td class="ru">Опытные пользователи ИИ достигают ~на 4 п.п. более высоких показателей успешности (Anthropic, 2026)</td><td class="ru">Anthropic, 2026</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-6">
+        <span class="en">1.6 Structural Vulnerability: Job Displacement</span>
+        <span class="ru">1.6 Структурная уязвимость: вытеснение</span>
+      </h2>
+      <p class="en">Lower-income workers face AI displacement with fewer tools to respond. Their jobs are threatened while their capacity to adapt is structurally limited.</p>
+      <p class="ru">Низкодоходные работники сталкиваются с вытеснением ИИ, имея меньше инструментов для ответа. Их рабочие места под угрозой, а адаптивные возможности структурно ограничены.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;">Only <strong>5%</strong> of workers were worried about actually losing jobs to AI — but <strong>21%</strong> expected AI to worsen their financial situation within 1–5 years (Federal Reserve Bank of Boston, 2024).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Лишь <strong>5%</strong> работников беспокоились о реальной потере работы из-за ИИ — но <strong>21%</strong> ожидали, что ИИ ухудшит их финансовое положение в течение 1–5 лет (Федеральный резервный банк Бостона, 2024).</li>
+        <li class="en" style="margin-bottom:0.5rem;">Workers without a bachelor's degree were <strong>almost twice as likely</strong> to feel their jobs were at risk (28% vs. 15%), and had a <strong>16 pp confidence gap</strong> in ability to retrain (Gallup/Northeastern, 2017).</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Работники без степени бакалавра <strong>почти вдвое чаще</strong> чувствовали, что их работа под угрозой (28% vs. 15%), и имели <strong>разрыв в 16 п.п.</strong> в уверенности в возможности переобучения (Gallup/Northeastern, 2017).</li>
+      </ul>
+
+      <h2 id="s1-7">
+        <span class="en">1.7 Downstream Consequences</span>
+        <span class="ru">1.7 Последствия разрыва</span>
+      </h2>
+      <p class="en">The AI wage premium doubled in a single year. The compounding of early adoption advantage is measurable and accelerating.</p>
+      <p class="ru">Надбавка к зарплате за ИИ-навыки удвоилась за один год. Накопление преимущества раннего освоения измеримо и ускоряется.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Outcome</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Результат</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">AI wage premium growth</td><td class="en"><strong>25% → 56%</strong> in one year</td><td class="en">PwC, 2023→2024</td>
+              <td class="ru">Рост надбавки к зарплате за ИИ</td><td class="ru"><strong>25% → 56%</strong> за год</td><td class="ru">PwC, 2023→2024</td></tr>
+          <tr><td class="en">Productivity gain for novice vs. top workers using AI</td><td class="en"><strong>34% vs. ~0%</strong></td><td class="en">Brynjolfsson et al., QJE 2025</td>
+              <td class="ru">Рост производительности: новичок vs. лучший при использовании ИИ</td><td class="ru"><strong>34% vs. ~0%</strong></td><td class="ru">Brynjolfsson et al., QJE 2025</td></tr>
+          <tr><td class="en">Top quintile share of GenAI gains (projected)</td><td class="en"><strong>&gt;50%</strong></td><td class="en">Tenacity, 2025</td>
+              <td class="ru">Доля верхнего квинтиля в выгодах GenAI (прогноз)</td><td class="ru"><strong>&gt;50%</strong></td><td class="ru">Tenacity, 2025</td></tr>
+          <tr><td class="en">Lower-income teen AI dependency at school</td><td class="en"><strong>20% vs. 7%</strong> (lower vs. higher income)</td><td class="en">Pew, Fall 2025</td>
+              <td class="ru">Зависимость от ИИ в учёбе: низкодоходные vs. высокодоходные</td><td class="ru"><strong>20% vs. 7%</strong></td><td class="ru">Pew, 2025</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PART 2 -->
+    <section id="part2">
+      <p class="part-header en">Part 2 — Understanding the Causes</p>
+      <p class="part-header ru">Часть 2 — Понимание причин</p>
+
+      <h2 id="s2-1">
+        <span class="en">2.1 Structural and Material Causes</span>
+        <span class="ru">2.1 Структурные и материальные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Device and connectivity constraints <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Ограничения устройств и связи <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">28% of Americans earning under $30K are smartphone-only internet users (Pew, 2023). Sustained professional AI work requires laptop or desktop interfaces. Among adults earning under $30K, <strong>41%</strong> do not own a laptop or desktop — directly constraining access to the AI use cases most relevant to economic mobility.</p>
+          <p class="ru">28% американцев с доходом до $30K пользуются интернетом только со смартфона (Pew, 2023). Серьёзная профессиональная работа с ИИ требует ноутбука или ПК. Среди взрослых с доходом ниже $30K <strong>41%</strong> не имеют ноутбука или ПК — это напрямую ограничивает доступ к сценариям ИИ, наиболее значимым для экономической мобильности.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Paywall-gated capability gap <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Разрыв возможностей за платным барьером <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Free-tier AI is adequate for roughly 60% of routine use cases. But complex professional work — deep research, coding, document analysis, sustained reasoning — requires paid tiers ($20–200/month). The use cases gated by this paywall are precisely those most tied to career advancement and economic mobility for lower-income workers.</p>
+          <p class="ru">Бесплатный ИИ подходит примерно для 60% рутинных задач. Но сложная профессиональная работа — глубокие исследования, программирование, анализ документов, длительные рассуждения — требует платного доступа ($20–200/мес.). Именно эти сценарии, заблокированные платным барьером, теснее всего связаны с карьерным ростом и экономической мобильностью низкодоходных работников.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Occupational sorting and AI tool design <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Профессиональная сортировка и дизайн ИИ-инструментов <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Current generative AI tools were built primarily to augment knowledge work — writing, coding, analysis. Lower-income workers are disproportionately concentrated in manual, service, and care work where current AI tools offer fewer direct applications. The tools are not designed for them; the productivity gains are not aimed at them.</p>
+          <p class="ru">Современные генеративные ИИ-инструменты созданы прежде всего для интеллектуального труда — написания текстов, программирования, анализа. Низкодоходные работники непропорционально сосредоточены в физическом труде, сфере услуг и уходе, где инструменты ИИ предлагают меньше прямых применений. Эти инструменты не разработаны для них; рост производительности на них не нацелен.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-2">
+        <span class="en">2.2 Institutional and Systemic Causes</span>
+        <span class="ru">2.2 Институциональные и системные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Training investment follows hierarchy <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Инвестиции в обучение следуют иерархии <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Only 25% of companies planned to offer AI training in 2024. Among those that do, investment concentrates on managerial and professional staff. Non-managers have L&D access at 51% vs. 72% for senior executives. In US schools, 67% of low-poverty districts offered AI training vs. just 39% of high-poverty districts (Tenacity/Digital Promise, 2024).</p>
+          <p class="ru">Лишь 25% компаний планировали предложить обучение ИИ в 2024 году. Среди тех, кто это делает, инвестиции концентрируются на управленческом и профессиональном персонале. Доступ к обучению у неруководителей — 51% против 72% у топ-менеджеров. В школах США: 67% школ с низким уровнем бедности предлагали обучение ИИ против 39% в школах с высоким уровнем бедности (Tenacity/Digital Promise, 2024).</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Network effects concentrate in professional circles <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Сетевые эффекты концентрируются в профессиональных кругах <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">7 in 10 AI users learned primarily through peers and social learning rather than formal onboarding (Microsoft, 2025). Higher-income workers have broader professional networks and social circles more likely to model AI use. Without peer modeling, adoption feels anomalous rather than expected.</p>
+          <p class="ru">7 из 10 пользователей ИИ учились преимущественно через сверстников и социальное обучение, а не формальное введение (Microsoft, 2025). Высокодоходные работники имеют более широкие профессиональные сети, в которых чаще демонстрируется использование ИИ. Без образца от сверстников освоение кажется аномальным, а не ожидаемым.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-3">
+        <span class="en">2.3 Psychological Causes</span>
+        <span class="ru">2.3 Психологические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Financial strain and distrust <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Финансовый стресс и недоверие <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">55% of the global workforce is under financial strain. These workers are "less trusting, motivated, or candid" and "less likely to believe leaders' narratives about AI or feel supported through disruption" (PwC, N≈50,000). Financial precarity makes risk-taking — including adopting new tools that might disrupt one's workflow — less attractive.</p>
+          <p class="ru">55% мировой рабочей силы испытывает финансовый стресс. Эти работники «менее доверчивы, мотивированы и откровенны» и «менее склонны верить нарративам руководства об ИИ или чувствовать поддержку в период перемен» (PwC, N≈50 000). Финансовая нестабильность делает принятие рисков — включая освоение новых инструментов — менее привлекательным.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Rational job displacement fear <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Рациональный страх вытеснения <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Lower-income workers' caution about AI is partly evidence-responsive. Their occupations face displacement with fewer tools to adapt — smaller savings, weaker professional networks, less access to retraining. A 16 pp confidence gap in ability to retrain (53% BA+ vs. 37% non-BA, Gallup/Northeastern) reflects real structural differences, not purely psychological ones.</p>
+          <p class="ru">Осторожность низкодоходных работников в отношении ИИ частично обоснована фактами. Их профессии под угрозой вытеснения при меньших инструментах адаптации — меньших сбережениях, более слабых профессиональных сетях, меньшем доступе к переобучению. Разрыв в 16 п.п. в уверенности в возможности переобучения (53% с дипломом vs. 37% без него, Gallup/Northeastern) отражает реальные структурные различия, а не только психологические.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-4">
+        <span class="en">2.4 Cultural and Historical Causes</span>
+        <span class="ru">2.4 Культурные и исторические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Computing as a credentialed domain <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Вычисления как привилегированная область <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Since 1984, personal computers were marketed primarily to technically-oriented users, creating early-life experience gaps that compound over decades. AI inherits this cultural coding — interfaces are text-heavy, assume abstract reasoning, and use formal language registers that correlate with educational attainment and income. The default imagined user is not a lower-income service worker.</p>
+          <p class="ru">С 1984 года персональные компьютеры продвигались прежде всего технически ориентированным пользователям, создавая пробелы в раннем опыте, которые накапливаются десятилетиями. ИИ наследует это культурное кодирование — интерфейсы перегружены текстом, предполагают абстрактное мышление и используют формальный языковой регистр, коррелирующий с уровнем образования и дохода. Воображаемый пользователь по умолчанию — не низкодоходный работник сферы услуг.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Kyrgyzstan: where income, language, and geography compound <span class="evidence-quality">Observational</span></summary>
+        <summary class="ru">Кыргызстан: где доход, язык и география совмещаются <span class="evidence-quality">Наблюдательный</span></summary>
+        <div class="details-body">
+          <p class="en">In Kyrgyzstan, the overlap of low income, agricultural employment, and rurality means AI displacement risk concentrates in populations with the least adaptive capacity. The same Brookings structural logic — high exposure, low adaptation tools — operates here, with the demographic profile of vulnerability shifting but the structural mechanism remaining identical. The additional language barrier (Kyrgyz-language AI performs far worse than English) compounds this further. No published data currently quantify the specific Kyrgyz income-AI gap, but the structural conditions suggest it significantly exceeds OECD averages.</p>
+          <p class="ru">В Кыргызстане совпадение низкого дохода, сельскохозяйственной занятости и сельской местности означает, что риск вытеснения ИИ концентрируется в популяциях с наименьшим адаптивным потенциалом. Та же структурная логика Brookings — высокая уязвимость, слабые инструменты адаптации — работает здесь, хотя демографический профиль уязвимости смещается. Языковой барьер (ИИ на кыргызском языке работает значительно хуже, чем на английском) дополнительно усиливает это. Опубликованных данных, количественно оценивающих конкретный кыргызский разрыв, пока нет, но структурные условия позволяют предположить, что он значительно превышает средний показатель по ОЭСР.</p>
+        </div>
+      </details>
+
+    </section>
+
+    <!-- PART 3 -->
+    <section id="part3">
+      <p class="part-header en">Part 3 — Synthesis</p>
+      <p class="part-header ru">Часть 3 — Синтез</p>
+
+      <h2 id="s3-1">
+        <span class="en">The mechanisms are interlocking</span>
+        <span class="ru">Механизмы взаимосвязаны</span>
+      </h2>
+      <p class="en">The income gap is a <strong>system</strong>: early-life digital divides create differential AI literacy → which compounds into lower adoption → which means training investment flows away from lower-income workers → which limits their skill development → which widens the productivity and earnings gap → which rationally increases their concern about AI displacement → which further reduces engagement. The feedback loop between network effects (who you learn from), institutional investment (who gets trained), and structural tools (device quality, subscription capacity) ensures the gap compounds rather than self-corrects.</p>
+      <p class="ru">Разрыв по доходам — это <strong>система</strong>: ранний цифровой разрыв создаёт различия в ИИ-грамотности → которые накапливаются в меньшем освоении → инвестиции в обучение уходят от низкодоходных работников → ограничивая развитие их навыков → расширяя разрыв в производительности и заработках → обоснованно усиливая их беспокойство о вытеснении ИИ → ещё больше снижая вовлечённость. Петля обратной связи между сетевыми эффектами, институциональными инвестициями и структурными инструментами обеспечивает накопление разрыва, а не его саморазрешение.</p>
+
+      <h2>
+        <span class="en">What the evidence suggests about intervention</span>
+        <span class="ru">Что данные говорят о вмешательстве</span>
+      </h2>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;"><strong>The case for lower-income workers is there — it just needs to be made.</strong> AI delivers its largest gains to novices and lower-skilled workers. Communicating this clearly — rather than positioning AI as a tool for the already-expert — may shift adoption decisions among those most likely to benefit.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Аргумент для низкодоходных работников существует — его просто нужно донести.</strong> ИИ обеспечивает наибольшую отдачу новичкам и низкоквалифицированным работникам. Чёткое информирование об этом — вместо позиционирования ИИ как инструмента для уже опытных — может изменить решения об освоении у тех, кто больше всего выиграет.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Community and peer learning over formal training.</strong> Informal learning through peer networks outperforms formal onboarding for most users. Community-based AI access points — libraries, community centres, workforce development programs — reach lower-income populations better than employer training alone.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Сообщество и обучение через сверстников важнее формального обучения.</strong> Неформальное обучение через сети сверстников превосходит формальное введение для большинства пользователей. Точки доступа к ИИ на основе сообществ — библиотеки, общественные центры, программы развития рабочей силы — охватывают низкодоходные группы лучше, чем корпоративное обучение в одиночку.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>What does not work:</strong> Assuming that free-tier AI access is sufficient for meaningful economic participation. The capabilities gated behind paywalls are disproportionately relevant to mobility — and the current pricing architecture does not account for this.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Что не работает:</strong> Предположение, что бесплатный доступ к ИИ достаточен для значимого экономического участия. Возможности за платным барьером непропорционально важны для мобильности — а текущая ценовая архитектура этого не учитывает.</li>
+      </ul>
+
+      <h2>
+        <span class="en">The open question</span>
+        <span class="ru">Открытый вопрос</span>
+      </h2>
+      <p class="en">The income gap's most concerning feature is the compounding dynamic: the AI wage premium doubled in a single year, early adopters are accumulating measurable performance leads, and training investment flows toward those who need it least. The technology's theoretical equalizing potential — AI's largest gains going to the lowest-skilled — is going unrealized precisely where it would matter most. The central unresolved question is whether this reversal of the equalizer effect can be achieved at scale before the advantage of early adoption becomes structurally entrenched.</p>
+      <p class="ru">Наиболее тревожная черта разрыва по доходам — динамика накопления: надбавка к зарплате за ИИ-навыки удвоилась за год, ранние пользователи накапливают измеримые преимущества в производительности, а инвестиции в обучение текут к тем, кто меньше всего в них нуждается. Теоретический выравнивающий потенциал технологии — наибольшая отдача ИИ для наименее квалифицированных — не реализуется именно там, где это было бы наиболее значимо. Главный нерешённый вопрос: можно ли добиться этого разворота в сторону выравнивания в масштабе, пока преимущество раннего освоения не стало структурно укоренившимся.</p>
+    </section>
+
+    <!-- Sources -->
+    <section id="sources" class="sources-section">
+      <h2>
+        <span class="en">Sources</span>
+        <span class="ru">Источники</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Authors / Organization</th><th class="en">Year</th><th class="en">Title / Source</th>
+            <th class="ru">Авторы</th><th class="ru">Год</th><th class="ru">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Brookings / NORC AmeriSpeak</td><td>2025</td><td><a href="https://www.brookings.edu/articles/the-ai-divide/" target="_blank" rel="noopener">The AI Divide</a></td></tr>
+          <tr><td>Pew Research Center</td><td>2025</td><td><a href="https://www.pewresearch.org/internet/2025/10/22/about-1-in-5-us-workers-now-use-ai-in-their-job/" target="_blank" rel="noopener">About 1 in 5 US workers now use AI</a></td></tr>
+          <tr><td>PwC</td><td>2024</td><td><a href="https://www.pwc.com/gx/en/issues/artificial-intelligence/ai-jobs-barometer.html" target="_blank" rel="noopener">AI Jobs Barometer 2024</a></td></tr>
+          <tr><td>Brynjolfsson, Li & Raymond</td><td>2025</td><td><a href="https://doi.org/10.1093/qje/qjaf001" target="_blank" rel="noopener">Generative AI at Work. QJE</a></td></tr>
+          <tr><td>Noy & Zhang</td><td>2023</td><td><a href="https://www.science.org/doi/10.1126/science.adh2586" target="_blank" rel="noopener">Experimental evidence on the productivity effects of generative AI. Science</a></td></tr>
+          <tr><td>Bick, Blandin & Deming</td><td>2024</td><td><a href="https://www.nber.org/papers/w32966" target="_blank" rel="noopener">The rapid adoption of generative AI. NBER 32966</a></td></tr>
+          <tr><td>IMF</td><td>2024</td><td><a href="https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2024/01/14/Gen-AI-Artificial-Intelligence-and-the-Future-of-Work-542379" target="_blank" rel="noopener">Gen-AI: AI and the Future of Work</a></td></tr>
+          <tr><td>KPMG / Univ. Melbourne</td><td>2025</td><td><a href="https://www.kpmg.com/xx/en/our-insights/ai-and-technology/trust-in-ai-global-insights-2025.html" target="_blank" rel="noopener">Trust in AI: Global Insights 2025. N=48,340</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Prev/Next -->
+    <div class="gap-nav">
+      <a href="gap-gender.html">
+        <span class="en">← Gender Gap</span>
+        <span class="ru">← Гендерный разрыв</span>
+      </a>
+      <span class="spacer"></span>
+      <a href="gap-language.html">
+        <span class="en">Language Gap →</span>
+        <span class="ru">Языковой разрыв →</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Right-side Navigator -->
+  <nav class="section-nav">
+    <p class="section-nav-title en">Contents</p>
+    <p class="section-nav-title ru">Содержание</p>
+    <a href="#summary" class="en">Executive Summary</a>
+    <a href="#summary" class="ru">Резюме</a>
+    <a href="#s1-1" class="en">1.1 Key Numbers</a>
+    <a href="#s1-1" class="ru">1.1 Цифры</a>
+    <a href="#s1-2" class="en">1.2 Adoption Rates</a>
+    <a href="#s1-2" class="ru">1.2 Освоение</a>
+    <a href="#s1-3" class="en">1.3 Attitudes</a>
+    <a href="#s1-3" class="ru">1.3 Отношение</a>
+    <a href="#s1-4" class="en">1.4 Feedback Loop</a>
+    <a href="#s1-4" class="ru">1.4 Петля</a>
+    <a href="#s1-5" class="en">1.5 Knowledge</a>
+    <a href="#s1-5" class="ru">1.5 Знания</a>
+    <a href="#s1-6" class="en">1.6 Vulnerability</a>
+    <a href="#s1-6" class="ru">1.6 Уязвимость</a>
+    <a href="#s1-7" class="en">1.7 Consequences</a>
+    <a href="#s1-7" class="ru">1.7 Последствия</a>
+    <a href="#s2-1" class="en">2.1 Structural</a>
+    <a href="#s2-1" class="ru">2.1 Структурные</a>
+    <a href="#s2-2" class="en">2.2 Institutional</a>
+    <a href="#s2-2" class="ru">2.2 Институциональные</a>
+    <a href="#s2-3" class="en">2.3 Psychological</a>
+    <a href="#s2-3" class="ru">2.3 Психологические</a>
+    <a href="#s2-4" class="en">2.4 Cultural</a>
+    <a href="#s2-4" class="ru">2.4 Культурные</a>
+    <a href="#part3" class="en">Synthesis</a>
+    <a href="#part3" class="ru">Синтез</a>
+    <a href="#sources" class="en">Sources</a>
+    <a href="#sources" class="ru">Источники</a>
+  </nav>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html">
+        <span class="en">← All gaps</span>
+        <span class="ru">← Все разрывы</span>
+      </a>
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  const sections = document.querySelectorAll('section[id], h2[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector('.section-nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+</body>
+</html>

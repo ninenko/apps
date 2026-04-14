@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AI Adoption Gap — Ivan Ninenko</title>
+  <meta name="description" content="Why Some People Are (Not) Crazy About AI. A personal research essay on five dimensions of the AI adoption gap.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress"></div>
+
+<!-- Language Switcher -->
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- =====================================================
+     SECTION 1 — HERO
+     ===================================================== -->
+<section class="hero">
+  <div class="container">
+
+    <p class="hero-issue reveal">
+      <span class="en">Research Essay · April 2026</span>
+      <span class="ru">Исследовательское эссе · Апрель 2026</span>
+    </p>
+
+    <h1 class="reveal">
+      <span class="en">The AI Adoption Gap: Why Some People Are <em>(Not)</em> Crazy About AI</span>
+      <span class="ru">Разрыв в освоении ИИ: почему все <em>(не)</em> сходят с ума от искусственного интеллекта</span>
+    </h1>
+
+    <p class="hero-subtitle reveal">
+      <span class="en">by Ivan Ninenko, researched through Claude</span>
+      <span class="ru">автор: Иван Ниненко, исследование с помощью Claude</span>
+    </p>
+
+    <p class="hero-byline reveal">
+      <span class="en">Six dimensions<span> · </span>Gender<span> · </span>Income<span> · </span>Language<span> · </span>Age<span> · </span>Education<span> · </span>Experience</span>
+      <span class="ru">Шесть измерений<span> · </span>Гендер<span> · </span>Доход<span> · </span>Язык<span> · </span>Возраст<span> · </span>Образование<span> · </span>Опыт</span>
+    </p>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     SECTION 2 — KARPATHY
+     ===================================================== -->
+<section>
+  <div class="container">
+
+    <span class="section-label reveal">
+      <span class="en">Where this started</span>
+      <span class="ru">С чего всё началось</span>
+    </span>
+
+    <div class="reveal">
+      <p class="en">In early 2026, Andrej Karpathy — one of the founding researchers at OpenAI — posted something that stopped me mid-scroll. He described a growing split in how people understand what AI can actually do.</p>
+      <p class="ru">В начале 2026 года Андрей Карпатый — один из основателей OpenAI — написал пост, который заставил меня остановиться. Он описал растущий разрыв в понимании того, на что реально способен ИИ.</p>
+    </div>
+
+    <div class="pull-quote reveal">
+      <blockquote>
+        <span class="en">"Judging by my tl there is a growing gap in understanding of AI capability."</span>
+        <span class="ru">«Судя по моей ленте, растёт разрыв в понимании возможностей ИИ».</span>
+      </blockquote>
+      <cite>— Andrej Karpathy, <a href="https://x.com/karpathy/status/2042334451611693415" target="_blank" rel="noopener">x.com/karpathy</a>, 2026</cite>
+    </div>
+
+    <div class="reveal">
+      <p class="en">He was talking about two groups. The first: people who tried a free-tier chatbot once, found it annoying or amusing, and let that experience form their entire view of AI. The second: people paying $200 a month to watch frontier models restructure entire codebases in under an hour.</p>
+      <p class="ru">Он говорил о двух группах. Первая: люди, которые однажды попробовали бесплатного чат-бота, нашли его раздражающим или забавным — и на этом сформировали своё полное представление об ИИ. Вторая: те, кто платит $200 в месяц и наблюдает, как модели-флагманы переписывают целые кодовые базы за час.</p>
+    </div>
+
+    <div class="pull-quote reveal">
+      <blockquote>
+        <span class="en">"The people in these two groups are speaking past each other."</span>
+        <span class="ru">«Люди из этих двух групп говорят о разных вещах, не слыша друг друга».</span>
+      </blockquote>
+      <cite>— Andrej Karpathy, 2026</cite>
+    </div>
+
+    <div class="reveal">
+      <p class="en">That one sentence stuck with me. It names something real — but it barely scratches the surface. Because the gap Karpathy describes isn't random. It tracks along fault lines we already know: gender, income, language, age, education. The question isn't just <em>why</em> some people don't get it. It's <em>which</em> people, and what that means for what comes next.</p>
+      <p class="ru">Это предложение врезалось в память. Оно называет что-то настоящее — но лишь царапает поверхность. Потому что разрыв, который описывает Карпатый, не случаен. Он проходит по уже знакомым нам линиям разлома: гендер, доход, язык, возраст, образование. Вопрос не только в том, <em>почему</em> одни не понимают. Вопрос — <em>кто именно</em> эти люди, и что это значит для того, что будет дальше.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     SECTION 3 — PERSONAL NOTE
+     ===================================================== -->
+<section>
+  <div class="container-narrow">
+
+    <span class="section-label reveal">
+      <span class="en">A personal note</span>
+      <span class="ru">Личная ремарка</span>
+    </span>
+
+    <div class="reveal">
+      <p class="en">My wife and I have an agreement: I don't overshare AI enthusiasm, and she gets to stop any AI-related conversation at any moment, no explanation needed. This arrangement exists because she noticed, correctly, that I am not entirely normal about this. I use AI for work, for research, for thinking — and now, apparently, for writing research essays about it.</p>
+      <p class="ru">У нас с женой есть соглашение: я не навязываю ей восторги по поводу ИИ, и она может прервать любой разговор на эту тему в любой момент, без объяснений. Это соглашение возникло потому, что она правильно заметила: я в этом вопросе не вполне нормален. Я использую ИИ для работы, исследований, мышления — а теперь, похоже, ещё и для написания исследовательских эссе о нём.</p>
+    </div>
+
+    <div class="reveal">
+      <p class="en">Meditation helps. Family helps. Maybe I'm just better at hiding the AI psychosis than some. But somewhere in that balance — between being genuinely amazed and keeping it in perspective — I started wondering about the people on the other side of Karpathy's gap. Not as a demographic problem to solve, but as something more interesting: a human story about uncertainty, trust, and who gets to participate in what might be one of the most significant technological shifts of our lifetimes.</p>
+      <p class="ru">Помогает медитация. Помогает семья. Или я просто лучше скрываю ИИ-психоз, чем некоторые. Но где-то в этом балансе — между искренним изумлением и трезвостью взгляда — я начал думать о людях по другую сторону разрыва, который описал Карпатый. Не как о демографической проблеме, требующей решения, а как о чём-то более интересном: о человеческой истории про неопределённость, доверие и вопрос о том, кто получает право участвовать в том, что может оказаться одним из значимейших технологических сдвигов в нашей жизни.</p>
+    </div>
+
+    <div class="reveal">
+      <p class="en">So I asked Claude. And then I asked again. Over several weeks of deep research dives, five gap reports took shape — each one following the same structure: the data first, then the causes, then what we don't yet know. This is the result.</p>
+      <p class="ru">Поэтому я спросил Claude. А потом спросил снова. За несколько недель глубоких исследовательских сессий сложились пять докладов о разрыве — каждый по одной схеме: сначала данные, затем причины, затем то, чего мы пока не знаем. Вот что из этого вышло.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     SECTION 4 — REPORT TITLE CARD
+     ===================================================== -->
+<div class="report-title-card reveal">
+  <p class="tag en">Research Report</p>
+  <p class="tag ru">Исследовательский доклад</p>
+  <h2>
+    <span class="en">The AI Adoption Gap</span>
+    <span class="ru">Разрыв в освоении ИИ</span>
+  </h2>
+  <p class="subtitle">
+    <span class="en">Why Some People Are <em>(Not)</em> Crazy About AI</span>
+    <span class="ru">Почему все <em>(не)</em> сходят с ума от искусственного интеллекта</span>
+  </p>
+  <p class="byline en">by Ivan Ninenko, researched through Claude Sonnet 4.6 · April 2026</p>
+  <p class="byline ru">автор: Иван Ниненко, исследование с Claude Sonnet 4.6 · Апрель 2026</p>
+</div>
+
+<!-- =====================================================
+     SECTION 5 — THREE NOTES
+     ===================================================== -->
+<section>
+  <div class="container">
+
+    <span class="section-label reveal">
+      <span class="en">Before you read</span>
+      <span class="ru">Перед чтением</span>
+    </span>
+
+    <div class="note-cards">
+
+      <div class="note-card reveal">
+        <p class="note-card-num">NOTE 01</p>
+        <p class="note-card-title">
+          <span class="en">On pace of change</span>
+          <span class="ru">О скорости изменений</span>
+        </p>
+        <p class="en">The AI landscape moves faster than research cycles. Some figures here — especially in the language gap section — may already be outdated. The structural mechanisms are more durable than the specific numbers.</p>
+        <p class="ru">ИИ-ландшафт меняется быстрее, чем исследовательские циклы. Некоторые данные здесь — особенно в разделе о языковом разрыве — могут уже устареть. Структурные механизмы надёжнее конкретных цифр.</p>
+      </div>
+
+      <div class="note-card reveal">
+        <p class="note-card-num">NOTE 02</p>
+        <p class="note-card-title">
+          <span class="en">On the spectrum</span>
+          <span class="ru">О спектре</span>
+        </p>
+        <p class="en">The binary of users vs. non-users misses a crowded middle. Between the technophobe and the AI-obsessed are people using AI as an answering machine — students offloading homework, professionals using it as a fancy search engine. How people <em>use</em> AI deserves its own study. This is not that study.</p>
+        <p class="ru">Деление на «пользователей» и «непользователей» упускает переполненную середину. Между технофобом и ИИ-фанатиком — люди, использующие ИИ как автоответчик: студенты, избавляющиеся от домашних заданий, профессионалы, применяющие его как навороченный поиск. То, <em>как</em> люди используют ИИ, заслуживает отдельного исследования. Это не оно.</p>
+      </div>
+
+      <div class="note-card reveal">
+        <p class="note-card-num">NOTE 03</p>
+        <p class="note-card-title">
+          <span class="en">On method</span>
+          <span class="ru">О методе</span>
+        </p>
+        <p class="en">This report was produced through a series of deep research dives with Claude, primarily Claude Sonnet 4.6. All claims are sourced with sample sizes, geographies, and years where available. Ivan made the editorial and framing decisions; Claude handled the research synthesis.</p>
+        <p class="ru">Этот доклад создан в ходе глубоких исследовательских сессий с Claude, преимущественно Claude Sonnet 4.6. Все утверждения подкреплены источниками с размерами выборок, географией и годами там, где это доступно. Иван принимал редакционные решения и задавал фреймы; Claude занимался синтезом исследований.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SECTION 6 — GAP NAVIGATOR
+     ===================================================== -->
+<section>
+  <div class="container">
+
+    <span class="section-label reveal">
+      <span class="en">Six dimensions of the gap</span>
+      <span class="ru">Шесть измерений разрыва</span>
+    </span>
+
+    <div class="gap-cards">
+
+      <a href="gap-gender.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">01 / GENDER GAP</span>
+          <span class="ru">01 / ГЕНДЕРНЫЙ РАЗРЫВ</span>
+        </p>
+        <p class="gap-card-stat">22%</p>
+        <p class="gap-card-stat-label">
+          <span class="en">Lower odds — women vs. men</span>
+          <span class="ru">Меньше шансов у женщин</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">The Gender Gap</span>
+          <span class="ru">Гендерный разрыв</span>
+        </p>
+        <p class="gap-card-desc en">Women are 22% less likely to adopt generative AI. Driven by confidence gaps, not access — self-assessed knowledge explains ~75% of the divide.</p>
+        <p class="gap-card-desc ru">Женщины на 22% реже осваивают генеративный ИИ. Причина — не в доступе, а в уверенности: самооценка знаний объясняет ~75% разрыва.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+      <a href="gap-income.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">02 / INCOME GAP</span>
+          <span class="ru">02 / РАЗРЫВ ПО ДОХОДАМ</span>
+        </p>
+        <p class="gap-card-stat">9→34%</p>
+        <p class="gap-card-stat-label">
+          <span class="en">Professional use — $30k vs $100k+</span>
+          <span class="ru">Использование на работе</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">The Income Gap</span>
+          <span class="ru">Разрыв по доходам</span>
+        </p>
+        <p class="gap-card-desc en">The wealthiest Americans are nearly 4× more likely to use AI professionally. The paradox: AI's largest gains go to the lowest-skilled workers — who are least likely to have access.</p>
+        <p class="gap-card-desc ru">Самые состоятельные американцы почти в 4 раза чаще используют ИИ профессионально. Парадокс: наибольшую пользу от ИИ получают наименее квалифицированные работники — те, у кого меньше всего доступа.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+      <a href="gap-language.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">03 / LANGUAGE GAP</span>
+          <span class="ru">03 / ЯЗЫКОВОЙ РАЗРЫВ</span>
+        </p>
+        <p class="gap-card-stat">15×</p>
+        <p class="gap-card-stat-label">
+          <span class="en">More tokens — Kyrgyz vs English</span>
+          <span class="ru">Больше токенов — Кыргызский vs Английский</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">The Language Gap</span>
+          <span class="ru">Языковой разрыв</span>
+        </p>
+        <p class="gap-card-desc en">Non-English speakers pay more per idea, get a smaller context window, and receive worse outputs. For Kyrgyz speakers, the AI penalty is structural and compounding.</p>
+        <p class="gap-card-desc ru">Неанглоязычные пользователи платят больше за идею, получают меньшее контекстное окно и более слабые результаты. Для кыргызскоязычных пользователей штраф за язык структурный и накапливающийся.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+      <a href="gap-age.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">04 / AGE GAP</span>
+          <span class="ru">04 / ВОЗРАСТНОЙ РАЗРЫВ</span>
+        </p>
+        <p class="gap-card-stat">53.6<span style="font-size:2rem">pp</span></p>
+        <p class="gap-card-stat-label">
+          <span class="en">Students vs. retirees — OECD 2026</span>
+          <span class="ru">Студенты vs. пенсионеры — ОЭСР 2026</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">The Age Gap</span>
+          <span class="ru">Возрастной разрыв</span>
+        </p>
+        <p class="gap-card-desc en">The single largest demographic divide. 75%+ of students use AI; only 12.5% of retired adults do. The gap is not about ignorance — 67–78% of older adults know what ChatGPT is.</p>
+        <p class="gap-card-desc ru">Крупнейший демографический разрыв. ИИ используют 75%+ студентов и лишь 12,5% пенсионеров. Дело не в незнании — 67–78% пожилых людей знают, что такое ChatGPT.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+      <a href="gap-education.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">05 / EDUCATION GAP</span>
+          <span class="ru">05 / ОБРАЗОВАТЕЛЬНЫЙ РАЗРЫВ</span>
+        </p>
+        <p class="gap-card-stat">46→22%</p>
+        <p class="gap-card-stat-label">
+          <span class="en">AI at work — STEM vs. all other</span>
+          <span class="ru">ИИ на работе — STEM vs. остальные</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">The Education Gap</span>
+          <span class="ru">Образовательный разрыв</span>
+        </p>
+        <p class="gap-card-desc en">Field of study is the strongest predictor of professional AI adoption. Within a single university, the gap between Natural Sciences (91%) and Literature (49%) rivals the gap between degree-holders and dropouts.</p>
+        <p class="gap-card-desc ru">Область обучения — сильнейший предиктор профессионального освоения ИИ. В рамках одного университета разрыв между естественными науками (91%) и литературой (49%) сопоставим с разрывом между дипломированными специалистами и бросившими учёбу.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+      <a href="gap-once-bitten.html" class="gap-card reveal">
+        <p class="gap-card-num">
+          <span class="en">06 / EXPERIENCE GAP</span>
+          <span class="ru">06 / РАЗРЫВ ПО ОПЫТУ</span>
+        </p>
+        <p class="gap-card-stat">42%</p>
+        <p class="gap-card-stat-label">
+          <span class="en">Companies abandoned AI initiatives</span>
+          <span class="ru">Компаний свернули ИИ-инициативы</span>
+        </p>
+        <p class="gap-card-name">
+          <span class="en">Once Bitten, Twice Shy</span>
+          <span class="ru">Обжёгшись на молоке, дуют на воду</span>
+        </p>
+        <p class="gap-card-desc en">42% of companies that started AI projects have since abandoned them. Bad first experiences create lasting aversion — a six-mechanism cascade from algorithm aversion to organizational retreat.</p>
+        <p class="gap-card-desc ru">42% компаний, начавших ИИ-проекты, впоследствии их свернули. Неудачный первый опыт создаёт стойкое отторжение — каскад из шести механизмов от алгоритмической неприязни до организационного отступления.</p>
+        <p class="gap-card-link">
+          <span class="en">Explore →</span>
+          <span class="ru">Читать →</span>
+        </p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+      <a href="https://x.com/karpathy/status/2042334451611693415" target="_blank" rel="noopener">Karpathy post</a>
+      <span class="en">Ivan Ninenko</span>
+      <span class="ru">Иван Ниненко</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY /
+      (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Language switcher
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+
+  // Restore saved language preference
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+
+</body>
+</html>

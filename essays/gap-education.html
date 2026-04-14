@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Education Gap in AI Adoption — AI Adoption Gap</title>
+  <meta name="description" content="College-educated workers are 21 percentage points more likely to adopt AI. Evidence, data, and causes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Hero -->
+<div class="gap-hero">
+  <div class="container-gap">
+    <a href="index.html" class="gap-hero-back">
+      <span class="en">← Back to overview</span>
+      <span class="ru">← К обзору</span>
+    </a>
+    <p class="gap-num">
+      <span class="en">05 / EDUCATION GAP</span>
+      <span class="ru">05 / ОБРАЗОВАТЕЛЬНЫЙ РАЗРЫВ</span>
+    </p>
+    <h1>
+      <span class="en">The Education Gap in AI Adoption</span>
+      <span class="ru">Образовательный разрыв во внедрении ИИ</span>
+    </h1>
+    <p class="sub">
+      <span class="en">Evidence, Data, and Understanding of Causes</span>
+      <span class="ru">Данные, доказательства и понимание причин</span>
+    </p>
+    <div class="gap-headline-stat">
+      <div class="stat">46 → 22%</div>
+      <div class="stat-label">
+        <span class="en">AI adoption at work: STEM vs. all other fields</span>
+        <span class="ru">Освоение ИИ на работе: STEM vs. все остальные области</span>
+      </div>
+      <div class="stat-source">Federal Reserve / Bick et al., NBER 2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="gap-layout">
+
+  <!-- Content -->
+  <main class="gap-content">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <p class="part-header en">Executive Summary</p>
+      <p class="part-header ru">Краткое резюме</p>
+      <div class="exec-summary">
+        <ul>
+          <li class="en">Adults with a college degree are <strong>16 percentage points more likely</strong> to be aware of generative AI than those without a high school diploma (Gambacorta et al., CEPR/ISCE, 2025).</li>
+          <li class="ru">Взрослые с дипломом колледжа на <strong>16 п.п. более вероятны</strong> знают о генеративном ИИ, чем люди без диплома средней школы (Gambacorta et al., CEPR/ISCE, 2025).</li>
+          <li class="en">Across the OECD, the education gap in AI use stands at <strong>~21 percentage points</strong> — comparable to the income gap, and exceeded only by the age gap (OECD, January 2026).</li>
+          <li class="ru">По OECD образовательный разрыв в использовании ИИ составляет <strong>~21 п.п.</strong> — сопоставим с разрывом по доходам и превышен только возрастным разрывом (OECD, январь 2026).</li>
+          <li class="en">Among college-educated workers, field of study is the <strong>strongest single predictor</strong> of AI adoption: STEM graduates adopt at 46% vs. 22% for all other majors (Federal Reserve / Bick et al., 2024).</li>
+          <li class="ru">Среди высокообразованных работников область обучения — <strong>сильнейший предиктор</strong> освоения ИИ: выпускники STEM осваивают ИИ на 46% vs. 22% для других специальностей (Federal Reserve / Bick et al., 2024).</li>
+          <li class="en">The adoption gap is driven primarily by <strong>confidence, occupational exposure, and institutional access</strong> — not by raw cognitive ability. Yet experimental evidence finds AI produces the <strong>largest productivity gains for less-skilled workers</strong>, making the education gap an efficiency problem as well as an equality problem.</li>
+          <li class="ru">Разрыв в освоении обусловлен главным образом <strong>уверенностью, профессиональным воздействием и доступом к инфраструктуре</strong> — а не когнитивными способностями. Тем не менее экспериментальные данные показывают, что ИИ дает <strong>наибольший прирост производительности менее квалифицированным работникам</strong>, делая образовательный разрыв проблемой эффективности и равенства.</li>
+          <li class="en">Within universities, adoption varies dramatically by field: Natural Sciences at 91.1% vs. Literature at 48.6% — a gap rivaling the gap between college-educated and non-college-educated workers in the general population (IZA/Middlebury, 2025).</li>
+          <li class="ru">Внутри университетов освоение варьирует резко: Естественные науки на 91,1% vs. Литература на 48,6% — разрыв, конкурирующий с разрывом между высокообразованными и менее образованными работниками в генеральной совокупности (IZA/Middlebury, 2025).</li>
+          <li class="en">Without deliberate intervention, AI risks becoming the latest technology to <strong>compound educational inequality</strong> rather than flatten it, despite its proven potential to equalize performance across skill levels.</li>
+          <li class="ru">Без целенаправленного вмешательства ИИ рискует стать очередной технологией, которая <strong>усилит образовательное неравенство</strong> вместо его сокращения, несмотря на его доказанный потенциал выравнивания результатов работников.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section id="part1">
+      <p class="part-header en">Part 1 — The Evidence</p>
+      <p class="part-header ru">Часть 1 — Доказательства</p>
+
+      <h2 id="s1-1">
+        <span class="en">1.1 Key Numbers at a Glance</span>
+        <span class="ru">1.1 Ключевые цифры</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Statistic</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Показатель</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Education gap in GenAI awareness (college degree vs. no high school diploma)</td><td class="en"><strong>+16 pp</strong></td><td class="en">Gambacorta et al., CEPR/ISCE, 2025</td>
+              <td class="ru">Разрыв в осведомлённости о ген-ИИ (колледж vs. нет среднего)</td><td class="ru"><strong>+16 п.п.</strong></td><td class="ru">Gambacorta et al., CEPR/ISCE, 2025</td></tr>
+          <tr><td class="en">OECD education gap in AI use (by attainment)</td><td class="en"><strong>~21 pp</strong></td><td class="en">OECD, January 2026</td>
+              <td class="ru">Образовательный разрыв OECD в использовании ИИ</td><td class="ru"><strong>~21 п.п.</strong></td><td class="ru">OECD, январь 2026</td></tr>
+          <tr><td class="en">STEM graduates using GenAI at work</td><td class="en"><strong>46%</strong></td><td class="en">Federal Reserve / Bick et al., 2024</td>
+              <td class="ru">Выпускники STEM, использующие ген-ИИ на работе</td><td class="ru"><strong>46%</strong></td><td class="ru">Federal Reserve / Bick et al., 2024</td></tr>
+          <tr><td class="en">Liberal arts / humanities graduates using GenAI at work</td><td class="en"><strong>22%</strong></td><td class="en">Federal Reserve / Bick et al., 2024</td>
+              <td class="ru">Выпускники гуманитарных дисциплин, использующие ген-ИИ</td><td class="ru"><strong>22%</strong></td><td class="ru">Federal Reserve / Bick et al., 2024</td></tr>
+          <tr><td class="en">AI adoption: Natural Sciences majors vs. Literature majors (elite US college)</td><td class="en"><strong>91.1% vs. 48.6%</strong></td><td class="en">Contractor & Reyes, IZA / Middlebury, 2025</td>
+              <td class="ru">Освоение ИИ: Естественные науки vs. Литература (элитный колледж)</td><td class="ru"><strong>91,1% vs. 48,6%</strong></td><td class="ru">Contractor & Reyes, IZA / Middlebury, 2025</td></tr>
+          <tr><td class="en">Students using GenAI in higher education (global)</td><td class="en"><strong>80–92%</strong></td><td class="en">HEPI, 2025; Digital Education Council, 2025</td>
+              <td class="ru">Студенты, использующие ген-ИИ в высшем образовании (глобально)</td><td class="ru"><strong>80–92%</strong></td><td class="ru">HEPI, 2025; Digital Education Council, 2025</td></tr>
+          <tr><td class="en">General US adults using GenAI</td><td class="en"><strong>~23–40%</strong></td><td class="en">Pew Research, 2024; Bick et al., 2025</td>
+              <td class="ru">Взрослые жители США, использующие ген-ИИ</td><td class="ru"><strong>~23–40%</strong></td><td class="ru">Pew Research, 2024; Bick et al., 2025</td></tr>
+          <tr><td class="en">US K-12 schools offering formal AI ethics instruction (late 2024)</td><td class="en"><strong>14%</strong></td><td class="en">US Dept. of Education / School Pulse Panel, 2024</td>
+              <td class="ru">Школы K-12 США, предлагающие формальное обучение этике ИИ</td><td class="ru"><strong>14%</strong></td><td class="ru">US Dept. of Education / School Pulse Panel, 2024</td></tr>
+          <tr><td class="en">US school districts offering AI teacher training (2024–25)</td><td class="en"><strong>26%</strong></td><td class="en">RAND / US Dept. of Education, 2025</td>
+              <td class="ru">Школьные округа США, предлагающие обучение учителей (2024–25)</td><td class="ru"><strong>26%</strong></td><td class="ru">RAND / US Dept. of Education, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-2">
+        <span class="en">1.2 Global Adoption Rates by Education Level</span>
+        <span class="ru">1.2 Глобальные показатели освоения по уровню образования</span>
+      </h2>
+      <p class="en">The education gradient in AI adoption is consistent across geographies and data sources.</p>
+      <p class="ru">Образовательный градиент в освоении ИИ устойчив в разных географических регионах и источниках данных.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Study / Source</th><th class="en">More Educated</th><th class="en">Less Educated</th>
+            <th class="ru">Исследование</th><th class="ru">Более образованные</th><th class="ru">Менее образованные</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Italy — ISCE nationally representative panel (April 2024)</td><td class="en">College degree: significantly higher use</td><td class="en">No high school: 16 pp lower awareness</td>
+              <td class="ru">Италия — национально репрезентативная панель ISCE</td><td class="ru">Колледж: существенно выше</td><td class="ru">Без среднего: на 16 п.п. ниже</td></tr>
+          <tr><td class="en">US — Federal Reserve Survey of Consumer Expectations (2024)</td><td class="en">College-educated: significantly more likely</td><td class="en">Non-college: substantially lower</td>
+              <td class="ru">США — Federal Reserve Survey (2024)</td><td class="ru">Высокообразованные: выше</td><td class="ru">Без колледжа: намного ниже</td></tr>
+          <tr><td class="en">US — Pew Research (N=8,750, September 2025)</td><td class="en">Bachelor's or more: among most likely to use AI at work</td><td class="en">Lower education: substantially less likely</td>
+              <td class="ru">США — Pew Research (N=8 750, сент. 2025)</td><td class="ru">Степень или выше: часто используют ИИ</td><td class="ru">Низкое образование: намного реже</td></tr>
+          <tr><td class="en">OECD cross-country aggregate (January 2026)</td><td class="en">Highest attainment group</td><td class="en">Lowest attainment group: ~21 pp gap</td>
+              <td class="ru">OECD (январь 2026)</td><td class="ru">Наивысший уровень образования</td><td class="ru">Наименьший уровень: ~21 п.п.</td></tr>
+          <tr><td class="en">US workers — Bick, Blandin & Deming (NBER, 2024)</td><td class="en">STEM majors: <strong>46%</strong> at work</td><td class="en">All other majors: <strong>22%</strong> at work</td>
+              <td class="ru">Работники США — Bick et al. (NBER, 2024)</td><td class="ru">Выпускники STEM: <strong>46%</strong></td><td class="ru">Другие специальности: <strong>22%</strong></td></tr>
+          <tr><td class="en">Middlebury College (IZA, Dec 2024–Feb 2025, N≈2,800)</td><td class="en">Natural Sciences: <strong>91.1%</strong></td><td class="en">Literature: <strong>48.6%</strong>; Languages: <strong>57.4%</strong></td>
+              <td class="ru">Middlebury College (IZA, дек 2024–февр 2025)</td><td class="ru">Естественные науки: <strong>91,1%</strong></td><td class="ru">Литература: <strong>48,6%</strong></td></tr>
+          <tr><td class="en">Higher education vs. general population (US, 2024–25)</td><td class="en">Students: <strong>80–92%</strong></td><td class="en">General adults: <strong>~23–40%</strong></td>
+              <td class="ru">Высшее образование vs. общее население</td><td class="ru">Студенты: <strong>80–92%</strong></td><td class="ru">Взрослые: <strong>~23–40%</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="en"><strong>Exception worth noting:</strong> The education gap inverts for <em>intensity</em> of use in some populations. Among US high school students, Black and Latinx teens who do use generative AI are <em>twice as likely</em> as white peers to use it at least weekly (Bowdoin / Harvard GSE, 2024). The gap is primarily a barrier at the entry point — once students start using AI, frequency can equalize or reverse. This means access and initial exposure, not inherent motivation, are the binding constraints.</p>
+        <p class="ru"><strong>Исключение:</strong> Образовательный разрыв инвертируется в отношении <em>интенсивности</em> использования в отдельных группах. Среди учащихся средних школ США чёрные и латиноамериканские подростки, которые используют генеративный ИИ, в <em>два раза чаще</em> используют его еженедельно, чем белые сверстники (Bowdoin / Harvard GSE, 2024). Разрыв — главным образом барьер на входе; один раз начав, интенсивность выравнивается. Это указывает, что связующие ограничения — доступ и начальная экспозиция, не врождённая мотивация.</p>
+      </div>
+
+      <h2 id="s1-3">
+        <span class="en">1.3 Attitudes and Emotional Responses</span>
+        <span class="ru">1.3 Отношение и эмоциональные реакции</span>
+      </h2>
+      <p class="en">Educational level shapes not just behavior but emotional orientation toward AI — with crucial implications for adoption pathways.</p>
+      <p class="ru">Уровень образования определяет не просто поведение, но и эмоциональное отношение к ИИ — с важнейшими последствиями для путей освоения.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Attitude</th><th class="en">Higher education / STEM</th><th class="en">Lower education / non-STEM</th><th class="en">Source</th>
+            <th class="ru">Установка</th><th class="ru">Высшее образование / STEM</th><th class="ru">Низкое образование / не-STEM</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Excitement about AI</td><td class="en">Higher</td><td class="en">Lower</td><td class="en">Pew, 2025</td>
+              <td class="ru">Воодушевление ИИ</td><td class="ru">Выше</td><td class="ru">Ниже</td><td class="ru">Pew, 2025</td></tr>
+          <tr><td class="en">Concern about AI and job displacement</td><td class="en">Lower (more abstract)</td><td class="en">Higher (more concrete and rational)</td><td class="en">HEPI, 2025; Pew, 2025</td>
+              <td class="ru">Беспокойство о вытеснении работы</td><td class="ru">Ниже (более абстрактное)</td><td class="ru">Выше (конкретное и рациональное)</td><td class="ru">HEPI, 2025; Pew, 2025</td></tr>
+          <tr><td class="en">Worry that AI use feels like "cheating"</td><td class="en">Lower in STEM; higher in humanities</td><td class="en">Variable by field</td><td class="en">HEPI, 2025</td>
+              <td class="ru">Беспокойство, что ИИ — «читерство»</td><td class="ru">В STEM ниже; в гуманитариях выше</td><td class="ru">Разнится</td><td class="ru">HEPI, 2025</td></tr>
+          <tr><td class="en">STEM vs. humanities: enthusiasm for AI</td><td class="en">Higher (STEM)</td><td class="en">Lower (humanities/languages)</td><td class="en">HEPI, 2025</td>
+              <td class="ru">STEM vs. гуманитарии: энтузиазм</td><td class="ru">Выше (STEM)</td><td class="ru">Ниже (гуманитарии)</td><td class="ru">HEPI, 2025</td></tr>
+          <tr><td class="en">AI experts vs. general public: predict positive national impact</td><td class="en">63% (experts)</td><td class="en">17% (general public)</td><td class="en">Pew, 2025</td>
+              <td class="ru">Эксперты vs. публика: позитивный прогноз</td><td class="ru">63% (эксперты)</td><td class="ru">17% (публика)</td><td class="ru">Pew, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-4">
+        <span class="en">1.4 The Institutional Feedback Loop</span>
+        <span class="ru">1.4 Петля обратной связи в институциональной сфере</span>
+      </h2>
+      <p class="en">Educational institutions reproduce and amplify the adoption gap through their ordinary operations.</p>
+      <p class="ru">Образовательные учреждения воспроизводят и усиливают разрыв в освоении через свою обычную деятельность.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Factor</th><th class="en">Better-resourced / STEM track</th><th class="en">Lower-resourced / non-STEM track</th><th class="en">Source</th>
+            <th class="ru">Фактор</th><th class="ru">Лучше обеспеченные / STEM</th><th class="ru">Менее обеспеченные / не-STEM</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">AI teacher training offered</td><td class="en">Higher-income suburban districts more likely</td><td class="en">Only <strong>26%</strong> of US districts (2024–25)</td><td class="en">RAND, 2025</td>
+              <td class="ru">Обучение учителей ИИ</td><td class="ru">Более вероятно в богатых районах</td><td class="ru">Только <strong>26%</strong> округов США</td><td class="ru">RAND, 2025</td></tr>
+          <tr><td class="en">Students who feel institution encourages AI</td><td class="en">Higher in tech/vocational/business programs</td><td class="en">Only <strong>29%</strong> of UK undergrads feel encouraged</td><td class="en">HEPI, 2025</td>
+              <td class="ru">Студенты чувствуют поддержку ИИ</td><td class="ru">Выше в технических программах</td><td class="ru">Только <strong>29%</strong> студентов UK</td><td class="ru">HEPI, 2025</td></tr>
+          <tr><td class="en">College students reporting school discourages or prohibits AI</td><td class="en">Lower in tech programs</td><td class="en"><strong>>50%</strong> of US college students</td><td class="en">Gallup-Lumina, 2026</td>
+              <td class="ru">Школа запрещает или не поддерживает ИИ</td><td class="ru">Ниже в технических программах</td><td class="ru"><strong>>50%</strong> студентов США</td><td class="ru">Gallup-Lumina, 2026</td></tr>
+          <tr><td class="en">Students who know about college-provided AI resources</td><td class="en">Higher among STEM students</td><td class="en">Only <strong>10.1%</strong> overall</td><td class="en">IZA / Middlebury, 2025</td>
+              <td class="ru">Студенты знают о ресурсах колледжа</td><td class="ru">Выше среди STEM</td><td class="ru">Только <strong>10,1%</strong> в целом</td><td class="ru">IZA / Middlebury, 2025</td></tr>
+          <tr><td class="en">K-12 teachers with formal AI training</td><td class="en">Urban/suburban schools</td><td class="en"><strong>96%</strong> of US K-12 teachers lack formal training</td><td class="en">demandsage, 2025</td>
+              <td class="ru">Учителя K-12 с формальным обучением ИИ</td><td class="ru">Городские/пригородные школы</td><td class="ru"><strong>96%</strong> учителей США не имеют</td><td class="ru">demandsage, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <div class="kyrgyz-note">
+        <p class="en">This dynamic is particularly acute in Kyrgyzstan's education system, where a sharp resource divide between urban (Bishkek, Osh) and rural schools means access to digital infrastructure — let alone AI-specific training — is concentrated in a small fraction of institutions. A student at a rural Kyrgyz school faces compounding barriers: limited device access, instruction in Kyrgyz or Russian rather than the English that dominates most AI interfaces, and a teacher corps almost entirely without AI training. The feedback loop from school investment → student fluency → labor market readiness is likely steeper here than global averages suggest, though no published local data currently quantify this.</p>
+        <p class="ru">Эта динамика особенно острая в образовательной системе Кыргызстана, где острый разрыв в ресурсах между городскими (Бишкек, Ош) и сельскими школами означает, что доступ к цифровой инфраструктуре — не говоря уже об обучении ИИ — сосредоточен в небольшой доле учреждений. Студент сельской кыргызской школы сталкивается с комплексом барьеров: ограниченный доступ к устройствам, обучение на кыргызском или русском языке вместо английского, на котором функционирует большинство ИИ-интерфейсов, и педагогический состав почти полностью без обучения ИИ. Петля от инвестиций в школы → беглость студентов → готовность к рынку труда здесь, вероятно, круче, чем глобальные средние показатели предполагают, хотя опубликованные локальные данные этого сейчас не количественно оценивают.</p>
+      </div>
+
+      <h2 id="s1-5">
+        <span class="en">1.5 Self-Assessed Knowledge and AI Literacy</span>
+        <span class="ru">1.5 Самооценка знаний и ИИ-грамотность</span>
+      </h2>
+      <p class="en">The knowledge gap in AI is partly real and partly perceived — and the distinction matters enormously for intervention design.</p>
+      <p class="ru">Разрыв в знаниях об ИИ отчасти реален, отчасти воспринимаемый — и различие имеет огромное значение для дизайна вмешательств.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;">College-educated workers are far more likely to have encountered AI through coursework, professional networks, and peer use — creating a genuine head start in baseline familiarity.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Высокообразованные работники намного чаще встречали ИИ через курсы, профессиональные сети и использование коллегами — создавая реальное преимущество в начальном знакомстве.</li>
+        <li class="en" style="margin-bottom:0.5rem;">Even within higher education, <strong>only 10.1%</strong> of students know about their college's AI resources, and only <strong>32.6%</strong> understand proper AI citation practices (IZA / Middlebury, 2025) — showing that credential attainment alone does not confer AI literacy.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Даже в высшем образовании <strong>только 10,1%</strong> студентов знают о ресурсах ИИ своего колледжа, и только <strong>32,6%</strong> понимают надлежащие практики цитирования (IZA / Middlebury, 2025) — показывая, что сама учёба не дарует ИИ-грамотность.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>96% of US K-12 teachers</strong> lack formal AI training (demandsage, 2025), and only <strong>14%</strong> of US public K-12 schools reported teaching students ethical/appropriate AI use as of late 2024 (US Dept. of Education, 2024).</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>96% учителей K-12 США</strong> не имеют формального обучения ИИ (demandsage, 2025), и только <strong>14%</strong> школ США обучают этике ИИ (US Dept. of Education, 2024).</li>
+        <li class="en" style="margin-bottom:0.5rem;">The "digital competence paradox": a Frontiers in Education study (2026) found that IT instructors — the most technically capable educator group — are not blocked by skill deficits. Their barriers are external: academic dishonesty concerns (M = 3.89/5), AI hallucinations (M = 3.70), and privacy issues (M = 3.41). Technical education alone does not drive adoption; institutional trust and systemic support are independent variables.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">"Парадокс цифровой компетентности": исследование Frontiers in Education (2026) обнаружило, что ИТ-инструкторы — самая технически способная группа — блокируются не дефицитом навыков. Их барьеры внешние: озабоченность нечестностью (M = 3,89/5), галлюцинации ИИ (M = 3,70), проблемы приватности (M = 3,41). Одной техничности недостаточно; доверие и системная поддержка независимы.</li>
+        <li class="en" style="margin-bottom:0.5rem;">Post-intervention data show gaps are malleable: gender differences in AI literacy scores disappear after targeted instruction (Kong et al., 2023; Kim & Kwon, 2024). The education-level gap is similarly not fixed.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Постинтервенционные данные показывают: разрывы пластичны. Гендерные различия в ИИ-грамотности исчезают после целевого обучения (Kong et al., 2023; Kim & Kwon, 2024). Образовательный разрыв также не фиксирован.</li>
+      </ul>
+
+      <h2 id="s1-6">
+        <span class="en">1.6 Structural Vulnerability: Occupational and Economic Exposure</span>
+        <span class="ru">1.6 Структурная уязвимость: профессиональное и экономическое воздействие</span>
+      </h2>
+      <p class="en">The relationship between education level and AI job risk is non-linear — a finding that complicates simple narratives.</p>
+      <p class="ru">Соотношение между уровнем образования и рисками работы нелинейно — нахождение, осложняющее простые нарративы.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Risk Factor</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Фактор риска</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">College-educated workers in AI-exposed occupations (computer/mathematical, management)</td><td class="en">~<strong>49%</strong> adoption rates</td><td class="en">Federal Reserve, 2025</td>
+              <td class="ru">Высокообразованные работники в ИИ-подверженных профессиях</td><td class="ru">~<strong>49%</strong> освоения</td><td class="ru">Federal Reserve, 2025</td></tr>
+          <tr><td class="en">Adaptive capacity of lower-educated workers facing AI displacement</td><td class="en">Limited: smaller savings, weaker networks, less retraining access</td><td class="en">OECD, 2026</td>
+              <td class="ru">Адаптивная способность менее образованных работников</td><td class="ru">Ограничена: меньше сбережений, слабые сети</td><td class="ru">OECD, 2026</td></tr>
+          <tr><td class="en">Retired and inactive populations using GenAI</td><td class="en"><strong>12.5%</strong> (vs. 41.1% employed)</td><td class="en">OECD, January 2026</td>
+              <td class="ru">Пенсионеры и неактивные, используют ген-ИИ</td><td class="ru"><strong>12,5%</strong> (vs. 41,1% занятые)</td><td class="ru">OECD, январь 2026</td></tr>
+          <tr><td class="en">Rural and lower-income school districts offering teacher AI training</td><td class="en">Substantially less likely than suburban/wealthy districts</td><td class="en">RAND, 2025</td>
+              <td class="ru">Сельские и бедные округа с обучением учителей</td><td class="ru">Намного менее вероятно</td><td class="ru">RAND, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-7">
+        <span class="en">1.7 Downstream Consequences: Productivity and Career Divergence</span>
+        <span class="ru">1.7 Последствия разрыва: производительность и карьерное расхождение</span>
+      </h2>
+      <p class="en">The adoption gap is already translating into measurable divergence — and the mechanism runs directly through education.</p>
+      <p class="ru">Разрыв в освоении уже превращается в измеримое расхождение — и механизм работает прямо через образование.</p>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;">Higher education has become the primary venue of mass AI adoption: 80–92% of university students use generative AI, versus approximately 23–40% of US adults generally. The credential-holder adoption advantage is now a <strong>2–4× multiplier</strong> on baseline rates.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Высшее образование стало основной площадкой массового освоения ИИ: 80–92% студентов vs. 23–40% взрослых США. Преимущество обладателей степеней — <strong>2–4-кратный множитель</strong> к базовым показателям.</li>
+        <li class="en" style="margin-bottom:0.5rem;">Several studies find AI produces the <strong>largest productivity gains for less-skilled workers</strong> (Noy & Zhang, MIT/Science, 2023; Brynjolfsson et al., NBER, 2025; Dell'Acqua et al., 2023). The technology's equalizing potential is going unrealized at precisely the populations where it would matter most.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Исследования показывают, что ИИ дает <strong>наибольший рост производительности менее квалифицированным работникам</strong> (Noy & Zhang, MIT/Science, 2023; Brynjolfsson et al., NBER, 2025). Потенциал выравнивания не реализуется именно там, где он имел бы наибольший смысл.</li>
+        <li class="en" style="margin-bottom:0.5rem;">Field-level divergence is already visible and will translate to the labor market: a 42-percentage-point within-university adoption gap between Natural Sciences and Literature graduates (IZA / Middlebury, 2025) will produce measurable AI-skill gaps in the same occupational cohorts within 2–3 years.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Расхождение на уровне специальностей уже видно и переведется на рынок труда: разрыв на 42 п.п. в университете между выпускниками Естественных наук и Литературы (IZA / Middlebury, 2025) создаст измеримые ИИ-навыковые разрывы в течение 2–3 лет.</li>
+        <li class="en" style="margin-bottom:0.5rem;">Global: adoption in the Global North grew almost <strong>twice as fast</strong> as the Global South in 2025, widening the gap to 10.6 percentage points (Microsoft AI Economy Institute, 2026). Since educational attainment tracks economic development, this is partly an education gap expressed at the country level.</li>
+        <li class="ru" style="margin-bottom:0.5rem;">Глобально: освоение в Глобальном Севере выросло почти <strong>в два раза быстрее</strong>, чем на Глобальном Юге в 2025 году, расширив разрыв до 10,6 п.п. (Microsoft AI Economy Institute, 2026). Так как образование отслеживает экономическое развитие, это отчасти образовательный разрыв на уровне стран.</li>
+      </ul>
+    </section>
+
+    <!-- PART 2 -->
+    <section id="part2">
+      <p class="part-header en">Part 2 — Understanding the Causes</p>
+      <p class="part-header ru">Часть 2 — Понимание причин</p>
+      <p class="en">The education gap in AI adoption is not simply a story of "more education = more AI." It is a story of credential as proxy for confidence, occupational context, institutional investment, and cultural signal. No single cause suffices.</p>
+      <p class="ru">Образовательный разрыв в освоении ИИ — не просто «больше образования = больше ИИ». Это история диплома как прокси уверенности, профессионального контекста, институциональных инвестиций и культурного сигнала. Одной причины недостаточно.</p>
+
+      <h2 id="s2-1">
+        <span class="en">2.1 Structural and Material Causes</span>
+        <span class="ru">2.1 Структурные и материальные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Occupational sorting determines AI exposure <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Профессиональная сортировка определяет воздействие ИИ <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Workers with college degrees concentrate in occupations where AI tools are currently most developed and deployed. Workers without degrees concentrate in manual, service, and clerical roles where current generative AI tools offer fewer direct workflow applications — and where employer investment in AI upskilling is lower. The structural gap in AI exposure is partly a product of which tasks AI was designed to augment first.</p>
+          <p class="ru">Работники с дипломами концентрируются в профессиях, где ИИ-инструменты наиболее развиты и развернуты. Работники без дипломов — в ручных, сервисных, канцелярских ролях, где ген-ИИ предлагает меньше приложений — и где инвестиции работодателей в обучение ИИ ниже. Структурный разрыв в воздействии ИИ отчасти обусловлен тем, какие задачи ИИ был создан дополнять в первую очередь.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Resource constraints at every level <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Ресурсные ограничения на всех уровнях <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Accessing and learning AI tools requires time, devices, fast internet, and institutional support — all of which correlate with educational level. Only <strong>26%</strong> of US school districts planned AI teacher training for 2024–25, disproportionately in higher-income, suburban districts (RAND, 2025). Lower-educated workers, who tend to have less discretionary time and less employer-sponsored training, face compounding access barriers.</p>
+          <p class="ru">Доступ и обучение требуют времени, устройств, быстрого интернета и поддержки — всё коррелирует с образованием. Только <strong>26%</strong> округов США планировали обучение учителей (RAND, 2025), диспропорционально в богатых районах. Менее образованные работники, с меньшим свободным временем и меньшей поддержкой работодателей, сталкиваются с комплексом барьеров.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Institutional design excludes non-credentialed learners <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Дизайн учреждений исключает некредентиалированных обучающихся <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Most AI literacy curricula are designed for post-secondary contexts. Workplace AI training programs disproportionately serve white-collar employees. Adult education and vocational training systems — the primary pathway for non-credentialed upskilling — have almost no established AI integration. The infrastructure of AI education is built around the population with the highest existing adoption rates.</p>
+          <p class="ru">Большинство ИИ-грамотности программ спроектированы для постсредних контекстов. Программы обучения ИИ на работе непропорционально служат беловоротничкам. Взрослое образование и профессиональные системы — основной путь для некредентиалированных — почти не имеют интеграции ИИ. Инфраструктура ИИ-образования построена вокруг населения с наибольшим освоением.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-2">
+        <span class="en">2.2 Institutional and Systemic Causes</span>
+        <span class="ru">2.2 Институциональные и системные причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">The training investment cycle <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Цикл инвестиций в обучение <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Employers invest AI training where current usage is highest; current usage is highest among college-educated workers in knowledge roles; therefore training resources flow disproportionately to already-advantaged workers; therefore their adoption grows faster. This self-reinforcing cycle is structurally identical to the workplace gender feedback loop: without deliberate correction, it compounds.</p>
+          <p class="ru">Работодатели вкладывают в обучение ИИ там, где использование выше; использование выше среди высокообразованных; поэтому ресурсы идут им диспропорционально; их освоение растёт быстрее. Этот самоусиливающийся цикл структурно идентичен гендерной петле на работе: без сознательного исправления он компаундируется.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">The digital competence paradox at institutional level <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Парадокс цифровой компетентности на институциональном уровне <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">High technical education does not automatically drive AI adoption — even IT instructors face adoption barriers rooted in trust, ethics, and system design concerns (Frontiers in Education, 2026). This means the problem cannot be solved by credentials alone. Institutional context, policy clarity, and trust in AI systems are independent variables.</p>
+          <p class="ru">Высокое техническое образование не автоматически ведёт к освоению ИИ — даже ИТ-инструкторы сталкиваются с барьерами в доверии и этике (Frontiers in Education, 2026). Дипломы не решат. Контекст, политическая ясность, доверие — независимые переменные.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Policy and governance lag creates hidden adoption tax <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Задержка политики и управления создаёт скрытый налог <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">A February 2026 Coursera survey found AI adoption has dramatically outpaced governance. Only <strong>29%</strong> of UK undergraduates feel their institution encourages AI use (HEPI, 2025); over half of US college students report their school discourages or prohibits it (Gallup-Lumina, 2026). Institutional ambivalence effectively penalizes adoption by students who lack the confidence and social networks to experiment outside official channels — which describes first-generation and lower-SES students disproportionately.</p>
+          <p class="ru">Опрос Coursera (февраль 2026) показал: освоение ИИ далеко обогнало управление. Только <strong>29%</strong> студентов UK чувствуют поддержку (HEPI, 2025); свыше половины США отчитываются о запрете (Gallup-Lumina, 2026). Неоднозначность наказывает тех, кто не может экспериментировать вне официальных каналов — первое поколение и низкий СЭС.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-3">
+        <span class="en">2.3 Psychological Causes</span>
+        <span class="ru">2.3 Психологические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">Confidence and domain-specific self-efficacy <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Уверенность и специфичная для области самоэффективность <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">The relationship between education level and AI self-efficacy is mediated by <em>field of study and occupational identity</em>, not just years of schooling. A Literature graduate may hold a higher credential than a STEM associate's degree holder but have lower AI-related confidence. Within higher education, STEM and health students show substantially higher AI enthusiasm and adoption than humanities and language students (HEPI, 2025). Credential level alone is a poor proxy for the confidence that drives adoption.</p>
+          <p class="ru">Связь между образованием и самоэффективностью опосредована <em>областью исследования и профессиональной идентичностью</em>, не просто годами. Выпускник литературы может иметь выше диплом, но ниже ИИ-уверенность. В высшем образовании STEM и здравоохранение намного выше в энтузиазме (HEPI, 2025). Диплом плохо прокси уверенности.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Risk perception: rational, not irrational <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Восприятие риска: рациональное, не иррациональное <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Non-credentialed workers' caution toward AI is partly evidence-responsive. Their occupations face AI displacement with less adaptive capacity: fewer savings, weaker professional networks, less access to retraining. A critical parallel from the gender literature: when experimental conditions <strong>guaranteed net positive employment effects</strong>, the gender gap in AI support disappeared entirely (Borwein et al., PNAS Nexus, 2026). The implication for education-level gaps is untested but plausible: lower-educated workers' skepticism may be similarly malleable if the employment case for AI is made clearly and credibly.</p>
+          <p class="ru">Осторожность менее образованных — отчасти обоснована. Их профессии рискуют вытеснением с низкой адаптивностью: меньше сбережений, слабые сети, меньше переквалификации. Параллель из гендерной литературы: когда гарантирован положительный эффект, разрыв исчезает (Borwein et al., 2026). Для образования: скептицизм может быть пластичным, если четко доказать положительный эффект для занятости.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Social influence and adoption environment <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Социальное влияние и среда освоения <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">UTAUT research shows social influence and peer norms are powerful adoption drivers. College campuses create dense peer-adoption environments where non-use is conspicuous: when 80–92% of peers use AI, adoption is the social norm. Workers in lower-education occupational contexts face the inverse — surrounded by non-adopters, adoption may feel unnecessary or anomalous. The social permission to experiment is unevenly distributed by educational context.</p>
+          <p class="ru">UTAUT показывает: социальное влияние — мощный драйвер. Кампусы создают плотную среду: при 80–92% использования ИИ — норма. Работники низшего образования окружены не-пользователями — ИИ кажется ненужным. Социальная санкция распределена неравномерно.</p>
+        </div>
+      </details>
+
+      <h2 id="s2-4">
+        <span class="en">2.4 Cultural and Historical Causes</span>
+        <span class="ru">2.4 Культурные и исторические причины</span>
+      </h2>
+
+      <details>
+        <summary class="en">AI as a credentialed domain <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">ИИ как область с полномочиями <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Since the 1984 inflection point when personal computers were marketed primarily to technically-oriented users and students — and when women's CS enrollment peaked and declined — computing has carried a cultural association with formal technical education. Generative AI inherits this coding. AI interfaces are often text-heavy and assume abstract reasoning and formal language use that correlates with educational attainment. The default imagined user of AI tools is someone who writes, reads, and frames problems in a register that formal education produces.</p>
+          <p class="ru">С 1984 года, когда персональные компьютеры продавались техничным и студентам, вычисления связаны с формальным техническим образованием. ИИ наследует это кодирование. Интерфейсы текстонасыщенные, предполагают абстрактное мышление и формальный язык, коррелирующие с образованием. Типичный пользователь ИИ — образованный писатель и мыслитель.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Socialization and early-life exposure <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Социализация и ранний опыт <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Access to computers and digital tools in school and at home created compounding early-life experience gaps that shape confidence decades later (Margolis & Fisher, Unlocking the Clubhouse, MIT Press, 2002). Students in lower-resourced schools received less technology exposure, less encouragement to experiment, and less modeling of computational thinking — creating divergent baselines before any AI tool is introduced. The education gap in AI adoption is partly the prior digital divide, extended forward.</p>
+          <p class="ru">Доступ к компьютерам в школе создал разрывы, формирующие уверенность десятилетия спустя (Margolis & Fisher, 2002). Студенты менее обеспеченных школ получали меньше экспозиции, меньше поощрения, меньше моделирования вычислительного мышления — расходящиеся базовые линии. Образовательный разрыв ИИ отчасти — расширенный цифровой разрыв.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary class="en">Goal congruity: who AI is "for" <span class="evidence-quality">Well-evidenced</span></summary>
+        <summary class="ru">Конгруэнтность целей: для кого ИИ <span class="evidence-quality">Хорошо доказано</span></summary>
+        <div class="details-body">
+          <p class="en">Goal Congruity Theory (Diekman et al., 2010) predicts that individuals assess technologies partly by whether they are congruent with their professional and social identity. If AI is culturally coded as a tool for knowledge workers, academics, and technologists, workers in manual, service, or care-oriented roles may perceive it as incongruent with their identity — not because AI cannot help them, but because the cultural framing of AI has not reached them. This is a construction that targeted communication can change.</p>
+          <p class="ru">Теория конгруэнтности целей (Diekman et al., 2010) предсказывает: люди оценивают технологии по конгруэнтности с идентичностью. Если ИИ — инструмент для знающих, то работники услуг видят его неконгруэнтным — не потому что ИИ не помогает, а потому что культурное кадрирование не достигло их. Это конструкция, которую коммуникация может изменить.</p>
+        </div>
+      </details>
+
+    </section>
+
+    <!-- PART 3 -->
+    <section id="part3">
+      <p class="part-header en">Part 3 — Synthesis</p>
+      <p class="part-header ru">Часть 3 — Синтез</p>
+
+      <h2>
+        <span class="en">The Mechanisms Are Interlocking</span>
+        <span class="ru">Механизмы взаимосвязаны</span>
+      </h2>
+      <p class="en">The education gap in AI adoption is a <strong>system</strong>: historical inequalities in school resourcing create early digital experience deficits → which produce lower AI self-efficacy → which are reinforced by occupational sorting into roles with less AI exposure → which limits adoption opportunity → which allows employer training investment to flow preferentially to already-credentialed workers → which widens the productivity and earnings gap → which rationally increases lower-educated workers' concern about AI displacement → which further reduces engagement. Each step feeds the next.</p>
+      <p class="ru">Образовательный разрыв в ИИ — это <strong>система</strong>: историческое неравенство в школьных ресурсах создаёт дефицит раннего опыта → низкую самоэффективность → усиливается профессиональной сортировкой → ограничивает возможности → позволяет инвестициям идти высокообразованным → расширяет разрыв в производительности → рационально усиливает озабоченность вытеснением → снижает вовлечение. Каждый шаг питает следующий.</p>
+
+      <h2>
+        <span class="en">The Equalizer Paradox</span>
+        <span class="ru">Парадокс выравнивания</span>
+      </h2>
+      <p class="en">The gap's most counterintuitive feature: experimental evidence shows AI produces the <strong>largest productivity gains for less-skilled workers</strong> (Noy & Zhang, 2023; Brynjolfsson et al., 2025). The technology's equalizing potential is greatest precisely where adoption is lowest. The education gap in AI is therefore not only an inequality story — it is an efficiency story. The largest unrealized gains from AI are in the populations currently least likely to adopt it.</p>
+      <p class="ru">Парадокс разрыва: экспериментальные данные показывают, что ИИ даёт <strong>наибольший прирост менее квалифицированным</strong> (Noy & Zhang, 2023; Brynjolfsson et al., 2025). Потенциал выравнивания наибольший там, где освоение наименьшее. Образовательный разрыв — история и эффективности, и неравенства. Наибольшие нереализованные выигрыши — где наименьшее освоение.</p>
+
+      <h2>
+        <span class="en">What the Evidence Suggests About Intervention</span>
+        <span class="ru">Что данные говорят о вмешательстве</span>
+      </h2>
+      <ul style="padding-left:1.5rem; margin-bottom:1.2rem;">
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Peer networks and community-based learning are as important as curricula.</strong> Informal learning and peer networks are key drivers of adoption among less-educated populations (Gambacorta et al., 2025). Programs that ignore social context miss the mechanism.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Сетевое обучение важно как учебные планы.</strong> Неформальное обучение и сетевые связи — ключевые драйверы для менее образованных (Gambacorta et al., 2025). Программы, игнорирующие социальный контекст, упускают механизм.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Institutional policy clarity is a precondition.</strong> Over half of US college students report their institution discourages AI use (Gallup-Lumina, 2026). Ambiguous or prohibitive institutional stances effectively penalize the students who most need to build AI fluency — first-generation and lower-SES students who lack the independent networks to experiment outside official channels.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Ясность политики учреждения — предусловие.</strong> Свыше половины студентов США сообщают, что школа не поддерживает ИИ (Gallup-Lumina, 2026). Неопределённые позиции наказывают тех, кому нужна беглость ИИ больше всего.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>AI literacy must reach K-12, not just higher education.</strong> Only 14% of US K-12 schools taught ethical AI use as of late 2024. Compounding disadvantage from early non-exposure means higher-education and workplace interventions alone cannot close the gap.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>ИИ-грамотность должна начинаться в K-12.</strong> Только 14% школ США обучают этике ИИ (2024). Компаундированный ущерб от раннего отсутствия означает, что высшее образование одно не закроет разрыв.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Framing the employment case clearly.</strong> Evidence from the gender literature shows that removing uncertainty about AI's employment effects closes the skepticism gap (Borwein et al., 2026). A parallel intervention — communicating clearly that AI produces the largest gains for less-skilled workers — is evidence-based and untested in the education-level context.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Четко о занятости.</strong> Гендерная литература показывает: уверенность в занятости закрывает скептицизм (Borwein et al., 2026). Параллельное вмешательство — четкое сообщение о выигрышах менее квалифицированных — обоснованно и не тестировано на образовательном уровне.</li>
+        <li class="en" style="margin-bottom:0.5rem;"><strong>Adult education and vocational systems need AI integration.</strong> Currently almost absent, this is the primary pathway for non-credentialed upskilling and the most direct lever for reaching workers already outside formal education.</li>
+        <li class="ru" style="margin-bottom:0.5rem;"><strong>Взрослое образование должно интегрировать ИИ.</strong> Почти отсутствует, это основной путь для некредентиалированных и прямой рычаг для работников вне системы.</li>
+      </ul>
+
+      <h2>
+        <span class="en">The Open Question</span>
+        <span class="ru">Открытый вопрос</span>
+      </h2>
+      <p class="en">Is the education gap closing or widening? The evidence leans toward widening in the near term. Within higher education, adoption has surged dramatically — from 66% to 92% of UK students in a single year (HEPI, 2025) — while general adult adoption in the US sits at roughly 23–40%. The absolute gap between the highly-educated and the general population is growing even as the highly-educated cohort approaches saturation.</p>
+      <p class="ru">Образовательный разрыв сужается или расширяется? Данные указывают на расширение. В высшем образовании освоение выросло: от 66% до 92% студентов UK за год (HEPI, 2025) — тогда как взрослые США: 23–40%. Абсолютный разрыв растёт, даже при насыщении высокообразованных.</p>
+
+      <p class="en">The central unresolved question is whether AI's demonstrated ability to close performance gaps (larger productivity gains for less-skilled users) will draw in lower-educated workers through demonstrated value before the credentialed population's first-mover advantage becomes entrenched. Early-mover advantages in new technologies tend to compound rather than dissolve.</p>
+      <p class="ru">Главный нерешённый вопрос: привлечёт ли доказанная способность ИИ закрывать разрывы (больший прирост менее квалифицированных) менее образованных до того, как преимущество первопроходца станет закреплённым? Ранние преимущества в технологиях обычно компаундируются, а не растворяются.</p>
+
+      <p class="en">What remains thin in the evidence: high-quality studies on AI adoption specifically among adult learners, vocational students, and workers in manual and service industries. Most adoption research is conducted in university settings or knowledge-worker populations — precisely the populations least likely to be on the wrong side of the education gap. The evidence base has the same blind spot as the gap itself.</p>
+      <p class="ru">Слабые места в данных: высококачественные исследования ИИ среди взрослых, профессиональных студентов, рабочих. Большинство исследований проводится в университетах или среди знающих работников — точно в группах с наименьшим разрывом. База данных имеет тот же слепой пункт, что и сам разрыв.</p>
+    </section>
+
+    <!-- Sources -->
+    <section id="sources" class="sources-section">
+      <h2>
+        <span class="en">Sources</span>
+        <span class="ru">Источники</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Authors / Organization</th><th class="en">Year</th><th class="en">Title / Source</th>
+            <th class="ru">Авторы / Организация</th><th class="ru">Год</th><th class="ru">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Bick, Blandin & Deming</td><td>2024–25</td><td class="en">The rapid adoption of generative AI. <em>NBER Working Paper 32966</em></td>
+              <td class="ru">Bick, Blandin & Deming</td><td>2024–25</td><td class="ru">Быстрое освоение ген-ИИ. <em>NBER Working Paper 32966</em></td></tr>
+          <tr><td class="en">Bowdoin / Harvard GSE</td><td>2024</td><td class="en">AI in High School Education: Trends, Challenges, and Opportunities</td>
+              <td class="ru">Bowdoin / Harvard GSE</td><td>2024</td><td class="ru">ИИ в средней школе: тренды и вызовы</td></tr>
+          <tr><td class="en">Brynjolfsson, Li & Raymond</td><td>2025</td><td class="en">Generative AI at work. <em>NBER Working Paper 31161</em></td>
+              <td class="ru">Brynjolfsson et al.</td><td>2025</td><td class="ru">Генеративный ИИ на работе. <em>NBER Working Paper 31161</em></td></tr>
+          <tr><td class="en">Contractor & Reyes</td><td>2025</td><td class="en">Generative AI in Higher Education: Evidence from an Elite College. <em>IZA Discussion Paper 18055</em></td>
+              <td class="ru">Contractor & Reyes</td><td>2025</td><td class="ru">Генеративный ИИ в высшем образовании. <em>IZA Discussion Paper 18055</em></td></tr>
+          <tr><td class="en">European Commission / JRC</td><td>2025</td><td class="en">Impact of digitalisation: 30% of EU workers use AI</td>
+              <td class="ru">European Commission / JRC</td><td>2025</td><td class="ru">Воздействие цифровизации: 30% работников ЕС используют ИИ</td></tr>
+          <tr><td class="en">Federal Reserve Board</td><td>2025</td><td class="en">Educational Exposure to Generative Artificial Intelligence. <em>FEDS Notes</em>, February 2026</td>
+              <td class="ru">Federal Reserve Board</td><td>2025</td><td class="ru">Образовательная экспозиция к ген-ИИ. <em>FEDS Notes</em>, февраль 2026</td></tr>
+          <tr><td class="en">Frontiers in Education</td><td>2026</td><td class="en">Barriers to AI adoption among instructors of IT-related disciplines in higher education</td>
+              <td class="ru">Frontiers in Education</td><td>2026</td><td class="ru">Барьеры освоения ИИ среди ИТ-инструкторов высшего образования</td></tr>
+          <tr><td class="en">Gambacorta et al.</td><td>2025</td><td class="en">Generative AI: Uneven adoption, labour market returns, and policy implications. <em>CEPR/VoxEU</em></td>
+              <td class="ru">Gambacorta et al.</td><td>2025</td><td class="ru">Генеративный ИИ: неравномерное освоение, рынок труда. <em>CEPR/VoxEU</em></td></tr>
+          <tr><td class="en">Gallup / Lumina Foundation</td><td>2026</td><td class="en">State of Higher Education Study. N=6,010 US adults</td>
+              <td class="ru">Gallup / Lumina Foundation</td><td>2026</td><td class="ru">Состояние высшего образования. N=6 010</td></tr>
+          <tr><td class="en">HEPI / Kortext</td><td>2025</td><td class="en">Student Generative AI Survey 2025. N=1,041 UK undergraduates</td>
+              <td class="ru">HEPI / Kortext</td><td>2025</td><td class="ru">Опрос студентов о ген-ИИ. N=1 041</td></tr>
+          <tr><td class="en">Microsoft AI Economy Institute</td><td>2026</td><td class="en">Global AI Adoption in 2025: A Widening Digital Divide</td>
+              <td class="ru">Microsoft AI Economy Institute</td><td>2026</td><td class="ru">Глобальное освоение ИИ 2025: расширяющийся разрыв</td></tr>
+          <tr><td class="en">Noy & Zhang</td><td>2023</td><td class="en">Experimental evidence on the productivity effects of generative AI. <em>Science / MIT</em></td>
+              <td class="ru">Noy & Zhang</td><td>2023</td><td class="ru">Экспериментальные доказательства о производительности ген-ИИ. <em>Science / MIT</em></td></tr>
+          <tr><td class="en">OECD</td><td>January 2026</td><td class="en">AI use by individuals surges across the OECD as adoption by firms continues to expand</td>
+              <td class="ru">OECD</td><td>январь 2026</td><td class="ru">Использование ИИ людьми возрастает по OECD</td></tr>
+          <tr><td class="en">Pew Research Center</td><td>Oct 2025</td><td class="en">About 1 in 5 US workers now use AI in their job. N=8,750</td>
+              <td class="ru">Pew Research Center</td><td>окт 2025</td><td class="ru">1 из 5 работников США использует ИИ. N=8 750</td></tr>
+          <tr><td class="en">RAND Corporation</td><td>2025</td><td class="en">District AI Training and Policy Survey. US K-12</td>
+              <td class="ru">RAND Corporation</td><td>2025</td><td class="ru">Опрос обучения ИИ округов. K-12 США</td></tr>
+          <tr><td class="en">US Dept. of Education</td><td>2024</td><td class="en">School Pulse Panel: AI use and instruction in K-12 schools</td>
+              <td class="ru">US Dept. of Education</td><td>2024</td><td class="ru">School Pulse Panel: ИИ в K-12</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Prev/Next -->
+    <div class="gap-nav">
+      <a href="gap-age.html">
+        <span class="en">← Age Gap</span>
+        <span class="ru">← Возрастной разрыв</span>
+      </a>
+      <span class="spacer"></span>
+      <a href="gap-once-bitten.html">
+        <span class="en">Once Bitten, Twice Shy →</span>
+        <span class="ru">Обжёгшись на молоке →</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Right-side Navigator -->
+  <nav class="section-nav">
+    <p class="section-nav-title en">Contents</p>
+    <p class="section-nav-title ru">Содержание</p>
+    <a href="#summary" class="en">Executive Summary</a>
+    <a href="#summary" class="ru">Резюме</a>
+    <a href="#s1-1" class="en">1.1 Key Numbers</a>
+    <a href="#s1-1" class="ru">1.1 Цифры</a>
+    <a href="#s1-2" class="en">1.2 Adoption Rates</a>
+    <a href="#s1-2" class="ru">1.2 Освоение</a>
+    <a href="#s1-3" class="en">1.3 Attitudes</a>
+    <a href="#s1-3" class="ru">1.3 Отношение</a>
+    <a href="#s1-4" class="en">1.4 Institutional Loop</a>
+    <a href="#s1-4" class="ru">1.4 Петля</a>
+    <a href="#s1-5" class="en">1.5 AI Literacy</a>
+    <a href="#s1-5" class="ru">1.5 Грамотность</a>
+    <a href="#s1-6" class="en">1.6 Vulnerability</a>
+    <a href="#s1-6" class="ru">1.6 Уязвимость</a>
+    <a href="#s1-7" class="en">1.7 Consequences</a>
+    <a href="#s1-7" class="ru">1.7 Последствия</a>
+    <a href="#s2-1" class="en">2.1 Structural</a>
+    <a href="#s2-1" class="ru">2.1 Структурные</a>
+    <a href="#s2-2" class="en">2.2 Institutional</a>
+    <a href="#s2-2" class="ru">2.2 Институциональные</a>
+    <a href="#s2-3" class="en">2.3 Psychological</a>
+    <a href="#s2-3" class="ru">2.3 Психологические</a>
+    <a href="#s2-4" class="en">2.4 Cultural</a>
+    <a href="#s2-4" class="ru">2.4 Культурные</a>
+    <a href="#part3" class="en">Synthesis</a>
+    <a href="#part3" class="ru">Синтез</a>
+    <a href="#sources" class="en">Sources</a>
+    <a href="#sources" class="ru">Источники</a>
+  </nav>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html">
+        <span class="en">← All gaps</span>
+        <span class="ru">← Все разрывы</span>
+      </a>
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const sections = document.querySelectorAll('section[id], h2[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector('.section-nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Language Gap in AI Adoption — AI Adoption Gap</title>
+  <meta name="description" content="Countries where the dominant language is low-resource in AI show 20% lower adoption rates. Evidence, data, and causes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="lang-switch">
+  <button class="on" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Hero -->
+<div class="gap-hero">
+  <div class="container-gap">
+    <a href="index.html" class="gap-hero-back">
+      <span class="en">← Back to overview</span>
+      <span class="ru">← К обзору</span>
+    </a>
+    <p class="gap-num">
+      <span class="en">03 / LANGUAGE GAP</span>
+      <span class="ru">03 / ЯЗЫКОВОЙ РАЗРЫВ</span>
+    </p>
+    <h1>
+      <span class="en">The Language Gap in AI Adoption</span>
+      <span class="ru">Языковой разрыв во внедрении ИИ</span>
+    </h1>
+    <p class="sub">
+      <span class="en">Evidence, Data, and Understanding of Causes</span>
+      <span class="ru">Данные, доказательства и понимание причин</span>
+    </p>
+    <div class="gap-headline-stat">
+      <div class="stat">15×</div>
+      <div class="stat-label">
+        <span class="en">More tokens — Kyrgyz vs. English</span>
+        <span class="ru">Больше токенов — киргизский vs. английский</span>
+      </div>
+      <div class="stat-source">Petrov et al., NeurIPS 2023; Turkic languages up to 15× penalty</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="gap-layout">
+
+  <!-- Content -->
+  <main class="gap-content">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <p class="part-header en">Executive Summary</p>
+      <p class="part-header ru">Краткое резюме</p>
+      <div class="exec-summary">
+        <ul>
+          <li class="en">Countries where the dominant language is low-resource in AI systems show AI adoption rates roughly <strong>20% lower</strong> than comparable countries, even after controlling for GDP and internet access (Microsoft AI Economy Institute, 147 countries, 2025).</li>
+          <li class="ru">Страны, где основной язык малоресурсен в системах ИИ, показывают показатели освоения ИИ на <strong>~20% ниже</strong> сопоставимых стран, даже после контроля ВВП и интернет-доступа (Microsoft AI Economy Institute, 147 стран, 2025).</li>
+          <li class="en">The cost gap is structural: identical content expressed in Kyrgyz, Arabic, or Hindi requires up to <strong>15 times more tokens</strong> than English — meaning non-English speakers pay more per idea and receive a proportionally smaller context window (Petrov et al., NeurIPS 2023).</li>
+          <li class="ru">Разрыв в стоимости структурный: одинаковый контент на киргизском, арабском или хинди требует <strong>до 15 раз больше токенов</strong>, чем на английском — означая, что говорящие на других языках платят больше за идею (Petrov et al., NeurIPS 2023).</li>
+          <li class="en">Quality failures are measurable: AI performance in Kyrgyz is so poor that ChatGPT routinely substitutes Kazakh vocabulary into Kyrgyz responses, and Kazakh scored only <strong>1.01/5.00</strong> on clinical advice quality versus <strong>3.32</strong> for English (Kursiv.media, 2025; ScienceDirect, 2024).</li>
+          <li class="ru">Отказы в качестве измеримы: производительность ИИ на киргизском настолько низкая, что ChatGPT подставляет казахскую лексику в киргизские ответы; казахский получил всего <strong>1.01/5.00</strong> по качеству клинических советов vs. <strong>3.32</strong> для английского (Kursiv.media, 2025; ScienceDirect, 2024).</li>
+          <li class="en">Software developers using AI in Russian or Kazakh gained <strong>13.8% productivity</strong> versus <strong>17.1%</strong> for English-language users — a 24% relative gap (Stanford, ~100,000 developers, 60 countries, 2025).</li>
+          <li class="ru">Разработчики, использующие ИИ на русском или казахском, получили <strong>13.8% производительности</strong> против <strong>17.1%</strong> для англоязычных пользователей — 24% относительный разрыв (Stanford, ~100 000 разработчиков, 60 стран, 2025).</li>
+          <li class="en">The gap is widening, not closing: global adoption for low-resource language countries grew slower in both absolute and relative terms; the North–South adoption divide <strong>widened from 9.8 to 10.6 percentage points</strong> during 2025 (Microsoft, 2025).</li>
+          <li class="ru">Разрыв расширяется, а не сужается: рост в странах с малоресурсными языками медленнее; разрыв Север–Юг <strong>расширился с 9.8 до 10.6 п.п.</strong> в 2025 (Microsoft, 2025).</li>
+          <li class="en">No major AI provider has implemented language-adjusted pricing despite years of documented evidence — this is a pricing policy choice, not a technical constraint.</li>
+          <li class="ru">Ни один крупный поставщик ИИ не внедрил языковую коррекцию цены несмотря на годы свидетельств — это выбор политики ценообразования, не техническое ограничение.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section id="part1">
+      <p class="part-header en">Part 1 — The Evidence</p>
+      <p class="part-header ru">Часть 1 — Доказательства</p>
+
+      <h2 id="s1-1">
+        <span class="en">1.1 Key Numbers at a Glance</span>
+        <span class="ru">1.1 Ключевые цифры</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Statistic</th><th class="en">Figure</th><th class="en">Source</th>
+            <th class="ru">Показатель</th><th class="ru">Цифра</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Lower AI adoption in low-resource language countries</td><td class="en"><strong>~20% lower</strong></td><td class="en">Microsoft AI Economy Institute, 147 countries, 2025</td>
+              <td class="ru">Более низкое внедрение ИИ в странах с малоресурсными языками</td><td class="ru"><strong>~20% ниже</strong></td><td class="ru">Microsoft AI Economy Institute, 147 стран, 2025</td></tr>
+          <tr><td class="en">Max tokenization length difference for identical content</td><td class="en"><strong>Up to 15×</strong></td><td class="en">Petrov et al., NeurIPS 2023</td>
+              <td class="ru">Макс. разница длины токенизации для одинакового контента</td><td class="ru"><strong>До 15×</strong></td><td class="ru">Petrov et al., NeurIPS 2023</td></tr>
+          <tr><td class="en">Effective cost premium: Russian vs. English (GPT-4o)</td><td class="en"><strong>+69%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Эффективная надбавка: русский vs. английский</td><td class="ru"><strong>+69%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">Effective cost premium: Hindi vs. English (GPT-4o)</td><td class="en"><strong>+63%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Эффективная надбавка: хинди vs. английский</td><td class="ru"><strong>+63%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">AI clinical advice quality: Kazakh vs. English (5-point scale)</td><td class="en"><strong>1.01 vs. 3.32</strong></td><td class="en">ScienceDirect, 50 patient profiles, 2024</td>
+              <td class="ru">Качество клинических советов: казахский vs. английский</td><td class="ru"><strong>1.01 vs. 3.32</strong></td><td class="ru">ScienceDirect, 50 пациентов, 2024</td></tr>
+          <tr><td class="en">Productivity gain: AI in English vs. Russian/Kazakh</td><td class="en"><strong>17.1% vs. 13.8%</strong></td><td class="en">Stanford, ~100K developers, 60 countries, 2025</td>
+              <td class="ru">Рост производительности: ИИ на английском vs. русском/казахском</td><td class="ru"><strong>17.1% vs. 13.8%</strong></td><td class="ru">Stanford, ~100K разработчиков, 60 стран, 2025</td></tr>
+          <tr><td class="en">South Korea adoption rank jump after LLM quality improvement</td><td class="en"><strong>25th → 18th</strong></td><td class="en">Microsoft, 2025</td>
+              <td class="ru">Скачок рейтинга Южной Кореи после улучшения LLM</td><td class="ru"><strong>25-й → 18-й</strong></td><td class="ru">Microsoft, 2025</td></tr>
+          <tr><td class="en">Global North vs. South adoption gap</td><td class="en"><strong>23% vs. 13%</strong></td><td class="en">Microsoft, 1B+ devices, 2025</td>
+              <td class="ru">Глобальный разрыв Север vs. Юг</td><td class="ru"><strong>23% vs. 13%</strong></td><td class="ru">Microsoft, 1B+ устройств, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-2">
+        <span class="en">1.2 Global and Cross-Group Adoption Rates</span>
+        <span class="ru">1.2 Глобальные показатели освоения</span>
+      </h2>
+      <p class="en">The language adoption gap appears consistently across geographies, income levels, and use cases. It is not an artifact of poverty — it persists after economic controls.</p>
+      <p class="ru">Языковой разрыв освоения устойчиво проявляется географически, по доходу и сценариям использования. Это не артефакт бедности — сохраняется после контроля экономики.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Context / Study</th><th class="en">High-resource lang.</th><th class="en">Low-resource lang.</th><th class="en">Source</th>
+            <th class="ru">Контекст</th><th class="ru">Высокоресурсный язык</th><th class="ru">Малоресурсный язык</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Global (147 countries)</td><td class="en">Baseline</td><td class="en"><strong>~20% lower odds</strong></td><td class="en">Microsoft, 2025</td>
+              <td class="ru">Глобально (147 стран)</td><td class="ru">Базис</td><td class="ru"><strong>~20% ниже шансы</strong></td><td class="ru">Microsoft, 2025</td></tr>
+          <tr><td class="en">South Korea (post-quality improvement)</td><td class="en">~30%+</td><td class="en">~26% (pre-improvement)</td><td class="en">Microsoft, 2025</td>
+              <td class="ru">Южная Корея (после улучшения)</td><td class="ru">~30%+</td><td class="ru">~26% (до улучшения)</td><td class="ru">Microsoft, 2025</td></tr>
+          <tr><td class="en">Sub-Saharan Africa</td><td class="en">N/A</td><td class="en"><strong>&lt;20% all countries</strong></td><td class="en">Microsoft, 2025</td>
+              <td class="ru">Африка к югу от Сахары</td><td class="ru">—</td><td class="ru"><strong>&lt;20% все страны</strong></td><td class="ru">Microsoft, 2025</td></tr>
+          <tr><td class="en">Developer productivity: Kazakh vs. English</td><td class="en">17.1% gain</td><td class="en"><strong>13.8% gain</strong></td><td class="en">Stanford, 2025</td>
+              <td class="ru">Производительность разработчика: казахский vs. английский</td><td class="ru">17.1%</td><td class="ru"><strong>13.8%</strong></td><td class="ru">Stanford, 2025</td></tr>
+          <tr><td class="en">ChatGPT clinical quality: English vs. Kazakh</td><td class="en">3.32 / 5</td><td class="en"><strong>1.01 / 5</strong></td><td class="en">ScienceDirect, 2024</td>
+              <td class="ru">Качество клинических советов ChatGPT</td><td class="ru">3.32 / 5</td><td class="ru"><strong>1.01 / 5</strong></td><td class="ru">ScienceDirect, 2024</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="en"><strong>Important exception: the urban–rural and educated–uneducated splits within Kyrgyzstan.</strong> The language gap is not uniform within a country. In Kyrgyzstan, Russian-fluent urban professionals in Bishkek have access to a substantially higher tier of AI capability than Kyrgyz-dominant rural users. Russian-language AI performs at roughly the same level as other medium-resource languages — meaning bilingualism correlates with AI access, and bilingualism in Kyrgyzstan correlates closely with socioeconomic status. The language gap thus compounds and echoes the income gap within the same national borders.</p>
+        <p class="ru"><strong>Важное исключение: различия городско-сельские и образованные-необразованные в Кыргызстане.</strong> Языковой разрыв неоднороден внутри страны. В Кыргызстане русскоговорящие городские профессионалы в Бишкеке имеют доступ к значительно более высокому уровню возможностей ИИ, чем киргизскоязычные сельские пользователи. Русскоязычный ИИ работает примерно на уровне других среднересурсных языков — двуязычие коррелирует с доступом ИИ, и в Кыргызстане двуязычие тесно коррелирует со статусом.</p>
+      </div>
+
+      <h2 id="s1-3">
+        <span class="en">1.3 Attitudes, Trust, and Emotional Responses</span>
+        <span class="ru">1.3 Отношение, доверие и эмоциональные реакции</span>
+      </h2>
+      <p class="en">Trust in AI is not uniformly distributed. Underrepresented language communities report systematically different emotional relationships with AI tools — ones grounded in direct experience of failure, not abstract concern.</p>
+      <p class="ru">Доверие к ИИ распределено неравномерно. Недопредставленные языковые сообщества сообщают о систематически различных эмоциональных отношениях с инструментами ИИ — основанных на прямом опыте отказа, а не абстрактной озабоченности.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Attitude / Behavior</th><th class="en">High-resource lang. users</th><th class="en">Low-resource lang. users</th><th class="en">Source</th>
+            <th class="ru">Установка</th><th class="ru">Высокоресурсные пользователи</th><th class="ru">Малоресурсные пользователи</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Global AI trust (% who view as trustworthy)</td><td class="en">Higher in advanced economies</td><td class="en"><strong>58% view as untrustworthy</strong></td><td class="en">KPMG/Melbourne, 48,340 people, 47 countries, 2025</td>
+              <td class="ru">Глобальное доверие к ИИ</td><td class="ru">Выше в развитых экономиках</td><td class="ru"><strong>58% считают недостойным доверия</strong></td><td class="ru">KPMG/Melbourne, 48 340 чел., 2025</td></tr>
+          <tr><td class="en">Trust trend since pre-ChatGPT era</td><td class="en">Stable or improving</td><td class="en"><strong>Falling in emerging economies</strong></td><td class="en">KPMG/Melbourne, 2025</td>
+              <td class="ru">Тренд доверия</td><td class="ru">Стабилен или улучшается</td><td class="ru"><strong>Падает в развивающихся экономиках</strong></td><td class="ru">KPMG/Melbourne, 2025</td></tr>
+          <tr><td class="en">Response to low-quality output</td><td class="en">Continue in native language</td><td class="en"><strong>Switch to English/Russian</strong> for better results</td><td class="en">Rest of World, 2023; UNDP 2025</td>
+              <td class="ru">Реакция на низкокачественный вывод</td><td class="ru">Продолжать на родном языке</td><td class="ru"><strong>Переключиться на английский/русский</strong></td><td class="ru">Rest of World, 2023; UNDP 2025</td></tr>
+          <tr><td class="en">Perception of AI relevance to own culture</td><td class="en">High</td><td class="en"><strong>Low — AI seen as "foreign"</strong></td><td class="en">UNDP Eurasia AI Language Gap, 2025</td>
+              <td class="ru">Восприятие релевантности ИИ к своей культуре</td><td class="ru">Высокое</td><td class="ru"><strong>Низкое — ИИ как «иностранный»</strong></td><td class="ru">UNDP Eurasia, 2025</td></tr>
+          <tr><td class="en">Willingness for high-stakes tasks (health, legal)</td><td class="en">Higher</td><td class="en"><strong>Lower, after error experiences</strong></td><td class="en">Nature, 2024; ScienceDirect, 2024</td>
+              <td class="ru">Готовность для высокорисковых задач</td><td class="ru">Выше</td><td class="ru"><strong>Ниже после ошибок</strong></td><td class="ru">Nature, 2024; ScienceDirect, 2024</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-4">
+        <span class="en">1.4 The Feedback Loop</span>
+        <span class="ru">1.4 Петля обратной связи</span>
+      </h2>
+      <p class="en">The language AI gap is not static — it is actively self-reinforcing through a cycle that operates simultaneously at the individual, institutional, and technical levels.</p>
+      <p class="ru">Языковой разрыв ИИ не статичен — активно саморазвивается через цикл на индивидуальном, институциональном и техническом уровнях.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Stage</th><th class="en">Mechanism</th><th class="en">Evidence</th>
+            <th class="ru">Этап</th><th class="ru">Механизм</th><th class="ru">Доказательство</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">1. Poor quality output</td><td class="en">AI produces errors, wrong-language responses, non-functional outputs</td><td class="en">Kyrgyz/Kazakh substitution (Kursiv, 2025); clinical failure (ScienceDirect, 2024)</td>
+              <td class="ru">1. Низкокачественный результат</td><td class="ru">ИИ производит ошибки, неправильные языки</td><td class="ru">Киргиз/Казах подстановка (Kursiv, 2025)</td></tr>
+          <tr><td class="en">2. User frustration and workarounds</td><td class="en">Users switch to English/Russian to get better results, or abandon</td><td class="en">UNDP specialists (2025); Rest of World (2023)</td>
+              <td class="ru">2. Разочарование пользователя</td><td class="ru">Пользователи переключаются на английский/русский или отказываются</td><td class="ru">Специалисты UNDP (2025)</td></tr>
+          <tr><td class="en">3. Reduced native-language data generation</td><td class="en">Less user interaction = less feedback data for improvement</td><td class="en">Structural: Stanford HAI, 2025</td>
+              <td class="ru">3. Снижение данных на родном языке</td><td class="ru">Меньше взаимодействия = меньше обратной связи</td><td class="ru">Структурный: Stanford HAI, 2025</td></tr>
+          <tr><td class="en">4. Models remain underpowered</td><td class="en">Next training cycle under-represents language, perpetuating gap</td><td class="en">Token Tax (arXiv 2025); KyrgyzNLP (arXiv 2024)</td>
+              <td class="ru">4. Модели остаются слабыми</td><td class="ru">Следующий цикл обучения недопредставляет язык</td><td class="ru">Token Tax (arXiv 2025)</td></tr>
+          <tr><td class="en">5. Adoption gap widens</td><td class="en">Low-resource language users fall behind in skills, productivity</td><td class="en">Microsoft 147-country study (2025)</td>
+              <td class="ru">5. Разрыв освоения расширяется</td><td class="ru">Пользователи отстают в навыках, производительности</td><td class="ru">Microsoft, 2025</td></tr>
+          <tr><td class="en">6. Language shift risk</td><td class="en">Reliance on Russian/English may accelerate native language erosion</td><td class="en">Saadanbekov warning (Kursiv, 2025)</td>
+              <td class="ru">6. Риск смены языка</td><td class="ru">Зависимость от русского/английского может ускорить эрозию</td><td class="ru">Saadanbekov (Kursiv, 2025)</td></tr>
+        </tbody>
+      </table>
+
+      <p class="en">The Kyrgyzstan case illustrates an additional dimension: the post-Soviet linguistic hierarchy. Russian is not merely better-supported in AI — it is the language of education, science, and institutional power. AI systems that work well in Russian and poorly in Kyrgyz actively reinforce this hierarchy, giving Russian-fluent users compounding advantage in an already unequal environment.</p>
+      <p class="ru">Кыргызский случай иллюстрирует дополнительное измерение: постсоветская языковая иерархия. Русский язык не только лучше поддерживается в ИИ — он язык образования, науки, институциональной власти. Системы ИИ, работающие хорошо на русском и плохо на киргизском, активно усиливают эту иерархию.</p>
+
+      <h2 id="s1-5">
+        <span class="en">1.5 The Knowledge and Literacy Dimension</span>
+        <span class="ru">1.5 Измерение знаний и грамотности</span>
+      </h2>
+      <p class="en">The language gap operates differently from the gender confidence gap. For low-resource language users, the barrier is not primarily self-assessed competence — it is actual, measurable quality failure. Users are not underestimating their ability; the tools genuinely do not work.</p>
+      <p class="ru">Языковой разрыв работает иначе, чем гендерный разрыв уверенности. Для малоресурсных пользователей барьер — не самооценка компетентности, а реальный, измеримый отказ в качестве. Пользователи не недооценивают свои возможности; инструменты просто не работают.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Barrier type</th><th class="en">Driver</th><th class="en">Intervention implication</th>
+            <th class="ru">Тип барьера</th><th class="ru">Движущий фактор</th><th class="ru">Последствия для вмешательства</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Confidence gap (gender)</td><td class="en">Self-assessed competence below actual ability</td><td class="en">Messaging, role models, community work</td>
+              <td class="ru">Разрыв уверенности (гендер)</td><td class="ru">Самооценка ниже способностей</td><td class="ru">Сообщения, модели, сообщество</td></tr>
+          <tr><td class="en">Access gap (infrastructure)</td><td class="en">No internet, no devices</td><td class="en">Connectivity investment works</td>
+              <td class="ru">Разрыв доступа</td><td class="ru">Нет интернета, нет устройств</td><td class="ru">Инвестиции в связь</td></tr>
+          <tr><td class="en"><strong>Quality gap (language)</strong></td><td class="en"><strong>AI genuinely performs worse in native language</strong></td><td class="en"><strong>Only technical improvement or language switching works</strong></td>
+              <td class="ru"><strong>Разрыв качества (язык)</strong></td><td class="ru"><strong>ИИ действительно хуже работает</strong></td><td class="ru"><strong>Только техническое улучшение</strong></td></tr>
+          <tr><td class="en">Cost gap (token tax)</td><td class="en">Paying more for less effective service</td><td class="en">Pricing reform or dedicated tokenizers work</td>
+              <td class="ru">Разрыв в стоимости</td><td class="ru">Платя больше за меньший результат</td><td class="ru">Реформа цены или токенизаторы</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="s1-6">
+        <span class="en">1.6 Structural Vulnerability: The Token Tax</span>
+        <span class="ru">1.6 Структурная уязвимость: налог на токены</span>
+      </h2>
+      <p class="en">The most quantitatively precise form of language-based AI inequality is tokenization: the process by which text is converted into numerical units for processing. Tokenizers are trained primarily on English text, creating a systematic premium for non-English languages.</p>
+      <p class="ru">Наиболее количественно точная форма языкового неравенства ИИ — токенизация: процесс преобразования текста в числовые единицы. Токенизаторы обучены на английском, создавая систематическую надбавку для других языков.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Language</th><th class="en">Tokens per word (approx.)</th><th class="en">Premium over English</th><th class="en">Source</th>
+            <th class="ru">Язык</th><th class="ru">Токенов на слово</th><th class="ru">Надбавка</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">English</td><td class="en">1.16</td><td class="en">—</td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Английский</td><td class="ru">1.16</td><td class="ru">—</td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">French</td><td class="en">1.52</td><td class="en"><strong>+31%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Французский</td><td class="ru">1.52</td><td class="ru"><strong>+31%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">German</td><td class="en">1.52</td><td class="en"><strong>+31%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Немецкий</td><td class="ru">1.52</td><td class="ru"><strong>+31%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">Russian</td><td class="en">1.96</td><td class="en"><strong>+69%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Русский</td><td class="ru">1.96</td><td class="ru"><strong>+69%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">Arabic</td><td class="en">1.97</td><td class="en"><strong>+70%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Арабский</td><td class="ru">1.97</td><td class="ru"><strong>+70%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">Hindi</td><td class="en">1.89</td><td class="en"><strong>+63%</strong></td><td class="en">Token Tax, arXiv 2025</td>
+              <td class="ru">Хинди</td><td class="ru">1.89</td><td class="ru"><strong>+63%</strong></td><td class="ru">Token Tax, arXiv 2025</td></tr>
+          <tr><td class="en">Turkic (Kazakh, Kyrgyz, Turkish)</td><td class="en">2–4×</td><td class="en"><strong>+100–300%</strong></td><td class="en">SozKZ project, arXiv 2025</td>
+              <td class="ru">Тюркские (казахский, киргизский, турецкий)</td><td class="ru">2–4×</td><td class="ru"><strong>+100–300%</strong></td><td class="ru">SozKZ проект, arXiv 2025</td></tr>
+          <tr><td class="en">Most African languages</td><td class="en">Up to 12×</td><td class="en"><strong>+1,100%</strong></td><td class="en">Petrov et al., NeurIPS 2023</td>
+              <td class="ru">Большинство африканских языков</td><td class="ru">До 12×</td><td class="ru"><strong>+1,100%</strong></td><td class="ru">Petrov et al., NeurIPS 2023</td></tr>
+        </tbody>
+      </table>
+
+      <p class="en">The tokenization premium has three distinct consequences beyond cost:</p>
+      <p class="ru">Надбавка за токенизацию имеет три отличных последствия сверх стоимости:</p>
+      <ul>
+        <li class="en"><strong>Smaller effective context window.</strong> GPT-4o's 128,000-token window accommodates ~110,000 English words but only ~68,000 Hindi words — a 38% reduction in usable capacity for the same subscription price.</li>
+        <li class="ru"><strong>Меньше эффективное окно контекста.</strong> 128,000-токен окно GPT-4o вмещает ~110,000 англ. слов, но только ~68,000 хинди слов — 38% сокращение.</li>
+        <li class="en"><strong>Higher latency.</strong> Transformer attention scales quadratically with sequence length, so a 2x tokenization premium produces ~4x computational cost and doubled response time.</li>
+        <li class="ru"><strong>Более высокая задержка.</strong> Трансформерное внимание масштабируется квадратично, 2x надбавка создает ~4x вычислительных затрат.</li>
+        <li class="en"><strong>Worse performance at inference.</strong> Models process longer token sequences less accurately for the same semantic content, compounding the quality gap created by training data imbalance.</li>
+        <li class="ru"><strong>Хуже производительность при выводе.</strong> Модели обрабатывают более длинные последовательности менее точно, усугубляя разрыв качества.</li>
+      </ul>
+
+      <p class="en">For Turkic languages specifically — including Kyrgyz — the agglutinative morphology compounds the problem. A single Kyrgyz word encodes what English expresses across multiple words. Standard byte-pair encoding tokenizers shatter these morphological structures, producing fragments that undermine model comprehension. The SozKZ project demonstrated that a dedicated Kazakh tokenizer achieves 2–3x better compression than standard multilingual tokenizers.</p>
+      <p class="ru">Для тюркских языков, включая киргизский, агглютинативная морфология усугубляет проблему. Одно киргизское слово кодирует то, что английский выражает несколькими словами. Стандартные токенизаторы разбивают эти структуры. SozKZ показал, что выделенный казахский токенизатор достигает 2–3x лучшего сжатия.</p>
+
+      <div class="callout">
+        <p class="en"><strong>The token tax is a pricing injustice, not a technical inevitability.</strong> No major AI provider has implemented language-adjusted pricing despite years of evidence. A user in Kazakhstan processing 100 million Hindi-equivalent words monthly pays an estimated $473 versus $290 for English — an annual language surcharge of ~$2,196. Researcher Kathane (Substack, 2025) summarized: "These disparities are design choices, not natural laws. They can be changed." The fix requires no innovation — only per-word or per-character pricing.</p>
+        <p class="ru"><strong>Налог на токены — несправедливость в ценах, не техническая неизбежность.</strong> Ни один крупный поставщик не внедрил языковую коррекцию цены. Пользователь в Казахстане обрабатывает 100 млн слов ежемесячно платит ~$473 vs. $290 за английский — ежегодная надбавка ~$2,196. «Эти различия — выбор дизайна, не естественные законы,» пишет Kathane.</p>
+      </div>
+
+      <h2 id="s1-7">
+        <span class="en">1.7 Downstream Consequences: Productivity and Opportunity</span>
+        <span class="ru">1.7 Нисходящие последствия: производительность и возможности</span>
+      </h2>
+      <p class="en">The language gap is already translating into measurable divergence in economic outcomes, and the trajectory is widening rather than narrowing.</p>
+      <p class="ru">Языковой разрыв уже переводится в измеримое расхождение экономических результатов, и траектория расширяется.</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Outcome</th><th class="en">High-resource lang.</th><th class="en">Low-resource lang.</th><th class="en">Source</th>
+            <th class="ru">Результат</th><th class="ru">Высокоресурсный</th><th class="ru">Малоресурсный</th><th class="ru">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Productivity gain from AI (software development)</td><td class="en">+17.1%</td><td class="en"><strong>+13.8%</strong></td><td class="en">Stanford, ~100K developers, 2025</td>
+              <td class="ru">Рост производительности от ИИ</td><td class="ru">+17.1%</td><td class="ru"><strong>+13.8%</strong></td><td class="ru">Stanford, ~100K разработчиков, 2025</td></tr>
+          <tr><td class="en">Clinical AI advice quality (5-point scale)</td><td class="en">3.32 (English)</td><td class="en"><strong>1.01 (Kazakh)</strong></td><td class="en">ScienceDirect, 50 synthetic patients, 2024</td>
+              <td class="ru">Качество клинических советов ИИ</td><td class="ru">3.32 (английский)</td><td class="ru"><strong>1.01 (казахский)</strong></td><td class="ru">ScienceDirect, 2024</td></tr>
+          <tr><td class="en">Business email improvement: actionability</td><td class="en">Baseline</td><td class="en"><strong>−0.59 SD (Arabic)</strong></td><td class="en">PMC cross-lingual study, 480 participants, 2025</td>
+              <td class="ru">Улучшение деловой почты</td><td class="ru">Базис</td><td class="ru"><strong>−0.59 SD (арабский)</strong></td><td class="ru">PMC, 480 участников, 2025</td></tr>
+          <tr><td class="en">Global AI adoption: North vs. South</td><td class="en">~23%</td><td class="en"><strong>~13%</strong></td><td class="en">Microsoft, 1B+ devices, 2025</td>
+              <td class="ru">Глобальное освоение ИИ: Север vs. Юг</td><td class="ru">~23%</td><td class="ru"><strong>~13%</strong></td><td class="ru">Microsoft, 1B+ устройств, 2025</td></tr>
+          <tr><td class="en">AI adoption gap direction (2025)</td><td class="en">Stable or growing</td><td class="en"><strong>Widening: gap grew 9.8 to 10.6 pp</strong></td><td class="en">Microsoft, 2025</td>
+              <td class="ru">Направление разрыва освоения ИИ</td><td class="ru">Стабильный или растущий</td><td class="ru"><strong>Расширяющийся: 9.8 до 10.6 п.п.</strong></td><td class="ru">Microsoft, 2025</td></tr>
+        </tbody>
+      </table>
+
+      <p class="en">The South Korea natural experiment is the most compelling evidence. When frontier LLMs improved Hangul capabilities, adoption surged and the country's global rank improved by seven positions within months. Language quality drives adoption. No other variable changed.</p>
+      <p class="ru">Южная Корея — самое убедительное доказательство. Когда передовые LLM улучшили Hangul, освоение выросло и глобальный рейтинг улучшился на семь позиций за месяцы. Качество языка движет освоением.</p>
+    </section>
+
+    <!-- PART 2 -->
+    <section id="part2">
+      <p class="part-header en">Part 2 — Understanding the Causes</p>
+      <p class="part-header ru">Часть 2 — Понимание причин</p>
+
+      <p class="en">The language AI gap does not have a single cause. Four interlocking categories of factor — structural, institutional, psychological, and historical — each contribute.</p>
+      <p class="ru">Языковой разрыв ИИ не имеет одной причины. Четыре взаимосвязанные категории — структурная, институциональная, психологическая и историческая.</p>
+
+      <details>
+        <summary>
+          <h3 id="s2-1">
+            <span class="en">2.1 Structural and Material Causes</span>
+            <span class="ru">2.1 Структурные и материальные причины</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en"><strong>Tokenization architecture</strong> — Standard byte-pair encoding tokenizers are trained on English-dominated corpora, creating systematic compression disadvantages for other languages — especially morphologically complex ones like Kyrgyz, Kazakh, and Turkish. The SozKZ project demonstrated a language-specific tokenizer achieves 2–3x better efficiency for Kazakh. Parity-aware BPE modifies the encoding algorithm to maximize compression of the worst-compressed language at each merge step. The technical solution exists; deployment lags.</p>
+          <p class="ru"><strong>Архитектура токенизации</strong> — стандартные токенизаторы обучены на английских корпусах, создавая систематические недостатки сжатия. SozKZ показал, что специфический для языка токенизатор достигает 2–3x лучшей эффективности для казахского. Техническое решение существует; развертывание отстает.</p>
+
+          <p class="en"><strong>Pricing structure</strong> — API pricing is per-token, not per-word or per-character. This creates a direct financial premium for non-English users proportional to tokenization inefficiency. The premium reaches 15x for the most disadvantaged languages, and ranges from 31% to 70% for widely spoken languages like French, Russian, and Arabic. No major AI company has implemented language-adjusted pricing. This is a pricing policy choice, not a technical constraint.</p>
+          <p class="ru"><strong>Структура цен</strong> — API цена за токен, не за слово или символ. Это создает прямую финансовую надбавку для неанглийских пользователей. Ни одна крупная компания ИИ не внедрила языковую коррекцию цены. Это выбор политики ценообразования, не ограничение.</p>
+
+          <p class="en"><strong>Infrastructure and connectivity</strong> — Only ~38% of Kyrgyzstan's population has internet access, compared to ~79% in Kazakhstan. Lower connectivity reduces both AI adoption and the generation of native-language digital content that could improve AI training data. This creates a compounding disadvantage: fewer users means less feedback data, which means slower quality improvement, which reduces incentive to adopt.</p>
+          <p class="ru"><strong>Инфраструктура и связь</strong> — только ~38% населения Кыргызстана имеет интернет, vs. ~79% в Казахстане. Низкая связность снижает как освоение ИИ, так и генерацию контента на родном языке. Это создает кумулятивный эффект: меньше пользователей — меньше обратной связи — медленнее улучшение качества.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-2">
+            <span class="en">2.2 Institutional and Systemic Causes</span>
+            <span class="ru">2.2 Институциональные и системные причины</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en"><strong>Workforce composition</strong> — AI development is concentrated in English-speaking countries and companies. No major AI lab is headquartered in a low-resource language country. When developers build and test in English, edge cases in other languages go unnoticed until users in those languages report them — a systematic quality control gap.</p>
+          <p class="ru"><strong>Состав рабочей силы</strong> — развитие ИИ сосредоточено в англоязычных странах и компаниях. Ни одна крупная лаборатория ИИ не находится в стране малоресурсного языка. Когда разработчики тестируют на английском, граничные случаи в других языках остаются незамеченными.</p>
+
+          <p class="en"><strong>Training and recognition feedback</strong> — User feedback loops that improve model quality operate predominantly in English. RLHF (reinforcement learning from human feedback) is disproportionately collected in English, meaning quality improvements diffuse more slowly to other languages. The Kazakh case illustrates institutional response: the government built KazLLM, but it attracted only 600,000 users versus 2.6 million for ChatGPT. State-sponsored language AI faces a competitiveness trap.</p>
+          <p class="ru"><strong>Обучение и обратная связь</strong> — циклы обратной связи работают преимущественно на английском. RLHF собирается непропорционально на английском. Правительство Казахстана построило KazLLM, но оно привлекло только 600 000 пользователей vs. 2.6 млн для ChatGPT.</p>
+
+          <p class="en"><strong>Post-Soviet institutional inheritance</strong> — Soviet-era policies established Russian as the language of science, governance, and formal education across Central Asia. This continues to shape which language Kyrgyz AI researchers write papers in, what data universities digitize, and what language government services are documented in. Kyrgyzstan's AI community, though growing, still relies primarily on pre-built English and Russian models rather than building Kyrgyz-language capability from scratch. This is a rational response to the incentive structure.</p>
+          <p class="ru"><strong>Постсоветское институциональное наследие</strong> — советские политики установили русский язык как язык науки, управления и образования в Центральной Азии. Это продолжает формировать, на каком языке киргизские исследователи пишут статьи. Киргизское сообщество ИИ по-прежнему полагается в основном на предварительно построенные английские и русские модели, а не на создание киргизских возможностей с нуля.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-3">
+            <span class="en">2.3 Psychological Causes</span>
+            <span class="ru">2.3 Психологические причины</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en"><strong>Quality-driven distrust</strong> — Unlike the gender AI gap, where distrust often precedes experience, language-based AI distrust is primarily experience-driven. Users who have encountered Kazakh-vocabulary substitutions in Kyrgyz responses, or received clinically useless nutritional advice, have accurate information for their distrust. This matters for intervention design: messaging campaigns cannot solve a problem caused by genuine quality failure. The psychological mechanism here is rational Bayesian updating, not confidence deficit.</p>
+          <p class="ru"><strong>Недоверие, основанное на качестве</strong> — в отличие от гендерного разрыва ИИ, языковое недоверие в основном основано на опыте. Пользователи, столкнувшиеся с подстановками казахской лексики в киргизские ответы, имеют точную информацию для своего недоверия. Сообщения не могут решить проблему, вызванную реальным отказом в качестве.</p>
+
+          <p class="en"><strong>Identity and belonging signals</strong> — AI interfaces, default languages, and cultural references signal who the technology is for. When AI responds to Kyrgyz queries in Kazakh, or frames answers in American cultural contexts, it signals "this is not for you" — even beyond the quality failure itself. Evidence that environmental signaling affects adoption is strong in the gender gap literature; direct evidence for the language gap remains limited but the mechanism is plausible.</p>
+          <p class="ru"><strong>Сигналы идентичности и принадлежности</strong> — интерфейсы ИИ, языки по умолчанию и культурные ссылки сигнализируют, для кого технология. Когда ИИ отвечает на киргизские запросы на казахском или структурирует ответы в американских культурных контекстах, это сигнализирует «это не для вас».</p>
+
+          <p class="en"><strong>Language switching costs and identity loss</strong> — When users switch from Kyrgyz to Russian or English to access better AI quality, they incur cognitive costs (working in a non-native language) and identity costs (using the language of colonial administration or global capital to access their own knowledge). AI researcher Thien Nguyen (Nature, 2024) described this as "causing a loss of diversity of thought," arguing that English-mediated AI creates homogenization pressure. Quantitative evidence for this mechanism in adoption decisions is sparse.</p>
+          <p class="ru"><strong>Затраты на смену языка и потеря идентичности</strong> — когда пользователи переходят с киргизского на русский или английский для доступа к лучшему ИИ, они несут когнитивные затраты и затраты идентичности. Thien Nguyen описал это как «потерю разнообразия мысли», утверждая, что англоязычный ИИ создает давление гомогенизации.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <h3 id="s2-4">
+            <span class="en">2.4 Cultural and Historical Causes</span>
+            <span class="ru">2.4 Культурные и исторические причины</span>
+          </h3>
+        </summary>
+        <div class="details-body">
+          <p class="en"><strong>Soviet-era linguistic hierarchy</strong> — The Soviet educational system made Russian the language of advancement and Kyrgyz the language of home and tradition. This established a durable association between Russian-medium activity and professional/technical competence — an association that AI tools now reinforce. Unlike the gender-in-computing historical analogy (where women's representation fell after computers were marketed as "boys' toys"), the Kyrgyz case involves an externally imposed exclusion rather than a marketing-driven one.</p>
+          <p class="ru"><strong>Советская языковая иерархия</strong> — советская образовательная система делала русский язык языком продвижения, а киргизский языком дома и традиции. Это установило стойкую ассоциацию между русским и профессиональной компетентностью, ассоциацию, которую инструменты ИИ теперь усиливают.</p>
+
+          <p class="en"><strong>The 1991 rupture and technological discontinuity</strong> — The post-Soviet transition created a sharp technological discontinuity. Soviet-era computing infrastructure (Cyrillic-heavy, Russian-language, isolated from the internet) did not transfer to the internet era. Older cohorts with Soviet technical training found their experience of limited value. This illustrates how historical exclusion can create a gap *after* a rupture event rather than through chronic neglect — a dynamic distinct from most AI gap narratives.</p>
+          <p class="ru"><strong>Разрыв 1991 года и технологический разрыв</strong> — постсоветский переход создал острый технологический разрыв. Советская вычислительная инфраструктура не перешла в эру интернета. Пожилые когорты с советским техническим обучением нашли свой опыт ограниченной ценности.</p>
+
+          <p class="en"><strong>Absence of digital cultural presence</strong> — Kyrgyz Wikipedia contains ~80,000 articles — 1.2% of English Wikipedia's size. Kyrgyz literary, scientific, and journalistic content has not been digitized at scale. This absence of digital cultural presence precedes and explains AI's failure in the language: you cannot train on content that was never written down online. Cultural content scarcity is not purely historical — it continues to accumulate. Every year that Kyrgyz speakers communicate in Russian online rather than Kyrgyz widens the training data gap for the next generation of models.</p>
+          <p class="ru"><strong>Отсутствие цифрового культурного присутствия</strong> — киргизская Википедия содержит ~80 000 статей — 1.2% от английской. Киргизский литературный, научный и журналистский контент не был оцифрован в масштабе. Это отсутствие объясняет отказ ИИ в языке: вы не можете обучаться на контенте, который никогда не был написан в сети. Каждый год киргизские говорящие общаются на русском в сети вместо киргизского расширяет разрыв в данных обучения.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- PART 3 -->
+    <section id="part3">
+      <p class="part-header en">Part 3 — Synthesis and Interventions</p>
+      <p class="part-header ru">Часть 3 — Синтез и интервенции</p>
+
+      <h2 id="s3-1">
+        <span class="en">3.1 The Causes Are Interlocking</span>
+        <span class="ru">3.1 Причины взаимосвязаны</span>
+      </h2>
+
+      <p class="en">The language AI gap cannot be fixed by any single intervention because its causes form a chain: the historical absence of digital Kyrgyz content → insufficient training data → poorly calibrated tokenizers → higher token cost and worse outputs → user experience of failure → distrust and language switching → less Kyrgyz-language feedback data generated → models remain underpowered → next training cycle reproduces the gap. Each link feeds the next.</p>
+      <p class="ru">Языковой разрыв ИИ не может быть исправлен одним вмешательством, потому что причины образуют цепь: исторические отсутствие цифрового контента → недостаточные данные обучения → плохо калиброванные токенизаторы → более высокие затраты и худшие результаты → отказ пользователя → недоверие и переключение языка → меньше киргизских данных → модели остаются слабыми → следующий цикл воспроизводит разрыв.</p>
+
+      <p class="en">The institutional layer sits across this chain. No actor within the current AI industry has a strong financial incentive to break it: Kyrgyz speakers are a small market; dedicated tokenizers cost money; language-adjusted pricing reduces revenue. The incentive structure points toward the gap persisting without deliberate policy intervention or mission-driven investment.</p>
+      <p class="ru">Институциональный слой находится поперек этой цепи. Ни один участник текущей индустрии ИИ не имеет сильного финансового стимула разорвать цепь: киргизские говорящие — малый рынок; выделенные токенизаторы стоят деньги; языковая коррекция цены снижает доход.</p>
+
+      <p class="en">The psychological layer compounds the structural and institutional gaps. Users who have experienced quality failure develop distrust that may persist even after quality improves. The South Korea case suggests quality improvement can rapidly shift adoption — but overcoming accumulated distrust may take longer than the initial technical fix.</p>
+      <p class="ru">Психологический слой усугубляет структурные и институциональные разрывы. Пользователи, которые испытали отказ в качестве, развивают недоверие, которое может сохраняться даже после улучшения. Южная Корея предполагает, что улучшение качества может быстро сдвинуть освоение.</p>
+
+      <h2>
+        <span class="en">3.2 What the Evidence Suggests About Intervention</span>
+        <span class="ru">3.2 Что свидетельства предполагают об интервенции</span>
+      </h2>
+
+      <p class="en"><strong>Language-adjusted API pricing</strong> (per word or per character) would eliminate the token tax immediately, without any technical work. This is the highest-leverage, lowest-cost intervention available and has not been implemented by any major provider.</p>
+      <p class="ru"><strong>Языковая коррекция API цены</strong> (за слово или символ) устранила бы налог на токены немедленно, без технической работы. Это самое высокое-рычаг, низкозатратное вмешательство, доступное и не внедренное ни одним крупным поставщиком.</p>
+
+      <p class="en"><strong>Dedicated tokenizers</strong> for agglutinative and morphologically complex languages achieve 2–3x efficiency improvements. This reduces both cost and quality penalties at inference time.</p>
+      <p class="ru"><strong>Выделенные токенизаторы</strong> для агглютинативных и морфологически сложных языков достигают 2–3x улучшения эффективности.</p>
+
+      <p class="en"><strong>Quality investment pays adoption returns.</strong> The South Korea case shows quality improvement drives adoption rapidly (7-rank global jump within months). Investing in model quality for specific languages produces measurable adoption returns, making it a viable business case even without policy mandates.</p>
+      <p class="ru"><strong>Инвестиции в качество окупаются освоением.</strong> Южная Корея показывает, что улучшение качества движет освоением быстро. Инвестирование в качество модели для конкретных языков дает измеримые результаты освоения.</p>
+
+      <p class="en"><strong>Community-driven corpus building</strong> is the most sustainable long-term approach — exemplified by Masakhane (Africa), TilCorpusu (Kyrgyz, 100M-word corpus released 2023), and Mozilla Common Voice. These efforts require consistent funding and cannot be treated as one-time projects.</p>
+      <p class="ru"><strong>Построение корпуса под руководством сообщества</strong> — самый устойчивый долгосрочный подход — Masakhane (Африка), TilCorpusu (киргизский, 100M-словный корпус выпущен 2023), Mozilla Common Voice.</p>
+
+      <p class="en"><strong>Sovereign language models</strong> (KazLLM, KyrgyzBERT) serve cultural fidelity but face a competitiveness trap on general tasks. They are most likely to succeed as specialized tools for culturally specific domains — government services, healthcare, education — rather than general-purpose competitors to GPT-4.</p>
+      <p class="ru"><strong>Суверенные языковые модели</strong> (KazLLM, KyrgyzBERT) служат культурной верности, но сталкиваются с ловушкой конкурентоспособности. Они, вероятно, добьются успеха как специализированные инструменты для культурно-специфических областей.</p>
+
+      <h2>
+        <span class="en">3.3 The Open Question</span>
+        <span class="ru">3.3 Открытый вопрос</span>
+      </h2>
+
+      <p class="en">The most important unresolved question is whether the language gap will close or widen as AI becomes more deeply embedded in economic life. In the <strong>convergence scenario</strong>: frontier models continue to improve multilingual performance; community-driven data efforts accumulate critical mass; the economic case for serving large language communities (Hindi, Arabic, Swahili) eventually pulls investment. In the <strong>divergence scenario</strong>: AI becomes embedded in high-stakes systems while still performing poorly in low-resource languages; path dependency locks in quality gaps; productivity and income divergence documented in 2025 compounds into generational inequality. The current evidence is more consistent with the divergence scenario. The Microsoft data show the gap widening, not narrowing. No major AI company has made structural changes to tokenizer fairness or pricing.</p>
+      <p class="ru">Наиболее важный нерешенный вопрос — будет ли языковой разрыв закрываться или расширяться по мере более глубокого встраивания ИИ. В <strong>сценарии конвергенции</strong>: передовые модели продолжают улучшать многоязычную производительность. В <strong>сценарии дивергенции</strong>: ИИ встраивается в высокорисковые системы при плохой производительности. Текущие данные более согласуются с дивергенцией. Microsoft показывает расширение разрыва.</p>
+    </section>
+
+    <!-- SOURCES -->
+    <section id="sources" class="sources-section">
+      <p class="part-header en">Selected Sources</p>
+      <p class="part-header ru">Избранные источники</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="en">Authors / Source</th><th class="en">Year</th><th class="en">Title / Publication</th>
+            <th class="ru">Авторы</th><th class="ru">Год</th><th class="ru">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Petrov et al.</td><td class="en">2023</td><td class="en">Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models. <em>EMNLP 2023 / NeurIPS 2023</em></td>
+              <td class="ru">Petrov et al.</td><td class="ru">2023</td><td class="ru">Do All Languages Cost the Same? <em>EMNLP 2023</em></td></tr>
+          <tr><td class="en">Token Tax (arXiv 2509.05486)</td><td class="en">2025</td><td class="en">The Token Tax: Systematic Bias in Multilingual Tokenization. <em>arXiv</em></td>
+              <td class="ru">Token Tax</td><td class="ru">2025</td><td class="ru">The Token Tax: Systematic Bias. <em>arXiv</em></td></tr>
+          <tr><td class="en">Microsoft AI Economy Institute</td><td class="en">2025</td><td class="en">Global AI Adoption in 2025. 147 countries, 1B+ devices</td>
+              <td class="ru">Microsoft AI</td><td class="ru">2025</td><td class="ru">Global AI Adoption in 2025. 147 стран</td></tr>
+          <tr><td class="en">SozKZ project</td><td class="en">2025</td><td class="en">Training Efficient Small Language Models for Kazakh from Scratch. <em>arXiv 2603.20854</em></td>
+              <td class="ru">SozKZ project</td><td class="ru">2025</td><td class="ru">Training Efficient Small Language Models. <em>arXiv</em></td></tr>
+          <tr><td class="en">Stanford HAI / Koyejo</td><td class="en">2025</td><td class="en">Closing the Digital Divide in AI. Policy white paper</td>
+              <td class="ru">Stanford HAI</td><td class="ru">2025</td><td class="ru">Closing the Digital Divide in AI. White paper</td></tr>
+          <tr><td class="en">ScienceDirect</td><td class="en">2024</td><td class="en">Evaluating ChatGPT's Multilingual Performance in Clinical Nutrition Advice Using Synthetic Medical Text: Insights from Central Asia. <em>Journal of Nutrition</em></td>
+              <td class="ru">ScienceDirect</td><td class="ru">2024</td><td class="ru">Evaluating ChatGPT's Multilingual Performance. <em>Journal of Nutrition</em></td></tr>
+          <tr><td class="en">Kursiv.media</td><td class="en">2025</td><td class="en">ChatGPT's Linguistic Blunder: Kyrgyz Prompts, Kazakh Replies. June 2025</td>
+              <td class="ru">Kursiv.media</td><td class="ru">2025</td><td class="ru">ChatGPT's Linguistic Blunder. June 2025</td></tr>
+          <tr><td class="en">KPMG / Univ. Melbourne</td><td class="en">2025</td><td class="en">Trust, Attitudes and Use of Artificial Intelligence: A Global Study. N=48,340, 47 countries</td>
+              <td class="ru">KPMG / Melbourne</td><td class="ru">2025</td><td class="ru">Trust, Attitudes and Use of AI. N=48 340</td></tr>
+          <tr><td class="en">Sharma et al. (Johns Hopkins)</td><td class="en">2025</td><td class="en">Faux Polyglot: A Study on Information Disparity in Multilingual LLMs. <em>NAACL 2025</em></td>
+              <td class="ru">Sharma et al.</td><td class="ru">2025</td><td class="ru">Faux Polyglot: Information Disparity. <em>NAACL</em></td></tr>
+          <tr><td class="en">UNDP Eurasia</td><td class="en">2025</td><td class="en">No Language Left Behind: How to Bridge the Rapidly Evolving AI Language Gap</td>
+              <td class="ru">UNDP Eurasia</td><td class="ru">2025</td><td class="ru">No Language Left Behind: Bridge AI Gap</td></tr>
+          <tr><td class="en">Parity-Aware BPE</td><td class="en">2025</td><td class="en">Parity-Aware Byte-Pair Encoding: Improving Cross-lingual Fairness in Tokenization. <em>arXiv 2508.04796</em></td>
+              <td class="ru">Parity-Aware BPE</td><td class="ru">2025</td><td class="ru">Parity-Aware Byte-Pair Encoding. <em>arXiv</em></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Prev/Next -->
+    <div class="gap-nav">
+      <a href="gap-income.html">
+        <span class="en">← Income Gap</span>
+        <span class="ru">← Разрыв по доходам</span>
+      </a>
+      <span class="spacer"></span>
+      <a href="gap-age.html">
+        <span class="en">Age Gap →</span>
+        <span class="ru">Возрастной разрыв →</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Right-side Navigator -->
+  <nav class="section-nav">
+    <p class="section-nav-title en">Contents</p>
+    <p class="section-nav-title ru">Содержание</p>
+    <a href="#summary" class="en">Executive Summary</a>
+    <a href="#summary" class="ru">Резюме</a>
+    <a href="#s1-1" class="en">1.1 Key Numbers</a>
+    <a href="#s1-1" class="ru">1.1 Цифры</a>
+    <a href="#s1-2" class="en">1.2 Adoption Rates</a>
+    <a href="#s1-2" class="ru">1.2 Освоение</a>
+    <a href="#s1-3" class="en">1.3 Attitudes</a>
+    <a href="#s1-3" class="ru">1.3 Отношение</a>
+    <a href="#s1-4" class="en">1.4 Feedback Loop</a>
+    <a href="#s1-4" class="ru">1.4 Петля</a>
+    <a href="#s1-5" class="en">1.5 Knowledge</a>
+    <a href="#s1-5" class="ru">1.5 Знания</a>
+    <a href="#s1-6" class="en">1.6 Token Tax</a>
+    <a href="#s1-6" class="ru">1.6 Токен-налог</a>
+    <a href="#s1-7" class="en">1.7 Consequences</a>
+    <a href="#s1-7" class="ru">1.7 Последствия</a>
+    <a href="#s2-1" class="en">2.1 Structural</a>
+    <a href="#s2-1" class="ru">2.1 Структурные</a>
+    <a href="#s2-2" class="en">2.2 Institutional</a>
+    <a href="#s2-2" class="ru">2.2 Институциональные</a>
+    <a href="#s2-3" class="en">2.3 Psychological</a>
+    <a href="#s2-3" class="ru">2.3 Психологические</a>
+    <a href="#s2-4" class="en">2.4 Cultural</a>
+    <a href="#s2-4" class="ru">2.4 Культурные</a>
+    <a href="#part3" class="en">Synthesis</a>
+    <a href="#part3" class="ru">Синтез</a>
+    <a href="#sources" class="en">Sources</a>
+    <a href="#sources" class="ru">Источники</a>
+  </nav>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html">
+        <span class="en">← All gaps</span>
+        <span class="ru">← Все разрывы</span>
+      </a>
+      <span class="en">Research: April 2026 · Claude Sonnet 4.6</span>
+      <span class="ru">Исследование: Апрель 2026 · Claude Sonnet 4.6</span>
+      <a href="methodology.html">
+        <span class="en">Methodology</span>
+        <span class="ru">Методология</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const sections = document.querySelectorAll('section[id], h2[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector('.section-nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  function setLang(lang) {
+    document.body.classList.toggle('ru-on', lang === 'ru');
+    document.querySelectorAll('#lang-switch button').forEach((btn, i) => {
+      btn.classList.toggle('on', i === (lang === 'en' ? 0 : 1));
+    });
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'ru') setLang('ru');
+</script>
+</body>
+</html>
