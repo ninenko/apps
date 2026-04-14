@@ -853,6 +853,55 @@ footer a:hover { color: var(--accent); }
   .section-nav { display: none; }
 }
 
+/* ── Discussion links ── */
+.discuss-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.discuss-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--dim);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.discuss-link:hover {
+  border-color: var(--accent);
+  background: var(--bg3);
+}
+
+.discuss-link-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  min-width: 2rem;
+}
+
+.discuss-link-text {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.discuss-link:hover .discuss-link-text {
+  color: var(--text);
+}
+
+.discuss-link-arrow {
+  color: var(--accent);
+  font-size: 1rem;
+}
+
 @media (max-width: 680px) {
   body { font-size: 1rem; }
   .container, .container-narrow, .container-gap { padding: 0 1.25rem; }
