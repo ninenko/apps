@@ -274,7 +274,9 @@
           <span data-lang="en">Memory card game with neuroscience concepts — match neuron types and brain structures.</span>
           <span data-lang="ru">Игра в мемори с концепциями нейронаук — сопоставляйте типы нейронов и структуры мозга.</span>
         </div>
-        <span class="card-tag tag-app">App</span>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Game</span><span data-lang="ru">Игра</span>
+        </span>
       </a>
 
       <a class="card" href="apps/neuroemo_results.html">
@@ -284,7 +286,9 @@
           <span data-lang="en">Results page for the Neuroscience and Emotional Intelligence course.</span>
           <span data-lang="ru">Страница результатов курса «Нейронауки и эмоциональный интеллект».</span>
         </div>
-        <span class="card-tag tag-app">App</span>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Dashboard</span><span data-lang="ru">Результаты</span>
+        </span>
       </a>
 
       <a class="card" href="apps/neural_net_pattern_input.html">
@@ -294,7 +298,9 @@
           <span data-lang="en">Interactive tool for drawing input patterns and observing how a neural network processes and classifies them.</span>
           <span data-lang="ru">Интерактивный инструмент: рисуйте паттерны и наблюдайте, как нейронная сеть их обрабатывает и классифицирует.</span>
         </div>
-        <span class="card-tag tag-app">App</span>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Interactive</span><span data-lang="ru">Интерактив</span>
+        </span>
       </a>
 
       <a class="card" href="apps/transaction_analyzer_static.html">
@@ -433,7 +439,8 @@
       localStorage.setItem('filter', filter);
     }
 
-    const lang   = localStorage.getItem('lang')   || 'en';
+    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
+    const lang   = localStorage.getItem('lang')   || defaultLang;
     const filter = localStorage.getItem('filter') || 'both';
     setLang(lang);
     setFilter(filter);
