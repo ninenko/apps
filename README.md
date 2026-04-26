@@ -56,6 +56,7 @@ HTML public/
 | new_school_slides.html | https://ninenko.github.io/apps/lectures/new_school_slides.html |
 | randomness_slides.html | https://ninenko.github.io/apps/lectures/randomness_slides.html |
 | story-of-programming-slides.html | https://ninenko.github.io/apps/lectures/story-of-programming-slides.html |
+| waterfall-vs-agile.html | https://ninenko.github.io/apps/lectures/waterfall-vs-agile.html |
 
 ### Essays
 
