@@ -1,0 +1,3436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Waterfall vs Agile · Pre-class Reading · ESP IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base:#080c14;
+  --bg-wf:#070d1c;
+  --bg-ag:#100c03;
+  --bg-kb:#0d0a02;
+  --wf-blue:#3b82f6;
+  --wf-blue-deep:#1e3a8a;
+  --wf-gold:#e8c547;
+  --ag-gold:#d4a017;
+  --ag-rust:#7a5810;
+  --ag-parch:#241a0a;
+  --text:#e8e6df;
+  --muted:#8a857a;
+  --line:rgba(255,255,255,.08);
+  --pixel-shadow:3px 3px 0 rgba(0,0,0,.6);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg-base);
+  color:var(--text);
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:15px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--ag-gold);text-decoration:none}
+
+/* ------------------- LAYOUT ------------------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+section{padding:80px 0;position:relative}
+section + section{border-top:1px solid var(--line)}
+
+/* ------------------- STICKY NAV ------------------- */
+nav.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,12,20,.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav.top .nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+nav.top .brand{
+  font-family:'Press Start 2P',monospace;
+  font-size:10px;color:var(--wf-gold);letter-spacing:.5px;
+}
+nav.top ul{list-style:none;display:flex;gap:18px;flex-wrap:wrap}
+nav.top a{
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);
+  letter-spacing:.5px;text-transform:uppercase;
+  padding:6px 0;border-bottom:1px solid transparent;transition:.2s;
+}
+nav.top a:hover{color:var(--wf-gold);border-color:var(--wf-gold)}
+@media(max-width:600px){
+  nav.top ul{gap:10px}
+  nav.top a{font-size:10px}
+  nav.top .brand{font-size:8px}
+}
+
+/* ------------------- HERO ------------------- */
+.hero{
+  min-height:88vh;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 24px 100px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.10),transparent 55%),
+             radial-gradient(ellipse at 70% 80%,rgba(212,160,23,.10),transparent 55%),
+             var(--bg-base);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(232,197,71,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(232,197,71,.05) 1px,transparent 1px);
+  background-size:32px 32px;
+  animation:gridShift 20s linear infinite;
+  pointer-events:none;
+}
+@keyframes gridShift{
+  from{background-position:0 0}
+  to{background-position:32px 32px}
+}
+
+/* twinkling stars */
+.star{
+  position:absolute;color:var(--wf-gold);font-size:12px;
+  animation:twinkle 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+
+/* floating skulls */
+.skull{
+  position:absolute;font-size:24px;opacity:.08;
+  animation:float 8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-30px) rotate(5deg)}
+}
+
+/* cannons */
+.cannon{
+  position:absolute;font-size:42px;
+  bottom:120px;
+  animation:cannonRock 2.4s ease-in-out infinite;
+  z-index:3;
+}
+.cannon.left{left:24px;transform-origin:bottom right}
+.cannon.right{right:24px;transform:scaleX(-1);transform-origin:bottom left}
+@keyframes cannonRock{
+  0%,100%{transform:rotate(-4deg)}
+  45%{transform:rotate(-4deg)}
+  50%{transform:rotate(8deg)}
+  55%{transform:rotate(-4deg)}
+}
+.cannon.right{
+  animation-name:cannonRockR;
+}
+@keyframes cannonRockR{
+  0%,100%{transform:scaleX(-1) rotate(-4deg)}
+  45%{transform:scaleX(-1) rotate(-4deg)}
+  50%{transform:scaleX(-1) rotate(8deg)}
+  55%{transform:scaleX(-1) rotate(-4deg)}
+}
+
+/* cannonballs */
+.ball{
+  position:absolute;font-size:14px;color:#7a1f1f;
+  bottom:152px;opacity:0;
+}
+.ball.lr{left:80px;animation:flyRight 5s linear infinite}
+.ball.rl{right:80px;animation:flyLeft 5s linear infinite 2.5s}
+@keyframes flyRight{
+  0%{opacity:0;transform:translateX(0) translateY(0)}
+  10%{opacity:1}
+  100%{opacity:0;transform:translateX(70vw) translateY(-40px)}
+}
+@keyframes flyLeft{
+  0%{opacity:0;transform:translateX(0) translateY(0)}
+  10%{opacity:1}
+  100%{opacity:0;transform:translateX(-70vw) translateY(-40px)}
+}
+
+/* corner figures */
+.corner-fig{
+  position:absolute;bottom:90px;font-size:36px;z-index:4;
+}
+.corner-fig.flag{left:24px;animation:wave 2.6s ease-in-out infinite}
+.corner-fig.casino{right:24px;animation:wave 2.6s ease-in-out infinite .3s}
+@keyframes wave{
+  0%,100%{transform:rotate(-6deg)}
+  50%{transform:rotate(6deg)}
+}
+
+/* hero content */
+.hero-content{
+  position:relative;z-index:5;text-align:center;max-width:780px;
+}
+.dpm-credit{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(59,130,246,.08);
+  border:1px solid rgba(59,130,246,.3);
+  padding:8px 16px;border-radius:4px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--muted);letter-spacing:.5px;
+  margin-bottom:36px;
+}
+.dpm-badge{
+  display:inline-block;background:var(--wf-blue);color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:8px;
+  padding:5px 7px;letter-spacing:1px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.4);
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-style:italic;font-weight:800;
+  font-size:clamp(46px,9vw,96px);
+  line-height:.95;letter-spacing:-2px;
+  margin-bottom:20px;
+}
+.hero h1 .vs{
+  color:var(--wf-gold);font-style:italic;
+  display:inline-block;transform:rotate(-4deg);
+  margin:0 .15em;
+}
+.hero h1 .wf{color:var(--wf-blue)}
+.hero h1 .ag{color:var(--ag-gold)}
+.hero .subtitle{
+  font-family:'DM Mono',monospace;
+  font-size:15px;color:var(--muted);
+  max-width:580px;margin:0 auto 36px;line-height:1.7;
+}
+.hero .badges{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+}
+.pixel-badge{
+  font-family:'Press Start 2P',monospace;font-size:8px;
+  padding:10px 14px;letter-spacing:1px;
+  box-shadow:var(--pixel-shadow);
+  border:2px solid;
+  text-decoration:none;display:inline-block;
+  cursor:pointer;
+  transition:transform .15s steps(2), box-shadow .15s steps(2), background .15s;
+}
+.pixel-badge:hover{
+  transform:translate(-2px,-2px);
+  box-shadow:5px 5px 0 rgba(0,0,0,.6);
+}
+.pixel-badge:active{
+  transform:translate(0,0);
+  box-shadow:1px 1px 0 rgba(0,0,0,.6);
+}
+.pixel-badge.wf{
+  background:#0a1530;color:var(--wf-blue);border-color:var(--wf-blue);
+}
+.pixel-badge.wf:hover{background:#0e1a3a;color:#7ba8ff}
+.pixel-badge.ag{
+  background:var(--ag-parch);color:var(--ag-gold);border-color:var(--ag-gold);
+}
+.pixel-badge.ag:hover{background:#3a2a14;color:#f1d99c}
+
+/* hero wave at bottom */
+.hero-wave{
+  position:absolute;bottom:0;left:0;right:0;height:60px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'><path d='M0,30 Q150,0 300,30 T600,30 T900,30 T1200,30 L1200,60 L0,60 Z' fill='%231a1410'/></svg>") repeat-x;
+  background-size:600px 60px;
+  animation:waveSlide 8s linear infinite;
+}
+@keyframes waveSlide{
+  from{background-position-x:0}
+  to{background-position-x:600px}
+}
+
+/* ------------------- SECTION HEADERS ------------------- */
+.section-num{
+  font-family:'Press Start 2P',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:2px;margin-bottom:14px;
+}
+.section-title{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:clamp(32px,5vw,52px);
+  letter-spacing:-1px;line-height:1.05;margin-bottom:18px;
+}
+.section-lede{
+  font-family:'DM Mono',monospace;color:var(--muted);
+  max-width:680px;margin-bottom:50px;font-size:15px;line-height:1.75;
+}
+
+/* ------------------- INTRO ------------------- */
+.intro p{margin-bottom:18px;color:#cbc6b8}
+.intro strong{color:var(--wf-gold)}
+
+/* ALMA AI ASSISTANT CARD */
+.alma-card{
+  display:flex;align-items:flex-start;gap:22px;
+  margin:36px 0 0;
+  padding:22px 26px;
+  background:linear-gradient(135deg,rgba(34,211,238,.06),rgba(168,85,247,.06));
+  border:1px solid rgba(34,211,238,.3);
+  border-left:4px solid #22d3ee;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  position:relative;
+}
+.alma-card:hover{
+  transform:translateY(-2px);
+  border-color:#22d3ee;
+  box-shadow:0 6px 24px rgba(34,211,238,.12);
+  background:linear-gradient(135deg,rgba(34,211,238,.1),rgba(168,85,247,.08));
+}
+.alma-portrait{
+  flex-shrink:0;
+  width:128px;height:128px;
+  border:2px solid rgba(34,211,238,.4);
+  box-shadow:3px 3px 0 rgba(0,0,0,.5),0 0 12px rgba(34,211,238,.15);
+  background:#0a1530;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  overflow:hidden;
+}
+.alma-portrait svg{
+  width:100%;height:100%;display:block;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+.alma-card:hover .alma-portrait{
+  border-color:#22d3ee;
+  box-shadow:3px 3px 0 rgba(0,0,0,.5),0 0 18px rgba(34,211,238,.35);
+}
+.alma-body{flex:1;min-width:0}
+.alma-head{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:12px;flex-wrap:wrap;
+}
+.alma-badge{
+  display:inline-block;
+  background:#22d3ee;color:#06121a;
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  padding:6px 9px;letter-spacing:1.5px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.4);
+}
+.alma-title{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:22px;color:#a5f3fc;line-height:1.3;
+}
+.alma-desc{
+  font-family:'DM Mono',monospace;font-size:14px;line-height:1.8;
+  color:#cbc6b8;margin-bottom:14px;
+}
+.alma-card .alma-desc strong{color:#a5f3fc}
+.alma-cta{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:12px;
+  color:#22d3ee;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 0;border-bottom:1px solid rgba(34,211,238,.4);
+  transition:border-color .2s;
+}
+.alma-card:hover .alma-cta{border-color:#22d3ee}
+@media(max-width:600px){
+  .alma-card{flex-direction:column;align-items:center;text-align:center;gap:16px;padding:20px}
+  .alma-portrait{width:104px;height:104px}
+  .alma-head{justify-content:center}
+  .alma-title{font-size:19px}
+  .alma-desc{text-align:left}
+}
+
+/* ------------------- WATERFALL — PIXEL CASINO ------------------- */
+.wf-section{
+  background:var(--bg-wf);
+  position:relative;overflow:hidden;
+}
+.wf-section::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+.wf-section > .wrap{position:relative;z-index:1}
+.wf-section .section-num{color:var(--wf-blue)}
+.wf-section .section-title{
+  font-family:'Press Start 2P',monospace;
+  font-style:normal;font-weight:400;
+  font-size:clamp(20px,3.4vw,32px);
+  color:var(--wf-gold);letter-spacing:1px;line-height:1.3;
+  text-shadow:3px 3px 0 #000;
+}
+
+.pixel-card{
+  background:#0a1530;
+  border:2px solid var(--wf-blue);
+  box-shadow:var(--pixel-shadow);
+  padding:24px;
+  transition:transform .15s steps(2);
+  margin-bottom:24px;
+}
+.pixel-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.6)}
+.pixel-card h3{
+  font-family:'Press Start 2P',monospace;font-size:11px;
+  color:var(--wf-gold);margin-bottom:14px;letter-spacing:1px;
+}
+.pixel-card p{color:#cdd5e8;font-size:14px}
+
+/* staircase — each step is clickable and expands */
+.staircase{
+  background:#1c1f2e;
+  padding:30px 24px;
+  margin:30px 0;
+  border:2px solid var(--wf-blue-deep);
+  box-shadow:var(--pixel-shadow);
+}
+.stair-row{margin-bottom:6px}
+.stair-row.stair-1{margin-left:0;width:60%}
+.stair-row.stair-2{margin-left:8%;width:65%}
+.stair-row.stair-3{margin-left:16%;width:70%}
+.stair-row.stair-4{margin-left:24%;width:75%}
+.stair-row.stair-5{margin-left:32%;width:78%}
+.stair-row.open{width:auto;max-width:100%;margin-left:0}
+.stair{
+  background:var(--wf-blue-deep);
+  color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;
+  padding:14px 16px;
+  border:2px solid var(--wf-blue);
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transition:transform .15s, background .15s;
+  cursor:pointer;
+  user-select:none;
+}
+.stair:hover{transform:translateX(4px);background:#243d80}
+.stair-row.open .stair{
+  background:#243d80;border-color:var(--wf-gold);
+  transform:translateX(4px);
+}
+.stair .trophies{color:var(--wf-gold);font-size:14px;letter-spacing:2px}
+.stair-row.open .stair .trophies{transform:rotate(0)}
+
+.stair-row .phase-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  background:#0a1530;
+  border:0 solid var(--wf-blue);
+  border-left-width:0;border-right-width:0;
+  margin:0;
+}
+.stair-row.open .phase-body{
+  max-height:280px;
+  padding:14px 18px;
+  border-left-width:2px;border-right-width:2px;border-bottom:2px solid var(--wf-blue);
+  border-top:1px dashed rgba(232,197,71,.3);
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+}
+.stair-row .phase-body p{
+  color:#cdd5e8;font-family:'DM Mono',monospace;font-size:13px;line-height:1.7;
+}
+.staircase-hint{
+  font-family:'Press Start 2P',monospace;font-size:8px;
+  color:rgba(232,197,71,.6);text-align:center;letter-spacing:1.5px;
+  margin-top:14px;
+}
+@media(max-width:600px){
+  .stair{font-size:7px;padding:10px}
+  .stair-row.stair-1,.stair-row.stair-2,.stair-row.stair-3,.stair-row.stair-4,.stair-row.stair-5{margin-left:0;width:100%}
+}
+
+/* quiz */
+.wf-quiz{
+  background:#0a1530;border:2px solid var(--wf-gold);
+  box-shadow:var(--pixel-shadow);padding:24px;margin:30px 0;
+}
+.wf-quiz h3{
+  font-family:'Press Start 2P',monospace;font-size:11px;
+  color:var(--wf-gold);margin-bottom:8px;letter-spacing:1px;
+}
+.wf-quiz .q{
+  color:#cdd5e8;font-size:14px;margin-bottom:20px;line-height:1.7;
+}
+.wf-options{display:flex;flex-direction:column;gap:10px}
+.wf-options button{
+  font-family:'DM Mono',monospace;font-size:13px;
+  background:#1c1f2e;color:#cdd5e8;
+  border:2px solid var(--wf-blue);
+  padding:12px 14px;text-align:left;
+  cursor:pointer;transition:.15s;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+}
+.wf-options button:hover:not(:disabled){
+  background:#0e1a3a;transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 rgba(0,0,0,.5);
+}
+.wf-options button:disabled{opacity:.6;cursor:not-allowed}
+.wf-options button.correct{background:#0d3a1a;border-color:#4ade80;color:#86efac}
+.wf-options button.wrong{background:#3a0d0d;border-color:#f87171;color:#fca5a5}
+.wf-feedback{
+  margin-top:18px;padding:14px;display:none;
+  font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6;
+}
+.wf-feedback.show{display:block}
+.wf-feedback.right{background:#0d3a1a;border:2px solid #4ade80;color:#86efac}
+.wf-feedback.wrong-fb{background:#3a0d0d;border:2px solid #f87171;color:#fca5a5}
+.wf-reset{
+  display:none;margin-top:14px;
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:transparent;color:var(--wf-gold);
+  border:2px solid var(--wf-gold);padding:10px 14px;cursor:pointer;
+}
+.wf-reset.show{display:inline-block}
+.wf-reset:hover{background:var(--wf-gold);color:#000}
+
+/* crew grid */
+.crew-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0;
+}
+@media(max-width:600px){.crew-grid{grid-template-columns:1fr}}
+.crew-card{
+  background:#0a1530;border:2px solid var(--wf-blue);
+  box-shadow:var(--pixel-shadow);padding:20px;
+}
+.crew-card .ico{font-size:36px;margin-bottom:10px;display:block}
+.crew-card h4{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  color:var(--wf-gold);margin-bottom:10px;letter-spacing:1px;line-height:1.4;
+}
+.crew-card p{font-size:13px;color:#cdd5e8;line-height:1.6}
+
+/* pros/cons */
+.pros-cons{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0;
+}
+@media(max-width:600px){.pros-cons{grid-template-columns:1fr}}
+.pros-cons .col{
+  padding:20px;border:2px solid;box-shadow:var(--pixel-shadow);
+}
+.pros-cons .pros{background:#0a2a14;border-color:#4ade80}
+.pros-cons .cons{background:#2a0a0a;border-color:#f87171}
+.pros-cons h4{
+  font-family:'Press Start 2P',monospace;font-size:10px;
+  margin-bottom:14px;letter-spacing:1px;
+}
+.pros h4{color:#86efac}
+.cons h4{color:#fca5a5}
+.pros-cons ul{list-style:none}
+.pros-cons li{
+  font-size:13px;padding:6px 0;color:#cdd5e8;
+  border-bottom:1px dashed rgba(255,255,255,.1);
+}
+.pros-cons li:last-child{border-bottom:none}
+
+/* warning box */
+.warning{
+  background:#1c1500;border:2px solid var(--wf-gold);
+  box-shadow:var(--pixel-shadow);
+  padding:18px;margin:30px 0;
+  font-family:'Press Start 2P',monospace;font-size:10px;
+  color:var(--wf-gold);letter-spacing:1px;line-height:1.7;
+}
+
+/* BRIDGE-BOX: connects metaphor to real-world IT scenario */
+.bridge-box{
+  margin:30px 0;padding:22px 26px;
+  background:rgba(59,130,246,.06);
+  border:2px solid var(--wf-blue-deep);
+  border-left-width:6px;
+  border-left-color:var(--wf-gold);
+  box-shadow:var(--pixel-shadow);
+  position:relative;
+}
+.bridge-box::before{
+  content:"// BRIDGE";
+  position:absolute;top:-10px;left:18px;
+  font-family:'Press Start 2P',monospace;font-size:8px;
+  color:var(--wf-gold);letter-spacing:2px;
+  background:var(--bg-wf);padding:2px 8px;
+}
+.bridge-box h3{
+  font-family:'Press Start 2P',monospace;font-size:11px;
+  color:var(--wf-gold);letter-spacing:1.5px;
+  margin-bottom:14px;line-height:1.5;
+}
+.bridge-box p{
+  font-family:'DM Mono',monospace;font-size:14px;line-height:1.85;
+  color:#cdd5e8;margin-bottom:14px;
+}
+.bridge-box p:last-child{margin-bottom:0}
+.bridge-box p strong{font-weight:500}
+.bridge-box em{font-style:italic;color:#f1d99c}
+
+/* parchment variant for Agile */
+.bridge-box.parch{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.4);
+  border-left:6px solid var(--ag-gold);
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+.bridge-box.parch::before{
+  content:"⚓ from the high seas to the real world";
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:13px;color:var(--ag-gold);letter-spacing:.5px;
+  background:var(--bg-ag);padding:2px 10px;
+  text-transform:none;
+}
+.bridge-box.parch h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:22px;color:#f1d99c;letter-spacing:0;
+  margin-bottom:14px;line-height:1.3;
+}
+.bridge-box.parch p{
+  font-family:'DM Mono',monospace;font-size:14px;line-height:1.85;
+  color:#c9bb98;
+}
+.bridge-box.parch em{color:var(--ag-gold)}
+
+/* SLOT MACHINE QUIZ */
+.slot-quiz{
+  background:#0a1530;border:2px solid var(--wf-gold);
+  box-shadow:var(--pixel-shadow);padding:24px;margin:30px 0;
+}
+.slot-quiz h3{
+  font-family:'Press Start 2P',monospace;font-size:11px;
+  color:var(--wf-gold);margin-bottom:8px;letter-spacing:1px;
+}
+.slot-intro{
+  color:#cdd5e8;font-size:13px;line-height:1.7;margin-bottom:18px;
+}
+.slot-machine{
+  background:#000;border:3px solid var(--wf-gold);
+  padding:18px;margin-bottom:18px;
+  box-shadow:inset 0 0 0 2px #1c1f2e,inset 0 0 30px rgba(232,197,71,.12);
+  position:relative;
+}
+.slot-body{
+  display:flex;align-items:stretch;gap:14px;margin-bottom:14px;
+}
+.slot-reels{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  flex:1;
+}
+
+/* THE LEVER */
+.slot-lever{
+  position:relative;
+  width:36px;height:80px;
+  background:transparent;border:none;
+  cursor:pointer;
+  padding:0;
+  display:flex;flex-direction:column;align-items:center;
+  flex-shrink:0;
+}
+.slot-lever:disabled{opacity:.55;cursor:not-allowed}
+.lever-ball{
+  width:24px;height:24px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ff6b6b,#a01818 70%,#5a0808);
+  border:2px solid #2a0404;
+  box-shadow:
+    inset -2px -3px 4px rgba(0,0,0,.5),
+    inset 2px 2px 3px rgba(255,255,255,.2),
+    0 0 8px rgba(232,197,71,.3);
+  transition:transform .35s cubic-bezier(.5,1.6,.4,.9);
+  z-index:3;
+  position:relative;
+}
+.lever-arm{
+  width:6px;flex:1;
+  background:linear-gradient(90deg,#3a3a4a,#888 50%,#3a3a4a);
+  border:1px solid #1a1a24;
+  margin-top:-2px;z-index:2;
+  transition:transform .35s cubic-bezier(.5,1.6,.4,.9);
+  transform-origin:bottom center;
+}
+.lever-base{
+  width:28px;height:14px;
+  background:linear-gradient(180deg,#5a4a1a,#2a1f08);
+  border:2px solid #1a1004;
+  border-radius:2px;
+  margin-top:-2px;z-index:1;
+  box-shadow:0 2px 0 rgba(0,0,0,.6);
+}
+.slot-lever:hover:not(:disabled) .lever-ball{
+  transform:scale(1.05);
+  box-shadow:
+    inset -2px -3px 4px rgba(0,0,0,.5),
+    inset 2px 2px 3px rgba(255,255,255,.2),
+    0 0 14px rgba(232,197,71,.6);
+}
+.slot-lever.pulling .lever-ball{
+  animation:leverBallPull .9s cubic-bezier(.4,1,.6,1);
+}
+.slot-lever.pulling .lever-arm{
+  animation:leverArmPull .9s cubic-bezier(.4,1,.6,1);
+}
+@keyframes leverBallPull{
+  0%{transform:translateY(0)}
+  35%{transform:translateY(38px)}
+  60%{transform:translateY(38px)}
+  100%{transform:translateY(0)}
+}
+@keyframes leverArmPull{
+  0%{transform:scaleY(1)}
+  35%{transform:scaleY(.45)}
+  60%{transform:scaleY(.45)}
+  100%{transform:scaleY(1)}
+}
+
+.slot-reel{
+  background:linear-gradient(180deg,#1c1f2e,#0a1530,#1c1f2e);
+  border:2px solid var(--wf-gold);
+  height:80px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+  box-shadow:inset 0 0 0 1px #000,inset 0 4px 8px rgba(0,0,0,.6);
+}
+.reel-symbol{
+  font-family:'Press Start 2P',monospace;font-size:32px;
+  color:var(--wf-gold);text-shadow:2px 2px 0 #000,0 0 12px rgba(232,197,71,.5);
+  transition:transform .1s;
+}
+.slot-reel.spinning .reel-symbol{
+  animation:reelSpin .08s linear infinite;
+}
+@keyframes reelSpin{
+  0%{transform:translateY(-30px);opacity:.3}
+  50%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(30px);opacity:.3}
+}
+.slot-reel.locked-right{
+  border-color:#4ade80;box-shadow:inset 0 0 0 1px #000,0 0 16px rgba(74,222,128,.5);
+}
+.slot-reel.locked-right .reel-symbol{color:#4ade80;text-shadow:2px 2px 0 #000,0 0 12px rgba(74,222,128,.6)}
+.slot-reel.locked-wrong{
+  border-color:#f87171;box-shadow:inset 0 0 0 1px #000,0 0 16px rgba(248,113,113,.5);
+}
+.slot-reel.locked-wrong .reel-symbol{color:#f87171;text-shadow:2px 2px 0 #000}
+.slot-status{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  color:var(--wf-gold);text-align:center;letter-spacing:2px;
+  padding:6px;background:#1c1f2e;border:1px dashed rgba(232,197,71,.4);
+}
+.slot-status.win{color:#86efac;border-color:#4ade80;background:#0d2a18}
+.slot-status.lose{color:#fca5a5;border-color:#f87171;background:#2a0d0d}
+.slot-question{
+  font-family:'DM Mono',monospace;font-size:14px;color:#cdd5e8;
+  background:#1c1f2e;padding:14px;margin-bottom:12px;
+  border-left:3px solid var(--wf-blue);min-height:20px;
+  display:none;line-height:1.7;
+}
+.slot-question.show{display:block}
+.slot-options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.slot-options:empty{margin-bottom:0}
+.slot-options button{
+  font-family:'DM Mono',monospace;font-size:13px;
+  background:#1c1f2e;color:#cdd5e8;
+  border:2px solid var(--wf-blue);
+  padding:11px 14px;text-align:left;
+  cursor:pointer;transition:.15s;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+}
+.slot-options button:hover:not(:disabled){
+  background:#0e1a3a;transform:translate(-1px,-1px);
+  box-shadow:3px 3px 0 rgba(0,0,0,.5);
+}
+.slot-options button:disabled{opacity:.55;cursor:not-allowed}
+.slot-options button.correct{background:#0d3a1a;border-color:#4ade80;color:#86efac}
+.slot-options button.wrong{background:#3a0d0d;border-color:#f87171;color:#fca5a5}
+.slot-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.slot-pull{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:var(--wf-gold);color:#000;
+  border:2px solid var(--wf-gold);padding:11px 16px;
+  cursor:pointer;letter-spacing:1px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+}
+.slot-pull:hover:not(:disabled){background:#ffd560}
+.slot-pull:disabled{opacity:.4;cursor:not-allowed}
+.slot-reset{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:transparent;color:var(--wf-blue);
+  border:2px solid var(--wf-blue);padding:11px 14px;
+  cursor:pointer;letter-spacing:1px;
+}
+.slot-reset:hover{background:var(--wf-blue);color:#fff}
+.slot-feedback{
+  margin-top:14px;padding:14px;display:none;
+  font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.7;
+}
+.slot-feedback.show{display:block}
+.slot-feedback.win{background:#0d3a1a;border:2px solid #4ade80;color:#86efac}
+.slot-feedback.lose{background:#3a0d0d;border:2px solid #f87171;color:#fca5a5}
+
+/* SLOT MACHINE COIN BURST */
+.slot-quiz{position:relative}
+.slot-coins{
+  position:absolute;inset:0;pointer-events:none;
+  overflow:hidden;z-index:20;
+}
+.slot-coin{
+  position:absolute;font-size:24px;
+  top:35%;left:50%;
+  filter:drop-shadow(0 0 8px rgba(232,197,71,.6));
+  animation-fill-mode:forwards;
+  animation-timing-function:cubic-bezier(.3,.6,.7,1);
+}
+@keyframes coinFly{
+  0%{
+    transform:translate(-50%,-50%) rotate(0deg) scale(.4);
+    opacity:0;
+  }
+  10%{opacity:1}
+  60%{opacity:1}
+  100%{
+    transform:translate(var(--coin-x),var(--coin-y)) rotate(var(--coin-r)) scale(1);
+    opacity:0;
+  }
+}
+.slot-machine.win-glow{
+  animation:winPulse 1.4s ease-in-out 2;
+}
+@keyframes winPulse{
+  0%,100%{box-shadow:inset 0 0 0 2px #1c1f2e,inset 0 0 30px rgba(232,197,71,.12)}
+  50%{box-shadow:inset 0 0 0 2px var(--wf-gold),inset 0 0 40px rgba(232,197,71,.4),0 0 30px rgba(232,197,71,.5)}
+}
+
+/* SLOT MACHINE LOSS — the cops are here */
+.slot-machine.lose-shake{
+  animation:slotShake .5s ease-in-out 4;
+  position:relative;
+}
+@keyframes slotShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px) rotate(-.5deg)}
+  40%{transform:translateX(6px) rotate(.5deg)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+.slot-doom{
+  position:absolute;inset:0;pointer-events:none;
+  overflow:hidden;z-index:20;
+}
+.doom-item{
+  position:absolute;font-size:32px;
+  filter:drop-shadow(0 0 6px rgba(0,0,0,.7));
+  animation-fill-mode:forwards;
+  top:-40px;
+}
+@keyframes sirenFall{
+  0%{transform:translateY(-40px) rotate(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(var(--doom-y)) rotate(var(--doom-r));opacity:0}
+}
+.doom-flash{
+  position:absolute;inset:0;
+  background:rgba(248,113,113,0);
+  pointer-events:none;
+  animation:redFlash 2.4s ease-in-out;
+  z-index:15;
+}
+@keyframes redFlash{
+  0%,100%{background:rgba(248,113,113,0)}
+  10%,30%,50%,70%{background:rgba(248,113,113,.15)}
+  20%,40%,60%,80%{background:rgba(0,40,200,.18)}
+}
+
+/* CRACK THE VAULT: phase ordering puzzle */
+.vault-game{
+  background:#0a1530;
+  border:2px solid var(--wf-gold);
+  box-shadow:var(--pixel-shadow);
+  padding:24px;margin:30px 0;
+}
+.vault-game h3{
+  font-family:'Press Start 2P',monospace;font-size:11px;
+  color:var(--wf-gold);margin-bottom:8px;letter-spacing:1px;
+}
+.vault-intro{
+  color:#cdd5e8;font-size:13px;line-height:1.7;margin-bottom:18px;
+}
+.vault-pool{
+  display:flex;flex-direction:column;gap:8px;
+  padding:14px;background:#1c1f2e;
+  border:2px dashed rgba(232,197,71,.4);
+  margin-bottom:14px;min-height:60px;
+}
+.vault-pool:empty::before{
+  content:"— vault is loaded —";
+  display:block;text-align:center;
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  color:rgba(232,197,71,.5);letter-spacing:1px;padding:6px 0;
+}
+.vault-pick{
+  font-family:'DM Mono',monospace;font-size:13px;
+  background:var(--wf-blue-deep);color:#fff;
+  border:2px solid var(--wf-blue);
+  padding:11px 14px;text-align:left;cursor:pointer;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);transition:.15s;
+}
+.vault-pick:hover{
+  background:#2a4380;transform:translate(-1px,-1px);
+  box-shadow:3px 3px 0 rgba(0,0,0,.5);
+}
+.vault-slots{
+  display:flex;flex-direction:column;gap:6px;margin-bottom:14px;
+}
+.vault-slot{
+  display:flex;align-items:stretch;
+  background:#1c1f2e;
+  border:2px solid var(--wf-blue-deep);
+  min-height:48px;
+}
+.vault-slot.filled{border-color:var(--wf-blue)}
+.vault-slot.right{border-color:#4ade80;background:#0d2a18}
+.vault-slot.wrong{border-color:#f87171;background:#2a0d0d}
+.slot-num{
+  font-family:'Press Start 2P',monospace;font-size:12px;
+  color:var(--wf-gold);
+  background:#000;padding:14px 16px;
+  display:flex;align-items:center;
+  border-right:2px solid var(--wf-blue-deep);
+  min-width:60px;justify-content:center;
+}
+.slot-fill{
+  flex:1;display:flex;align-items:center;
+  font-family:'DM Mono',monospace;font-size:13px;
+  color:#cdd5e8;padding:8px 14px;cursor:pointer;
+  user-select:none;
+}
+.slot-fill:empty::before{
+  content:"empty slot";color:rgba(255,255,255,.25);font-style:italic;
+}
+.slot-fill:not(:empty):hover{
+  background:rgba(255,255,255,.04);
+}
+.vault-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.vault-check{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:var(--wf-gold);color:#000;
+  border:2px solid var(--wf-gold);
+  padding:11px 16px;cursor:pointer;letter-spacing:1px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);
+}
+.vault-check:hover:not(:disabled){background:#ffd560}
+.vault-check:disabled{opacity:.35;cursor:not-allowed}
+.vault-reset{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:transparent;color:var(--wf-blue);
+  border:2px solid var(--wf-blue);padding:11px 14px;cursor:pointer;letter-spacing:1px;
+}
+.vault-reset:hover{background:var(--wf-blue);color:#fff}
+.vault-result{
+  margin-top:14px;padding:14px;display:none;
+  font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6;
+}
+.vault-result.show{display:block}
+.vault-result.right{background:#0d3a1a;border:2px solid #4ade80;color:#86efac}
+.vault-result.wrong{background:#3a0d0d;border:2px solid #f87171;color:#fca5a5}
+.vault-game.cracked{
+  animation:vaultCracked 1s ease;
+}
+@keyframes vaultCracked{
+  0%,100%{transform:translateX(0)}
+  10%{transform:translateX(-6px)}
+  20%{transform:translateX(6px)}
+  30%{transform:translateX(-4px)}
+  40%{transform:translateX(4px)}
+  50%{box-shadow:0 0 0 4px rgba(232,197,71,.3),var(--pixel-shadow)}
+  60%{box-shadow:0 0 0 8px rgba(232,197,71,.15),var(--pixel-shadow)}
+}
+
+/* VAULT DOOR OPENING — replaces slots area on success */
+.vault-slots{position:relative}
+.vault-door{
+  position:absolute;inset:0;
+  z-index:5;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease;
+}
+.vault-game.cracked .vault-door{
+  visibility:visible;
+  opacity:1;
+}
+@keyframes vaultDoorAppear{
+  to{opacity:1}
+}
+.vault-door-frame{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,#0a0703 0%,#1a1004 50%,#0a0703 100%);
+  border:3px solid var(--wf-gold);
+  box-shadow:
+    inset 0 0 0 2px #000,
+    inset 0 0 30px rgba(232,197,71,.25),
+    0 0 24px rgba(232,197,71,.4);
+  overflow:hidden;
+}
+/* the gold pile revealed inside */
+.vault-loot{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;letter-spacing:8px;
+  color:var(--wf-gold);
+  text-shadow:0 0 18px rgba(232,197,71,.7),0 0 4px #000;
+  animation:lootGlow 1.4s ease-in-out infinite alternate;
+}
+@keyframes lootGlow{
+  from{text-shadow:0 0 14px rgba(232,197,71,.5),0 0 4px #000;transform:scale(1)}
+  to{text-shadow:0 0 28px rgba(232,197,71,1),0 0 8px #000;transform:scale(1.05)}
+}
+.vault-loot::before{
+  /* radial sunburst */
+  content:"";position:absolute;inset:-50%;
+  background:radial-gradient(circle at center,rgba(232,197,71,.35),transparent 55%);
+  animation:lootSunburst 2.4s linear infinite;
+  z-index:-1;
+}
+@keyframes lootSunburst{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+/* the two door halves that slide apart */
+.vault-door-half{
+  position:absolute;top:0;bottom:0;width:50%;
+  background:
+    repeating-linear-gradient(45deg,#1c1f2e 0 8px,#0a1530 8px 16px);
+  border:2px solid var(--wf-blue);
+  box-shadow:inset 0 0 0 1px #000,inset 0 0 18px rgba(0,0,0,.7);
+  z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 1.2s cubic-bezier(.7,0,.3,1);
+}
+.vault-door-half.left{left:0;border-right:1px solid #000}
+.vault-door-half.right{right:0;border-left:1px solid #000}
+.vault-door-half::after{
+  /* the wheel/handle */
+  content:"⊛";
+  font-size:42px;color:var(--wf-gold);
+  text-shadow:0 0 8px rgba(0,0,0,.8);
+  transition:transform 1.2s ease;
+}
+.vault-door-half.left::after{transform:translateX(40%)}
+.vault-door-half.right::after{transform:translateX(-40%)}
+.vault-game.cracked .vault-door-half.left{
+  transform:translateX(-105%);
+}
+.vault-game.cracked .vault-door-half.right{
+  transform:translateX(105%);
+}
+.vault-game.cracked .vault-door-half.left::after{transform:translateX(40%) rotate(-540deg)}
+.vault-game.cracked .vault-door-half.right::after{transform:translateX(-40%) rotate(540deg)}
+
+/* hide the underlying slots once cracked */
+.vault-game.cracked .vault-slot{
+  opacity:.3;
+  filter:saturate(.4);
+  transition:opacity .4s ease, filter .4s ease;
+}
+
+/* video button (pixel) */
+.video-btn{
+  display:block;background:#0a1530;border:2px solid var(--wf-gold);
+  box-shadow:var(--pixel-shadow);padding:24px;margin:30px 0;
+  text-decoration:none;color:inherit;transition:.15s;
+}
+.video-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.6)}
+.video-btn .v-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.video-btn .v-title{
+  font-family:'Press Start 2P',monospace;font-size:10px;
+  color:var(--wf-gold);letter-spacing:1px;
+}
+.video-btn .v-meta{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+}
+.video-btn .v-desc{font-size:13px;color:#cdd5e8;line-height:1.7;margin-bottom:14px}
+.video-btn .v-attrib{
+  display:flex;align-items:center;gap:10px;
+  padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+}
+.video-btn .v-cta{
+  display:inline-block;
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  background:var(--wf-blue);color:#fff;
+  padding:10px 14px;letter-spacing:1px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.5);margin-top:6px;
+}
+
+/* ------------------- AGILE — PIRATE PARCHMENT ------------------- */
+.ag-section{
+  background:var(--bg-ag);
+  position:relative;overflow:hidden;
+}
+.ag-section::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 0% 0%,rgba(212,160,23,.10),transparent 50%),
+    radial-gradient(ellipse at 100% 100%,rgba(212,160,23,.10),transparent 50%);
+  pointer-events:none;
+}
+.ag-section > .wrap{position:relative;z-index:1}
+.ag-section .section-num{color:var(--ag-gold)}
+.ag-section .section-title{color:#f1d99c}
+.ag-section .section-lede{color:#9a8e6f}
+
+/* bobbing ship */
+.ag-deco-ship{
+  position:absolute;top:60px;right:24px;font-size:42px;
+  opacity:.18;animation:bob 4s ease-in-out infinite;z-index:0;
+}
+@keyframes bob{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-12px) rotate(3deg)}
+}
+.ag-deco-flag{
+  position:absolute;top:60px;left:24px;font-size:36px;
+  opacity:.18;animation:wave 2.6s ease-in-out infinite;z-index:0;
+}
+
+.parch-card{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.3);
+  border-radius:2px;
+  padding:24px;margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(212,160,23,.1);
+  position:relative;
+}
+.parch-card h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:22px;color:#f1d99c;margin-bottom:14px;
+}
+.parch-card p{color:#c9bb98;font-size:14px;line-height:1.7}
+
+/* core loop 3-panel */
+.triad{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0;
+}
+@media(max-width:700px){.triad{grid-template-columns:1fr}}
+.triad-panel{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.3);
+  padding:20px;text-align:center;
+  position:relative;
+}
+.triad-panel .ico{font-size:32px;margin-bottom:10px;display:block}
+.triad-panel h4{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:18px;color:var(--ag-gold);margin-bottom:8px;
+}
+.triad-panel p{color:#c9bb98;font-size:13px;line-height:1.6}
+
+/* iteration cards (hearts) */
+.iter-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0;
+}
+@media(max-width:700px){.iter-grid{grid-template-columns:1fr}}
+.iter-card{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.3);
+  padding:20px;
+}
+.iter-card .hearts{font-size:18px;margin-bottom:10px;letter-spacing:4px}
+.iter-card h4{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:17px;color:#f1d99c;margin-bottom:8px;
+}
+.iter-card p{color:#c9bb98;font-size:13px;line-height:1.6}
+
+/* flip cards */
+.flip-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0;
+}
+@media(max-width:700px){.flip-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.flip-grid{grid-template-columns:1fr}}
+.flip{
+  perspective:1000px;height:200px;cursor:pointer;
+}
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .6s;
+}
+.flip.flipped .flip-inner,
+.flip:hover .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:1px solid rgba(212,160,23,.4);
+  padding:18px;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+}
+.flip-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(135deg,#241a0a,#2c2010);
+}
+.flip-front .letter{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:800;
+  font-size:48px;color:var(--ag-gold);line-height:1;margin-bottom:8px;
+}
+.flip-front h4{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:17px;color:#f1d99c;margin-bottom:8px;line-height:1.2;
+}
+.flip-front .hint{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:1px;text-transform:uppercase;
+  margin-top:auto;
+}
+.flip-back p{
+  color:#c9bb98;font-size:13px;line-height:1.6;font-style:italic;
+}
+
+/* MVP box */
+.mvp-box{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border-left:4px solid var(--ag-gold);
+  padding:20px 24px;margin:30px 0;
+}
+.mvp-box h4{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:20px;color:var(--ag-gold);margin-bottom:10px;
+}
+.mvp-box p{color:#c9bb98;font-size:14px;line-height:1.7}
+
+/* scope creep game */
+.scope-game{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.4);
+  padding:24px;margin:30px 0;
+}
+.scope-game h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:24px;color:var(--ag-gold);margin-bottom:8px;
+}
+.scope-game .premise{
+  color:#c9bb98;font-size:14px;line-height:1.7;margin-bottom:20px;
+}
+.budget-bar-wrap{
+  background:#0c0903;border:1px solid rgba(212,160,23,.3);
+  height:32px;border-radius:2px;overflow:hidden;margin-bottom:6px;
+  position:relative;
+}
+.budget-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#3d6e2d,#a07c1d);
+  transition:width .4s ease;
+  display:flex;align-items:center;padding-left:10px;
+  font-family:'DM Mono',monospace;font-size:11px;color:#0c0903;
+  font-weight:500;letter-spacing:1px;
+}
+.budget-bar.danger{background:linear-gradient(90deg,#a07c1d,#7a1f1f)}
+.budget-label{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:1px;margin-bottom:18px;text-transform:uppercase;
+}
+.scope-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.scope-buttons{grid-template-columns:1fr}}
+.scope-buttons button{
+  font-family:'Fraunces',serif;font-style:italic;
+  background:#2c2010;color:#f1d99c;
+  border:1px solid rgba(212,160,23,.4);
+  padding:14px;text-align:left;font-size:14px;
+  cursor:pointer;transition:.2s;
+}
+.scope-buttons button:hover:not(:disabled){
+  background:#3a2a14;border-color:var(--ag-gold);
+}
+.scope-buttons button:disabled{
+  opacity:.4;cursor:not-allowed;text-decoration:line-through;
+}
+.scope-msg{
+  margin-top:20px;padding:14px;display:none;
+  background:#3a0d0d;border:1px solid #f87171;
+  font-family:'Fraunces',serif;font-style:italic;
+  color:#fca5a5;font-size:15px;line-height:1.6;
+}
+.scope-msg.show{display:block}
+.scope-reset{
+  display:none;margin-top:14px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  background:transparent;color:var(--ag-gold);
+  border:1px solid var(--ag-gold);padding:8px 14px;cursor:pointer;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.scope-reset.show{display:inline-block}
+.scope-reset:hover{background:var(--ag-gold);color:#0c0903}
+
+/* SCOPE CREEP LOSS — sinking ship */
+.scope-game{position:relative}
+.scope-game.sinking{
+  animation:shipSink 5s ease-in forwards;
+}
+@keyframes shipSink{
+  0%{transform:translateY(0) rotate(0deg)}
+  10%{transform:translateY(-3px) rotate(-1deg)}
+  20%{transform:translateY(0) rotate(1deg)}
+  35%{transform:translateY(2px) rotate(-1.5deg)}
+  60%{transform:translateY(8px) rotate(2deg)}
+  100%{transform:translateY(14px) rotate(0deg)}
+}
+.sinking-ship{
+  display:inline-block;
+  animation:sinkingShipBob 1s ease-in-out infinite alternate;
+  font-size:1.2em;margin-right:6px;
+}
+@keyframes sinkingShipBob{
+  from{transform:translateY(0) rotate(-8deg)}
+  to{transform:translateY(3px) rotate(8deg)}
+}
+.sink-bubbles{
+  position:absolute;inset:0;pointer-events:none;
+  overflow:hidden;z-index:5;
+}
+.bubble{
+  position:absolute;bottom:-30px;
+  font-size:20px;opacity:.85;
+  filter:drop-shadow(0 0 4px rgba(100,200,255,.4));
+}
+@keyframes bubbleRise{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  20%{opacity:.9}
+  100%{transform:translateY(-360px) translateX(var(--bubble-x,20px));opacity:0}
+}
+
+/* CANNON DEFENCE GAME */
+.cannon-game{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.4);
+  padding:24px;margin:30px 0;
+}
+.cannon-game h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:24px;color:var(--ag-gold);margin-bottom:8px;
+}
+.cannon-intro{
+  color:#c9bb98;font-size:14px;line-height:1.7;margin-bottom:18px;
+}
+.cannon-stats{
+  display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;
+}
+.cannon-stat{
+  display:flex;flex-direction:column;
+  background:#0c0903;border:1px solid rgba(212,160,23,.3);
+  padding:8px 14px;flex:1;min-width:100px;
+}
+.cannon-stat .stat-label{
+  font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);
+  letter-spacing:1px;text-transform:uppercase;
+}
+.cannon-stat .stat-val{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:22px;color:var(--ag-gold);
+}
+.cannon-stat#stat-hull.danger .stat-val,
+.cannon-stat .stat-val.danger{color:#fca5a5}
+.cannon-arena{
+  background:
+    linear-gradient(180deg,#0a0703 0%,#160e02 60%,#241704 100%);
+  border:1px solid rgba(212,160,23,.3);
+  height:280px;position:relative;overflow:hidden;
+  margin-bottom:10px;
+  cursor:crosshair;
+}
+.cannon-arena::before{
+  /* horizon stars */
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 20% 20%,rgba(232,197,71,.6),transparent),
+    radial-gradient(1px 1px at 60% 35%,rgba(232,197,71,.4),transparent),
+    radial-gradient(1px 1px at 80% 25%,rgba(232,197,71,.5),transparent),
+    radial-gradient(1px 1px at 35% 50%,rgba(232,197,71,.3),transparent);
+  pointer-events:none;
+}
+.cannon-arena::after{
+  /* wave at bottom */
+  content:"⚓";position:absolute;bottom:8px;left:50%;
+  transform:translateX(-50%);font-size:22px;
+  opacity:.6;pointer-events:none;
+}
+.cn-cannon{
+  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  font-size:32px;z-index:5;pointer-events:none;
+  animation:cnRock 2s ease-in-out infinite;
+}
+@keyframes cnRock{
+  0%,100%{transform:translateX(-50%) rotate(-5deg)}
+  50%{transform:translateX(-50%) rotate(5deg)}
+}
+.cn-target{
+  position:absolute;
+  background:linear-gradient(135deg,#241a0a,#3a2a14);
+  border:1px solid rgba(212,160,23,.5);
+  color:#f1d99c;padding:8px 12px;
+  font-family:'Fraunces',serif;font-style:italic;font-size:13px;
+  cursor:pointer;
+  max-width:240px;line-height:1.4;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+  transition:transform .15s, opacity .3s, background .15s;
+  user-select:none;
+}
+.cn-target.is-wf{
+  /* visually identical to agile so they have to read */
+}
+.cn-target:hover{
+  background:#3a2a14;border-color:var(--ag-gold);
+}
+.cn-target.hit-right{
+  background:#0d3a1a;border-color:#4ade80;color:#86efac;
+  transform:scale(1.1);opacity:0;
+}
+.cn-target.hit-wrong{
+  background:#3a0d0d;border-color:#f87171;color:#fca5a5;
+  transform:scale(.9);
+}
+.cn-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,7,3,.85);backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  z-index:10;flex-direction:column;gap:14px;padding:20px;text-align:center;
+}
+.cn-overlay.hidden{display:none}
+.cn-overlay .end-msg{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:22px;color:var(--ag-gold);max-width:420px;line-height:1.4;
+}
+.cn-overlay .end-detail{
+  font-family:'DM Mono',monospace;font-size:13px;color:#c9bb98;
+  max-width:480px;line-height:1.6;
+}
+.cn-start{
+  font-family:'DM Mono',monospace;font-size:13px;letter-spacing:1px;
+  background:var(--ag-gold);color:#0c0903;
+  border:none;padding:14px 22px;cursor:pointer;
+  text-transform:uppercase;font-weight:500;
+}
+.cn-start:hover{background:#f1d99c}
+.cn-flash{
+  position:absolute;pointer-events:none;
+  font-size:28px;opacity:1;z-index:9;
+  animation:cnFlash .6s ease-out forwards;
+}
+@keyframes cnFlash{
+  0%{transform:scale(.5);opacity:1}
+  100%{transform:scale(1.8);opacity:0}
+}
+
+/* SHIP SUNK — hull reaches 0 */
+.cannon-arena.sunk{
+  animation:arenaShake .4s ease-in-out 3;
+}
+@keyframes arenaShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.cn-red-flash{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(248,113,113,.5),rgba(180,30,30,.3) 40%,transparent 80%);
+  animation:redFlash 1.6s ease-out forwards;
+  z-index:8;
+}
+@keyframes redFlash{
+  0%{opacity:0}
+  15%{opacity:1}
+  100%{opacity:0}
+}
+.cn-sinking-ship{
+  position:absolute;left:50%;top:-60px;
+  font-size:54px;z-index:9;pointer-events:none;
+  animation:shipSink 2.2s cubic-bezier(.5,.1,.7,1) forwards;
+  filter:drop-shadow(0 0 12px rgba(0,0,0,.8));
+}
+@keyframes shipSink{
+  0%{
+    transform:translateX(-50%) rotate(-8deg) translateY(0);
+    opacity:0;
+  }
+  10%{opacity:1}
+  60%{
+    transform:translateX(-50%) rotate(15deg) translateY(180px);
+    opacity:1;
+  }
+  100%{
+    transform:translateX(-50%) rotate(40deg) translateY(280px);
+    opacity:0;
+  }
+}
+.cn-bubble{
+  position:absolute;font-size:18px;color:#cdd5e8;
+  opacity:0;pointer-events:none;z-index:7;
+  animation:bubbleRise 1.8s ease-out forwards;
+}
+@keyframes bubbleRise{
+  0%{transform:translateY(20px) scale(.3);opacity:0}
+  20%{opacity:.7}
+  100%{transform:translateY(-220px) scale(1.2);opacity:0}
+}
+
+/* TIME UP — cannon explodes */
+.cn-explosion{
+  position:absolute;left:50%;bottom:6px;
+  transform:translateX(-50%);
+  font-size:64px;z-index:9;pointer-events:none;
+  animation:cnExplode 1.2s cubic-bezier(.3,.6,.7,1) forwards;
+  filter:drop-shadow(0 0 14px rgba(248,113,113,.9));
+}
+@keyframes cnExplode{
+  0%{transform:translateX(-50%) scale(.5);opacity:0}
+  20%{transform:translateX(-50%) scale(1.4);opacity:1}
+  100%{transform:translateX(-50%) scale(2.2);opacity:0}
+}
+.cn-smoke{
+  position:absolute;font-size:30px;
+  pointer-events:none;z-index:6;opacity:0;
+  animation:smokeRise 2.4s ease-out forwards;
+}
+@keyframes smokeRise{
+  0%{transform:translateY(0) scale(.6);opacity:0}
+  20%{opacity:.8}
+  100%{transform:translateY(-140px) scale(1.5);opacity:0}
+}
+.cn-stamp{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(0) rotate(-12deg);
+  font-family:'Fraunces',serif;font-style:italic;font-weight:800;
+  font-size:36px;letter-spacing:2px;
+  color:#fca5a5;
+  border:4px solid #fca5a5;
+  padding:8px 22px;
+  text-transform:uppercase;
+  z-index:11;pointer-events:none;
+  white-space:nowrap;
+  text-shadow:0 0 12px rgba(0,0,0,.8);
+  box-shadow:0 0 20px rgba(248,113,113,.6),inset 0 0 20px rgba(248,113,113,.2);
+  background:rgba(58,13,13,.7);
+  animation:stampDown .5s cubic-bezier(.6,.1,.3,1.4) .4s forwards;
+}
+@keyframes stampDown{
+  0%{transform:translate(-50%,-50%) scale(2.5) rotate(-12deg);opacity:0}
+  60%{transform:translate(-50%,-50%) scale(.92) rotate(-12deg);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(-12deg);opacity:1}
+}
+.cn-stamp.win{
+  color:#86efac;border-color:#86efac;
+  background:rgba(13,58,26,.7);
+  box-shadow:0 0 20px rgba(74,222,128,.5),inset 0 0 20px rgba(74,222,128,.2);
+}
+
+.cannon-note{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+  font-style:italic;line-height:1.6;
+}
+
+/* sepia pros/cons */
+.sepia-pc{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0;
+}
+@media(max-width:600px){.sepia-pc{grid-template-columns:1fr}}
+.sepia-pc .col{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.3);
+  padding:20px;
+}
+.sepia-pc h4{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:19px;margin-bottom:14px;
+}
+.sepia-pc .pros h4{color:#86efac}
+.sepia-pc .cons h4{color:#fca5a5}
+.sepia-pc ul{list-style:none}
+.sepia-pc li{
+  font-size:14px;padding:8px 0;color:#c9bb98;font-style:italic;
+  border-bottom:1px dashed rgba(212,160,23,.15);
+}
+.sepia-pc li:last-child{border-bottom:none}
+
+/* sprint tags */
+.sprint-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.sprint-tag{
+  font-family:'DM Mono',monospace;font-size:11px;
+  background:#2c2010;color:#f1d99c;
+  border:1px solid rgba(212,160,23,.3);
+  padding:6px 10px;letter-spacing:.5px;
+}
+
+/* video button (pirate scroll) */
+.video-btn-pirate{
+  display:block;
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid var(--ag-gold);border-radius:2px;
+  padding:24px;margin:30px 0;
+  text-decoration:none;color:inherit;transition:.2s;
+  position:relative;
+}
+.video-btn-pirate:hover{
+  border-color:#f1d99c;
+  box-shadow:0 4px 30px rgba(212,160,23,.2);
+}
+.video-btn-pirate .v-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.video-btn-pirate .v-title{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:20px;color:#f1d99c;
+}
+.video-btn-pirate .v-meta{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+}
+.video-btn-pirate .v-desc{
+  color:#c9bb98;font-size:14px;line-height:1.7;margin-bottom:14px;font-style:italic;
+}
+.video-btn-pirate .v-attrib{
+  display:flex;align-items:center;gap:10px;
+  padding-top:14px;border-top:1px dashed rgba(212,160,23,.2);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+}
+.video-btn-pirate .v-cta{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;
+  background:var(--ag-gold);color:#0c0903;
+  padding:10px 16px;text-transform:uppercase;font-weight:500;
+  margin-top:6px;
+}
+
+/* ------------------- KANBAN — sub of Agile ------------------- */
+.kb-section{
+  background:var(--bg-kb);
+  border-top:2px dashed rgba(212,160,23,.3) !important;
+  position:relative;overflow:hidden;
+}
+.kb-section::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,160,23,.06),transparent 60%);
+  pointer-events:none;
+}
+.kb-section > .wrap{position:relative;z-index:1}
+.kb-section .section-num{color:var(--ag-gold)}
+.kb-section .section-title{color:#f1d99c}
+.kb-tag{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:11px;
+  background:rgba(212,160,23,.1);color:var(--ag-gold);
+  border:1px solid rgba(212,160,23,.3);
+  padding:6px 12px;letter-spacing:1px;margin-bottom:14px;
+}
+
+/* kanban principles */
+.kb-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0;
+}
+@media(max-width:600px){.kb-grid{grid-template-columns:1fr}}
+.kb-card{
+  background:linear-gradient(135deg,#1d1607,#241a0a);
+  border:1px solid rgba(212,160,23,.3);
+  border-top:3px solid var(--ag-gold);
+  padding:20px;
+}
+.kb-card .num{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:800;
+  font-size:32px;color:var(--ag-gold);line-height:1;margin-bottom:8px;
+}
+.kb-card h4{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:18px;color:#f1d99c;margin-bottom:8px;
+}
+.kb-card p{color:#c9bb98;font-size:13px;line-height:1.6;font-style:italic}
+
+/* kanban board */
+.kb-board{
+  background:#0c0903;
+  border:1px solid rgba(212,160,23,.3);
+  padding:20px;margin:30px 0;
+}
+.kb-board h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:20px;color:var(--ag-gold);margin-bottom:6px;
+}
+.kb-board .hint{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+  margin-bottom:18px;letter-spacing:.5px;
+}
+.kb-cols{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+}
+@media(max-width:600px){.kb-cols{grid-template-columns:1fr}}
+.kb-col{
+  background:#1a140a;
+  border:1px solid rgba(212,160,23,.2);
+  padding:14px;min-height:240px;
+}
+.kb-col-head{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--ag-gold);letter-spacing:1px;margin-bottom:14px;
+  text-transform:uppercase;padding-bottom:10px;
+  border-bottom:1px dashed rgba(212,160,23,.2);
+}
+.kb-task{
+  background:#2c2010;color:#f1d99c;
+  border:1px solid rgba(212,160,23,.3);
+  padding:10px 12px;margin-bottom:8px;
+  font-family:'Fraunces',serif;font-style:italic;
+  font-size:14px;cursor:pointer;
+  transition:.2s;
+  user-select:none;
+}
+.kb-task:hover{background:#3a2a14;transform:translateX(2px)}
+.kb-task.done{background:#1a3520;border-color:#4ade80;color:#86efac;cursor:default;text-decoration:line-through}
+.kb-task.done:hover{transform:none}
+.kb-task.in-progress{background:#3a2a14;border-color:var(--ag-gold)}
+.kb-celebrate{
+  margin-top:18px;padding:14px;display:none;
+  background:#1a3520;border:1px solid #4ade80;
+  font-family:'Fraunces',serif;font-style:italic;
+  color:#86efac;font-size:15px;line-height:1.6;
+}
+.kb-celebrate.show{display:block}
+.kb-warn{
+  margin-top:14px;padding:12px 14px;display:none;
+  background:#3a0d0d;border:1px solid #f87171;
+  font-family:'Fraunces',serif;font-style:italic;
+  color:#fca5a5;font-size:14px;line-height:1.6;
+}
+.kb-warn.show{display:block}
+.kb-task.shake{animation:wipShake .5s ease}
+@keyframes wipShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px);background:#5a1a1a;border-color:#f87171;color:#fca5a5}
+  40%{transform:translateX(8px);background:#5a1a1a;border-color:#f87171;color:#fca5a5}
+  60%{transform:translateX(-6px);background:#5a1a1a;border-color:#f87171;color:#fca5a5}
+  80%{transform:translateX(6px)}
+}
+
+/* ------------------- COMPARISON TABLE ------------------- */
+.compare-section{background:#06090e}
+
+/* SORT THE METHOD GAME */
+.sort-game{
+  background:linear-gradient(135deg,#0a0d18,#0e1220);
+  border:1px solid var(--line);
+  padding:24px;margin:30px 0;
+  border-radius:2px;
+  position:relative;
+  overflow:hidden;
+}
+.sort-game::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,transparent 49.5%,rgba(59,130,246,.06) 49.5%,rgba(59,130,246,.06) 50.5%,transparent 50.5%);
+  pointer-events:none;
+}
+.sort-game > *{position:relative;z-index:1}
+.sort-game h3{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  font-size:24px;color:var(--text);margin-bottom:8px;
+}
+.sort-intro{
+  color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:20px;
+}
+.sort-stack{display:flex;flex-direction:column;gap:8px}
+.sort-stmt{
+  display:block;width:100%;text-align:left;
+  font-family:'DM Mono',monospace;font-size:13px;
+  background:#0a0d18;color:#cdd5e8;
+  border:1px solid rgba(255,255,255,.12);
+  border-left:4px solid rgba(255,255,255,.12);
+  padding:12px 14px;cursor:pointer;
+  transition:.15s;line-height:1.5;
+}
+.sort-stmt:hover:not(:disabled){
+  background:#101526;border-color:rgba(255,255,255,.25);
+}
+.sort-stmt[data-pick="wf"]{
+  border-left-color:var(--wf-blue);
+  background:rgba(59,130,246,.08);color:#cdd5e8;
+}
+.sort-stmt[data-pick="wf"]::before{
+  content:"🎰 ";
+}
+.sort-stmt[data-pick="ag"]{
+  border-left-color:var(--ag-gold);
+  background:rgba(212,160,23,.08);color:#f1d99c;
+}
+.sort-stmt[data-pick="ag"]::before{
+  content:"⚓ ";
+}
+.sort-stmt.right{
+  border-color:#4ade80;background:rgba(74,222,128,.08);color:#86efac;
+}
+.sort-stmt.wrong{
+  border-color:#f87171;background:rgba(248,113,113,.08);color:#fca5a5;
+}
+.sort-stmt.right::after,.sort-stmt.wrong::after{
+  float:right;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;
+}
+.sort-stmt.right::after{content:"✓"}
+.sort-stmt.wrong::after{content:"✗"}
+.sort-actions{
+  display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap;
+}
+.sort-check{
+  font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1px;
+  background:var(--wf-gold);color:#000;
+  border:none;padding:10px 18px;cursor:pointer;
+  text-transform:uppercase;font-weight:500;
+}
+.sort-check:hover{background:#fde288}
+.sort-check:disabled{opacity:.4;cursor:not-allowed}
+.sort-reset{
+  font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1px;
+  background:transparent;color:var(--muted);
+  border:1px solid var(--line);padding:9px 14px;cursor:pointer;
+  text-transform:uppercase;
+}
+.sort-reset:hover{color:var(--text);border-color:var(--text)}
+.sort-score{
+  font-family:'DM Mono',monospace;font-size:13px;color:var(--ag-gold);
+  letter-spacing:.5px;
+}
+.sort-result{
+  margin-top:14px;padding:12px 14px;display:none;
+  font-family:'DM Mono',monospace;font-size:13px;line-height:1.6;
+  border-left:3px solid var(--wf-gold);background:rgba(232,197,71,.05);
+  color:#cdd5e8;
+}
+.sort-result.show{display:block}
+
+.compare-wrap{overflow-x:auto;margin:20px 0}
+.compare{
+  width:100%;border-collapse:collapse;
+  font-family:'DM Mono',monospace;font-size:13px;
+  min-width:560px;
+}
+.compare th,.compare td{
+  text-align:left;padding:14px 16px;
+  border-bottom:1px solid var(--line);
+}
+.compare th{
+  font-family:'Press Start 2P',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;font-weight:400;
+  border-bottom:2px solid var(--line);
+}
+.compare th.wf-h{color:var(--wf-blue)}
+.compare th.ag-h{color:var(--ag-gold)}
+.compare td{color:#c9bb98}
+.compare td:first-child{color:#9a9080;font-style:italic}
+.compare tr:hover td{background:rgba(255,255,255,.02)}
+
+/* ------------------- GLOSSARY ------------------- */
+.gloss-section{background:#06090e}
+.gloss-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0;
+}
+@media(max-width:700px){.gloss-grid{grid-template-columns:1fr}}
+.gloss-item{
+  border-left:2px solid rgba(232,197,71,.3);
+  padding:8px 16px;
+}
+.gloss-item dt{
+  font-family:'DM Mono',monospace;font-size:13px;
+  color:var(--wf-gold);font-weight:500;margin-bottom:4px;letter-spacing:.5px;
+}
+.gloss-item dd{
+  font-size:13px;color:var(--muted);line-height:1.6;
+}
+
+/* ------------------- FOOTER ------------------- */
+footer{
+  border-top:1px solid var(--line);
+  padding:40px 24px;text-align:center;
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);
+}
+footer .creds{margin-top:8px;font-size:11px}
+
+</style>
+</head>
+<body>
+
+<!-- ============== STICKY NAV ============== -->
+<nav class="top">
+  <div class="nav-inner">
+    <span class="brand">SDLC · ESP IT</span>
+    <ul>
+      <li><a href="#intro">01·Intro</a></li>
+      <li><a href="#waterfall">02·Waterfall</a></li>
+      <li><a href="#agile">03·Agile</a></li>
+      <li><a href="#kanban">04·Kanban</a></li>
+      <li><a href="#compare">05·Compare</a></li>
+      <li><a href="#glossary">06·Glossary</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero">
+  <div class="hero-grid"></div>
+
+  <!-- twinkling stars -->
+  <span class="star" style="top:12%;left:8%;animation-delay:0s">✦</span>
+  <span class="star" style="top:20%;left:88%;animation-delay:.6s">✦</span>
+  <span class="star" style="top:35%;left:14%;animation-delay:1.2s">✦</span>
+  <span class="star" style="top:18%;left:42%;animation-delay:1.8s">✦</span>
+  <span class="star" style="top:48%;left:90%;animation-delay:.3s">✦</span>
+  <span class="star" style="top:60%;left:6%;animation-delay:1.5s">✦</span>
+  <span class="star" style="top:8%;left:60%;animation-delay:2.4s">✦</span>
+
+  <!-- floating skulls -->
+  <span class="skull" style="top:25%;left:20%;animation-delay:0s">💀</span>
+  <span class="skull" style="top:55%;left:78%;animation-delay:2s">💀</span>
+  <span class="skull" style="top:70%;left:35%;animation-delay:4s">💀</span>
+
+  <!-- cannons + cannonballs -->
+  <span class="cannon left">💣</span>
+  <span class="cannon right">💣</span>
+  <span class="ball lr">🔴</span>
+  <span class="ball rl">🔴</span>
+
+  <!-- corner figures -->
+  <span class="corner-fig flag">🏴‍☠️</span>
+  <span class="corner-fig casino">🎰</span>
+
+  <div class="hero-content">
+    <div class="dpm-credit">
+      <span class="dpm-badge">dpm</span>
+      <span>Videos by The Digital Project Manager · @thedigitalprojectmanager · 18.8K subscribers</span>
+    </div>
+    <h1>
+      <span class="wf">WATERFALL</span>
+      <span class="vs">vs</span>
+      <span class="ag">AGILE</span>
+    </h1>
+    <p class="subtitle">
+      Pre-class reading for ESP IT. We're learning two ways software gets built — through pirates trying to outrun the Black Pearl and a casino heist crew planning the perfect job. Read this before class. There will be a test.
+    </p>
+    <div class="badges">
+      <a href="#waterfall" class="pixel-badge wf">🎰 WATERFALL · CASINO HEIST →</a>
+      <a href="#agile" class="pixel-badge ag">⚓ AGILE + KANBAN · PIRATE SHIP →</a>
+    </div>
+  </div>
+
+  <div class="hero-wave"></div>
+</header>
+
+<!-- ============== 01 · INTRO ============== -->
+<section id="intro" class="intro">
+  <div class="wrap">
+    <div class="section-num">01 · INTRODUCTION</div>
+    <h2 class="section-title">Two ways to build software.</h2>
+    <p class="section-lede">
+      The <strong>Software Development Life Cycle</strong> (SDLC) is the structured framework teams use to build software. Different sources count anywhere from five to eight phases — and that's fine. <strong style="color:var(--wf-gold)">Some authors add more stages to the Waterfall model</strong>, so don't just memorise a fixed number. Get the general understanding of the approach, and compare it with the Agile model. This page covers both. Kanban is presented as part of Agile, because that's what it is.
+    </p>
+    <p>The two short videos linked in each section come from <strong>The Digital Project Manager</strong> on YouTube — a channel that explains these methods through a casino heist (Waterfall) and Captain Jack Sparrow building a pirate ship (Agile). They're funny, fast, and they stick. Watch them. Then come back here, click around the games, and check the glossary.</p>
+    <p>If you can explain the difference between Waterfall and Agile to a friend in your own words by the end — using either pirates or a heist crew as an example — you're ready for the test.</p>
+
+    <!-- ALMA AI ASSISTANT CARD -->
+    <a class="alma-card" href="https://chat.almalearning.ai/create-chat?uuid=a35cdf91-fb47-49cd-badb-332f5768c5eb" target="_blank" rel="noopener">
+      <div class="alma-portrait" aria-hidden="true">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid meet">
+<rect x="0" y="0" width="32" height="1" fill="#0a1530"/><rect x="0" y="1" width="3" height="1" fill="#0a1530"/><rect x="3" y="1" width="26" height="1" fill="#1e3a8a"/><rect x="29" y="1" width="3" height="1" fill="#0a1530"/><rect x="0" y="2" width="3" height="1" fill="#0a1530"/><rect x="3" y="2" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="2" width="24" height="1" fill="#3b82f6"/><rect x="28" y="2" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="2" width="3" height="1" fill="#0a1530"/><rect x="0" y="3" width="3" height="1" fill="#0a1530"/><rect x="3" y="3" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="3" width="1" height="1" fill="#3b82f6"/><rect x="5" y="3" width="2" height="1" fill="#0a1530"/><rect x="7" y="3" width="1" height="1" fill="#e8c547"/><rect x="8" y="3" width="16" height="1" fill="#0a1530"/><rect x="24" y="3" width="1" height="1" fill="#e8c547"/><rect x="25" y="3" width="2" height="1" fill="#0a1530"/><rect x="27" y="3" width="1" height="1" fill="#3b82f6"/><rect x="28" y="3" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="3" width="3" height="1" fill="#0a1530"/><rect x="0" y="4" width="3" height="1" fill="#0a1530"/><rect x="3" y="4" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="4" width="1" height="1" fill="#3b82f6"/><rect x="5" y="4" width="7" height="1" fill="#0a1530"/><rect x="12" y="4" width="8" height="1" fill="#5a2d0e"/><rect x="20" y="4" width="7" height="1" fill="#0a1530"/><rect x="27" y="4" width="1" height="1" fill="#3b82f6"/><rect x="28" y="4" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="4" width="3" height="1" fill="#0a1530"/><rect x="0" y="5" width="3" height="1" fill="#0a1530"/><rect x="3" y="5" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="5" width="1" height="1" fill="#3b82f6"/><rect x="5" y="5" width="5" height="1" fill="#0a1530"/><rect x="10" y="5" width="2" height="1" fill="#5a2d0e"/><rect x="12" y="5" width="8" height="1" fill="#8b4a18"/><rect x="20" y="5" width="2" height="1" fill="#5a2d0e"/><rect x="22" y="5" width="5" height="1" fill="#0a1530"/><rect x="27" y="5" width="1" height="1" fill="#3b82f6"/><rect x="28" y="5" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="5" width="3" height="1" fill="#0a1530"/><rect x="0" y="6" width="3" height="1" fill="#0a1530"/><rect x="3" y="6" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="6" width="1" height="1" fill="#3b82f6"/><rect x="5" y="6" width="4" height="1" fill="#0a1530"/><rect x="9" y="6" width="1" height="1" fill="#5a2d0e"/><rect x="10" y="6" width="2" height="1" fill="#8b4a18"/><rect x="12" y="6" width="8" height="1" fill="#b87333"/><rect x="20" y="6" width="2" height="1" fill="#8b4a18"/><rect x="22" y="6" width="1" height="1" fill="#5a2d0e"/><rect x="23" y="6" width="4" height="1" fill="#0a1530"/><rect x="27" y="6" width="1" height="1" fill="#3b82f6"/><rect x="28" y="6" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="6" width="3" height="1" fill="#0a1530"/><rect x="0" y="7" width="3" height="1" fill="#0a1530"/><rect x="3" y="7" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="7" width="1" height="1" fill="#3b82f6"/><rect x="5" y="7" width="3" height="1" fill="#0a1530"/><rect x="8" y="7" width="1" height="1" fill="#5a2d0e"/><rect x="9" y="7" width="2" height="1" fill="#8b4a18"/><rect x="11" y="7" width="1" height="1" fill="#b87333"/><rect x="12" y="7" width="9" height="1" fill="#f4d4a8"/><rect x="21" y="7" width="2" height="1" fill="#8b4a18"/><rect x="23" y="7" width="1" height="1" fill="#5a2d0e"/><rect x="24" y="7" width="3" height="1" fill="#0a1530"/><rect x="27" y="7" width="1" height="1" fill="#3b82f6"/><rect x="28" y="7" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="7" width="3" height="1" fill="#0a1530"/><rect x="0" y="8" width="3" height="1" fill="#0a1530"/><rect x="3" y="8" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="8" width="1" height="1" fill="#3b82f6"/><rect x="5" y="8" width="2" height="1" fill="#0a1530"/><rect x="7" y="8" width="1" height="1" fill="#5a2d0e"/><rect x="8" y="8" width="1" height="1" fill="#8b4a18"/><rect x="9" y="8" width="1" height="1" fill="#b87333"/><rect x="10" y="8" width="11" height="1" fill="#f4d4a8"/><rect x="21" y="8" width="1" height="1" fill="#b87333"/><rect x="22" y="8" width="1" height="1" fill="#8b4a18"/><rect x="23" y="8" width="1" height="1" fill="#5a2d0e"/><rect x="24" y="8" width="3" height="1" fill="#0a1530"/><rect x="27" y="8" width="1" height="1" fill="#3b82f6"/><rect x="28" y="8" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="8" width="3" height="1" fill="#0a1530"/><rect x="0" y="9" width="3" height="1" fill="#0a1530"/><rect x="3" y="9" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="9" width="1" height="1" fill="#3b82f6"/><rect x="5" y="9" width="2" height="1" fill="#0a1530"/><rect x="7" y="9" width="1" height="1" fill="#5a2d0e"/><rect x="8" y="9" width="1" height="1" fill="#8b4a18"/><rect x="9" y="9" width="1" height="1" fill="#b87333"/><rect x="10" y="9" width="2" height="1" fill="#f4d4a8"/><rect x="12" y="9" width="2" height="1" fill="#1a1a1a"/><rect x="14" y="9" width="3" height="1" fill="#f4d4a8"/><rect x="17" y="9" width="2" height="1" fill="#1a1a1a"/><rect x="19" y="9" width="3" height="1" fill="#f4d4a8"/><rect x="22" y="9" width="1" height="1" fill="#8b4a18"/><rect x="23" y="9" width="1" height="1" fill="#5a2d0e"/><rect x="24" y="9" width="3" height="1" fill="#0a1530"/><rect x="27" y="9" width="1" height="1" fill="#3b82f6"/><rect x="28" y="9" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="9" width="3" height="1" fill="#0a1530"/><rect x="0" y="10" width="3" height="1" fill="#0a1530"/><rect x="3" y="10" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="10" width="1" height="1" fill="#3b82f6"/><rect x="5" y="10" width="3" height="1" fill="#0a1530"/><rect x="8" y="10" width="1" height="1" fill="#5a2d0e"/><rect x="9" y="10" width="1" height="1" fill="#8b4a18"/><rect x="10" y="10" width="1" height="1" fill="#b87333"/><rect x="11" y="10" width="11" height="1" fill="#f4d4a8"/><rect x="22" y="10" width="1" height="1" fill="#8b4a18"/><rect x="23" y="10" width="1" height="1" fill="#5a2d0e"/><rect x="24" y="10" width="3" height="1" fill="#0a1530"/><rect x="27" y="10" width="1" height="1" fill="#3b82f6"/><rect x="28" y="10" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="10" width="3" height="1" fill="#0a1530"/><rect x="0" y="11" width="3" height="1" fill="#0a1530"/><rect x="3" y="11" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="11" width="1" height="1" fill="#3b82f6"/><rect x="5" y="11" width="2" height="1" fill="#0a1530"/><rect x="7" y="11" width="1" height="1" fill="#5a2d0e"/><rect x="8" y="11" width="1" height="1" fill="#8b4a18"/><rect x="9" y="11" width="1" height="1" fill="#b87333"/><rect x="10" y="11" width="6" height="1" fill="#f4d4a8"/><rect x="16" y="11" width="2" height="1" fill="#d9a774"/><rect x="18" y="11" width="5" height="1" fill="#f4d4a8"/><rect x="23" y="11" width="1" height="1" fill="#8b4a18"/><rect x="24" y="11" width="1" height="1" fill="#5a2d0e"/><rect x="25" y="11" width="2" height="1" fill="#0a1530"/><rect x="27" y="11" width="1" height="1" fill="#3b82f6"/><rect x="28" y="11" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="11" width="3" height="1" fill="#0a1530"/><rect x="0" y="12" width="3" height="1" fill="#0a1530"/><rect x="3" y="12" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="12" width="1" height="1" fill="#3b82f6"/><rect x="5" y="12" width="3" height="1" fill="#0a1530"/><rect x="8" y="12" width="1" height="1" fill="#5a2d0e"/><rect x="9" y="12" width="1" height="1" fill="#8b4a18"/><rect x="10" y="12" width="1" height="1" fill="#b87333"/><rect x="11" y="12" width="11" height="1" fill="#f4d4a8"/><rect x="22" y="12" width="1" height="1" fill="#8b4a18"/><rect x="23" y="12" width="1" height="1" fill="#5a2d0e"/><rect x="24" y="12" width="3" height="1" fill="#0a1530"/><rect x="27" y="12" width="1" height="1" fill="#3b82f6"/><rect x="28" y="12" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="12" width="3" height="1" fill="#0a1530"/><rect x="0" y="13" width="3" height="1" fill="#0a1530"/><rect x="3" y="13" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="13" width="1" height="1" fill="#3b82f6"/><rect x="5" y="13" width="2" height="1" fill="#0a1530"/><rect x="7" y="13" width="1" height="1" fill="#5a2d0e"/><rect x="8" y="13" width="1" height="1" fill="#b87333"/><rect x="9" y="13" width="7" height="1" fill="#f4d4a8"/><rect x="16" y="13" width="2" height="1" fill="#9a3838"/><rect x="18" y="13" width="5" height="1" fill="#f4d4a8"/><rect x="23" y="13" width="1" height="1" fill="#8b4a18"/><rect x="24" y="13" width="3" height="1" fill="#0a1530"/><rect x="27" y="13" width="1" height="1" fill="#3b82f6"/><rect x="28" y="13" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="13" width="3" height="1" fill="#0a1530"/><rect x="0" y="14" width="3" height="1" fill="#0a1530"/><rect x="3" y="14" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="14" width="1" height="1" fill="#3b82f6"/><rect x="5" y="14" width="4" height="1" fill="#0a1530"/><rect x="9" y="14" width="1" height="1" fill="#8b4a18"/><rect x="10" y="14" width="1" height="1" fill="#b87333"/><rect x="11" y="14" width="11" height="1" fill="#f4d4a8"/><rect x="22" y="14" width="1" height="1" fill="#8b4a18"/><rect x="23" y="14" width="4" height="1" fill="#0a1530"/><rect x="27" y="14" width="1" height="1" fill="#3b82f6"/><rect x="28" y="14" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="14" width="3" height="1" fill="#0a1530"/><rect x="0" y="15" width="3" height="1" fill="#0a1530"/><rect x="3" y="15" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="15" width="1" height="1" fill="#3b82f6"/><rect x="5" y="15" width="4" height="1" fill="#0a1530"/><rect x="9" y="15" width="2" height="1" fill="#8b4a18"/><rect x="11" y="15" width="1" height="1" fill="#b87333"/><rect x="12" y="15" width="7" height="1" fill="#f4d4a8"/><rect x="19" y="15" width="1" height="1" fill="#b87333"/><rect x="20" y="15" width="2" height="1" fill="#8b4a18"/><rect x="22" y="15" width="5" height="1" fill="#0a1530"/><rect x="27" y="15" width="1" height="1" fill="#3b82f6"/><rect x="28" y="15" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="15" width="3" height="1" fill="#0a1530"/><rect x="0" y="16" width="3" height="1" fill="#0a1530"/><rect x="3" y="16" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="16" width="1" height="1" fill="#3b82f6"/><rect x="5" y="16" width="5" height="1" fill="#0a1530"/><rect x="10" y="16" width="3" height="1" fill="#8b4a18"/><rect x="13" y="16" width="1" height="1" fill="#b87333"/><rect x="14" y="16" width="3" height="1" fill="#f4d4a8"/><rect x="17" y="16" width="1" height="1" fill="#b87333"/><rect x="18" y="16" width="3" height="1" fill="#8b4a18"/><rect x="21" y="16" width="6" height="1" fill="#0a1530"/><rect x="27" y="16" width="1" height="1" fill="#3b82f6"/><rect x="28" y="16" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="16" width="3" height="1" fill="#0a1530"/><rect x="0" y="17" width="3" height="1" fill="#0a1530"/><rect x="3" y="17" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="17" width="1" height="1" fill="#3b82f6"/><rect x="5" y="17" width="6" height="1" fill="#0a1530"/><rect x="11" y="17" width="2" height="1" fill="#0e1a3a"/><rect x="13" y="17" width="6" height="1" fill="#f5f5f5"/><rect x="19" y="17" width="2" height="1" fill="#0e1a3a"/><rect x="21" y="17" width="6" height="1" fill="#0a1530"/><rect x="27" y="17" width="1" height="1" fill="#3b82f6"/><rect x="28" y="17" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="17" width="3" height="1" fill="#0a1530"/><rect x="0" y="18" width="3" height="1" fill="#0a1530"/><rect x="3" y="18" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="18" width="1" height="1" fill="#3b82f6"/><rect x="5" y="18" width="5" height="1" fill="#0a1530"/><rect x="10" y="18" width="3" height="1" fill="#0e1a3a"/><rect x="13" y="18" width="2" height="1" fill="#f5f5f5"/><rect x="15" y="18" width="2" height="1" fill="#1e3a8a"/><rect x="17" y="18" width="2" height="1" fill="#f5f5f5"/><rect x="19" y="18" width="3" height="1" fill="#0e1a3a"/><rect x="22" y="18" width="5" height="1" fill="#0a1530"/><rect x="27" y="18" width="1" height="1" fill="#3b82f6"/><rect x="28" y="18" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="18" width="3" height="1" fill="#0a1530"/><rect x="0" y="19" width="3" height="1" fill="#0a1530"/><rect x="3" y="19" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="19" width="1" height="1" fill="#3b82f6"/><rect x="5" y="19" width="4" height="1" fill="#0a1530"/><rect x="9" y="19" width="1" height="1" fill="#0e1a3a"/><rect x="10" y="19" width="2" height="1" fill="#1c2a52"/><rect x="12" y="19" width="2" height="1" fill="#0e1a3a"/><rect x="14" y="19" width="1" height="1" fill="#f5f5f5"/><rect x="15" y="19" width="2" height="1" fill="#2c4ea0"/><rect x="17" y="19" width="1" height="1" fill="#f5f5f5"/><rect x="18" y="19" width="2" height="1" fill="#0e1a3a"/><rect x="20" y="19" width="2" height="1" fill="#1c2a52"/><rect x="22" y="19" width="1" height="1" fill="#0e1a3a"/><rect x="23" y="19" width="4" height="1" fill="#0a1530"/><rect x="27" y="19" width="1" height="1" fill="#3b82f6"/><rect x="28" y="19" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="19" width="3" height="1" fill="#0a1530"/><rect x="0" y="20" width="3" height="1" fill="#0a1530"/><rect x="3" y="20" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="20" width="1" height="1" fill="#3b82f6"/><rect x="5" y="20" width="3" height="1" fill="#0a1530"/><rect x="8" y="20" width="1" height="1" fill="#0e1a3a"/><rect x="9" y="20" width="4" height="1" fill="#1c2a52"/><rect x="13" y="20" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="20" width="1" height="1" fill="#f5f5f5"/><rect x="15" y="20" width="2" height="1" fill="#2c4ea0"/><rect x="17" y="20" width="1" height="1" fill="#f5f5f5"/><rect x="18" y="20" width="1" height="1" fill="#0e1a3a"/><rect x="19" y="20" width="4" height="1" fill="#1c2a52"/><rect x="23" y="20" width="1" height="1" fill="#0e1a3a"/><rect x="24" y="20" width="3" height="1" fill="#0a1530"/><rect x="27" y="20" width="1" height="1" fill="#3b82f6"/><rect x="28" y="20" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="20" width="3" height="1" fill="#0a1530"/><rect x="0" y="21" width="3" height="1" fill="#0a1530"/><rect x="3" y="21" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="21" width="1" height="1" fill="#3b82f6"/><rect x="5" y="21" width="2" height="1" fill="#0a1530"/><rect x="7" y="21" width="1" height="1" fill="#0e1a3a"/><rect x="8" y="21" width="6" height="1" fill="#1c2a52"/><rect x="14" y="21" width="1" height="1" fill="#f5f5f5"/><rect x="15" y="21" width="2" height="1" fill="#2c4ea0"/><rect x="17" y="21" width="1" height="1" fill="#f5f5f5"/><rect x="18" y="21" width="6" height="1" fill="#1c2a52"/><rect x="24" y="21" width="1" height="1" fill="#0e1a3a"/><rect x="25" y="21" width="2" height="1" fill="#0a1530"/><rect x="27" y="21" width="1" height="1" fill="#3b82f6"/><rect x="28" y="21" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="21" width="3" height="1" fill="#0a1530"/><rect x="0" y="22" width="3" height="1" fill="#0a1530"/><rect x="3" y="22" width="1" height="1" fill="#1e3a8a"/><rect x="4" y="22" width="1" height="1" fill="#3b82f6"/><rect x="5" y="22" width="1" height="1" fill="#0a1530"/><rect x="6" y="22" width="1" height="1" fill="#0e1a3a"/><rect x="7" y="22" width="7" height="1" fill="#1c2a52"/><rect x="14" y="22" width="1" height="1" fill="#f5f5f5"/><rect x="15" y="22" width="2" height="1" fill="#2c4ea0"/><rect x="17" y="22" width="1" height="1" fill="#f5f5f5"/><rect x="18" y="22" width="7" height="1" fill="#1c2a52"/><rect x="25" y="22" width="1" height="1" fill="#0e1a3a"/><rect x="26" y="22" width="1" height="1" fill="#0a1530"/><rect x="27" y="22" width="1" height="1" fill="#3b82f6"/><rect x="28" y="22" width="1" height="1" fill="#1e3a8a"/><rect x="29" y="22" width="3" height="1" fill="#0a1530"/><rect x="0" y="23" width="2" height="1" fill="#0a1530"/><rect x="2" y="23" width="2" height="1" fill="#1e3a8a"/><rect x="4" y="23" width="1" height="1" fill="#0e1a3a"/><rect x="5" y="23" width="7" height="1" fill="#1c2a52"/><rect x="12" y="23" width="1" height="1" fill="#0e1a3a"/><rect x="13" y="23" width="2" height="1" fill="#2c4ea0"/><rect x="15" y="23" width="1" height="1" fill="#0e1a3a"/><rect x="16" y="23" width="7" height="1" fill="#1c2a52"/><rect x="23" y="23" width="1" height="1" fill="#0e1a3a"/><rect x="24" y="23" width="2" height="1" fill="#1e3a8a"/><rect x="26" y="23" width="6" height="1" fill="#0a1530"/><rect x="0" y="24" width="4" height="1" fill="#0a1530"/><rect x="4" y="24" width="1" height="1" fill="#0e1a3a"/><rect x="5" y="24" width="8" height="1" fill="#1c2a52"/><rect x="13" y="24" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="24" width="2" height="1" fill="#2c4ea0"/><rect x="16" y="24" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="24" width="8" height="1" fill="#1c2a52"/><rect x="25" y="24" width="1" height="1" fill="#0e1a3a"/><rect x="26" y="24" width="6" height="1" fill="#0a1530"/><rect x="0" y="25" width="3" height="1" fill="#0a1530"/><rect x="3" y="25" width="1" height="1" fill="#0e1a3a"/><rect x="4" y="25" width="9" height="1" fill="#1c2a52"/><rect x="13" y="25" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="25" width="2" height="1" fill="#2c4ea0"/><rect x="16" y="25" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="25" width="9" height="1" fill="#1c2a52"/><rect x="26" y="25" width="1" height="1" fill="#0e1a3a"/><rect x="27" y="25" width="5" height="1" fill="#0a1530"/><rect x="0" y="26" width="2" height="1" fill="#0a1530"/><rect x="2" y="26" width="1" height="1" fill="#0e1a3a"/><rect x="3" y="26" width="10" height="1" fill="#1c2a52"/><rect x="13" y="26" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="26" width="2" height="1" fill="#2c4ea0"/><rect x="16" y="26" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="26" width="10" height="1" fill="#1c2a52"/><rect x="27" y="26" width="1" height="1" fill="#0e1a3a"/><rect x="28" y="26" width="4" height="1" fill="#0a1530"/><rect x="0" y="27" width="1" height="1" fill="#0a1530"/><rect x="1" y="27" width="1" height="1" fill="#0e1a3a"/><rect x="2" y="27" width="11" height="1" fill="#1c2a52"/><rect x="13" y="27" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="27" width="2" height="1" fill="#2c4ea0"/><rect x="16" y="27" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="27" width="11" height="1" fill="#1c2a52"/><rect x="28" y="27" width="1" height="1" fill="#0e1a3a"/><rect x="29" y="27" width="3" height="1" fill="#0a1530"/><rect x="0" y="28" width="1" height="1" fill="#0e1a3a"/><rect x="1" y="28" width="12" height="1" fill="#1c2a52"/><rect x="13" y="28" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="28" width="2" height="1" fill="#1e3a8a"/><rect x="16" y="28" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="28" width="12" height="1" fill="#1c2a52"/><rect x="29" y="28" width="1" height="1" fill="#0e1a3a"/><rect x="30" y="28" width="2" height="1" fill="#0a1530"/><rect x="0" y="29" width="13" height="1" fill="#1c2a52"/><rect x="13" y="29" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="29" width="2" height="1" fill="#1e3a8a"/><rect x="16" y="29" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="29" width="13" height="1" fill="#1c2a52"/><rect x="30" y="29" width="2" height="1" fill="#0a1530"/><rect x="0" y="30" width="13" height="1" fill="#1c2a52"/><rect x="13" y="30" width="1" height="1" fill="#0e1a3a"/><rect x="14" y="30" width="2" height="1" fill="#1e3a8a"/><rect x="16" y="30" width="1" height="1" fill="#0e1a3a"/><rect x="17" y="30" width="13" height="1" fill="#1c2a52"/><rect x="30" y="30" width="2" height="1" fill="#0a1530"/><rect x="0" y="31" width="14" height="1" fill="#1c2a52"/><rect x="14" y="31" width="2" height="1" fill="#1e3a8a"/><rect x="16" y="31" width="14" height="1" fill="#1c2a52"/><rect x="30" y="31" width="2" height="1" fill="#0a1530"/>
+        </svg>
+      </div>
+      <div class="alma-body">
+        <div class="alma-head">
+          <span class="alma-badge">AI</span>
+          <span class="alma-title">Or learn through dialogue with ALMA</span>
+        </div>
+        <p class="alma-desc">Prefer to ask questions rather than read top to bottom? <strong>ALMA</strong> is an AI assistant that will walk you through Waterfall, Agile and Kanban in conversation — answer your questions, push back on shaky understanding, and check what stuck. <strong>Note:</strong> ALMA uses a different metaphor — <strong>cooking</strong> — instead of the casino heist and Captain Sparrow you'll meet on this page. Two metaphors, same ideas. Use ALMA alongside this page, not instead of it.</p>
+        <span class="alma-cta">Open ALMA in a new tab →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============== 02 · WATERFALL ============== -->
+<section id="waterfall" class="wf-section">
+  <div class="wrap">
+    <div class="section-num">02 · WATERFALL MODEL</div>
+    <h2 class="section-title">THE CASINO HEIST</h2>
+    <p class="section-lede">
+      Waterfall is <strong style="color:var(--wf-gold)">linear and sequential</strong>. Five phases, top to bottom, no going back. Like planning the perfect casino heist — every door, every camera, every guard mapped out before anyone touches a lock. One wrong move and the whole crew goes down.
+    </p>
+
+    <!-- Video button -->
+    <a class="video-btn" href="https://youtu.be/vkccoUNthEI" target="_blank" rel="noopener">
+      <div class="v-head">
+        <span class="v-title">▶ WATCH FIRST · WATERFALL HEIST</span>
+        <span class="v-meta">5:57</span>
+      </div>
+      <p class="v-desc">🎰 A four-person crew is planning to rob an ocean-style casino. Mastermind, analyst, tech expert, developer. Five phases. One rule they cannot break — and if they break it, the alarm goes off. This is the cleanest way you'll ever see Waterfall explained: pixel art, fast jokes, and a heist that lands every concept where it needs to.</p>
+      <div class="v-attrib">
+        <span class="dpm-badge">dpm</span>
+        <span>The Digital Project Manager · @thedigitalprojectmanager</span>
+      </div>
+      <span class="v-cta">OPEN ON YOUTUBE →</span>
+    </a>
+
+    <!-- Bridge: heist → IT -->
+    <div class="bridge-box">
+      <h3>From the casino floor to a real IT project</h3>
+      <p>The heist is fun, but here's where it lands in your future career. Imagine your team is hired to build the <strong style="color:var(--wf-gold)">online banking system for a national bank</strong>. The regulator demands that every requirement, every architectural decision, every test result is documented and traceable. The launch date is fixed by law. The features are stable — people want to log in, check balances, transfer money, and that's not changing next month.</p>
+      <p>This is exactly when Waterfall earns its keep. The Business Analyst spends weeks gathering requirements with compliance officers. The Tech Expert chooses a stack that meets banking regulations. Only then do the Developers write code, against a frozen specification. If a requirement changes after sign-off, going back is expensive — but in regulated software, the cost of <em>not</em> documenting and locking down would be much higher. Same logic as the heist: plan everything before anyone touches a lock.</p>
+    </div>
+
+    <!-- Pixel staircase — each step expands to show its phase -->
+    <div class="staircase">
+      <div class="stair-row stair-1">
+        <div class="stair" onclick="togglePhase(this.parentElement)">
+          <span>PHASE 01 · INITIATION / REQUIREMENTS</span>
+          <span class="trophies">🏆 ▶</span>
+        </div>
+        <div class="phase-body">
+          <p>Requirements gathered, stakeholders identified, project charter created. The PM brings in the Analyst to map every corner of the casino floor before anyone touches a lock. Business value calculated, goals mapped out.</p>
+        </div>
+      </div>
+      <div class="stair-row stair-2">
+        <div class="stair" onclick="togglePhase(this.parentElement)">
+          <span>PHASE 02 · PLANNING / DESIGN</span>
+          <span class="trophies">🏆🏆 ▶</span>
+        </div>
+        <div class="phase-body">
+          <p>Detailed plan, tech stack, tasks and timeline are set. The Tech Expert joins. Tasks are assigned to developers with anticipated completion dates. The crew gets the green light only after the full plan is approved by the client.</p>
+        </div>
+      </div>
+      <div class="stair-row stair-3">
+        <div class="stair" onclick="togglePhase(this.parentElement)">
+          <span>PHASE 03 · EXECUTION</span>
+          <span class="trophies">🏆🏆🏆 ▶</span>
+        </div>
+        <div class="phase-body">
+          <p>Work begins. The PM holds the kickoff and the team works through tasks — getting into character, disabling security, creating diversions. The PM monitors progress, manages the budget, and guides the team through corridors, hallways, ventilation shafts and past security guards.</p>
+        </div>
+      </div>
+      <div class="stair-row stair-4">
+        <div class="stair" onclick="togglePhase(this.parentElement)">
+          <span>PHASE 04 · MONITORING & CONTROLLING</span>
+          <span class="trophies">🏆🏆🏆🏆 ▶</span>
+        </div>
+        <div class="phase-body">
+          <p>Quality and progress checked continuously. If an alarm goes off — accidental triggering, getaway car not starting — the PM corrects course fast. Documentation is key. Every adjustment is recorded for visibility, accountability and traceability.</p>
+        </div>
+      </div>
+      <div class="stair-row stair-5">
+        <div class="stair" onclick="togglePhase(this.parentElement)">
+          <span>PHASE 05 · CLOSING</span>
+          <span class="trophies">🏆🏆🏆🏆🏆 ▶</span>
+        </div>
+        <div class="phase-body">
+          <p>Deliverables verified, cash counted, profits divided. A retrospective is held to celebrate the team and identify areas for improvement. Documentation is archived for the next job — assuming the crew is up for a sequel.</p>
+        </div>
+      </div>
+      <p class="staircase-hint">▲ Tap any phase to expand</p>
+    </div>
+
+    <!-- Crew -->
+    <h3 style="font-family:'Press Start 2P',monospace;font-size:14px;color:var(--wf-gold);margin:40px 0 20px;letter-spacing:1px;text-shadow:2px 2px 0 #000;">THE HEIST CREW</h3>
+    <div class="crew-grid">
+      <div class="crew-card">
+        <span class="ico">👨‍💻</span>
+        <h4>DEVELOPER</h4>
+        <p>Writes the code in Phase 3 only — and only after the full plan is approved. No improvising on the casino floor.</p>
+      </div>
+      <div class="crew-card">
+        <span class="ico">🕴️</span>
+        <h4>PROJECT MANAGER</h4>
+        <p>The mastermind. Plans every step, manages the budget, monitors progress and steers the crew through ventilation shafts.</p>
+      </div>
+      <div class="crew-card">
+        <span class="ico">🔍</span>
+        <h4>BUSINESS ANALYST</h4>
+        <p>Joins in Phase 1. Gathers requirements, shapes the project charter, maps the casino floor from penthouse to vault.</p>
+      </div>
+      <div class="crew-card">
+        <span class="ico">⚙️</span>
+        <h4>TECH EXPERT</h4>
+        <p>Brought in during Phase 2 to choose the tech stack. Makes sure the crew has the right tools to see the plan through.</p>
+      </div>
+    </div>
+
+    <!-- CRACK THE VAULT: phase ordering puzzle -->
+    <div class="vault-game">
+      <h3>🔐 CRACK THE VAULT</h3>
+      <p class="vault-intro">The crew got the phases mixed up. Tap each one in the correct order to fill slots 1 through 5. Get it right and the vault opens.</p>
+      <div class="vault-pool" id="vault-pool">
+        <!-- shuffled at load -->
+      </div>
+      <div class="vault-slots">
+        <div class="vault-slot" data-slot="0"><span class="slot-num">01</span><span class="slot-fill"></span></div>
+        <div class="vault-slot" data-slot="1"><span class="slot-num">02</span><span class="slot-fill"></span></div>
+        <div class="vault-slot" data-slot="2"><span class="slot-num">03</span><span class="slot-fill"></span></div>
+        <div class="vault-slot" data-slot="3"><span class="slot-num">04</span><span class="slot-fill"></span></div>
+        <div class="vault-slot" data-slot="4"><span class="slot-num">05</span><span class="slot-fill"></span></div>
+
+        <!-- Vault opening overlay (revealed on success) -->
+        <div class="vault-door" aria-hidden="true">
+          <div class="vault-door-frame">
+            <div class="vault-loot">🪙 💰 🏆 💎 🪙</div>
+          </div>
+          <div class="vault-door-half left"></div>
+          <div class="vault-door-half right"></div>
+        </div>
+      </div>
+      <div class="vault-actions">
+        <button class="vault-check" id="vault-check" onclick="checkVault()" disabled>CRACK IT</button>
+        <button class="vault-reset" onclick="resetVault()">↻ RESET</button>
+      </div>
+      <div class="vault-result" id="vault-result"></div>
+    </div>
+
+    <!-- Pros/Cons -->
+    <div class="pros-cons">
+      <div class="col pros">
+        <h4>✓ PROS</h4>
+        <ul>
+          <li>Clear goals — no ambiguity</li>
+          <li>Structured, predictable timeline</li>
+          <li>Full documentation for visibility</li>
+          <li>Great for regulated industries</li>
+        </ul>
+      </div>
+      <div class="col cons">
+        <h4>✗ CONS</h4>
+        <ul>
+          <li>Inflexible — no going back</li>
+          <li>Bad for changing requirements</li>
+          <li>Late problems are very expensive</li>
+          <li>Not suited for dynamic projects</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="warning">
+      ⚠ DIFFERENT SOURCES LIST 5, 6, OR MORE PHASES.<br>FOCUS ON THE LOGIC — NOT THE NUMBER.
+    </div>
+
+    <!-- Quiz: SLOT MACHINE -->
+    <div class="slot-quiz">
+      <h3>🎰 THE HEIST QUIZ · SLOT MACHINE</h3>
+      <p class="slot-intro">Now that you've watched the heist — three pulls, three questions. Three correct = jackpot. One wrong answer trips the alarm and the heist is over.</p>
+      <div class="slot-machine">
+        <div class="slot-body">
+          <div class="slot-reels">
+            <div class="slot-reel" id="reel-1"><div class="reel-symbol">?</div></div>
+            <div class="slot-reel" id="reel-2"><div class="reel-symbol">?</div></div>
+            <div class="slot-reel" id="reel-3"><div class="reel-symbol">?</div></div>
+          </div>
+          <button class="slot-lever" id="slot-lever" onclick="pullLever()" aria-label="Pull the lever">
+            <span class="lever-ball"></span>
+            <span class="lever-arm"></span>
+            <span class="lever-base"></span>
+          </button>
+        </div>
+        <div class="slot-status" id="slot-status">PULL THE LEVER TO START</div>
+      </div>
+      <div class="slot-question" id="slot-question"></div>
+      <div class="slot-options" id="slot-options"></div>
+      <div class="slot-actions">
+        <button class="slot-pull" id="slot-pull" onclick="pullLever()">▼ PULL THE LEVER</button>
+        <button class="slot-reset" onclick="resetSlot()">↻ NEW HEIST</button>
+      </div>
+      <div class="slot-feedback" id="slot-feedback"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== 03 · AGILE ============== -->
+<section id="agile" class="ag-section">
+  <span class="ag-deco-ship">⛵</span>
+  <span class="ag-deco-flag">🏴‍☠️</span>
+
+  <div class="wrap">
+    <div class="section-num">03 · AGILE MODEL</div>
+    <h2 class="section-title">Captain Jack & the Black Pearl.</h2>
+    <p class="section-lede">
+      Agile is <em style="color:var(--ag-gold)">iterative and incremental</em> — the opposite of Waterfall. Captain Jack Sparrow commissions a ship to outrun the Black Pearl. His crew builds it Agile-style: an MVP first, then improve it iteration by iteration based on what Jack actually wants. Time is short. The plan changes. That's the point.
+    </p>
+
+    <!-- Video button pirate -->
+    <a class="video-btn-pirate" href="https://youtu.be/q3XnHCB7RNQ" target="_blank" rel="noopener">
+      <div class="v-head">
+        <span class="v-title">▶ Watch first · Captain Jack & the Agile crew</span>
+        <span class="v-meta">4:20</span>
+      </div>
+      <p class="v-desc">⚓ Captain Jack Sparrow needs a ship faster than the Black Pearl — and he needs it now. He doesn't know exactly what it should look like, but he'll know when he sees it. His crew has a method for exactly that kind of customer. Watch them build the impossible ship in four minutes, and watch the moment a "small request" almost capsizes the whole project.</p>
+      <div class="v-attrib">
+        <span class="dpm-badge">dpm</span>
+        <span>The Digital Project Manager · @thedigitalprojectmanager</span>
+      </div>
+      <span class="v-cta">Open on YouTube →</span>
+    </a>
+
+    <!-- Bridge: pirate ship → IT -->
+    <div class="bridge-box parch">
+      <h3>From a pirate ship to a real IT project</h3>
+      <p>Captain Jack is fun, but here's where this lands in your future career. Picture a <strong style="color:var(--ag-gold)">consumer mobile app at an early-stage startup</strong> — say, a food delivery service launching in a new city. The founder has a strong gut feeling about what users want, but no one really knows yet. The market shifts every week. Competitors copy features overnight. And the only honest answer to "what should the app do?" is "we'll find out by shipping something and watching what users actually do."</p>
+      <p>This is exactly when Agile earns its keep. The team builds an MVP — maybe just login, browse three restaurants, place one order — and ships it to a small group of users. They watch what happens, talk to people, read reviews. The next two-week sprint adds whatever turned out to matter most: faster checkout, restaurant filters, push notifications. Each iteration is a small bet, and each one teaches the team something the original founder couldn't have predicted. Same logic as the pirate ship: <em>build the bare hull, get it on the water, let the customer tell you what's missing</em>.</p>
+    </div>
+
+    <!-- Core Agile Loop -->
+    <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;color:#f1d99c;margin:30px 0 14px">The Core Loop</h3>
+    <div class="triad">
+      <div class="triad-panel">
+        <span class="ico">💡</span>
+        <h4>Conceived</h4>
+        <p>The idea is defined. Details still coming together. Time is short.</p>
+      </div>
+      <div class="triad-panel">
+        <span class="ico">✏️</span>
+        <h4>Executed</h4>
+        <p>The crew builds and delivers a working increment.</p>
+      </div>
+      <div class="triad-panel">
+        <span class="ico">👁️</span>
+        <h4>Adapted</h4>
+        <p>Feedback reviewed, plan adjusted — the loop starts again.</p>
+      </div>
+    </div>
+
+    <!-- Iterations -->
+    <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;color:#f1d99c;margin:40px 0 14px">Each Iteration: Growing Satisfaction</h3>
+    <div class="iter-grid">
+      <div class="iter-card">
+        <div class="hearts">❤️</div>
+        <h4>1st Iteration · The MVP</h4>
+        <p>The bare hull of the ship. Jack's first real feedback. He can already see what's coming.</p>
+      </div>
+      <div class="iter-card">
+        <div class="hearts">❤️❤️</div>
+        <h4>2nd Iteration</h4>
+        <p>Crow's nest added, hull reinforced for rough maelstroms. Closer to what Jack actually needs.</p>
+      </div>
+      <div class="iter-card">
+        <div class="hearts">❤️❤️❤️</div>
+        <h4>3rd Iteration</h4>
+        <p>Extra mast, more rum storage in the galley. Peak satisfaction. The ship is ready to sail.</p>
+      </div>
+    </div>
+
+    <!-- Six Agile Principles - flip cards -->
+    <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;color:#f1d99c;margin:40px 0 14px">Six Agile Principles <span style="font-size:12px;font-style:normal;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px">· tap to reveal</span></h3>
+    <div class="flip-grid">
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">a</div>
+          <h4>Iterative Development</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Work split into short cycles. Each one produces a shippable increment the customer can see and use.</p></div>
+      </div></div>
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">b</div>
+          <h4>Customer Collaboration</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Customers give continuous feedback throughout — not just at the start and end of the project.</p></div>
+      </div></div>
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">c</div>
+          <h4>Cross-Functional Teams</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Developers, testers, designers and product owners all working together in one crew.</p></div>
+      </div></div>
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">d</div>
+          <h4>Embracing Change</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Changing requirements are welcomed even late in development. Adapting is a strength, not a weakness.</p></div>
+      </div></div>
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">e</div>
+          <h4>Delivering Value Early</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Useful features released often — quick responses to feedback and shifts in the market.</p></div>
+      </div></div>
+      <div class="flip" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+        <div class="flip-front">
+          <div class="letter">f</div>
+          <h4>Continuous Testing</h4>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flip-back"><p>Testing built into every cycle — automated tests keep quality high throughout the voyage.</p></div>
+      </div></div>
+    </div>
+
+    <!-- MVP box -->
+    <div class="mvp-box">
+      <h4>⚓ MVP — Minimum Viable Product</h4>
+      <p>Don't wait for perfection. Build the bare hull and show it early. The customer gives feedback, you improve it next iteration. Each cycle brings the product closer to what they actually need.</p>
+    </div>
+
+    <!-- How Agile structures work -->
+    <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;color:#f1d99c;margin:40px 0 14px">How the Voyage is Structured</h3>
+    <div class="triad">
+      <div class="triad-panel">
+        <span class="ico">📅</span>
+        <h4>Defined Intervals</h4>
+        <p>Fixed sprints of 2–4 weeks. Predictable rhythm.</p>
+      </div>
+      <div class="triad-panel">
+        <span class="ico">🎯</span>
+        <h4>Specific Goals</h4>
+        <p>Each sprint has a clear agreed target pulled from the backlog.</p>
+      </div>
+      <div class="triad-panel">
+        <span class="ico">🔁</span>
+        <h4>Feedback Loops</h4>
+        <p>Results reviewed at sprint end. Improvements feed the next cycle.</p>
+      </div>
+    </div>
+
+    <!-- Scope Creep Game -->
+    <div class="scope-game">
+      <h3>⚠️ Danger: Scope Creep!</h3>
+      <p class="premise">Captain Jack keeps adding requirements to the ship. Every "great idea" feels harmless on its own. Click each one to add it to the project. Watch the budget bar. Don't fill it up. <em>Try.</em></p>
+      <div class="budget-bar-wrap"><div class="budget-bar" id="budget-bar">0%</div></div>
+      <div class="budget-label">▲ PROJECT BUDGET · 100% = scope creep disaster</div>
+      <div class="scope-buttons">
+        <button onclick="addCreep(this)">🍺 Add extra rum storage</button>
+        <button onclick="addCreep(this)">💣 Install 12 more cannons</button>
+        <button onclick="addCreep(this)">🌊 Reinforce hull for tropical storms</button>
+        <button onclick="addCreep(this)">🚪 Add a secret escape hatch</button>
+        <button onclick="addCreep(this)">🗿 Commission a figurehead sculpture</button>
+        <button onclick="addCreep(this)">♨️ Install a crow's nest hot tub</button>
+      </div>
+      <div class="scope-msg" id="scope-msg"></div>
+      <button class="scope-reset" id="scope-reset" onclick="resetCreep()">↻ Reset & try again</button>
+    </div>
+
+    <!-- CANNON DEFENCE GAME -->
+    <div class="cannon-game">
+      <h3>💣 Cannon Defence — Defend the Agile Ship!</h3>
+      <p class="cannon-intro">Statements drift across the deck. Some are <strong style="color:var(--ag-gold)">true Agile principles</strong> — leave them alone. Others are <strong style="color:#fca5a5">Waterfall ideas trying to sneak aboard</strong> — fire your cannon at those! 60 seconds. Hit the wrong one and your ship takes damage.</p>
+      <div class="cannon-stats">
+        <span class="cannon-stat"><span class="stat-label">SCORE</span><span class="stat-val" id="cn-score">0</span></span>
+        <span class="cannon-stat"><span class="stat-label">HULL</span><span class="stat-val" id="cn-hull">100%</span></span>
+        <span class="cannon-stat"><span class="stat-label">TIME</span><span class="stat-val" id="cn-time">60</span></span>
+      </div>
+      <div class="cannon-arena" id="cn-arena">
+        <div class="cn-overlay" id="cn-overlay">
+          <button class="cn-start" id="cn-start" onclick="startCannon()">⚔️ Start the round</button>
+        </div>
+      </div>
+      <p class="cannon-note">Tap a drifting statement to fire at it. Wrong hits cost 20% hull. Correct hits = +10 points each.</p>
+    </div>
+
+    <!-- Pros/Cons sepia -->
+    <div class="sepia-pc">
+      <div class="col pros">
+        <h4>✓ Fair Winds</h4>
+        <ul>
+          <li>Reduces risk through small iterations</li>
+          <li>Flexible — change is welcomed</li>
+          <li>Customer satisfaction grows each cycle</li>
+          <li>Clear goals at each defined interval</li>
+        </ul>
+      </div>
+      <div class="col cons">
+        <h4>✗ Rough Seas</h4>
+        <ul>
+          <li>Scope creep risk if not managed</li>
+          <li>Deadlines harder to control</li>
+          <li>Needs strong communication</li>
+          <li>Not suited for every project type</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sprint box -->
+    <div class="parch-card" style="margin-top:30px">
+      <h3>What is a Sprint?</h3>
+      <p>A sprint is a fixed 2–4 week period in Scrum. The crew selects tasks from the backlog, holds daily stand-ups, then demos results and runs a retrospective before the next sprint sets sail.</p>
+      <div class="sprint-tags">
+        <span class="sprint-tag">Plan sprint</span>
+        <span class="sprint-tag">Select from backlog</span>
+        <span class="sprint-tag">Daily stand-ups</span>
+        <span class="sprint-tag">Build & test</span>
+        <span class="sprint-tag">Demo to stakeholders</span>
+        <span class="sprint-tag">Retrospective</span>
+        <span class="sprint-tag">→ next sprint</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== 04 · KANBAN ============== -->
+<section id="kanban" class="kb-section">
+  <div class="wrap">
+    <div class="section-num">04 · KANBAN</div>
+    <span class="kb-tag">↳ Part of Agile</span>
+    <h2 class="section-title">The board on the sand.</h2>
+    <p class="section-lede">
+      Unlike Scrum's fixed sprints, Kanban visualises work as a <em style="color:var(--ag-gold)">continuous flow</em>. Tasks move across columns. The key rule: limit how many tasks can be In Progress at once. When Captain Jack's crew builds his ship using Kanban, they draw the board in the sand — and every pirate sees the project's status at a glance.
+    </p>
+
+    <!-- Video button pirate -->
+    <a class="video-btn-pirate" href="https://youtu.be/6lGQIlnHUww" target="_blank" rel="noopener">
+      <div class="v-head">
+        <span class="v-title">▶ Watch first · Kanban in the sand</span>
+        <span class="v-meta">3:38</span>
+      </div>
+      <p class="v-desc">🏴‍☠️ Jack's crew has a problem: too much rum, too many distractions, and a ship that's not building itself. So they draw a board in the sand and discover the strangest rule in project management — <em>start fewer things and you'll finish more</em>. Three minutes, four principles, and the trick that runs Toyota factories and tech teams alike.</p>
+      <div class="v-attrib">
+        <span class="dpm-badge">dpm</span>
+        <span>The Digital Project Manager · @thedigitalprojectmanager</span>
+      </div>
+      <span class="v-cta">Open on YouTube →</span>
+    </a>
+
+    <!-- 4 Principles -->
+    <div class="kb-grid">
+      <div class="kb-card">
+        <div class="num">01</div>
+        <h4>Visualisation</h4>
+        <p>Every task is a card on the board. The whole crew sees status at a glance — no one wonders what anyone else is doing.</p>
+      </div>
+      <div class="kb-card">
+        <div class="num">02</div>
+        <h4>Limit WIP</h4>
+        <p>Only a few tasks In Progress at once. Finish before starting new — work doesn't pile up unfinished.</p>
+      </div>
+      <div class="kb-card">
+        <div class="num">03</div>
+        <h4>Focus on Flow</h4>
+        <p>Regular reviews identify bottlenecks and improve how work moves through the board, voyage by voyage.</p>
+      </div>
+      <div class="kb-card">
+        <div class="num">04</div>
+        <h4>Feedback Loops</h4>
+        <p>Continuous input from team and stakeholders keeps improving the process — Jack, the harbormaster, even fellow pirates.</p>
+      </div>
+    </div>
+
+    <!-- Interactive Kanban Board -->
+    <div class="kb-board">
+      <h3>The Crew's Board</h3>
+      <p class="hint">Tap a card to advance it: To Do → In Progress → Done. <strong style="color:var(--ag-gold)">WIP limit: 2.</strong> Try breaking it.</p>
+      <div class="kb-cols">
+        <div class="kb-col" id="kb-todo">
+          <div class="kb-col-head">📋 To Do</div>
+          <div class="kb-task" onclick="advanceTask(this)">Build the hull</div>
+          <div class="kb-task" onclick="advanceTask(this)">Install cannons</div>
+          <div class="kb-task" onclick="advanceTask(this)">Hoist the sails</div>
+          <div class="kb-task" onclick="advanceTask(this)">Chart the course</div>
+          <div class="kb-task" onclick="advanceTask(this)">Stock the rum</div>
+          <div class="kb-task" onclick="advanceTask(this)">Train the crew</div>
+        </div>
+        <div class="kb-col" id="kb-doing">
+          <div class="kb-col-head">⚙️ In Progress · <span id="wip-count">0</span>/2</div>
+        </div>
+        <div class="kb-col" id="kb-done">
+          <div class="kb-col-head">✅ Done</div>
+        </div>
+      </div>
+      <div class="kb-warn" id="kb-warn"></div>
+      <div class="kb-celebrate" id="kb-celebrate">
+        🏴‍☠️ Yo-ho-ho! The ship is ready to sail. Every task delivered, the board is clear — that's Kanban in action. Time to chase the Black Pearl.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== 05 · COMPARISON ============== -->
+<section id="compare" class="compare-section">
+  <div class="wrap">
+    <div class="section-num">05 · COMPARISON</div>
+    <h2 class="section-title">Waterfall vs Agile.</h2>
+    <p class="section-lede">Can you explain each difference in your own words before class?</p>
+
+    <!-- SORT THE METHOD GAME -->
+    <div class="sort-game">
+      <h3>🎯 Sort the Method</h3>
+      <p class="sort-intro">Tap each statement to assign it. Each tap cycles: <em>unassigned</em> → <span style="color:var(--wf-blue)">🎰 Waterfall</span> → <span style="color:var(--ag-gold)">⚓ Agile</span> → <em>unassigned</em>. Sort all 10, then hit <strong>Check</strong>.</p>
+      <div class="sort-stack" id="sort-stack">
+        <button class="sort-stmt" data-answer="wf" onclick="cycleSort(this)">Documentation is extensive — every decision recorded</button>
+        <button class="sort-stmt" data-answer="ag" onclick="cycleSort(this)">Customer gives feedback continuously throughout</button>
+        <button class="sort-stmt" data-answer="wf" onclick="cycleSort(this)">Phases happen once, in strict order</button>
+        <button class="sort-stmt" data-answer="ag" onclick="cycleSort(this)">Welcomes changing requirements, even late</button>
+        <button class="sort-stmt" data-answer="wf" onclick="cycleSort(this)">Best for stable, well-defined projects</button>
+        <button class="sort-stmt" data-answer="ag" onclick="cycleSort(this)">Delivers a working MVP early, then iterates</button>
+        <button class="sort-stmt" data-answer="wf" onclick="cycleSort(this)">Testing happens after coding is complete</button>
+        <button class="sort-stmt" data-answer="ag" onclick="cycleSort(this)">Cross-functional team works in 2–4 week sprints</button>
+        <button class="sort-stmt" data-answer="wf" onclick="cycleSort(this)">Going back to fix something is very expensive</button>
+        <button class="sort-stmt" data-answer="ag" onclick="cycleSort(this)">Risk of scope creep if not managed carefully</button>
+      </div>
+      <div class="sort-actions">
+        <button class="sort-check" onclick="checkSort()">Check my answers</button>
+        <button class="sort-reset" onclick="resetSort()">↻ Reset</button>
+        <span class="sort-score" id="sort-score"></span>
+      </div>
+      <div class="sort-result" id="sort-result"></div>
+    </div>
+
+    <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;color:var(--text);margin:50px 0 14px">The reference table</h3>
+    <p style="color:var(--muted);margin-bottom:20px;font-size:14px">Use this to check your sorting — and as a study reference.</p>
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th class="wf-h">🎰 Waterfall</th>
+            <th class="ag-h">⚓ Agile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Approach</td><td>Linear, sequential</td><td>Iterative, incremental</td></tr>
+          <tr><td>Phases</td><td>5 phases, done once in order</td><td>Repeated cycles (sprints)</td></tr>
+          <tr><td>Documentation</td><td>Extensive — every step recorded</td><td>Lighter — working software over docs</td></tr>
+          <tr><td>Requirements</td><td>Fixed at the start</td><td>Can change throughout</td></tr>
+          <tr><td>Customer</td><td>Mainly at start and end</td><td>Continuous throughout</td></tr>
+          <tr><td>Testing</td><td>After coding is complete</td><td>Built into every cycle</td></tr>
+          <tr><td>Delivery</td><td>One final release</td><td>Frequent small releases</td></tr>
+          <tr><td>Flexibility</td><td>Low — changes are costly</td><td>High — change is welcomed</td></tr>
+          <tr><td>Best for</td><td>Stable, well-defined projects</td><td>Evolving or complex projects</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 06 · GLOSSARY ============== -->
+<section id="glossary" class="gloss-section">
+  <div class="wrap">
+    <div class="section-num">06 · GLOSSARY</div>
+    <h2 class="section-title">14 terms to know.</h2>
+    <p class="section-lede">Make sure you understand all of these before class.</p>
+    <dl class="gloss-grid">
+      <div class="gloss-item"><dt>MVP</dt><dd>Minimum Viable Product — the simplest working version of a product, released early to get customer feedback before further development.</dd></div>
+      <div class="gloss-item"><dt>Scope creep</dt><dd>When project requirements keep expanding beyond the original plan, threatening deadlines and budget.</dd></div>
+      <div class="gloss-item"><dt>Sprint</dt><dd>A fixed 2–4 week work period in Scrum during which the team completes a specific set of tasks.</dd></div>
+      <div class="gloss-item"><dt>Backlog</dt><dd>A prioritised list of all tasks, features, and requirements waiting to be worked on.</dd></div>
+      <div class="gloss-item"><dt>Increment</dt><dd>A working, usable piece of software delivered at the end of each Agile iteration.</dd></div>
+      <div class="gloss-item"><dt>Iteration</dt><dd>One complete Agile cycle of planning, building, testing, and reviewing.</dd></div>
+      <div class="gloss-item"><dt>Stakeholder</dt><dd>Anyone with an interest in the project — clients, users, managers, or investors.</dd></div>
+      <div class="gloss-item"><dt>Deployment</dt><dd>Releasing finished software to a production environment for real users.</dd></div>
+      <div class="gloss-item"><dt>Stand-up</dt><dd>A brief daily team meeting (≈15 min, often standing) to share progress and flag blockers.</dd></div>
+      <div class="gloss-item"><dt>Cross-functional team</dt><dd>A team with diverse skills (dev, design, testing) all working together on one product.</dd></div>
+      <div class="gloss-item"><dt>Kanban board</dt><dd>A visual board with columns (To Do / In Progress / Done) for tracking task flow.</dd></div>
+      <div class="gloss-item"><dt>Retrospective</dt><dd>A meeting at sprint end to reflect on what went well and what to improve next time.</dd></div>
+      <div class="gloss-item"><dt>WIP limit</dt><dd>The maximum number of tasks allowed In Progress at once in Kanban — prevents overload.</dd></div>
+      <div class="gloss-item"><dt>Project charter</dt><dd>A document from Waterfall Phase 1 defining the project's goals, scope, and stakeholders.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div>SDLC Pre-class Reading · ESP IT · IUCA</div>
+  <div class="creds">Video content credit: <a href="https://www.youtube.com/@thedigitalprojectmanager" target="_blank" rel="noopener">The Digital Project Manager</a></div>
+</footer>
+
+<script>
+// ===== 1. ACCORDION PHASES (WATERFALL) =====
+function togglePhase(el){
+  el.classList.toggle('open');
+}
+
+// ===== 2. SLOT MACHINE QUIZ (WATERFALL) =====
+var SLOT_QUESTIONS = [
+  {
+    q:"In Waterfall, what happens if you discover a major problem during the Testing phase?",
+    opts:[
+      {t:"You adapt quickly and move forward with Agile sprints", ok:false},
+      {t:"You must go back to the earlier phase — which is very costly", ok:true},
+      {t:"The PM adds it to the backlog for the next iteration", ok:false},
+      {t:"You hold a retrospective and update the Kanban board", ok:false}
+    ],
+    feedback:"Going back in Waterfall means redoing every signed-off step in between. That's exactly why upfront planning matters."
+  },
+  {
+    q:"Which crew member joins the project FIRST in Waterfall?",
+    opts:[
+      {t:"The Developer — they need the most time to code", ok:false},
+      {t:"The Tech Expert — to choose the tech stack", ok:false},
+      {t:"The Business Analyst — to gather requirements with the PM", ok:true},
+      {t:"The Stakeholders — they sign off on every phase", ok:false}
+    ],
+    feedback:"In Phase 1 the PM brings in the Analyst. The Tech Expert joins in Phase 2. The Developer codes in Phase 3."
+  },
+  {
+    q:"Which industry is Waterfall MOST suited to?",
+    opts:[
+      {t:"A startup pivoting weekly based on user feedback", ok:false},
+      {t:"A regulated industry with strict compliance requirements", ok:true},
+      {t:"A mobile app shipping new features every two weeks", ok:false},
+      {t:"An AI research lab exploring unknown problems", ok:false}
+    ],
+    feedback:"Waterfall's heavy documentation and locked phases are a strength when regulators audit every decision."
+  },
+  {
+    q:"What is the FINAL phase of Waterfall called?",
+    opts:[
+      {t:"Deployment", ok:false},
+      {t:"Maintenance", ok:false},
+      {t:"Closing", ok:true},
+      {t:"Retrospective", ok:false}
+    ],
+    feedback:"The five phases are Initiation, Planning, Execution, Monitoring & Controlling, and Closing. Closing includes the retrospective and archiving."
+  },
+  {
+    q:"In the Waterfall heist, what does the PM do during Monitoring & Controlling?",
+    opts:[
+      {t:"Writes the code while the developer takes a break", ok:false},
+      {t:"Picks the tech stack with the Tech Expert", ok:false},
+      {t:"Tracks progress, manages budget, corrects course if anything goes wrong", ok:true},
+      {t:"Collects feedback from the customer for the next sprint", ok:false}
+    ],
+    feedback:"The PM keeps the heist on rails: budget, quality, schedule. They steer the crew through the corridors and ventilation shafts."
+  }
+];
+var slotState = {
+  pulls:0, max:3, correct:0, used:[], current:null, locked:false
+};
+function pullLever(){
+  if(slotState.locked) return;
+  if(slotState.pulls >= slotState.max) return;
+  // pick an unused question
+  var pool = [];
+  for(var i = 0; i < SLOT_QUESTIONS.length; i++){
+    if(slotState.used.indexOf(i) === -1) pool.push(i);
+  }
+  if(pool.length === 0) return;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  slotState.used.push(pick);
+  slotState.current = pick;
+
+  var reels = document.querySelectorAll('.slot-reel');
+  // spin only the next reel
+  var idx = slotState.pulls;
+  reels.forEach(function(r,i){
+    if(i === idx){
+      r.classList.add('spinning');
+      r.classList.remove('locked-right','locked-wrong');
+      r.querySelector('.reel-symbol').textContent = '?';
+    }
+  });
+  document.getElementById('slot-status').textContent = 'SPINNING…';
+  document.getElementById('slot-status').className = 'slot-status';
+  document.getElementById('slot-pull').disabled = true;
+  var lever = document.getElementById('slot-lever');
+  if(lever){
+    lever.disabled = true;
+    lever.classList.remove('pulling');
+    // restart animation reliably
+    void lever.offsetWidth;
+    lever.classList.add('pulling');
+    setTimeout(function(){ lever.classList.remove('pulling'); }, 950);
+  }
+  slotState.locked = true;
+
+  setTimeout(function(){
+    reels[idx].classList.remove('spinning');
+    // show question + options
+    var Q = SLOT_QUESTIONS[pick];
+    var qDiv = document.getElementById('slot-question');
+    qDiv.textContent = '🃏 PULL ' + (idx+1) + '/3 — ' + Q.q;
+    qDiv.classList.add('show');
+    var optsDiv = document.getElementById('slot-options');
+    optsDiv.innerHTML = '';
+    Q.opts.forEach(function(o, oi){
+      var b = document.createElement('button');
+      b.textContent = String.fromCharCode(65 + oi) + ') ' + o.t;
+      b.onclick = function(){ answerSlot(b, o.ok, Q.feedback, idx); };
+      optsDiv.appendChild(b);
+    });
+    document.getElementById('slot-status').textContent = 'CHOOSE YOUR ANSWER';
+  }, 900);
+}
+function answerSlot(btn, ok, feedback, idx){
+  // disable all
+  document.querySelectorAll('#slot-options button').forEach(function(b){ b.disabled = true; });
+  // mark all
+  document.querySelectorAll('#slot-options button').forEach(function(b){
+    // find correct one by checking onclick
+    if(b === btn){
+      b.classList.add(ok ? 'correct' : 'wrong');
+    }
+  });
+  // also reveal correct if this was wrong
+  if(!ok){
+    var Q = SLOT_QUESTIONS[slotState.current];
+    var allBtns = document.querySelectorAll('#slot-options button');
+    Q.opts.forEach(function(o, oi){
+      if(o.ok) allBtns[oi].classList.add('correct');
+    });
+  }
+
+  var reels = document.querySelectorAll('.slot-reel');
+  var symbol = ok ? '🏆' : '💥';
+  reels[idx].querySelector('.reel-symbol').textContent = symbol;
+  reels[idx].classList.add(ok ? 'locked-right' : 'locked-wrong');
+
+  slotState.pulls++;
+  if(ok) slotState.correct++;
+
+  var fb = document.getElementById('slot-feedback');
+  var status = document.getElementById('slot-status');
+  var lever = document.getElementById('slot-lever');
+  if(!ok){
+    // game over
+    status.textContent = '🚨 ALARM! THE HEIST IS OVER';
+    status.className = 'slot-status lose';
+    fb.className = 'slot-feedback show lose';
+    fb.textContent = '💥 ' + feedback + ' THE CREW BLEW IT. HIT NEW HEIST TO RUN IT AGAIN.';
+    document.getElementById('slot-pull').disabled = true;
+    if(lever) lever.disabled = true;
+    slotState.locked = false;
+    triggerSlotLose();
+  } else if(slotState.pulls >= slotState.max){
+    // jackpot!
+    status.textContent = '🏆 JACKPOT! VAULT OPENED — THE HEIST IS A SUCCESS';
+    status.className = 'slot-status win';
+    fb.className = 'slot-feedback show win';
+    fb.textContent = '🏆 3 PULLS, 3 CORRECT. YOU\'VE GOT WATERFALL DOWN. BRING THIS UNDERSTANDING TO CLASS.';
+    document.getElementById('slot-pull').disabled = true;
+    if(lever) lever.disabled = true;
+    slotState.locked = false;
+    burstCoins();
+    document.querySelector('.slot-machine').classList.add('win-glow');
+  } else {
+    status.textContent = '✅ CORRECT — PULL THE LEVER AGAIN';
+    fb.className = 'slot-feedback show win';
+    fb.textContent = '✅ ' + feedback;
+    document.getElementById('slot-pull').disabled = false;
+    if(lever) lever.disabled = false;
+    slotState.locked = false;
+  }
+}
+function resetSlot(){
+  slotState = {pulls:0, max:3, correct:0, used:[], current:null, locked:false};
+  document.querySelectorAll('.slot-reel').forEach(function(r){
+    r.classList.remove('spinning','locked-right','locked-wrong');
+    r.querySelector('.reel-symbol').textContent = '?';
+  });
+  document.getElementById('slot-status').textContent = 'PULL THE LEVER TO START';
+  document.getElementById('slot-status').className = 'slot-status';
+  document.getElementById('slot-question').classList.remove('show');
+  document.getElementById('slot-question').textContent = '';
+  document.getElementById('slot-options').innerHTML = '';
+  document.getElementById('slot-feedback').classList.remove('show');
+  document.getElementById('slot-feedback').textContent = '';
+  document.getElementById('slot-pull').disabled = false;
+  var lever = document.getElementById('slot-lever');
+  if(lever){ lever.disabled = false; lever.classList.remove('pulling'); }
+  var slot = document.querySelector('.slot-machine');
+  if(slot) slot.classList.remove('win-glow','lose-shake');
+  var layer = document.querySelector('.slot-coins');
+  if(layer) layer.remove();
+  var doom = document.querySelector('.slot-doom');
+  if(doom) doom.remove();
+}
+function burstCoins(){
+  var quiz = document.querySelector('.slot-quiz');
+  if(!quiz) return;
+  // remove old layer if any
+  var old = quiz.querySelector('.slot-coins');
+  if(old) old.remove();
+  var layer = document.createElement('div');
+  layer.className = 'slot-coins';
+  quiz.appendChild(layer);
+  var COIN_SYMBOLS = ['🪙','💰','🏆','💎','🪙','🪙'];
+  var COUNT = 32;
+  for(var i = 0; i < COUNT; i++){
+    (function(i){
+      setTimeout(function(){
+        var c = document.createElement('span');
+        c.className = 'slot-coin';
+        c.textContent = COIN_SYMBOLS[Math.floor(Math.random() * COIN_SYMBOLS.length)];
+        // random horizontal spread (-220 to 220 px)
+        var x = (Math.random() * 440 - 220) + 'px';
+        // fall down 380-520 px
+        var y = (260 + Math.random() * 240) + 'px';
+        // rotation
+        var r = (Math.random() * 720 - 360) + 'deg';
+        c.style.setProperty('--coin-x', x);
+        c.style.setProperty('--coin-y', y);
+        c.style.setProperty('--coin-r', r);
+        var dur = (1.4 + Math.random() * 1.2);
+        c.style.animation = 'coinFly ' + dur + 's forwards';
+        layer.appendChild(c);
+        // remove after animation
+        setTimeout(function(){ if(c.parentElement) c.remove(); }, dur * 1000 + 100);
+      }, i * 35);
+    })(i);
+  }
+  // remove the layer after all coins gone
+  setTimeout(function(){
+    if(layer.parentElement) layer.remove();
+  }, 3500);
+}
+function triggerSlotLose(){
+  var slot = document.querySelector('.slot-machine');
+  var quiz = document.querySelector('.slot-quiz');
+  if(!slot || !quiz) return;
+  // shake the machine
+  slot.classList.remove('lose-shake');
+  void slot.offsetWidth;
+  slot.classList.add('lose-shake');
+  // overlay layer
+  var old = quiz.querySelector('.slot-doom');
+  if(old) old.remove();
+  var layer = document.createElement('div');
+  layer.className = 'slot-doom';
+  // red/blue police flash
+  var flash = document.createElement('div');
+  flash.className = 'doom-flash';
+  layer.appendChild(flash);
+  // falling sirens, hats, police cars
+  var ICONS = ['🚨','🚨','🚓','👮','🚔','🚨','💀','🚨'];
+  var COUNT = 14;
+  for(var i = 0; i < COUNT; i++){
+    (function(i){
+      setTimeout(function(){
+        var el = document.createElement('span');
+        el.className = 'doom-item';
+        el.textContent = ICONS[Math.floor(Math.random() * ICONS.length)];
+        el.style.left = (5 + Math.random() * 90) + '%';
+        var y = 240 + Math.random() * 200;
+        var r = (Math.random() * 720 - 360) + 'deg';
+        el.style.setProperty('--doom-y', y + 'px');
+        el.style.setProperty('--doom-r', r);
+        var dur = 1.6 + Math.random() * .8;
+        el.style.animation = 'sirenFall ' + dur + 's forwards cubic-bezier(.4,.1,.6,1)';
+        layer.appendChild(el);
+        setTimeout(function(){ if(el.parentElement) el.remove(); }, dur * 1000 + 100);
+      }, i * 110);
+    })(i);
+  }
+  quiz.appendChild(layer);
+  setTimeout(function(){
+    if(layer.parentElement) layer.remove();
+    slot.classList.remove('lose-shake');
+  }, 4200);
+}
+
+// ===== 3. SCOPE CREEP GAME =====
+var creepCount = 0;
+var creepStep = 18; // each click ~18%
+function addCreep(btn){
+  if(btn.disabled) return;
+  btn.disabled = true;
+  creepCount += creepStep;
+  if(creepCount > 100) creepCount = 100;
+  var bar = document.getElementById('budget-bar');
+  bar.style.width = creepCount + '%';
+  bar.textContent = creepCount + '%';
+  if(creepCount > 80){ bar.classList.add('danger'); }
+  if(creepCount >= 100){
+    var msg = document.getElementById('scope-msg');
+    msg.classList.add('show');
+    msg.innerHTML = '<span class="sinking-ship">⛵</span> 💀 SCOPE CREEP! The ship is too heavy. The Black Pearl is laughing. The project is over budget, behind schedule, and now actually sinking. Arrr.';
+    document.getElementById('scope-reset').classList.add('show');
+    // disable all
+    document.querySelectorAll('.scope-buttons button').forEach(function(b){ b.disabled = true; });
+    // bubbles 🫧 rising from below
+    triggerScopeSink();
+  }
+}
+function triggerScopeSink(){
+  var game = document.querySelector('.scope-game');
+  if(!game) return;
+  game.classList.remove('sinking');
+  void game.offsetWidth;
+  game.classList.add('sinking');
+  var old = game.querySelector('.sink-bubbles');
+  if(old) old.remove();
+  var layer = document.createElement('div');
+  layer.className = 'sink-bubbles';
+  for(var i = 0; i < 18; i++){
+    (function(i){
+      setTimeout(function(){
+        var b = document.createElement('span');
+        b.className = 'bubble';
+        b.textContent = ['🫧','💧','🐟','🦑'][Math.floor(Math.random()*4)];
+        b.style.left = (5 + Math.random() * 90) + '%';
+        var dur = 2.4 + Math.random() * 1.6;
+        b.style.animation = 'bubbleRise ' + dur + 's forwards ease-out';
+        layer.appendChild(b);
+        setTimeout(function(){ if(b.parentElement) b.remove(); }, dur * 1000 + 100);
+      }, i * 180);
+    })(i);
+  }
+  game.appendChild(layer);
+  setTimeout(function(){
+    if(layer.parentElement) layer.remove();
+  }, 6500);
+}
+function resetCreep(){
+  creepCount = 0;
+  var bar = document.getElementById('budget-bar');
+  bar.style.width = '0%';
+  bar.textContent = '0%';
+  bar.classList.remove('danger');
+  document.getElementById('scope-msg').classList.remove('show');
+  document.getElementById('scope-msg').innerHTML = '';
+  document.getElementById('scope-reset').classList.remove('show');
+  document.querySelectorAll('.scope-buttons button').forEach(function(b){ b.disabled = false; });
+  var game = document.querySelector('.scope-game');
+  if(game){
+    game.classList.remove('sinking');
+    var bubbles = game.querySelector('.sink-bubbles');
+    if(bubbles) bubbles.remove();
+  }
+}
+
+// ===== 4. SORT THE METHOD =====
+function cycleSort(btn){
+  if(btn.disabled) return;
+  var cur = btn.getAttribute('data-pick');
+  var next = !cur ? 'wf' : (cur === 'wf' ? 'ag' : '');
+  if(next){ btn.setAttribute('data-pick', next); }
+  else { btn.removeAttribute('data-pick'); }
+  // clear any prior right/wrong styling on edit
+  btn.classList.remove('right','wrong');
+  document.getElementById('sort-result').classList.remove('show');
+  document.getElementById('sort-score').textContent = '';
+}
+function checkSort(){
+  var stmts = document.querySelectorAll('.sort-stmt');
+  var total = stmts.length, correct = 0, unassigned = 0;
+  stmts.forEach(function(s){
+    var pick = s.getAttribute('data-pick');
+    var ans = s.getAttribute('data-answer');
+    s.classList.remove('right','wrong');
+    if(!pick){ unassigned++; return; }
+    if(pick === ans){ s.classList.add('right'); correct++; }
+    else { s.classList.add('wrong'); }
+  });
+  var score = document.getElementById('sort-score');
+  var result = document.getElementById('sort-result');
+  score.textContent = correct + ' / ' + total + ' correct';
+  result.classList.add('show');
+  if(unassigned > 0 && correct + unassigned === total){
+    result.innerHTML = '⚠ ' + unassigned + ' statement' + (unassigned>1?'s':'') + ' still unassigned. Tap each one until it shows 🎰 or ⚓, then check again.';
+  } else if(correct === total){
+    result.innerHTML = '🏆 <strong>Perfect — every statement sorted correctly.</strong> You can explain Waterfall vs Agile to anyone now. Use the table below as your study reference.';
+  } else if(correct >= total - 2){
+    result.innerHTML = '👍 Very close — only a couple wrong. Look at the table below to spot which ones tripped you up, then reset and try again.';
+  } else if(correct >= total/2){
+    result.innerHTML = '🤔 Halfway there. Re-read the Waterfall and Agile sections, focusing on what each method values: <em>order vs adaptation</em>. Then reset and try again.';
+  } else {
+    result.innerHTML = '💀 The heist went sideways. The table below shows the right answers — study it, then reset and run the game again before class.';
+  }
+}
+function resetSort(){
+  document.querySelectorAll('.sort-stmt').forEach(function(s){
+    s.removeAttribute('data-pick');
+    s.classList.remove('right','wrong');
+  });
+  document.getElementById('sort-result').classList.remove('show');
+  document.getElementById('sort-score').textContent = '';
+}
+var WIP_LIMIT = 2;
+var wipViolations = 0;
+function advanceTask(card){
+  if(card.classList.contains('done')) return;
+  var todo = document.getElementById('kb-todo');
+  var doing = document.getElementById('kb-doing');
+  var done = document.getElementById('kb-done');
+  var warn = document.getElementById('kb-warn');
+  var wipCount = doing.querySelectorAll('.kb-task').length;
+
+  if(todo.contains(card)){
+    // trying to move into "In Progress"
+    if(wipCount >= WIP_LIMIT){
+      // BLOCK — teach the WIP limit
+      card.classList.add('shake');
+      setTimeout(function(){ card.classList.remove('shake'); }, 500);
+      wipViolations++;
+      warn.classList.add('show');
+      var msgs = [
+        '⚠ WIP limit reached. Finish a task in progress before starting a new one — that\'s the whole point of Kanban.',
+        '🏴‍☠️ The crew is overloaded! With too many tasks in progress, nothing actually finishes. Complete one first.',
+        '⚓ Arrr — too much on deck. Limiting Work In Progress (WIP) is what keeps the ship moving.'
+      ];
+      warn.textContent = msgs[Math.min(wipViolations - 1, msgs.length - 1)];
+      return;
+    }
+    card.classList.add('in-progress');
+    doing.appendChild(card);
+    warn.classList.remove('show');
+  } else if(doing.contains(card)){
+    card.classList.remove('in-progress');
+    card.classList.add('done');
+    done.appendChild(card);
+    warn.classList.remove('show');
+  }
+  // update counter
+  document.getElementById('wip-count').textContent = doing.querySelectorAll('.kb-task').length;
+  // celebration check
+  var allTasks = document.querySelectorAll('.kb-task');
+  var allDone = true;
+  allTasks.forEach(function(t){ if(!t.classList.contains('done')) allDone = false; });
+  if(allDone){
+    document.getElementById('kb-celebrate').classList.add('show');
+  }
+}
+
+// ===== 6. CRACK THE VAULT (phase ordering) =====
+var VAULT_PHASES = [
+  {id:1, name:'INITIATION / REQUIREMENTS'},
+  {id:2, name:'PLANNING / DESIGN'},
+  {id:3, name:'EXECUTION'},
+  {id:4, name:'MONITORING & CONTROLLING'},
+  {id:5, name:'CLOSING'}
+];
+function shuffleArr(a){
+  var arr = a.slice();
+  for(var i = arr.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function initVault(){
+  var pool = document.getElementById('vault-pool');
+  if(!pool) return;
+  pool.innerHTML = '';
+  var shuffled = shuffleArr(VAULT_PHASES);
+  // ensure not already in correct order
+  var inOrder = shuffled.every(function(p,i){ return p.id === i+1; });
+  while(inOrder){
+    shuffled = shuffleArr(VAULT_PHASES);
+    inOrder = shuffled.every(function(p,i){ return p.id === i+1; });
+  }
+  shuffled.forEach(function(p){
+    var btn = document.createElement('button');
+    btn.className = 'vault-pick';
+    btn.setAttribute('data-id', p.id);
+    btn.textContent = p.name;
+    btn.onclick = function(){ vaultPickClick(btn); };
+    pool.appendChild(btn);
+  });
+  document.querySelectorAll('.vault-slot').forEach(function(s){
+    s.classList.remove('filled','right','wrong');
+    var fill = s.querySelector('.slot-fill');
+    fill.textContent = '';
+    fill.removeAttribute('data-id');
+    fill.onclick = function(){ vaultSlotClick(fill, s); };
+  });
+  document.getElementById('vault-check').disabled = true;
+  document.getElementById('vault-result').classList.remove('show');
+  document.querySelector('.vault-game').classList.remove('cracked');
+}
+function vaultPickClick(btn){
+  var slots = document.querySelectorAll('.vault-slot');
+  for(var i = 0; i < slots.length; i++){
+    var fill = slots[i].querySelector('.slot-fill');
+    if(!fill.textContent){
+      fill.textContent = btn.textContent;
+      fill.setAttribute('data-id', btn.getAttribute('data-id'));
+      slots[i].classList.add('filled');
+      btn.remove();
+      checkVaultReady();
+      return;
+    }
+  }
+}
+function vaultSlotClick(fill, slot){
+  if(!fill.textContent) return;
+  var pool = document.getElementById('vault-pool');
+  var btn = document.createElement('button');
+  btn.className = 'vault-pick';
+  btn.setAttribute('data-id', fill.getAttribute('data-id'));
+  btn.textContent = fill.textContent;
+  btn.onclick = function(){ vaultPickClick(btn); };
+  pool.appendChild(btn);
+  fill.textContent = '';
+  fill.removeAttribute('data-id');
+  slot.classList.remove('filled','right','wrong');
+  document.getElementById('vault-result').classList.remove('show');
+  checkVaultReady();
+}
+function checkVaultReady(){
+  var allFilled = true;
+  document.querySelectorAll('.vault-slot .slot-fill').forEach(function(f){
+    if(!f.textContent) allFilled = false;
+  });
+  document.getElementById('vault-check').disabled = !allFilled;
+}
+function checkVault(){
+  var slots = document.querySelectorAll('.vault-slot');
+  var allRight = true;
+  slots.forEach(function(s, i){
+    var fill = s.querySelector('.slot-fill');
+    var id = parseInt(fill.getAttribute('data-id'), 10);
+    s.classList.remove('right','wrong');
+    if(id === i + 1){ s.classList.add('right'); }
+    else { s.classList.add('wrong'); allRight = false; }
+  });
+  var result = document.getElementById('vault-result');
+  result.classList.add('show');
+  if(allRight){
+    result.className = 'vault-result show right';
+    result.textContent = '🏆 VAULT CRACKED! THE CREW GOT IN. THAT\'S WATERFALL — LINEAR, SEQUENTIAL, ONE PHASE AFTER THE NEXT.';
+    document.querySelector('.vault-game').classList.add('cracked');
+  } else {
+    result.className = 'vault-result show wrong';
+    result.textContent = '💥 ALARM TRIGGERED! WRONG ORDER. RED SLOTS ARE OUT OF PLACE — TAP THEM TO RETURN, THEN TRY AGAIN.';
+  }
+}
+function resetVault(){ initVault(); }
+
+// ===== 7. CANNON DEFENCE (AGILE) =====
+var CANNON_STATEMENTS = [
+  // ag = true Agile (DON'T fire) ; wf = Waterfall sneaking in (FIRE!)
+  {t:"Welcome changing requirements, even late", side:'ag'},
+  {t:"Lock all requirements at the start", side:'wf'},
+  {t:"Deliver a working MVP first, then iterate", side:'ag'},
+  {t:"Skip testing until the very end", side:'wf'},
+  {t:"Hold daily stand-ups with the crew", side:'ag'},
+  {t:"Sign off each phase before the next begins", side:'wf'},
+  {t:"Customer feedback every sprint", side:'ag'},
+  {t:"Document every decision before coding starts", side:'wf'},
+  {t:"Cross-functional teams in 2–4 week sprints", side:'ag'},
+  {t:"One final release at the end of the project", side:'wf'},
+  {t:"Retrospective at the end of each sprint", side:'ag'},
+  {t:"Customer mainly involved at start and end", side:'wf'},
+  {t:"Continuous testing built into every cycle", side:'ag'},
+  {t:"No going back once a phase is closed", side:'wf'}
+];
+var cannonState = {
+  running:false, score:0, hull:100, time:60,
+  spawnInterval:null, tickInterval:null, targets:[]
+};
+function startCannon(){
+  if(cannonState.running) return;
+  cannonState = {running:true, score:0, hull:100, time:60, spawnInterval:null, tickInterval:null, targets:[]};
+  updateCannonStats();
+  document.getElementById('cn-overlay').classList.add('hidden');
+  // add the cannon visual
+  var arena = document.getElementById('cn-arena');
+  // clear existing targets
+  arena.querySelectorAll('.cn-target,.cn-flash,.cn-cannon').forEach(function(n){ n.remove(); });
+  var cannon = document.createElement('div');
+  cannon.className = 'cn-cannon';
+  cannon.textContent = '💣';
+  arena.appendChild(cannon);
+  // spawn statement every 1.4s
+  cannonState.spawnInterval = setInterval(spawnTarget, 1400);
+  spawnTarget(); // first one immediately
+  // tick down timer
+  cannonState.tickInterval = setInterval(function(){
+    cannonState.time--;
+    updateCannonStats();
+    if(cannonState.time <= 0){ endCannon('time'); }
+  }, 1000);
+}
+function spawnTarget(){
+  if(!cannonState.running) return;
+  var arena = document.getElementById('cn-arena');
+  var pick = CANNON_STATEMENTS[Math.floor(Math.random() * CANNON_STATEMENTS.length)];
+  var div = document.createElement('div');
+  div.className = 'cn-target ' + (pick.side === 'wf' ? 'is-wf' : 'is-ag');
+  div.setAttribute('data-side', pick.side);
+  div.textContent = pick.t;
+  // start to right of arena, drift left
+  var arenaW = arena.clientWidth;
+  // pick a vertical position roughly in top 70% of arena
+  var topPct = 8 + Math.random() * 55;
+  div.style.top = topPct + '%';
+  div.style.left = arenaW + 'px';
+  div.onclick = function(e){
+    e.stopPropagation();
+    hitTarget(div);
+  };
+  arena.appendChild(div);
+  // animate left over ~7s
+  var dur = 7000 + Math.random() * 1500;
+  var startTime = performance.now();
+  function step(now){
+    if(!cannonState.running){ return; }
+    if(!div.parentElement){ return; }
+    var elapsed = now - startTime;
+    var progress = elapsed / dur;
+    if(progress >= 1){
+      div.remove();
+      // missed: if it was a wf statement and we DIDN'T fire, that's a missed defence.
+      // Treat as a small hull penalty so they don't ignore them.
+      if(div.getAttribute('data-side') === 'wf' && cannonState.running){
+        cannonState.hull = Math.max(0, cannonState.hull - 5);
+        updateCannonStats();
+        if(cannonState.hull <= 0){ endCannon('hull'); }
+      }
+      return;
+    }
+    var x = arenaW - (arenaW + 280) * progress;
+    div.style.left = x + 'px';
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function hitTarget(div){
+  if(!cannonState.running) return;
+  var side = div.getAttribute('data-side');
+  // flash effect
+  var arena = document.getElementById('cn-arena');
+  var rect = div.getBoundingClientRect();
+  var arenaRect = arena.getBoundingClientRect();
+  var flash = document.createElement('div');
+  flash.className = 'cn-flash';
+  flash.style.left = (rect.left - arenaRect.left + rect.width/2 - 14) + 'px';
+  flash.style.top = (rect.top - arenaRect.top + rect.height/2 - 14) + 'px';
+  if(side === 'wf'){
+    // GOOD HIT
+    flash.textContent = '💥';
+    cannonState.score += 10;
+    div.classList.add('hit-right');
+    setTimeout(function(){ if(div.parentElement) div.remove(); }, 280);
+  } else {
+    // FRIENDLY FIRE
+    flash.textContent = '🩸';
+    cannonState.hull = Math.max(0, cannonState.hull - 20);
+    div.classList.add('hit-wrong');
+    setTimeout(function(){ if(div.parentElement) div.remove(); }, 600);
+  }
+  arena.appendChild(flash);
+  setTimeout(function(){ if(flash.parentElement) flash.remove(); }, 600);
+  updateCannonStats();
+  if(cannonState.hull <= 0){ endCannon('hull'); return; }
+  if(cannonState.score >= 100){ endCannon('win'); return; }
+}
+function updateCannonStats(){
+  document.getElementById('cn-score').textContent = cannonState.score;
+  var hullEl = document.getElementById('cn-hull');
+  hullEl.textContent = cannonState.hull + '%';
+  if(cannonState.hull <= 40){ hullEl.classList.add('danger'); }
+  else { hullEl.classList.remove('danger'); }
+  document.getElementById('cn-time').textContent = cannonState.time;
+}
+function endCannon(reason){
+  cannonState.running = false;
+  if(cannonState.spawnInterval) clearInterval(cannonState.spawnInterval);
+  if(cannonState.tickInterval) clearInterval(cannonState.tickInterval);
+  // clear floating targets
+  document.querySelectorAll('#cn-arena .cn-target').forEach(function(t){ t.remove(); });
+  document.querySelectorAll('#cn-arena .cn-cannon').forEach(function(c){ c.remove(); });
+  var arena = document.getElementById('cn-arena');
+  var overlay = document.getElementById('cn-overlay');
+  // keep overlay hidden during the death/win animation
+  overlay.classList.add('hidden');
+  overlay.innerHTML = '';
+  var msg = document.createElement('div');
+  msg.className = 'end-msg';
+  var detail = document.createElement('div');
+  detail.className = 'end-detail';
+  var btn = document.createElement('button');
+  btn.className = 'cn-start';
+  btn.textContent = '↻ Play again';
+  btn.onclick = startCannon;
+
+  if(reason === 'win'){
+    // CAPTAIN JACK DANCES
+    overlay.classList.add('win');
+    overlay.classList.remove('lose');
+    msg.innerHTML = '<span class="sparrow-dance">🏴‍☠️</span> 100 points! The ship is safe!';
+    detail.innerHTML = 'Captain Jack himself is dancing on the deck. You spotted every Waterfall principle that tried to sneak aboard. <strong>Final score: ' + cannonState.score + '</strong> · Hull: ' + cannonState.hull + '%';
+    triggerSparrowDance();
+    showStamp('VICTORY', 'win');
+  } else if(reason === 'hull'){
+    overlay.classList.add('lose');
+    overlay.classList.remove('win');
+    msg.innerHTML = '<span class="ship-sinking">🚢</span> The ship is sunk!';
+    detail.innerHTML = 'Too many Agile principles got hit by friendly fire. The Black Pearl just laughed and sailed past. Score: ' + cannonState.score + '. Re-read the Agile section before trying again.';
+    triggerCannonSink();
+    triggerHullLoss();
+    showStamp('SHIP SUNK');
+  } else if(reason === 'time'){
+    overlay.classList.remove('win','lose');
+    if(cannonState.score >= 70){
+      msg.textContent = '⚓ Time\'s up — solid defence!';
+    } else if(cannonState.score >= 40){
+      msg.textContent = '⚓ Time\'s up — keep practising.';
+      triggerTimeUpFail();
+      showStamp('MISSION FAILED');
+      overlay.classList.add('lose');
+    } else {
+      msg.textContent = '⚓ Time\'s up — many Waterfall principles slipped through.';
+      triggerTimeUpFail();
+      showStamp('MISSION FAILED');
+      overlay.classList.add('lose');
+    }
+    detail.textContent = 'You needed 100 to win. Final score: ' + cannonState.score + ' · Hull: ' + cannonState.hull + '%. Each correct hit is +10. Friendly fire costs 20% hull. Missed Waterfall statements cost 5% hull.';
+  }
+  overlay.appendChild(msg);
+  overlay.appendChild(detail);
+  overlay.appendChild(btn);
+  // reveal overlay after the death/win animation has had its moment
+  // win=2.6s, hull=2.6s, time-up=2.6s, time-up-good=immediate
+  var animDelay = (reason === 'win' || reason === 'hull' || (reason === 'time' && cannonState.score < 70)) ? 2400 : 0;
+  setTimeout(function(){
+    overlay.classList.remove('hidden');
+  }, animDelay);
+}
+
+function triggerSparrowDance(){
+  var arena = document.getElementById('cn-arena');
+  if(!arena) return;
+  // confetti & coins from above
+  var party = document.createElement('div');
+  party.className = 'sparrow-party';
+  var ICONS = ['🪙','💰','🎉','🎊','⭐','🪙','🏆','💎'];
+  for(var i = 0; i < 30; i++){
+    (function(i){
+      setTimeout(function(){
+        var el = document.createElement('span');
+        el.className = 'party-item';
+        el.textContent = ICONS[Math.floor(Math.random() * ICONS.length)];
+        el.style.left = (Math.random() * 100) + '%';
+        var dur = 2.4 + Math.random() * 1.6;
+        var sway = (Math.random() * 200 - 100) + 'px';
+        el.style.setProperty('--party-sway', sway);
+        el.style.animation = 'partyFall ' + dur + 's forwards ease-out';
+        party.appendChild(el);
+        setTimeout(function(){ if(el.parentElement) el.remove(); }, dur * 1000 + 100);
+      }, i * 80);
+    })(i);
+  }
+  arena.appendChild(party);
+  setTimeout(function(){ if(party.parentElement) party.remove(); }, 5500);
+}
+function triggerCannonSink(){
+  var arena = document.getElementById('cn-arena');
+  if(!arena) return;
+  // bubbles + black pearl drifts past
+  var sink = document.createElement('div');
+  sink.className = 'cn-sink';
+  // black pearl
+  var pearl = document.createElement('div');
+  pearl.className = 'black-pearl';
+  pearl.textContent = '🏴‍☠️';
+  sink.appendChild(pearl);
+  // sinking ship
+  var sunk = document.createElement('div');
+  sunk.className = 'cn-sunk-ship';
+  sunk.textContent = '🚢';
+  sink.appendChild(sunk);
+  // bubbles
+  for(var i = 0; i < 14; i++){
+    (function(i){
+      setTimeout(function(){
+        var b = document.createElement('span');
+        b.className = 'cn-bubble';
+        b.textContent = '🫧';
+        b.style.left = (35 + Math.random() * 30) + '%';
+        var dur = 2.2 + Math.random() * 1.2;
+        b.style.animation = 'cnBubbleRise ' + dur + 's forwards ease-out';
+        sink.appendChild(b);
+        setTimeout(function(){ if(b.parentElement) b.remove(); }, dur * 1000 + 100);
+      }, i * 160);
+    })(i);
+  }
+  arena.appendChild(sink);
+  setTimeout(function(){ if(sink.parentElement) sink.remove(); }, 5500);
+}
+
+function triggerHullLoss(){
+  // adds: red flash, screen shake, extra sinking ship + bubbles already handled by triggerCannonSink
+  var arena = document.getElementById('cn-arena');
+  if(!arena) return;
+  arena.classList.add('sunk');
+  var flash = document.createElement('div');
+  flash.className = 'cn-red-flash';
+  arena.appendChild(flash);
+  // big sinking ship dropping down
+  var ship = document.createElement('div');
+  ship.className = 'cn-sinking-ship';
+  ship.textContent = '🚢';
+  arena.appendChild(ship);
+  // bubble cluster
+  for(var i = 0; i < 12; i++){
+    (function(i){
+      setTimeout(function(){
+        var b = document.createElement('span');
+        b.className = 'cn-bubble';
+        b.textContent = Math.random() > .5 ? '🫧' : '○';
+        b.style.left = (30 + Math.random() * 40) + '%';
+        b.style.bottom = (10 + Math.random() * 30) + 'px';
+        var dur = 1.4 + Math.random() * .8;
+        b.style.animation = 'bubbleRise ' + dur + 's forwards ease-out';
+        arena.appendChild(b);
+        setTimeout(function(){ if(b.parentElement) b.remove(); }, dur * 1000 + 100);
+      }, i * 130);
+    })(i);
+  }
+  setTimeout(function(){
+    arena.classList.remove('sunk');
+    if(flash.parentElement) flash.remove();
+    if(ship.parentElement) ship.remove();
+  }, 2400);
+}
+
+function triggerTimeUpFail(){
+  // cannon explodes + smoke rises
+  var arena = document.getElementById('cn-arena');
+  if(!arena) return;
+  // big explosion
+  var boom = document.createElement('div');
+  boom.className = 'cn-explosion';
+  boom.textContent = '💥';
+  arena.appendChild(boom);
+  setTimeout(function(){ if(boom.parentElement) boom.remove(); }, 1200);
+  // smoke columns
+  var SMOKES = ['💨','💨','🌫️'];
+  for(var i = 0; i < 14; i++){
+    (function(i){
+      setTimeout(function(){
+        var s = document.createElement('span');
+        s.className = 'cn-smoke';
+        s.textContent = SMOKES[Math.floor(Math.random() * SMOKES.length)];
+        s.style.left = (35 + Math.random() * 30) + '%';
+        s.style.bottom = (4 + Math.random() * 20) + 'px';
+        var dur = 1.8 + Math.random() * 1.2;
+        s.style.animation = 'smokeRise ' + dur + 's forwards ease-out';
+        arena.appendChild(s);
+        setTimeout(function(){ if(s.parentElement) s.remove(); }, dur * 1000 + 100);
+      }, 200 + i * 130);
+    })(i);
+  }
+}
+
+function showStamp(text, variant){
+  var arena = document.getElementById('cn-arena');
+  if(!arena) return;
+  var stamp = document.createElement('div');
+  stamp.className = 'cn-stamp' + (variant === 'win' ? ' win' : '');
+  stamp.textContent = text;
+  arena.appendChild(stamp);
+  // remove when overlay shows the play-again screen (overlay covers it anyway, but tidy up)
+  setTimeout(function(){ if(stamp.parentElement) stamp.remove(); }, 5200);
+}
+
+// ===== INIT =====
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initVault);
+} else {
+  initVault();
+}
+</script>
+
+</body>
+</html>

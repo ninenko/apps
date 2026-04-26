@@ -397,6 +397,18 @@
         </span>
       </a>
 
+      <a class="card" href="lectures/waterfall-vs-agile.html">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Waterfall vs Agile</div>
+        <div class="card-desc">
+          <span data-lang="en">Pre-class reading on SDLC methodologies — Waterfall, Agile, Scrum, and Kanban side by side with interactive comparisons.</span>
+          <span data-lang="ru">Материал для подготовки к лекции по методологиям SDLC — Waterfall, Agile, Scrum и Kanban с интерактивными сравнениями.</span>
+        </div>
+        <span class="card-tag tag-lecture">
+          <span data-lang="en">Reading</span><span data-lang="ru">Чтение</span>
+        </span>
+      </a>
+
       <a class="card" href="https://ninenko.github.io/apps/essays/ai-gap/index.html" target="_blank" rel="noopener">
         <div class="card-icon">🤖</div>
         <div class="card-title">The AI Adoption Gap</div>
@@ -429,22 +441,3 @@
     }
 
     function setFilter(filter) {
-      const apps     = document.getElementById('section-apps');
-      const lectures = document.getElementById('section-lectures');
-      apps.classList.toggle('hidden',     filter === 'lectures');
-      lectures.classList.toggle('hidden', filter === 'apps');
-      document.querySelectorAll('.filter-btn').forEach((btn, i) => {
-        btn.classList.toggle('active', ['both','apps','lectures'][i] === filter);
-      });
-      localStorage.setItem('filter', filter);
-    }
-
-    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
-    const lang   = localStorage.getItem('lang')   || defaultLang;
-    const filter = localStorage.getItem('filter') || 'both';
-    setLang(lang);
-    setFilter(filter);
-  </script>
-
-</body>
-</html>
