@@ -441,3 +441,22 @@
     }
 
     function setFilter(filter) {
+      const apps     = document.getElementById('section-apps');
+      const lectures = document.getElementById('section-lectures');
+      apps.classList.toggle('hidden',     filter === 'lectures');
+      lectures.classList.toggle('hidden', filter === 'apps');
+      document.querySelectorAll('.filter-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', ['both','apps','lectures'][i] === filter);
+      });
+      localStorage.setItem('filter', filter);
+    }
+
+    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
+    const lang   = localStorage.getItem('lang')   || defaultLang;
+    const filter = localStorage.getItem('filter') || 'both';
+    setLang(lang);
+    setFilter(filter);
+  </script>
+
+</body>
+</html>
