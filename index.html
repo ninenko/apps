@@ -116,6 +116,7 @@
     }
 
     .card {
+      position: relative;
       background: #1a1a24;
       border: 1px solid #2a2a38;
       border-radius: 14px;
@@ -127,6 +128,23 @@
       flex-direction: column;
       gap: 10px;
     }
+
+    .lang-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      line-height: 1;
+    }
+
+    .lang-en { background: #1a2030; color: #93c5fd; border: 1px solid #2e4566; }
+    .lang-ru { background: #2a1a26; color: #f9a8d4; border: 1px solid #5a3a4e; }
+    .lang-bi { background: #221a30; color: #c4b5fd; border: 1px solid #4a3a6a; }
 
     .card:hover {
       transform: translateY(-4px);
@@ -208,6 +226,7 @@
     <div class="grid">
 
       <a class="card" href="apps/matrix-picker.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🟩</div>
         <div class="card-title">Matrix Name Picker</div>
         <div class="card-desc">
@@ -220,6 +239,7 @@
       </a>
 
       <a class="card" href="apps/binary-transistors-explorer.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">⚡</div>
         <div class="card-title">Binary & Transistors Explorer</div>
         <div class="card-desc">
@@ -232,6 +252,7 @@
       </a>
 
       <a class="card" href="apps/punchcard-emulator.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🪄</div>
         <div class="card-title">Punchcard Emulator</div>
         <div class="card-desc">
@@ -244,6 +265,7 @@
       </a>
 
       <a class="card" href="apps/punchcard-emulator-ru.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🇷🇺</div>
         <div class="card-title">Эмулятор Перфокарты</div>
         <div class="card-desc">
@@ -256,6 +278,7 @@
       </a>
 
       <a class="card" href="apps/word-embeddings-2d.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🧠</div>
         <div class="card-title">Word Embeddings 2D</div>
         <div class="card-desc">
@@ -268,6 +291,7 @@
       </a>
 
       <a class="card" href="apps/memory_neurons.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🧩</div>
         <div class="card-title">Мемори: Нейроны</div>
         <div class="card-desc">
@@ -280,6 +304,7 @@
       </a>
 
       <a class="card" href="apps/neuroemo_results.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🧠</div>
         <div class="card-title">Нейронауки и эмоциональный интеллект</div>
         <div class="card-desc">
@@ -292,6 +317,7 @@
       </a>
 
       <a class="card" href="apps/neural_net_pattern_input.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🧠</div>
         <div class="card-title">Neural Network Pattern Input</div>
         <div class="card-desc">
@@ -304,6 +330,7 @@
       </a>
 
       <a class="card" href="apps/transaction_analyzer_static.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🧩</div>
         <div class="card-title">Транзакционный Анализ</div>
         <div class="card-desc">
@@ -316,6 +343,7 @@
       </a>
 
       <a class="card" href="apps/roleplay_IT_hardware.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🎭</div>
         <div class="card-title">IT Consultant Roleplay</div>
         <div class="card-desc">
@@ -338,6 +366,7 @@
     <div class="grid">
 
       <a class="card" href="lectures/api-slides.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🔌</div>
         <div class="card-title">What is an API?</div>
         <div class="card-desc">
@@ -350,6 +379,7 @@
       </a>
 
       <a class="card" href="lectures/randomness_slides.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🎲</div>
         <div class="card-title">Случайность в игре</div>
         <div class="card-desc">
@@ -362,6 +392,7 @@
       </a>
 
       <a class="card" href="lectures/story-of-programming-slides.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">💾</div>
         <div class="card-title">The Story of Programming</div>
         <div class="card-desc">
@@ -374,6 +405,7 @@
       </a>
 
       <a class="card" href="lectures/game_mechanics_slides_v3.html">
+        <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🎮</div>
         <div class="card-title">Игровые механики в образовании</div>
         <div class="card-desc">
@@ -386,6 +418,7 @@
       </a>
 
       <a class="card" href="lectures/new_school_slides.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🏫</div>
         <div class="card-title">The New School</div>
         <div class="card-desc">
@@ -398,6 +431,7 @@
       </a>
 
       <a class="card" href="lectures/waterfall-vs-agile.html">
+        <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🔄</div>
         <div class="card-title">Waterfall vs Agile</div>
         <div class="card-desc">
@@ -410,6 +444,7 @@
       </a>
 
       <a class="card" href="https://ninenko.github.io/apps/essays/ai-gap/index.html" target="_blank" rel="noopener">
+        <span class="lang-badge lang-bi">EN/RU</span>
         <div class="card-icon">🤖</div>
         <div class="card-title">The AI Adoption Gap</div>
         <div class="card-desc">
