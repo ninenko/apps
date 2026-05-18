@@ -316,6 +316,19 @@
         </span>
       </a>
 
+      <a class="card" href="apps/neuroemo_Spring2026_semester_grades.html">
+        <span class="lang-badge lang-ru">RU</span>
+        <div class="card-icon">🎓</div>
+        <div class="card-title">Итоги семестра — Нейронауки и ЭИ</div>
+        <div class="card-desc">
+          <span data-lang="en">Spring 2026 semester grade lookup for the Neuroscience &amp; Emotional Intelligence course — enter your student ID to see your base-80 score, bonuses, and section breakdown.</span>
+          <span data-lang="ru">Итоговые оценки за весенний семестр 2026 по курсу «Нейронауки и эмоциональный интеллект». Введи свой ID, чтобы увидеть базовый балл (из 80), бонусы и разбивку по разделам.</span>
+        </div>
+        <span class="card-tag tag-app">
+          <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
+        </span>
+      </a>
+
       <a class="card" href="apps/neural_net_pattern_input.html">
         <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🧠</div>
@@ -468,30 +481,4 @@
       document.querySelectorAll('[data-lang]').forEach(el => {
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
-      });
-      document.documentElement.lang = lang;
-      localStorage.setItem('lang', lang);
-    }
-
-    function setFilter(filter) {
-      const apps     = document.getElementById('section-apps');
-      const lectures = document.getElementById('section-lectures');
-      apps.classList.toggle('hidden',     filter === 'lectures');
-      lectures.classList.toggle('hidden', filter === 'apps');
-      document.querySelectorAll('.filter-btn').forEach((btn, i) => {
-        btn.classList.toggle('active', ['both','apps','lectures'][i] === filter);
-      });
-      localStorage.setItem('filter', filter);
-    }
-
-    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
-    const lang   = localStorage.getItem('lang')   || defaultLang;
-    const filter = localStorage.getItem('filter') || 'both';
-    setLang(lang);
-    setFilter(filter);
-  </script>
-
-</body>
-</html>
+      document.q

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итоги семестра — Нейронауки и эмоциональный интеллект</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f14; --surface: #17171f; --surface2: #1e1e2a;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+    --text: #f0eff5; --muted: rgba(240,239,245,0.45);
+    --accent: #7c6cff; --accent2: #b09fff;
+    --gold: #f0c060; --gold2: #f5d48a;
+    --green: #4ade80; --amber: #fbbf24; --red: #f87171;
+    --radius: 16px;
+  }
+  body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text);
+    min-height:100vh; display:flex; align-items:flex-start; justify-content:center;
+    padding:3rem 1rem 4rem; overflow-x:hidden; }
+  body::before { content:''; position:fixed; top:-200px; left:-200px; width:600px; height:600px;
+    background:radial-gradient(circle,rgba(124,108,255,.12) 0%,transparent 70%); pointer-events:none; }
+  body::after { content:''; position:fixed; bottom:-150px; right:-100px; width:500px; height:500px;
+    background:radial-gradient(circle,rgba(240,192,96,.07) 0%,transparent 70%); pointer-events:none; }
+  .container { width:100%; max-width:500px; animation:fadeUp .5s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .course-tag { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent2);
+    border:1px solid rgba(124,108,255,.3); border-radius:100px; padding:4px 12px; margin-bottom:1rem; }
+  .course-tag::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block; }
+  .title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; line-height:1.25; margin-bottom:.5rem; }
+  .subtitle { font-size:13px; color:var(--muted); line-height:1.6; }
+  .header { margin-bottom:2.5rem; }
+
+  .lookup-card { background:var(--surface); border:1px solid var(--border2);
+    border-radius:var(--radius); padding:1.75rem; margin-bottom:1.5rem; }
+  label { display:block; font-size:12px; font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .input-row { display:flex; gap:10px; }
+  input[type="text"] { flex:1; background:var(--surface2); border:1px solid var(--border2);
+    border-radius:10px; color:var(--text); font-family:'Manrope',sans-serif;
+    font-size:20px; font-weight:600; letter-spacing:.06em; padding:12px 16px;
+    outline:none; transition:border-color .2s; }
+  input[type="text"]:focus { border-color:var(--accent); }
+  .btn { background:var(--accent); color:#fff; border:none; border-radius:10px;
+    font-family:'Manrope',sans-serif; font-size:14px; font-weight:700;
+    padding:0 20px; cursor:pointer; transition:background .2s,transform .1s; }
+  .btn:hover { background:#6a5af0; } .btn:active { transform:scale(.97); }
+  .error { font-size:13px; color:var(--red); margin-top:10px; min-height:18px; font-weight:500; }
+
+  /* Result card */
+  .result-card { background:var(--surface); border:1px solid var(--border2);
+    border-radius:var(--radius); overflow:hidden; animation:fadeUp .35s ease both; }
+
+  .result-header { background:linear-gradient(135deg,#1a1830 0%,#1e1e2a 100%);
+    border-bottom:1px solid var(--border); padding:1.25rem 1.75rem; }
+  .id-label { font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase;
+    letter-spacing:.1em; margin-bottom:2px; }
+  .id-value { font-size:22px; font-weight:800; letter-spacing:.04em; }
+
+  /* Base-80 summary banner */
+  .base-banner { padding:1rem 1.75rem; background:rgba(124,108,255,.07);
+    border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .base-label { font-size:12px; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.1em; font-weight:600; margin-bottom:3px; }
+  .base-score { font-size:28px; font-weight:800; color:var(--text); line-height:1; }
+  .base-max { font-size:14px; color:var(--muted); }
+  .base-pct { font-size:13px; color:var(--accent2); font-weight:600; margin-top:2px; }
+  .bonus-pill { font-size:11px; font-weight:700; background:rgba(240,192,96,.15);
+    color:var(--gold); border:1px solid rgba(240,192,96,.3); border-radius:100px; padding:3px 10px; }
+
+  /* Sections */
+  .section-block { border-bottom:1px solid var(--border); }
+  .section-header { display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.75rem; cursor:pointer; user-select:none; transition:background .15s; }
+  .section-header:hover { background:rgba(255,255,255,.03); }
+  .section-title-wrap { display:flex; align-items:center; gap:10px; }
+  .section-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .section-name { font-size:14px; font-weight:600; }
+  .section-max-label { font-size:11px; color:var(--muted); font-weight:400; margin-left:4px; }
+  .section-score { font-size:14px; font-weight:700; white-space:nowrap; }
+  .chevron { font-size:12px; color:var(--muted); transition:transform .25s; }
+  .chevron.open { transform:rotate(180deg); }
+  .bar-row { padding:0 1.75rem 10px; }
+  .bar-track { height:4px; background:var(--surface2); border-radius:99px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:99px; transition:width .7s cubic-bezier(.16,1,.3,1); width:0; }
+  .detail-panel { max-height:0; overflow:hidden; transition:max-height .35s cubic-bezier(.16,1,.3,1);
+    background:rgba(0,0,0,.2); }
+  .detail-panel.open { max-height:900px; }
+  .detail-inner { padding:.75rem 1.75rem 1.25rem; }
+  .detail-row { display:flex; justify-content:space-between; align-items:center;
+    padding:7px 0; border-bottom:1px solid var(--border); }
+  .detail-row:last-child { border-bottom:none; }
+  .detail-label { font-size:13px; color:var(--muted); }
+  .detail-val { font-size:13px; font-weight:600; }
+  .bonus-tag { font-size:10px; font-weight:700; letter-spacing:.06em;
+    background:rgba(240,192,96,.15); color:var(--gold); border:1px solid rgba(240,192,96,.3);
+    border-radius:100px; padding:2px 7px; margin-left:6px; vertical-align:middle; }
+
+  /* Final block */
+  .final-section { border-bottom:1px solid var(--border); }
+  .final-done-row { padding:1rem 1.75rem; display:flex; align-items:center; justify-content:space-between; }
+  .final-missing { padding:1.25rem 1.75rem; }
+  .final-missing-label { font-size:13px; color:var(--muted); margin-bottom:12px; line-height:1.5; }
+  .final-inputs { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+  .final-input { flex:1; background:var(--surface2); border:1px solid var(--border2);
+    border-radius:10px; color:var(--text); font-family:'Manrope',sans-serif;
+    font-size:18px; font-weight:600; padding:10px 14px; outline:none;
+    transition:border-color .2s; }
+  .final-input:focus { border-color:var(--accent); }
+  .final-toggle { display:flex; gap:4px; }
+  .toggle-btn { background:var(--surface2); border:1px solid var(--border2); color:var(--muted);
+    border-radius:8px; font-family:'Manrope',sans-serif; font-size:12px; font-weight:600;
+    padding:6px 12px; cursor:pointer; transition:all .15s; }
+  .toggle-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .final-preview { background:rgba(124,108,255,.06); border:1px solid rgba(124,108,255,.15);
+    border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .fp-label { font-size:12px; color:var(--muted); margin-bottom:2px; text-transform:uppercase; letter-spacing:.08em; }
+  .fp-total { font-size:28px; font-weight:800; color:var(--text); }
+  .fp-pct { font-size:22px; font-weight:800; color:var(--gold); }
+
+  /* Total row */
+  .total-row { padding:1.25rem 1.75rem; display:flex; align-items:center; justify-content:space-between;
+    background:rgba(124,108,255,.05); }
+  .total-left .lbl { font-size:12px; text-transform:uppercase; letter-spacing:.1em;
+    font-weight:600; color:var(--muted); margin-bottom:2px; }
+  .total-score { font-size:32px; font-weight:800; line-height:1; }
+  .total-max { font-size:15px; font-weight:400; color:var(--muted); }
+  .total-pct { font-size:36px; font-weight:800; color:var(--gold); line-height:1; }
+  .semester-note { font-size:11px; color:var(--muted); text-align:center; margin-top:1rem; font-style:italic; }
+
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="course-tag">Весна 2026</div>
+    <h1 class="title">Нейронауки и эмоциональный интеллект</h1>
+    <p class="subtitle">Итоги семестра — введите свой студенческий ID.<br>
+    <span style="color:var(--accent2);font-style:italic;">Для демо введите любой номер от 1 до 9.</span></p>
+  </div>
+
+  <div class="lookup-card">
+    <label for="id-input">Студенческий ID</label>
+    <div class="input-row">
+      <input type="text" id="id-input" maxlength="6" inputmode="numeric" autocomplete="off"/>
+      <button class="btn" onclick="lookup()">Найти</button>
+    </div>
+    <p class="error" id="err-msg"></p>
+  </div>
+
+  <div class="result-card hidden" id="result">
+    <div class="result-header">
+      <div class="id-label">ID студента</div>
+      <div class="id-value" id="r-id"></div>
+    </div>
+
+    <!-- Base-80 banner -->
+    <div class="base-banner" id="base-banner">
+      <div>
+        <div class="base-label">Без Final</div>
+        <div><span class="base-score" id="r-base"></span><span class="base-max"> / 80</span></div>
+        <div class="base-pct" id="r-base-pct"></div>
+      </div>
+      <div id="r-bonus-pill" class="hidden"></div>
+    </div>
+
+    <!-- TESTS -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('tests-detail',this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--green)"></div>
+          <span class="section-name">Тесты <span class="section-max-label">/ 30 б.</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-score" id="r-tests"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-tests" style="background:var(--green)"></div></div></div>
+      <div class="detail-panel" id="tests-detail"><div class="detail-inner" id="tests-inner"></div></div>
+    </div>
+
+    <!-- ATT -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('att-detail',this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--accent2)"></div>
+          <span class="section-name">Посещаемость <span class="section-max-label">/ 10 б.</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-score" id="r-att"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-att" style="background:var(--accent2)"></div></div></div>
+      <div class="detail-panel" id="att-detail"><div class="detail-inner" id="att-inner"></div></div>
+    </div>
+
+    <!-- MIDTERM -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('mid-detail',this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--gold)"></div>
+          <span class="section-name">Midterm <span class="section-max-label">/ 20 б.</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-score" id="r-mid"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-mid" style="background:var(--gold)"></div></div></div>
+      <div class="detail-panel" id="mid-detail"><div class="detail-inner" id="mid-inner"></div></div>
+    </div>
+
+    <!-- DRAWING -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggle('draw-detail',this)">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:#a78bfa"></div>
+          <span class="section-name">Рисунок эмоций <span class="section-max-label">/ 20 б.</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-score" id="r-draw"></span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="bar-row"><div class="bar-track"><div class="bar-fill" id="bar-draw" style="background:#a78bfa"></div></div></div>
+      <div class="detail-panel" id="draw-detail"><div class="detail-inner" id="draw-inner"></div></div>
+    </div>
+
+    <!-- FINAL -->
+    <div class="final-section" id="final-section">
+      <!-- populated by JS: either done row or simulator -->
+    </div>
+
+    <!-- Total (only shown when final done) -->
+    <div id="total-row-wrap" class="hidden">
+      <div class="total-row">
+        <div class="total-left">
+          <div class="lbl">Итого</div>
+          <div><span class="total-score" id="r-total"></span><span class="total-max"> / 100</span></div>
+        </div>
+        <div style="text-align:right"><div class="total-pct" id="r-pct"></div><div style="font-size:16px;font-weight:700;color:var(--accent2);margin-top:3px;" id="r-letter"></div></div>
+      </div>
+      <p class="semester-note">Итоговая оценка за семестр.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const testNames = [
+  "Тест 1: Нейрон (05 февр.)",
+  "Тест 2: Нейромедиаторы (12 февр.)",
+  "Тест 3: Триединый мозг (19 февр.)",
+  "Тест 4: ЦНС и ПНС (26 февр.)",
+  "Тест 5: Разделы мозга (05 мар.)",
+  "Тест 6: Эндокр. система (12 мар.)",
+  "Тест 7: Эмоции Экмана (02 апр.)",
+  "Тест 8: Эмоции Плутчика (09 апр.)",
+  "Тест 8.5: Повтор. Плутчика (16 апр.)",
+  "Тест 9: Эмпатия (30 апр.)",
+  "Тест 10: Дофамин и др. (14 мая)",
+];
+
+const data = {
+  1255: '1592',
+  1592:{tests:[100,71,100,100,100,100,100,71,100,100,100],att:100,midTest:80,midOpen:30,midTotal:100,draw:100,finalPct:100,testsAvg:94.727,base80:78,total:98,bonus:0},
+  1533:{tests:[100,100,100,100,100,100,100,86,100,67,100],att:89,midTest:80,midOpen:30,midTotal:100,draw:100,finalPct:85,testsAvg:95.727,base80:78,total:95,bonus:0},
+  1989:{tests:[100,71,86,71,86,100,100,86,100,67,100],att:100,midTest:68,midOpen:21,midTotal:89,draw:100,finalPct:null,testsAvg:87.5,base80:74,total:null,bonus:0},
+  1876:{tests:[100,70,86,100,100,100,100,86,100,100,100],att:100,midTest:76,midOpen:21,midTotal:97,draw:100,finalPct:null,testsAvg:95.167,base80:78,total:null,bonus:0},
+  1769:{tests:[83,71,100,100,100,100,100,71,100,83,100],att:100,midTest:80,midOpen:21,midTotal:100,draw:100,finalPct:null,testsAvg:92.333,base80:78,total:null,bonus:0},
+  2057:{tests:[67,70,86,86,100,100,0,86,86,100,83],att:93,midTest:80,midOpen:20,midTotal:100,draw:100,finalPct:null,testsAvg:80.333,base80:73,total:null,bonus:0},
+  1831:{tests:[83,86,71,70,71,70,0,86,86,50,0],att:86,midTest:72,midOpen:23,midTotal:95,draw:100,finalPct:null,testsAvg:64.417,base80:67,total:null,bonus:0},
+  2062:{tests:[33,86,0,57,71,100,100,0,43,50,83],att:78,midTest:null,midOpen:null,midTotal:0,draw:100,finalPct:null,testsAvg:60.25,base80:61,total:null,bonus:15},
+  1543:{tests:[100,100,86,71,100,100,100,86,0,50,0],att:93,midTest:72,midOpen:18,midTotal:90,draw:100,finalPct:null,testsAvg:73.0,base80:69,total:null,bonus:0},
+  1477:{tests:[69,100,100,100,71,86,80,71,100,33,100],att:100,midTest:60,midOpen:25,midTotal:85,draw:100,finalPct:75,testsAvg:82.727,base80:72,total:87,bonus:0},
+  1481:{tests:[null,null,100,100,100,86,80,57,57,100,83],att:100,midTest:76,midOpen:22,midTotal:98,draw:100,finalPct:70,testsAvg:84.778,base80:75,total:89,bonus:0},
+  1654:{tests:[100,70,100,71,86,100,100,86,0,83,50],att:93,midTest:68,midOpen:21,midTotal:89,draw:100,finalPct:null,testsAvg:77.417,base80:70,total:null,bonus:0},
+  1622:{tests:[100,100,100,100,100,70,100,86,100,67,100],att:93,midTest:80,midOpen:25,midTotal:100,draw:100,finalPct:null,testsAvg:93.583,base80:77,total:null,bonus:0},
+  1608:{tests:[100,71,100,100,100,100,100,86,100,83,100],att:100,midTest:80,midOpen:28,midTotal:100,draw:100,finalPct:100,testsAvg:94.545,base80:78,total:98,bonus:0},
+  1463:{tests:[100,70,100,100,86,86,100,0,86,67,83],att:93,midTest:60,midOpen:16,midTotal:76,draw:100,finalPct:80,testsAvg:79.818,base80:68,total:84,bonus:0},
+  1455:{tests:[100,100,100,100,100,100,100,86,null,100,100],att:93,midTest:80,midOpen:24,midTotal:100,draw:100,finalPct:95,testsAvg:98.6,base80:79,total:98,bonus:0},
+  1710:{tests:[35,29,57,29,29,57,100,71,71,67,83],att:100,midTest:60,midOpen:18,midTotal:78,draw:100,finalPct:null,testsAvg:60.667,base80:64,total:null,bonus:0},
+  1488:{tests:[null,null,null,null,100,100,100,0,71,67,100],att:90,midTest:72,midOpen:24,midTotal:96,draw:100,finalPct:85,testsAvg:76.857,base80:71,total:88,bonus:0},
+  1719:{tests:[0,71,100,100,86,100,0,86,100,100,null],att:86,midTest:72,midOpen:23,midTotal:95,draw:100,finalPct:null,testsAvg:73.636,base80:70,total:null,bonus:0},
+  1964:{tests:[85,71,100,71,86,71,100,86,86,100,100],att:100,midTest:64,midOpen:21,midTotal:85,draw:100,finalPct:null,testsAvg:85.25,base80:73,total:null,bonus:0},
+  1452:{tests:[null,null,86,100,100,86,100,86,null,null,100],att:83,midTest:72,midOpen:21,midTotal:93,draw:100,finalPct:95,testsAvg:94.0,base80:75,total:94,bonus:0},
+  1740:{tests:[35,57,100,100,100,100,80,0,86,83,100],att:93,midTest:56,midOpen:19,midTotal:75,draw:100,finalPct:null,testsAvg:78.417,base80:68,total:null,bonus:0},
+  // Demo IDs 1-9
+  1:{tests:[35,57,100,100,100,100,80,0,86,83,100],att:100,midTest:56,midOpen:19,midTotal:75,draw:100,finalPct:null,testsAvg:78.417,base80:68,total:null,bonus:0},
+  2:{tests:[35,29,57,29,29,57,100,71,71,67,83],att:100,midTest:60,midOpen:18,midTotal:78,draw:100,finalPct:null,testsAvg:60.667,base80:64,total:null,bonus:0},
+  3:{tests:[100,100,100,100,100,100,100,86,null,100,100],att:93,midTest:80,midOpen:24,midTotal:100,draw:100,finalPct:95,testsAvg:98.6,base80:79,total:98,bonus:0},
+  4:{tests:[null,null,100,100,100,86,80,57,57,100,83],att:100,midTest:76,midOpen:22,midTotal:98,draw:100,finalPct:null,testsAvg:84.778,base80:75,total:null,bonus:0},
+  5:{tests:[100,100,100,100,100,70,100,86,100,67,100],att:93,midTest:80,midOpen:25,midTotal:100,draw:100,finalPct:null,testsAvg:93.583,base80:77,total:null,bonus:0},
+  6:{tests:[83,86,71,70,71,70,0,86,86,50,0],att:86,midTest:72,midOpen:23,midTotal:95,draw:100,finalPct:null,testsAvg:64.417,base80:67,total:null,bonus:0},
+  7:{tests:[100,71,86,71,86,100,100,86,100,67,100],att:100,midTest:68,midOpen:21,midTotal:89,draw:100,finalPct:null,testsAvg:87.5,base80:74,total:null,bonus:0},
+  8:{tests:[33,86,0,57,71,100,100,0,43,50,83],att:78,midTest:null,midOpen:null,midTotal:0,draw:100,finalPct:null,testsAvg:60.25,base80:61,total:null,bonus:15},
+  9:{tests:[100,71,100,100,100,100,100,71,100,100,100],att:100,midTest:80,midOpen:30,midTotal:100,draw:100,finalPct:100,testsAvg:94.727,base80:78,total:98,bonus:0},
+};
+
+let currentEntry = null;
+let finalMode = 'pct'; // 'pct' or 'pts'
+
+function excelRound(x) { return Math.floor(x + 0.5); }
+function letterGrade(s) {
+  if (s >= 94) return 'A';
+  if (s >= 90) return 'A⁻';
+  if (s >= 87) return 'B+';
+  if (s >= 83) return 'B';
+  if (s >= 80) return 'B⁻';
+  if (s >= 77) return 'C+';
+  if (s >= 74) return 'C';
+  if (s >= 70) return 'C⁻';
+  if (s >= 67) return 'D+';
+  if (s >= 63) return 'D';
+  if (s >= 60) return 'D⁻';
+  return 'F';
+}
+function pctColor(p) {
+  if (p === null || p === undefined) return 'var(--muted)';
+  if (p >= 80) return 'var(--green)';
+  if (p >= 60) return 'var(--amber)';
+  return 'var(--red)';
+}
+function toggle(id, header) {
+  document.getElementById(id).classList.toggle('open');
+  header.querySelector('.chevron').classList.toggle('open');
+}
+
+function computeTotal(e, finalPct) {
+  return Math.min(100, excelRound(e.testsAvg*30/100 + e.att*10/100 + e.midTotal*20/100 + e.draw*20/100 + finalPct*20/100) + e.bonus);
+}
+
+function renderFinalSimulator(e) {
+  const sec = document.getElementById('final-section');
+  sec.innerHTML = `
+    <div class="final-missing">
+      <div class="final-missing-label">
+        Сейчас у вас <strong>${e.base80} / 80 б.</strong> (${Math.round(e.base80/80*100)}%).<br>
+        Последние <strong>20 баллов</strong> будут за Final.<br>Введите ниже ваш прогноз в % за Final и вы увидите итоговый результат.
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <input class="final-input" id="final-guess" type="number" min="0" max="100" placeholder="—" oninput="updatePreview()" />
+        <div class="final-toggle">
+          <button class="toggle-btn active" id="btn-pct" onclick="setMode('pct')">%</button>
+          <button class="toggle-btn" id="btn-pts" onclick="setMode('pts')">б.</button>
+        </div>
+      </div>
+      <div class="final-preview" id="final-preview" style="display:none">
+        <div>
+          <div class="fp-label">Итоговый балл</div>
+          <div><span class="fp-total" id="preview-total">—</span><span style="font-size:14px;color:var(--muted);"> / 100</span></div>
+        </div>
+        <div style="text-align:right"><div class="fp-pct" id="preview-pct">—</div><div style="font-size:14px;font-weight:700;color:var(--accent2);margin-top:2px;" id="preview-letter"></div></div>
+      </div>
+    </div>`;
+}
+
+function setMode(m) {
+  finalMode = m;
+  document.getElementById('btn-pct').className = 'toggle-btn' + (m==='pct'?' active':'');
+  document.getElementById('btn-pts').className = 'toggle-btn' + (m==='pts'?' active':'');
+  document.getElementById('final-guess').value = '';
+  document.getElementById('final-preview').style.display = 'none';
+}
+
+function updatePreview() {
+  const e = currentEntry;
+  const raw = parseFloat(document.getElementById('final-guess').value);
+  if (isNaN(raw) || raw < 0) { document.getElementById('final-preview').style.display='none'; return; }
+  let finalPct;
+  if (finalMode === 'pts') {
+    finalPct = Math.min(raw, 20) / 20 * 100;
+  } else {
+    finalPct = Math.min(raw, 100);
+  }
+  const total = computeTotal(e, finalPct);
+  document.getElementById('final-preview').style.display = 'flex';
+  document.getElementById('preview-total').textContent = total;
+  document.getElementById('preview-pct').textContent = total + '%';
+  document.getElementById('preview-letter').textContent = letterGrade(total);
+}
+
+function lookup() {
+  const raw = document.getElementById('id-input').value.trim();
+  const err = document.getElementById('err-msg');
+  const res = document.getElementById('result');
+  err.textContent = '';
+
+  if (!raw) { err.textContent = 'Введите студенческий ID.'; return; }
+  let id = parseInt(raw);
+  if (isNaN(id)) { err.textContent = 'ID должен быть числом.'; return; }
+
+  let entry = data[id];
+  if (typeof entry === 'string') entry = data[parseInt(entry)];
+  if (!entry) { err.textContent = 'Запись не найдена. Проверьте ID и попробуйте снова.'; res.classList.add('hidden'); return; }
+
+  currentEntry = entry;
+  res.classList.remove('hidden');
+  document.getElementById('r-id').textContent = id;
+
+  // Base-80 banner
+  document.getElementById('base-banner').style.display = entry.finalPct !== null ? 'none' : 'flex';
+  document.getElementById('r-base').textContent = entry.base80;
+  document.getElementById('r-base-pct').textContent = Math.round(entry.base80/80*100) + '% от 80';
+  if (entry.bonus > 0) {
+    const pill = document.getElementById('r-bonus-pill');
+    pill.textContent = '+' + entry.bonus + ' бонус';
+    pill.classList.remove('hidden');
+  } else {
+    document.getElementById('r-bonus-pill').classList.add('hidden');
+  }
+
+  // Section scores
+  const testsPts = excelRound(entry.testsAvg*30/100);
+  const attPts   = excelRound(entry.att*10/100);
+  const midPts   = excelRound(entry.midTotal*20/100);
+  const drawPts  = excelRound(entry.draw*20/100);
+
+  document.getElementById('r-tests').textContent = testsPts + ' б. / ' + Math.round(entry.testsAvg) + '%';
+  document.getElementById('r-att').textContent   = attPts + ' б. / ' + entry.att + '%';
+  document.getElementById('r-mid').textContent   = midPts + ' б. / ' + Math.min(entry.midTotal,100) + '%';
+  document.getElementById('r-draw').textContent  = drawPts + ' б. / ' + entry.draw + '%';
+
+  setTimeout(() => {
+    document.getElementById('bar-tests').style.width = Math.min(entry.testsAvg,100) + '%';
+    document.getElementById('bar-att').style.width   = entry.att + '%';
+    document.getElementById('bar-mid').style.width   = Math.min(entry.midTotal,100) + '%';
+    document.getElementById('bar-draw').style.width  = entry.draw + '%';
+  }, 50);
+
+  // Tests detail
+  let testsHtml = '';
+  entry.tests.forEach((v,i) => {
+    const disp = v === null ? '—' : v + '%';
+    const col  = v === null ? 'var(--muted)' : pctColor(v);
+    testsHtml += `<div class="detail-row"><span class="detail-label">${testNames[i]}</span><span class="detail-val" style="color:${col}">${disp}</span></div>`;
+  });
+  document.getElementById('tests-inner').innerHTML = testsHtml;
+
+  // Att detail
+  document.getElementById('att-inner').innerHTML =
+    `<div class="detail-row"><span class="detail-label">Процент посещаемости</span><span class="detail-val" style="color:${pctColor(entry.att)}">${entry.att}%</span></div>
+     <div class="detail-row"><span class="detail-label">Баллы</span><span class="detail-val">${attPts} / 10</span></div>`;
+
+  // Midterm detail
+  let midHtml = '';
+  if (entry.midTest === null) {
+    midHtml = `<div class="detail-row"><span class="detail-label">Не явился на экзамен</span><span class="detail-val" style="color:var(--red)">—</span></div>`;
+  } else {
+    const tPct = Math.round(entry.midTest/80*100);
+    const openBase  = Math.min(entry.midOpen, 20);
+    const openBonus = Math.max(0, entry.midOpen - 20);
+    const openPct   = Math.round(openBase/20*100);
+    const bonusTag  = openBonus > 0 ? `<span class="bonus-tag">+${openBonus} бонус</span>` : '';
+    midHtml = `
+      <div class="detail-row"><span class="detail-label">Тестовая часть (макс. 80)</span><span class="detail-val" style="color:${pctColor(tPct)}">${entry.midTest} б. / ${tPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Открытые вопросы (макс. 20 + 10 бонус)${bonusTag}</span><span class="detail-val" style="color:${pctColor(openPct)}">${entry.midOpen} б. / ${openPct}%</span></div>
+      <div class="detail-row"><span class="detail-label">Итого (макс. 100)</span><span class="detail-val">${Math.min(entry.midTotal,100)} б. / ${Math.min(entry.midTotal,100)}%</span></div>
+      <div class="detail-row"><span class="detail-label">Зачтено в итоговый балл</span><span class="detail-val">${midPts} / 20</span></div>`;
+  }
+  document.getElementById('mid-inner').innerHTML = midHtml;
+
+  // Draw detail
+  document.getElementById('draw-inner').innerHTML =
+    `<div class="detail-row"><span class="detail-label">Рисунок выполнен</span><span class="detail-val" style="color:var(--green)">✓</span></div>
+     <div class="detail-row"><span class="detail-label">Баллы</span><span class="detail-val">${drawPts} / 20</span></div>`;
+
+  // Final
+  const finalSec = document.getElementById('final-section');
+  const totalWrap = document.getElementById('total-row-wrap');
+
+  if (entry.finalPct !== null) {
+    const finalPts = excelRound(entry.finalPct*20/100);
+    finalSec.innerHTML = `
+      <div class="final-done-row">
+        <div class="section-title-wrap">
+          <div class="section-dot" style="background:var(--red)"></div>
+          <span class="section-name">Final <span class="section-max-label">/ 20 б.</span></span>
+        </div>
+        <span class="section-score" style="color:var(--text)">${finalPts} б. / ${Math.round(entry.finalPct)}%</span>
+      </div>`;
+    totalWrap.classList.remove('hidden');
+    document.getElementById('r-total').textContent = entry.total;
+    document.getElementById('r-pct').textContent = entry.total + '%';
+        document.getElementById('r-letter').textContent = letterGrade(entry.total);
+  } else {
+    renderFinalSimulator(entry);
+    totalWrap.classList.add('hidden');
+  }
+}
+
+document.getElementById('id-input').addEventListener('keydown', e => { if (e.key==='Enter') lookup(); });
+</script>
+</body>
+</html>

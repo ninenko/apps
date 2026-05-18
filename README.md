@@ -41,6 +41,7 @@ HTML public/
 | memory_neurons.html | https://ninenko.github.io/apps/apps/memory_neurons.html |
 | neural_net_pattern_input.html | https://ninenko.github.io/apps/apps/neural_net_pattern_input.html |
 | neuroemo_results.html | https://ninenko.github.io/apps/apps/neuroemo_results.html |
+| neuroemo_Spring2026_semester_grades.html | https://ninenko.github.io/apps/apps/neuroemo_Spring2026_semester_grades.html |
 | punchcard-emulator.html | https://ninenko.github.io/apps/apps/punchcard-emulator.html |
 | punchcard-emulator-ru.html | https://ninenko.github.io/apps/apps/punchcard-emulator-ru.html |
 | roleplay_IT_hardware.html | https://ninenko.github.io/apps/apps/roleplay_IT_hardware.html |
@@ -60,6 +61,4 @@ HTML public/
 
 ### Essays
 
-| Файл | Ссылка |
-|------|--------|
-| essays/ai-gap/index.html | https://ninenko.github.io/apps/essays/ai-gap/index.html |
+| Фай�
