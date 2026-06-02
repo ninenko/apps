@@ -69,6 +69,7 @@
     .filter-bar {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 36px;
     }
@@ -179,6 +180,7 @@
     .tag-app  { background: #1e2a1e; color: #4ade80; }
     .tag-lecture { background: #1e1e2e; color: #818cf8; }
     .tag-essay { background: #1e1a2e; color: #c084fc; }
+    .tag-grade { background: #2e2616; color: #fbbf24; }
 
     footer {
       text-align: center;
@@ -196,8 +198,8 @@
   <header>
     <h1>Ivan's Apps</h1>
     <p>
-      <span data-lang="ru">Коллекция HTML-приложений и лекций, опубликованных через Cowork</span>
-      <span data-lang="en">A collection of HTML apps and lectures published via Cowork</span>
+      <span data-lang="ru">Приложения, игры, лекции и оценки — опубликовано через Cowork</span>
+      <span data-lang="en">Apps, games, lectures and grades — published via Cowork</span>
     </p>
     <div class="lang-switcher">
       <button class="lang-btn" onclick="setLang('ru')">RU</button>
@@ -207,21 +209,24 @@
 
   <!-- Category filter -->
   <div class="filter-bar">
-    <button class="filter-btn active" onclick="setFilter('both')">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">
       <span data-lang="en">All</span><span data-lang="ru">Всё</span>
     </button>
-    <button class="filter-btn" onclick="setFilter('apps')">
-      <span data-lang="en">Apps</span><span data-lang="ru">Приложения</span>
+    <button class="filter-btn" data-filter="apps" onclick="setFilter('apps')">
+      <span data-lang="en">Apps &amp; games</span><span data-lang="ru">Приложения и игры</span>
     </button>
-    <button class="filter-btn" onclick="setFilter('lectures')">
-      <span data-lang="en">Lectures</span><span data-lang="ru">Лекции</span>
+    <button class="filter-btn" data-filter="lectures" onclick="setFilter('lectures')">
+      <span data-lang="en">Lectures &amp; slides</span><span data-lang="ru">Лекции и слайды</span>
+    </button>
+    <button class="filter-btn" data-filter="grades" onclick="setFilter('grades')">
+      <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
     </button>
   </div>
 
-  <!-- APPS -->
+  <!-- 1. APPS & GAMES -->
   <div class="section-block" id="section-apps">
     <div class="section-label">
-      <span data-lang="en">Apps</span><span data-lang="ru">Приложения</span>
+      <span data-lang="en">Apps &amp; games</span><span data-lang="ru">Приложения и игры</span>
     </div>
     <div class="grid">
 
@@ -303,32 +308,6 @@
         </span>
       </a>
 
-      <a class="card" href="apps/neuroemo_results.html">
-        <span class="lang-badge lang-ru">RU</span>
-        <div class="card-icon">🧠</div>
-        <div class="card-title">Нейронауки и эмоциональный интеллект</div>
-        <div class="card-desc">
-          <span data-lang="en">Results page for the Neuroscience and Emotional Intelligence course.</span>
-          <span data-lang="ru">Страница результатов курса «Нейронауки и эмоциональный интеллект».</span>
-        </div>
-        <span class="card-tag tag-app">
-          <span data-lang="en">Dashboard</span><span data-lang="ru">Результаты</span>
-        </span>
-      </a>
-
-      <a class="card" href="apps/neuroemo_Spring2026_semester_grades.html">
-        <span class="lang-badge lang-ru">RU</span>
-        <div class="card-icon">🎓</div>
-        <div class="card-title">Итоги семестра — Нейронауки и ЭИ</div>
-        <div class="card-desc">
-          <span data-lang="en">Spring 2026 semester grade lookup for the Neuroscience &amp; Emotional Intelligence course — enter your student ID to see your base-80 score, bonuses, and section breakdown.</span>
-          <span data-lang="ru">Итоговые оценки за весенний семестр 2026 по курсу «Нейронауки и эмоциональный интеллект». Введи свой ID, чтобы увидеть базовый балл (из 80), бонусы и разбивку по разделам.</span>
-        </div>
-        <span class="card-tag tag-app">
-          <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
-        </span>
-      </a>
-
       <a class="card" href="apps/neural_net_pattern_input.html">
         <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">🧠</div>
@@ -371,10 +350,10 @@
     </div>
   </div>
 
-  <!-- LECTURES -->
+  <!-- 2. LECTURES & SLIDES -->
   <div class="section-block" id="section-lectures">
     <div class="section-label">
-      <span data-lang="en">Lectures</span><span data-lang="ru">Лекции</span>
+      <span data-lang="en">Lectures &amp; slides</span><span data-lang="ru">Лекции и слайды</span>
     </div>
     <div class="grid">
 
@@ -472,6 +451,55 @@
     </div>
   </div>
 
+  <!-- 3. GRADES -->
+  <div class="section-block" id="section-grades">
+    <div class="section-label">
+      <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="apps/neuroemo_Spring2026_semester_grades.html">
+        <span class="lang-badge lang-ru">RU</span>
+        <div class="card-icon">🎓</div>
+        <div class="card-title">Итоги семестра — Нейронауки и ЭИ</div>
+        <div class="card-desc">
+          <span data-lang="en">Spring 2026 semester grade lookup for the Neuroscience &amp; Emotional Intelligence course — enter your student ID to see your base-80 score, bonuses, and section breakdown.</span>
+          <span data-lang="ru">Итоговые оценки за весенний семестр 2026 по курсу «Нейронауки и эмоциональный интеллект». Введи свой ID, чтобы увидеть базовый балл (из 80), бонусы и разбивку по разделам.</span>
+        </div>
+        <span class="card-tag tag-grade">
+          <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
+        </span>
+      </a>
+
+      <a class="card" href="apps/neuroemo_results.html">
+        <span class="lang-badge lang-ru">RU</span>
+        <div class="card-icon">📊</div>
+        <div class="card-title">Нейронауки и эмоциональный интеллект</div>
+        <div class="card-desc">
+          <span data-lang="en">Results page for the Neuroscience and Emotional Intelligence course.</span>
+          <span data-lang="ru">Страница результатов курса «Нейронауки и эмоциональный интеллект».</span>
+        </div>
+        <span class="card-tag tag-grade">
+          <span data-lang="en">Results</span><span data-lang="ru">Результаты</span>
+        </span>
+      </a>
+
+      <a class="card" href="apps/grades_neuro_edu_test1.html">
+        <span class="lang-badge lang-ru">RU</span>
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Психология и психофизиология — базовый тест</div>
+        <div class="card-desc">
+          <span data-lang="en">Base test results lookup for the "Psychology &amp; Psychophysiology in Human Development" course — enter your student ID to see your score and breakdown.</span>
+          <span data-lang="ru">Результаты базового теста по курсу «Психология и психофизиология в развитии человека». Введи свой ID, чтобы увидеть балл и разбивку.</span>
+        </div>
+        <span class="card-tag tag-grade">
+          <span data-lang="en">Test result</span><span data-lang="ru">Тест</span>
+        </span>
+      </a>
+
+    </div>
+  </div>
+
   <footer>
     <p>ninenko.github.io/apps · <span data-lang="en">updated via Cowork</span><span data-lang="ru">обновляется через Cowork</span></p>
   </footer>
@@ -481,4 +509,36 @@
       document.querySelectorAll('[data-lang]').forEach(el => {
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
-      document.q
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+      });
+      document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
+    }
+
+    const SECTIONS = ['apps', 'lectures', 'grades'];
+
+    function setFilter(filter) {
+      SECTIONS.forEach(key => {
+        const show = (filter === 'all' || filter === key);
+        document.getElementById('section-' + key).classList.toggle('hidden', !show);
+      });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+      localStorage.setItem('filter', filter);
+    }
+
+    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
+    const lang = localStorage.getItem('lang') || defaultLang;
+
+    const validFilters = ['all', ...SECTIONS];
+    let filter = localStorage.getItem('filter') || 'all';
+    if (!validFilters.includes(filter)) filter = 'all';  // migrate legacy 'both'
+
+    setLang(lang);
+    setFilter(filter);
+  </script>
+
+</body>
+</html>
