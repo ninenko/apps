@@ -54,6 +54,7 @@ HTML public/
 | Файл | Ссылка |
 |------|--------|
 | binary-transistors-explorer.html | https://ninenko.github.io/apps/apps/binary-transistors-explorer.html |
+| demo_infoprocessing.html | https://ninenko.github.io/apps/apps/demo_infoprocessing.html |
 | matrix-picker.html | https://ninenko.github.io/apps/apps/matrix-picker.html |
 | memory_neurons.html | https://ninenko.github.io/apps/apps/memory_neurons.html |
 | neural_net_pattern_input.html | https://ninenko.github.io/apps/apps/neural_net_pattern_input.html |
@@ -61,6 +62,7 @@ HTML public/
 | punchcard-emulator-ru.html | https://ninenko.github.io/apps/apps/punchcard-emulator-ru.html |
 | roleplay_IT_hardware.html | https://ninenko.github.io/apps/apps/roleplay_IT_hardware.html |
 | transaction_analyzer_static.html | https://ninenko.github.io/apps/apps/transaction_analyzer_static.html |
+| vnimanie_viktoriny.html | https://ninenko.github.io/apps/apps/vnimanie_viktoriny.html |
 | word-embeddings-2d.html | https://ninenko.github.io/apps/apps/word-embeddings-2d.html |
 
 ### Лекции и слайды

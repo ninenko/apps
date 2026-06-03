@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Внимание — викторины для повторения</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&display=swap');
+
+  :root{
+    --bg:#0d1b3e;
+    --bg2:#13245a;
+    --card:#1a2d63;
+    --card-soft:#22397a;
+    --ink:#eef3ff;
+    --ink-dim:#a9bce8;
+    --green:#3ddc97;
+    --green-deep:#1faa70;
+    --gold:#ffcf5c;
+    --gold-deep:#e3a826;
+    --coral:#ff7a6b;
+    --line:rgba(170,188,232,.22);
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Manrope',system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(61,220,151,.16), transparent 60%),
+      radial-gradient(900px 600px at -10% 20%, rgba(255,207,92,.12), transparent 55%),
+      linear-gradient(160deg,var(--bg),var(--bg2) 70%,#0a1530);
+    color:var(--ink);
+    min-height:100vh;
+    line-height:1.5;
+    padding:0 0 60px;
+  }
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px;}
+
+  /* HEADER */
+  header{padding:38px 0 18px;text-align:center;}
+  .kicker{
+    display:inline-block;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    font-size:13px;color:var(--gold);background:rgba(255,207,92,.12);
+    padding:7px 16px;border-radius:999px;border:1px solid rgba(255,207,92,.3);
+  }
+  h1{
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    font-size:clamp(34px,9vw,56px);line-height:1.02;margin:18px 0 10px;
+    background:linear-gradient(120deg,#fff,var(--green) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{color:var(--ink-dim);font-size:clamp(16px,4vw,19px);max-width:520px;margin:0 auto;}
+
+  /* GAME PICKER */
+  .menu{display:grid;gap:14px;margin-top:30px;}
+  .menu-card{
+    display:flex;align-items:center;gap:16px;text-align:left;width:100%;
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
+    padding:20px;cursor:pointer;color:var(--ink);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    box-shadow:var(--shadow);
+  }
+  .menu-card:active{transform:scale(.98);}
+  .menu-card:hover{border-color:var(--green);background:var(--card-soft);}
+  .menu-emoji{
+    font-size:34px;flex:0 0 64px;height:64px;width:64px;border-radius:18px;
+    display:grid;place-items:center;background:rgba(61,220,151,.14);
+  }
+  .menu-card:nth-child(2) .menu-emoji{background:rgba(255,207,92,.16);}
+  .menu-card:nth-child(3) .menu-emoji{background:rgba(255,122,107,.16);}
+  .menu-card:nth-child(4) .menu-emoji{background:rgba(120,160,255,.16);}
+  .menu-text h3{margin:0 0 4px;font-size:21px;font-weight:800;font-family:'Unbounded',sans-serif;}
+  .menu-text p{margin:0;color:var(--ink-dim);font-size:15px;}
+
+  /* SCREENS */
+  .screen{display:none;animation:fade .35s ease both;}
+  .screen.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  .topbar{display:flex;align-items:center;gap:12px;padding:26px 0 8px;}
+  .back{
+    background:var(--card);border:1px solid var(--line);color:var(--ink);
+    border-radius:14px;padding:11px 16px;font-size:16px;font-weight:700;cursor:pointer;
+    font-family:'Manrope';display:inline-flex;align-items:center;gap:7px;
+  }
+  .back:active{transform:scale(.96);}
+  .game-title{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(20px,5vw,26px);margin:0;}
+
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:24px;
+    padding:24px;margin-top:16px;box-shadow:var(--shadow);
+  }
+  .hint{
+    background:rgba(255,207,92,.1);border:1px solid rgba(255,207,92,.28);
+    border-radius:16px;padding:15px 18px;color:#ffe3a3;font-size:15.5px;margin-bottom:6px;
+  }
+  .hint b{color:var(--gold);}
+
+  .btn{
+    appearance:none;border:none;cursor:pointer;font-family:'Manrope';font-weight:800;
+    font-size:19px;border-radius:18px;padding:18px 24px;width:100%;
+    background:linear-gradient(135deg,var(--green),var(--green-deep));color:#06251a;
+    box-shadow:0 10px 24px rgba(31,170,112,.4);transition:transform .12s ease,filter .12s;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn.secondary{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#3a2700;box-shadow:0 10px 24px rgba(227,168,38,.35);}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);box-shadow:none;}
+  .btn-row{display:flex;gap:12px;margin-top:14px;}
+  .btn-row .btn{margin-top:0;}
+
+  /* ===== THIMBLES ===== */
+  .cups{
+    position:relative;margin:42px auto 10px;
+    height:clamp(170px,46vw,210px);
+    width:calc(100% - 24px);max-width:400px;
+  }
+  .cup{
+    position:absolute;bottom:0;
+    width:clamp(82px,26vw,110px);height:clamp(100px,30vw,130px);cursor:pointer;
+    transition:left var(--move,.6s) cubic-bezier(.45,.05,.3,1), transform var(--move,.6s) cubic-bezier(.45,.05,.3,1);
+    will-change:left,transform;
+  }
+  .cup.lifted{transition:transform .5s cubic-bezier(.34,1.4,.5,1);}
+  .cup-body{
+    position:absolute;inset:0;border-radius:14px 14px 26px 26px;
+    background:linear-gradient(160deg,#ff9e7a,var(--coral) 60%,#d8503f);
+    box-shadow:inset 0 -10px 22px rgba(0,0,0,.25), 0 12px 22px rgba(0,0,0,.35);
+    border:2px solid rgba(255,255,255,.18);
+    display:grid;place-items:center;font-size:34px;font-weight:800;color:rgba(255,255,255,.85);
+    font-family:'Unbounded';
+  }
+  .cup.lifted{transform:translateY(-90px) rotate(-5deg);}
+  .cup.moving{z-index:5;}
+  @keyframes cupJoy{
+    0%{transform:translateY(-90px) rotate(-5deg) scale(1);}
+    20%{transform:translateY(-128px) rotate(-5deg) scale(1.08);}
+    40%{transform:translateY(-90px) rotate(-5deg) scale(1);}
+    60%{transform:translateY(-112px) rotate(-5deg) scale(1.04);}
+    80%{transform:translateY(-90px) rotate(-5deg) scale(1);}
+    100%{transform:translateY(-90px) rotate(-5deg) scale(1);}
+  }
+  .cup.joy{animation:cupJoy .85s ease 2;}
+  .confetti{position:absolute;top:0;left:50%;width:11px;height:16px;border-radius:2px;pointer-events:none;z-index:30;will-change:transform,opacity;}
+  @keyframes confettiFall{
+    0%{transform:translate(0,-10px) rotate(0deg);opacity:1;}
+    100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0;}
+  }
+  /* term shown as a readable pill sitting in the gap under the lifted cup */
+  .cup .term{
+    position:absolute;left:50%;bottom:18px;transform:translate(-50%,8px);
+    width:max-content;max-width:clamp(96px,30vw,130px);
+    text-align:center;font-size:12.5px;font-weight:800;line-height:1.15;
+    color:var(--gold);background:rgba(8,18,46,.92);
+    padding:7px 11px;border-radius:11px;border:1px solid rgba(255,207,92,.45);
+    box-shadow:0 6px 16px rgba(0,0,0,.45);
+    opacity:0;transition:opacity .3s ease .12s, transform .3s ease .12s;
+    pointer-events:none;z-index:6;
+  }
+  .cup.lifted .term{opacity:1;transform:translate(-50%,0);}
+  /* edge cups: anchor pill toward the container center so it never clips */
+  .cup.at-left .term{left:0;right:auto;transform:translate(0,8px);}
+  .cup.at-left.lifted .term{transform:translate(0,0);}
+  .cup.at-right .term{left:auto;right:0;transform:translate(0,8px);}
+  .cup.at-right.lifted .term{transform:translate(0,0);}
+
+  .reveal{
+    margin-top:8px;background:var(--card-soft);border:1px solid var(--green);
+    border-radius:18px;padding:20px;display:none;animation:fade .3s ease both;
+  }
+  .reveal.show{display:block;}
+  .reveal .term-name{font-family:'Unbounded';font-size:22px;font-weight:700;color:var(--green);margin:0 0 8px;}
+  .reveal .def{font-size:16.5px;margin:0 0 12px;}
+  .reveal .classroom{font-size:15px;color:var(--gold);background:rgba(255,207,92,.1);padding:12px 14px;border-radius:12px;}
+  .reveal .classroom b{color:var(--gold);}
+
+  /* ===== STROOP ===== */
+  .stroop-word{
+    font-family:'Unbounded',sans-serif;font-weight:800;text-align:center;
+    font-size:clamp(54px,17vw,96px);margin:24px 0 8px;letter-spacing:.02em;
+  }
+  .swatches{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+  .swatch{
+    border:none;border-radius:18px;padding:26px 10px;font-size:20px;font-weight:800;
+    font-family:'Manrope';cursor:pointer;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);
+    transition:transform .1s;
+  }
+  .swatch:active{transform:scale(.95);}
+  .feedback{text-align:center;font-size:19px;font-weight:700;margin-top:16px;min-height:28px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--coral);}
+  .counter{text-align:center;color:var(--ink-dim);font-size:15px;margin-top:6px;}
+
+  /* ===== MEMORY ===== */
+  .mem-display{
+    font-family:'Unbounded';font-weight:800;text-align:center;
+    font-size:clamp(46px,15vw,86px);letter-spacing:.12em;min-height:120px;
+    display:grid;place-items:center;color:var(--gold);
+  }
+  .mem-input{
+    width:100%;font-size:30px;text-align:center;letter-spacing:.3em;font-weight:800;
+    font-family:'Unbounded';padding:16px;border-radius:16px;border:2px solid var(--line);
+    background:var(--bg);color:var(--ink);margin-top:8px;
+  }
+  .mem-input:focus{outline:none;border-color:var(--gold);}
+  .mem-result{text-align:center;font-size:18px;font-weight:700;margin-top:14px;min-height:26px;}
+  .mem-len{text-align:center;color:var(--ink-dim);margin-top:4px;font-size:15px;}
+
+  /* ===== SORT ===== */
+  .sort-card-area{min-height:96px;display:grid;place-items:center;margin:18px 0;}
+  .sort-card{
+    background:var(--card-soft);border:1px solid var(--line);border-radius:20px;
+    padding:22px 20px;font-size:20px;font-weight:700;text-align:center;width:100%;
+    animation:fade .3s ease both;
+  }
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .bin{
+    border-radius:20px;padding:22px 12px;font-weight:800;font-size:18px;cursor:pointer;
+    border:2px solid var(--line);text-align:center;font-family:'Manrope';color:var(--ink);
+    transition:transform .1s;
+  }
+  .bin:active{transform:scale(.96);}
+  .bin.top{background:rgba(120,160,255,.16);border-color:rgba(120,160,255,.4);}
+  .bin.bottom{background:rgba(255,122,107,.16);border-color:rgba(255,122,107,.4);}
+  .bin small{display:block;font-weight:600;font-size:13px;color:var(--ink-dim);margin-top:5px;}
+  .sort-fb{text-align:center;font-size:17px;font-weight:700;margin-top:14px;min-height:48px;}
+  .sort-fb.ok{color:var(--green);}
+  .sort-fb.no{color:var(--coral);}
+
+  .done-box{text-align:center;padding:20px 0;}
+  .done-box .big{font-family:'Unbounded';font-size:46px;}
+
+  .foot{text-align:center;color:var(--ink-dim);font-size:13px;margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ MENU ============ -->
+  <section id="menu" class="screen active">
+    <header>
+      <span class="kicker">Внимание · повторение</span>
+      <h1>Игры на внимание</h1>
+      <p class="sub">Вспоминаем ключевые идеи из урока. Без оценок — просто играем и освежаем память.</p>
+    </header>
+    <div class="menu">
+      <button class="menu-card" onclick="go('thimbles')">
+        <div class="menu-emoji">🥤</div>
+        <div class="menu-text"><h3>Напёрстки</h3><p>Следите за стаканом — под ним спрятан термин</p></div>
+      </button>
+      <button class="menu-card" onclick="go('stroop')">
+        <div class="menu-emoji">🎨</div>
+        <div class="menu-text"><h3>Эффект Струпа</h3><p>Назовите цвет шрифта, а не слово</p></div>
+      </button>
+      <button class="menu-card" onclick="go('memory')">
+        <div class="menu-emoji">🧠</div>
+        <div class="menu-text"><h3>Объём памяти</h3><p>Сколько единиц удержит ваш буфер?</p></div>
+      </button>
+      <button class="menu-card" onclick="go('sort')">
+        <div class="menu-emoji">🔀</div>
+        <div class="menu-text"><h3>Сверху или снизу?</h3><p>Произвольное внимание или захват</p></div>
+      </button>
+    </div>
+    <p class="foot">Психология и психофизиология в развитии человека</p>
+  </section>
+
+  <!-- ============ THIMBLES ============ -->
+  <section id="thimbles" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="go('menu')">← Меню</button>
+      <h2 class="game-title">Напёрстки</h2>
+    </div>
+    <div class="panel">
+      <div class="hint" id="th-hint"><b>Как играть:</b> под одним стаканом спрятан термин. Запомните его позицию, следите взглядом во время перемешивания, потом нажмите на нужный стакан.</div>
+      <div style="margin:16px 0 2px;">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--ink-dim);margin-bottom:6px;">
+          <span>🐢 Медленно</span><span id="th-speed-label">Скорость: средняя</span><span>Быстро 🐇</span>
+        </div>
+        <input type="range" id="th-speed" min="1" max="5" value="3" step="1"
+          style="width:100%;accent-color:var(--green);height:30px;cursor:pointer;">
+      </div>
+      <div class="cups" id="cups">
+        <div class="cup" data-i="0" onclick="pickCup(0)"><div class="cup-body">?</div><div class="term"></div></div>
+        <div class="cup" data-i="1" onclick="pickCup(1)"><div class="cup-body">?</div><div class="term"></div></div>
+        <div class="cup" data-i="2" onclick="pickCup(2)"><div class="cup-body">?</div><div class="term"></div></div>
+      </div>
+      <div class="reveal" id="th-reveal">
+        <p class="term-name" id="th-name"></p>
+        <p class="def" id="th-def"></p>
+        <div class="classroom" id="th-class"></div>
+      </div>
+      <button class="btn" id="th-btn" onclick="thimblesAction()">Спрятать и перемешать</button>
+    </div>
+  </section>
+
+  <!-- ============ STROOP ============ -->
+  <section id="stroop" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="go('menu')">← Меню</button>
+      <h2 class="game-title">Эффект Струпа</h2>
+    </div>
+    <div class="panel">
+      <div class="hint"><b>Задание:</b> нажмите на кнопку с <b>цветом шрифта</b> слова — не с тем, что написано. Чувствуете, как «снизу-вверх» мешает «сверху-вниз»?</div>
+      <div class="stroop-word" id="stroop-word">СИНИЙ</div>
+      <div class="swatches" id="swatches"></div>
+      <div class="feedback" id="stroop-fb"></div>
+      <div class="counter" id="stroop-count">Раунд 1</div>
+    </div>
+  </section>
+
+  <!-- ============ MEMORY ============ -->
+  <section id="memory" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="go('menu')">← Меню</button>
+      <h2 class="game-title">Объём памяти</h2>
+    </div>
+    <div class="panel">
+      <div class="hint"><b>Рабочая память</b> держит около <b>4 единиц</b> за раз. Запомните цепочку, она исчезнет — потом введите её.</div>
+      <div class="mem-display" id="mem-display">нажмите старт</div>
+      <div id="mem-input-wrap" style="display:none;">
+        <input class="mem-input" id="mem-input" inputmode="text" autocomplete="off" placeholder="введите цепочку">
+        <button class="btn secondary" style="margin-top:12px" onclick="checkMemory()">Проверить</button>
+      </div>
+      <div class="mem-result" id="mem-result"></div>
+      <div class="mem-len" id="mem-len"></div>
+      <button class="btn" id="mem-btn" onclick="startMemory()">Старт</button>
+    </div>
+  </section>
+
+  <!-- ============ SORT ============ -->
+  <section id="sort" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="go('menu')">← Меню</button>
+      <h2 class="game-title">Сверху или снизу?</h2>
+    </div>
+    <div class="panel">
+      <div class="hint">К какому типу внимания относится ситуация? <b>Сверху-вниз</b> — вы управляете вниманием сами. <b>Снизу-вверх</b> — что-то захватывает его за вас.</div>
+      <div class="sort-card-area" id="sort-area"></div>
+      <div class="bins">
+        <button class="bin top" onclick="sortPick('top')">⬇ Сверху-вниз<small>произвольное, усилие</small></button>
+        <button class="bin bottom" onclick="sortPick('bottom')">⬆ Снизу-вверх<small>захват, непроизвольное</small></button>
+      </div>
+      <div class="sort-fb" id="sort-fb"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- NAV ---------- */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='stroop') newStroop();
+  if(id==='sort') newSort();
+  if(id==='thimbles') resetThimbles();
+}
+
+/* ---------- THIMBLES ---------- */
+const TERMS=[
+  {name:'Эффект коктейльной вечеринки',
+   def:'Внимание непроизвольно переключается на собственное имя или важный сигнал, даже в общем шуме.',
+   cls:'В классе: имя ребёнка — самый сильный «крючок» внимания. Назвать по имени эффективнее, чем «эй, ты там».'},
+  {name:'Сенсорная память',
+   def:'Короткий «зал ожидания»: зрительный след держится доли секунды, слуховой — 2–4 секунды. Дальше проходит только часть.',
+   cls:'В классе: если говорить и одновременно показывать, часть успеет «выпасть» из буфера. Давайте паузы.'},
+  {name:'Фильтр внимания (Бродбент)',
+   def:'Модель 1958 года: поток информации проходит через фильтр, который пропускает дальше лишь часть сигналов.',
+   cls:'В классе: ученик физически не может обработать всё сразу — лишний шум конкурирует с вашим голосом.'},
+  {name:'Луч прожектора',
+   def:'Произвольное внимание «сверху-вниз»: узкий направленный луч, который требует усилий и имеет ограниченный объём.',
+   cls:'В классе: удерживать луч — это работа. Через 10–15 минут он «устаёт», нужна смена активности.'},
+  {name:'Переполнение буфера',
+   def:'Когда единиц больше, чем вмещает рабочая память, новое просто не усваивается — и дело не в лени.',
+   cls:'В классе: если за раз дать 8 шагов инструкции, половина потеряется. Дробите на части.'},
+  {name:'Префронтальная кора',
+   def:'Структура, управляющая произвольным вниманием. Созревает позже всех — и активно строится в школьном возрасте.',
+   cls:'В классе: тренируя внимание, вы буквально помогаете строить нейронные связи, полезные на всю жизнь.'}
+];
+let thState='ready', hiddenCup=0, curTerm=null;
+let slots=[0,1,2]; // slots[cupIndex] = position 0..2
+let termDeck=[], termPtr=0;
+
+// speed slider → timing in ms (move duration, gap between swaps, swap count)
+const SPEED_MAP={
+  1:{move:900,gap:1100,label:'очень медленно'},
+  2:{move:720,gap:850, label:'медленно'},
+  3:{move:600,gap:720, label:'средняя'},
+  4:{move:440,gap:520, label:'быстро'},
+  5:{move:320,gap:380, label:'очень быстро'}
+};
+function curSpeed(){ return SPEED_MAP[+document.getElementById('th-speed').value]; }
+
+function shuffleDeck(){
+  termDeck=[...Array(TERMS.length).keys()].sort(()=>Math.random()-0.5);
+  termPtr=0;
+}
+function nextTerm(){
+  if(termPtr>=termDeck.length) shuffleDeck();
+  return TERMS[termDeck[termPtr++]];
+}
+
+function slotLeft(pos){
+  // three evenly spaced positions within the .cups container
+  return 'calc(' + (pos*50) + '% - ' + (pos*0) + 'px)';
+}
+function layoutCups(animate){
+  const cups=document.querySelectorAll('.cup');
+  cups.forEach(c=>{
+    if(!animate) c.style.transition='none';
+    const pos=slots[+c.dataset.i];
+    c.style.left = (pos===0? '0%' : pos===1? '50%' : '100%');
+    const baseX = (pos===1?'-50%':pos===2?'-100%':'0');
+    // edge-awareness for the term pill
+    c.classList.toggle('at-left', pos===0);
+    c.classList.toggle('at-right', pos===2);
+    let y='0', rot='0deg', arc='';
+    if(c.classList.contains('lifted')){ y='-90px'; rot='-5deg'; }
+    else if(c.classList.contains('arc')){ y='-46px'; rot='0deg'; } // mid-move hop
+    c.style.transform='translateX('+baseX+') translateY('+y+') rotate('+rot+')';
+    if(!animate){ c.offsetHeight; c.style.transition=''; }
+  });
+}
+
+function resetThimbles(){
+  thState='ready';
+  slots=[0,1,2];
+  document.getElementById('th-reveal').classList.remove('show');
+  document.getElementById('th-btn').textContent='Спрятать и перемешать';
+  document.getElementById('th-hint').innerHTML='<b>Как играть:</b> под одним стаканом спрятан термин. Запомните его позицию, следите взглядом во время перемешивания, потом нажмите на нужный стакан.';
+  document.querySelectorAll('.cup').forEach(c=>{c.classList.remove('lifted','arc','moving','joy');c.querySelector('.term').textContent='';c.querySelector('.cup-body').textContent='?';});
+  document.querySelectorAll('#cups .confetti').forEach(c=>c.remove());
+  layoutCups(false);
+}
+
+function thimblesAction(){
+  if(thState==='ready'||thState==='revealed'){
+    document.getElementById('th-reveal').classList.remove('show');
+    curTerm=nextTerm();
+    slots=[0,1,2];
+    document.querySelectorAll('.cup').forEach(c=>c.classList.remove('arc','moving','lifted','joy'));
+    layoutCups(false);
+    // assign the term to a random cup
+    hiddenCup=Math.floor(Math.random()*3);
+    document.querySelectorAll('.cup').forEach((c,i)=>{
+      c.querySelector('.cup-body').textContent='?';
+      c.querySelector('.term').textContent = (+c.dataset.i===hiddenCup)? curTerm.name : '';
+    });
+    // briefly lift the hidden cup to show the term
+    const target=document.querySelector('.cup[data-i="'+hiddenCup+'"]');
+    target.classList.add('lifted');
+    layoutCups(true);
+    document.getElementById('th-hint').innerHTML='👀 Запомните, где термин... перемешиваю!';
+    document.getElementById('th-btn').textContent='...';
+    thState='peeking';
+    setTimeout(()=>{
+      target.classList.remove('lifted');
+      layoutCups(true);
+      setTimeout(shuffleCups,500);
+    },1600);
+  }
+}
+
+function shuffleCups(){
+  thState='shuffling';
+  const sp=curSpeed();
+  document.getElementById('cups').style.setProperty('--move',(sp.move/1000)+'s');
+  let moves=0;
+  const totalMoves=6;
+  function swap(){
+    const posA=Math.floor(Math.random()*3);
+    let posB=Math.floor(Math.random()*3);
+    while(posB===posA) posB=Math.floor(Math.random()*3);
+    const cupAtA=slots.indexOf(posA);
+    const cupAtB=slots.indexOf(posB);
+    const nodeA=document.querySelector('.cup[data-i="'+cupAtA+'"]');
+    const nodeB=document.querySelector('.cup[data-i="'+cupAtB+'"]');
+    nodeA.classList.add('arc','moving');
+    nodeB.classList.add('arc','moving');
+    slots[cupAtA]=posB;
+    slots[cupAtB]=posA;
+    layoutCups(true);
+    setTimeout(()=>{
+      nodeA.classList.remove('arc');
+      nodeB.classList.remove('arc');
+      layoutCups(true);
+    },sp.move/2);
+    setTimeout(()=>{ nodeA.classList.remove('moving'); nodeB.classList.remove('moving'); },sp.move);
+    moves++;
+    if(moves<totalMoves){ setTimeout(swap,sp.gap); }
+    else{
+      setTimeout(()=>{
+        thState='guess';
+        document.getElementById('th-hint').innerHTML='✅ Где термин? Нажмите на стакан.';
+      },sp.gap);
+    }
+  }
+  swap();
+}
+
+function pickCup(i){
+  if(thState!=='guess') return;
+  const target=document.querySelector('.cup[data-i="'+hiddenCup+'"]');
+  const clicked=document.querySelector('.cup[data-i="'+i+'"]');
+  target.classList.add('lifted');
+  layoutCups(true);
+  if(i===hiddenCup){
+    document.getElementById('th-hint').innerHTML='🎯 Точно! Ваш луч внимания удержал цель.';
+    setTimeout(()=>{ target.classList.add('joy'); celebrate(target); },120);
+  }else{
+    clicked.classList.add('lifted');
+    layoutCups(true);
+    document.getElementById('th-hint').innerHTML='Почти! Вот где он был спрятан — внимание ускользнуло.';
+  }
+  document.getElementById('th-name').textContent=curTerm.name;
+  document.getElementById('th-def').textContent=curTerm.def;
+  document.getElementById('th-class').innerHTML='<b>📚 В классе:</b> '+curTerm.cls.replace(/^В классе:\s*/,'');
+  document.getElementById('th-reveal').classList.add('show');
+  document.getElementById('th-btn').textContent='Следующий термин →';
+  thState='revealed';
+}
+
+function celebrate(cup){
+  const colors=['#3ddc97','#ffcf5c','#ff7a6b','#7aa0ff','#ffffff'];
+  const cups=document.getElementById('cups');
+  for(let k=0;k<28;k++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.background=colors[k%colors.length];
+    // origin: above the winning cup
+    const pos=slots[+cup.dataset.i];
+    c.style.left=(pos===0?'14%':pos===1?'50%':'86%');
+    const dx=(Math.random()*240-120)+'px';
+    const dy=(Math.random()*200+120)+'px';
+    const rot=(Math.random()*720-360)+'deg';
+    c.style.setProperty('--dx',dx);
+    c.style.setProperty('--dy',dy);
+    c.style.setProperty('--rot',rot);
+    c.style.animation='confettiFall '+(0.9+Math.random()*0.6)+'s ease-out forwards';
+    cups.appendChild(c);
+    setTimeout(()=>c.remove(),1700);
+  }
+}
+
+/* ---------- STROOP ---------- */
+const COLORS=[
+  {name:'КРАСНЫЙ',hex:'#ff5a4d'},
+  {name:'СИНИЙ',hex:'#4d8bff'},
+  {name:'ЗЕЛЁНЫЙ',hex:'#3ddc97'},
+  {name:'ЖЁЛТЫЙ',hex:'#ffcf5c'},
+  {name:'ФИОЛЕТОВЫЙ',hex:'#b07cff'}
+];
+let stroopRound=1, stroopAnswer=null;
+function newStroop(){
+  document.getElementById('stroop-fb').textContent='';
+  // pick a word and a (usually different) ink color
+  const word=COLORS[Math.floor(Math.random()*COLORS.length)];
+  let ink=COLORS[Math.floor(Math.random()*COLORS.length)];
+  if(Math.random()<0.75){ while(ink.name===word.name) ink=COLORS[Math.floor(Math.random()*COLORS.length)]; }
+  stroopAnswer=ink.name;
+  const w=document.getElementById('stroop-word');
+  w.textContent=word.name; w.style.color=ink.hex;
+  // build 4 swatch options including correct ink
+  let opts=[ink];
+  const pool=COLORS.filter(c=>c.name!==ink.name).sort(()=>Math.random()-0.5);
+  opts=opts.concat(pool.slice(0,3)).sort(()=>Math.random()-0.5);
+  const box=document.getElementById('swatches'); box.innerHTML='';
+  opts.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.style.background=c.hex; b.textContent=c.name;
+    if(c.hex==='#ffcf5c'||c.hex==='#3ddc97') b.style.color='#06251a';
+    b.onclick=()=>answerStroop(c.name);
+    box.appendChild(b);
+  });
+  document.getElementById('stroop-count').textContent='Раунд '+stroopRound;
+}
+function answerStroop(name){
+  const fb=document.getElementById('stroop-fb');
+  if(name===stroopAnswer){
+    fb.textContent='✅ Верно — вы назвали цвет, а не слово!'; fb.className='feedback ok';
+  }else{
+    fb.textContent='🙂 Это слово сбило с толку. Цвет шрифта был другой.'; fb.className='feedback no';
+  }
+  stroopRound++;
+  setTimeout(newStroop,1100);
+}
+
+/* ---------- MEMORY ---------- */
+let memSeq='', memLen=4;
+const MEM_CHARS='АБВГДЕКМНПРСТЦЧ';
+function startMemory(){
+  document.getElementById('mem-result').textContent='';
+  document.getElementById('mem-input-wrap').style.display='none';
+  document.getElementById('mem-btn').style.display='none';
+  memSeq='';
+  for(let i=0;i<memLen;i++) memSeq+=MEM_CHARS[Math.floor(Math.random()*MEM_CHARS.length)];
+  const disp=document.getElementById('mem-display');
+  disp.textContent=memSeq;
+  disp.style.color='var(--gold)';
+  document.getElementById('mem-len').textContent='Длина: '+memLen+' '+plural(memLen);
+  const showTime=900+memLen*450;
+  setTimeout(()=>{
+    disp.textContent='?';
+    disp.style.color='var(--ink-dim)';
+    const wrap=document.getElementById('mem-input-wrap');
+    wrap.style.display='block';
+    const inp=document.getElementById('mem-input');
+    inp.value=''; inp.focus();
+  },showTime);
+}
+function plural(n){ if(n===1)return 'единица'; if(n>=2&&n<=4)return 'единицы'; return 'единиц'; }
+function checkMemory(){
+  const val=document.getElementById('mem-input').value.trim().toUpperCase();
+  const res=document.getElementById('mem-result');
+  document.getElementById('mem-input-wrap').style.display='none';
+  document.getElementById('mem-display').textContent=memSeq;
+  document.getElementById('mem-display').style.color='var(--gold)';
+  if(val===memSeq){
+    res.innerHTML='<span style="color:var(--green)">✅ Точно! Попробуем длиннее?</span>';
+    memLen=Math.min(memLen+1,9);
+    document.getElementById('mem-btn').textContent='Длиннее ('+memLen+') →';
+  }else{
+    res.innerHTML='<span style="color:var(--coral)">Буфер переполнился 🙂 Было: <b>'+memSeq+'</b></span><br><span style="font-size:14px;color:var(--ink-dim)">Это нормально: ~4 единицы — обычный предел.</span>';
+    memLen=4;
+    document.getElementById('mem-btn').textContent='Ещё раз (4) →';
+  }
+  document.getElementById('mem-btn').style.display='block';
+  document.getElementById('mem-len').textContent='';
+}
+
+/* ---------- SORT ---------- */
+const SORT_CARDS=[
+  {t:'За окном резко взвыла сирена',a:'bottom',why:'Громкий звук захватывает внимание сам — это «снизу-вверх».'},
+  {t:'Решаю сложную задачу по математике',a:'top',why:'Вы намеренно держите фокус — произвольное «сверху-вниз».'},
+  {t:'Услышал своё имя в шумном коридоре',a:'bottom',why:'Эффект коктейльной вечеринки — непроизвольный захват.'},
+  {t:'Перечитываю абзац, чтобы понять смысл',a:'top',why:'Усилие и направленность — это «сверху-вниз».'},
+  {t:'Яркая вспышка на экране телефона',a:'bottom',why:'Яркий стимул выдёргивает внимание автоматически.'},
+  {t:'Считаю в уме сдачу в магазине',a:'top',why:'Контролируемое усилие рабочей памяти — «сверху-вниз».'},
+  {t:'Почувствовал запах еды, когда голоден',a:'bottom',why:'Невольное внимание к тому, что отвечает потребности.'},
+  {t:'Слушаю объяснение и делаю конспект',a:'top',why:'Вы сознательно удерживаете луч на учителе.'}
+];
+let sortIdx=0, sortOrder=[];
+function newSort(){
+  sortOrder=[...Array(SORT_CARDS.length).keys()].sort(()=>Math.random()-0.5);
+  sortIdx=0;
+  document.getElementById('sort-fb').textContent='';
+  renderSort();
+}
+function renderSort(){
+  const area=document.getElementById('sort-area');
+  if(sortIdx>=sortOrder.length){
+    area.innerHTML='<div class="done-box"><div class="big">🎉</div><p style="font-size:18px;font-weight:700">Все карточки разобраны!</p></div>';
+    document.getElementById('sort-fb').innerHTML='<button class="btn ghost" style="width:auto;padding:12px 22px" onclick="newSort()">Ещё раз 🔁</button>';
+    return;
+  }
+  const c=SORT_CARDS[sortOrder[sortIdx]];
+  area.innerHTML='<div class="sort-card">'+c.t+'</div>';
+}
+function sortPick(choice){
+  if(sortIdx>=sortOrder.length) return;
+  const c=SORT_CARDS[sortOrder[sortIdx]];
+  const fb=document.getElementById('sort-fb');
+  if(choice===c.a){
+    fb.textContent='✅ Верно! '+c.why; fb.className='sort-fb ok';
+  }else{
+    fb.textContent='🙂 На самом деле наоборот. '+c.why; fb.className='sort-fb no';
+  }
+  sortIdx++;
+  setTimeout(()=>{renderSort(); if(sortIdx<sortOrder.length){fb.textContent='';fb.className='sort-fb';}},1500);
+}
+
+/* ---------- INIT ---------- */
+shuffleDeck(); // randomize term order at each site load
+(function(){
+  const slider=document.getElementById('th-speed');
+  const label=document.getElementById('th-speed-label');
+  function upd(){ label.textContent='Скорость: '+SPEED_MAP[+slider.value].label; }
+  slider.addEventListener('input',upd);
+  upd();
+})();
+</script>
+</body>
+</html>

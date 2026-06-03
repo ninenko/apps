@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Прочитайте это</title>
+<style>
+  :root{
+    --bg:#0d1b3e; --bg2:#15264f;
+    --ink:#eaf0ff; --muted:#9fb2d8;
+    --green:#3ddc97; --gold:#f2c14e; --blue:#5aa9ff; --rose:#f08fb0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh;
+    background:radial-gradient(1200px 800px at 50% -10%, var(--bg2), var(--bg));
+    color:var(--ink);
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:32px 16px;
+  }
+  h1{font-size:clamp(22px,3.4vw,34px); font-weight:700; margin:0 0 28px; text-align:center;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(9, 1fr);
+    grid-template-rows:repeat(4, 1fr);
+    gap:0;
+    background:rgba(255,255,255,0.025);
+    border-radius:14px;
+    padding:8px;
+  }
+  .cell{
+    width:clamp(34px,8.5vw,68px); height:clamp(34px,8.5vw,68px);
+    display:flex; align-items:center; justify-content:center;
+    font-size:clamp(18px,4.2vw,32px); font-weight:600;
+    user-select:none; color:var(--ink);
+    border-radius:8px;
+    transition:background .22s ease, color .22s ease, transform .16s ease;
+  }
+  .cell.lit{font-weight:800; transform:scale(1.05);}
+  .cell.w0{background:var(--green); color:#06281c;}
+  .cell.w1{background:var(--gold);  color:#3a2c05;}
+  .cell.w2{background:var(--blue);  color:#06203f;}
+  .cell.w3{background:var(--rose);  color:#3d0d20;}
+  .btn{
+    margin-top:28px;
+    width:64px; height:64px; border-radius:50%;
+    border:2px solid var(--muted); background:transparent;
+    cursor:pointer; position:relative;
+    transition:border-color .15s, background .15s, transform .1s;
+  }
+  .btn:hover{border-color:var(--green); background:rgba(61,220,151,0.08);}
+  .btn:active{transform:scale(0.94);}
+  .btn::after{
+    content:""; position:absolute; top:50%; left:50%;
+    width:0; height:0;
+    border-left:16px solid var(--ink);
+    border-top:11px solid transparent;
+    border-bottom:11px solid transparent;
+    transform:translate(-40%,-50%);
+  }
+</style>
+</head>
+<body>
+  <h1>Запомни буквы</h1>
+  <div class="grid" id="grid"></div>
+  <button class="btn" id="btn" aria-label="reveal"></button>
+
+<script>
+  const phrase = "СЛОЖНУЮИНФОРМАЦИЮНЕВОЗМОЖНОЗАПОМНИТЬ"; // 36 букв
+  const ROWS = 4, COLS = 9;
+  const letters = phrase.split("");
+
+  // границы слов по позициям в фразе
+  // СЛОЖНУЮ(0-6) ИНФОРМАЦИЮ(7-16) НЕВОЗМОЖНО(17-26) ЗАПОМНИТЬ(27-35)
+  const wordOf = idx =>
+    idx <= 6 ? 0 : idx <= 16 ? 1 : idx <= 26 ? 2 : 3;
+
+  // cells[r][c] нам нужны по позиции в сетке, но буквы кладём ПО СТОЛБЦАМ.
+  // Для (row r, col c): letterIndex = c*ROWS + r  -> читая по строкам, глаз видит кашу.
+  const grid = document.getElementById('grid');
+  const cells = [];
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const idx = c*ROWS + r;
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.textContent = letters[idx];
+      cell.dataset.word = wordOf(idx);
+      grid.appendChild(cell);
+      cells.push(cell);
+    }
+  }
+
+  let revealed = false;
+  document.getElementById('btn').addEventListener('click', ()=>{
+    if(!revealed){
+      cells.forEach(cell=> cell.classList.add('lit','w'+cell.dataset.word));
+      revealed = true;
+    } else {
+      cells.forEach(cell=> cell.classList.remove('lit','w0','w1','w2','w3'));
+      revealed = false;
+    }
+  });
+</script>
+</body>
+</html>
