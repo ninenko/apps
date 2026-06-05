@@ -58,6 +58,8 @@ HTML public/
 | matrix-picker.html | https://ninenko.github.io/apps/apps/matrix-picker.html |
 | memory_neurons.html | https://ninenko.github.io/apps/apps/memory_neurons.html |
 | neural_net_pattern_input.html | https://ninenko.github.io/apps/apps/neural_net_pattern_input.html |
+| physics_deckbuilder_2p.html | https://ninenko.github.io/apps/apps/physics_deckbuilder_2p.html |
+| physics_rules_2p.html | https://ninenko.github.io/apps/apps/physics_rules_2p.html |
 | punchcard-emulator.html | https://ninenko.github.io/apps/apps/punchcard-emulator.html |
 | punchcard-emulator-ru.html | https://ninenko.github.io/apps/apps/punchcard-emulator-ru.html |
 | roleplay_IT_hardware.html | https://ninenko.github.io/apps/apps/roleplay_IT_hardware.html |

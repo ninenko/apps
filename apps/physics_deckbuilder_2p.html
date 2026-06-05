@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФОРМУЛА :: 2 ИГРОКА</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e27;--bg2:#0d1535;--panel:#121a40;--cyan:#3fe0ff;--gold:#ffcf3f;
+    --green:#5fff7a;--coral:#ff6f6f;--purple:#b07fff;--line:#1f2d5c;--txt:#dfe7ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg);color:var(--txt);font-family:'Press Start 2P',monospace;
+    overflow:hidden;position:relative;
+  }
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0,rgba(0,0,0,.12) 1px,transparent 2px,transparent 4px);mix-blend-mode:multiply}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;
+    background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45) 100%)}
+
+  .title-bar{position:absolute;top:6px;left:50%;transform:translateX(-50%);
+    font-size:10px;color:var(--gold);letter-spacing:2px;z-index:5;text-shadow:0 0 8px rgba(255,207,63,.4)}
+  .help-link{position:absolute;top:8px;right:12px;font-size:7px;color:var(--cyan);
+    text-decoration:none;border:1px solid var(--line);padding:5px 8px;z-index:5}
+  .help-link:hover{background:var(--panel)}
+
+  #board{position:absolute;inset:0;display:flex;flex-direction:column;
+    padding:34px 14px 12px;gap:8px}
+
+  .seat{display:flex;flex-direction:column;align-items:center;gap:7px}
+  .nameplate{font-size:9px;padding:6px 12px;border:2px solid var(--line);
+    background:var(--panel);letter-spacing:1px;display:flex;align-items:center;gap:10px}
+  .nameplate.active{box-shadow:0 0 0 2px var(--gold),0 0 16px rgba(255,207,63,.5);border-color:var(--gold)}
+  .nameplate .sc{color:var(--gold)}
+  .p1 .dot{color:var(--cyan)} .p2 .dot{color:var(--coral)}
+
+  .hand{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;min-height:90px;align-items:center}
+
+  .card{
+    width:60px;height:84px;border-radius:6px;position:relative;border:2px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--bg2);cursor:pointer;flex:none;transition:transform .12s,box-shadow .12s;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 6px 14px rgba(0,0,0,.5)}
+  .card.sel{transform:translateY(-9px);box-shadow:0 0 0 2px var(--gold),0 8px 16px rgba(0,0,0,.6)}
+  .card.dim{opacity:.32;cursor:not-allowed}
+  .card.dim:hover{transform:none;box-shadow:none}
+  .card .glyph{font-size:20px;line-height:1}
+  .card .sub{font-size:6px;margin-top:9px;text-align:center;padding:0 3px;color:#9fb0e0;letter-spacing:.5px}
+  .card.op .glyph{color:var(--coral)} .card.val .glyph{color:var(--cyan)}
+  .card.small{width:46px;height:64px}
+  .card.small .glyph{font-size:15px} .card.small .sub{font-size:5px;margin-top:5px}
+
+  .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}
+
+  /* mode: piles */
+  .piles{display:flex;gap:34px}
+  .pile{display:flex;flex-direction:column;align-items:center;gap:7px}
+  .pile .lbl{font-size:7px;color:#7f90c8;letter-spacing:1px}
+  .deckcard{width:66px;height:90px;border-radius:6px;border:2px solid #26367a;
+    background:repeating-linear-gradient(45deg,#15205a 0 6px,#101945 6px 12px);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    color:#aab8ee;font-size:8px;cursor:pointer;position:relative;text-align:center;padding:6px}
+  .deckcard:hover{box-shadow:0 0 12px rgba(63,224,255,.45)}
+  .deckcard .cnt{position:absolute;bottom:5px;font-size:7px;color:var(--cyan)}
+  .deckcard.signs{background:repeating-linear-gradient(45deg,#3a1a3a 0 6px,#2a1230 6px 12px);border-color:#7a3a7a;color:#e7b8ff}
+  .discard{width:66px;height:90px;border-radius:6px;border:2px solid var(--line);
+    background:var(--bg2);display:flex;align-items:center;justify-content:center;color:#7f90c8;font-size:8px}
+
+  /* mode: build */
+  .build{display:none;flex-direction:column;align-items:center;gap:14px}
+  .build.on{display:flex}
+  .formula-line{display:flex;align-items:stretch;gap:10px}
+  .side{
+    min-width:150px;min-height:96px;border:2px dashed var(--line);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:8px;
+    background:rgba(18,26,64,.5);cursor:pointer;transition:.12s;
+  }
+  .side.hot{border-color:var(--cyan);box-shadow:0 0 12px rgba(63,224,255,.3)}
+  .side .ph{font-size:7px;color:#6677b0;text-align:center;line-height:1.8;padding:0 6px}
+  .equals{display:flex;align-items:center;font-size:30px;color:var(--gold);
+    text-shadow:0 0 10px rgba(255,207,63,.5);padding:0 4px}
+
+  .msg{min-height:30px;font-size:8px;color:var(--cyan);text-align:center;max-width:600px;line-height:1.9;letter-spacing:.5px}
+  .msg .good{color:var(--green)} .msg .bad{color:var(--coral)} .msg .gold{color:var(--gold)}
+
+  .controls{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+  button.act{font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 12px;
+    border:2px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;letter-spacing:1px;transition:.12s}
+  button.act:hover:not(:disabled){background:var(--cyan);color:var(--bg)}
+  button.act:disabled{opacity:.3;cursor:not-allowed}
+  button.gold{border-color:var(--gold);color:var(--gold)} button.gold:hover:not(:disabled){background:var(--gold);color:var(--bg)}
+  button.coral{border-color:var(--coral);color:var(--coral)} button.coral:hover:not(:disabled){background:var(--coral);color:var(--bg)}
+
+  .pill{font-size:7px;color:#7f90c8;border:1px solid var(--line);padding:5px 9px;letter-spacing:1px}
+  .pill b{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="title-bar">★ ФОРМУЛА ★ 2 ИГРОКА</div>
+<a class="help-link" href="physics_rules_2p.html" target="_blank">ПРАВИЛА ▸</a>
+
+<div id="board">
+  <!-- PLAYER 2 (top) -->
+  <div class="seat">
+    <div class="nameplate p2" id="np2"><span class="dot">●</span> ИГРОК 2 <span class="sc" id="sc2">0</span></div>
+    <div class="hand" id="hand2"></div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- piles mode -->
+    <div class="piles" id="pilesMode">
+      <div class="pile">
+        <div class="deckcard" id="deckVal">ВЕЛИ-<br>ЧИНЫ<span class="cnt" id="cntVal">0</span></div>
+        <div class="lbl">ВЕЛИЧИНЫ</div>
+      </div>
+      <div class="pile">
+        <div class="deckcard signs" id="deckSign">ЗНАКИ<span class="cnt" id="cntSign">0</span></div>
+        <div class="lbl">ЗНАКИ</div>
+      </div>
+      <div class="pile">
+        <div class="discard" id="discard">—</div>
+        <div class="lbl">СБРОС</div>
+      </div>
+    </div>
+
+    <!-- build mode -->
+    <div class="build" id="buildMode">
+      <div class="formula-line">
+        <div class="side" id="sideL" data-side="L"><span class="ph">ЛЕВАЯ ЧАСТЬ<br>(нажми, потом карту)</span></div>
+        <div class="equals">=</div>
+        <div class="side" id="sideR" data-side="R"><span class="ph">ПРАВАЯ ЧАСТЬ<br>(нажми, потом карту)</span></div>
+      </div>
+    </div>
+
+    <div class="msg" id="msg">Ход <span class="gold">Игрока 1</span>. Возьми карту из колоды или поменяйся с соперником, затем собирай формулу.</div>
+
+    <div class="controls" id="ctrlPiles">
+      <button class="act" id="btnSwap" disabled>ОБМЕН 1↔1</button>
+      <button class="act gold" id="btnBuild">СОБРАТЬ ФОРМУЛУ</button>
+      <button class="act" id="btnPass">ПЕРЕДАТЬ ХОД ▸</button>
+    </div>
+    <div class="controls" id="ctrlBuild" style="display:none">
+      <button class="act gold" id="btnCheck">ПРОВЕРИТЬ ФОРМУЛУ</button>
+      <button class="act coral" id="btnCancel">◂ ОТМЕНА</button>
+    </div>
+    <div class="pill" id="hintPill">СТАРТ: <b>2 величины + 1 знак</b> · «=» уже на поле</div>
+  </div>
+
+  <!-- PLAYER 1 (bottom, active first) -->
+  <div class="seat">
+    <div class="hand" id="hand1"></div>
+    <div class="nameplate p1 active" id="np1"><span class="dot">●</span> ИГРОК 1 <span class="sc" id="sc1">0</span></div>
+  </div>
+</div>
+
+<script>
+/* ===== КАРТЫ ===== */
+const VAL = [ // величины
+  {id:'m',g:'m',sub:'масса'},{id:'v',g:'v',sub:'скорость'},{id:'t',g:'t',sub:'время'},
+  {id:'s',g:'s',sub:'путь'},{id:'a',g:'a',sub:'ускорение'},{id:'F',g:'F',sub:'сила'},
+  {id:'p',g:'p',sub:'импульс'},{id:'A',g:'A',sub:'работа'},{id:'Ek',g:'Eₖ',sub:'кин. энергия'},
+  {id:'P',g:'P',sub:'мощность'},{id:'rho',g:'ρ',sub:'плотность'},{id:'V',g:'V',sub:'объём'},
+];
+const SIGN = [ // знаки (БЕЗ равно)
+  {id:'mul',g:'×',sub:'умножить'},{id:'div',g:'/',sub:'делить'},
+  {id:'sq',g:'²',sub:'квадрат'},{id:'half',g:'½',sub:'одна вторая'},
+];
+const BYID = {}; VAL.forEach(c=>BYID[c.id]={...c,type:'val'}); SIGN.forEach(c=>BYID[c.id]={...c,type:'op'});
+
+/* ===== ФОРМУЛЫ: левая часть = правая часть ===== */
+// L и R — массивы id в правильном порядке
+const FORMULAS = [
+  {name:'v = s / t',       L:['v'],  R:['s','div','t'],            pts:3},
+  {name:'a = v / t',       L:['a'],  R:['v','div','t'],            pts:3},
+  {name:'s = v × t',       L:['s'],  R:['v','mul','t'],            pts:3},
+  {name:'F = m × a',       L:['F'],  R:['m','mul','a'],            pts:3},
+  {name:'p = m × v',       L:['p'],  R:['m','mul','v'],            pts:3},
+  {name:'ρ = m / V',       L:['rho'],R:['m','div','V'],            pts:3},
+  {name:'A = F × s',       L:['A'],  R:['F','mul','s'],            pts:4},
+  {name:'P = A / t',       L:['P'],  R:['A','div','t'],            pts:4},
+  {name:'P = F × v',       L:['P'],  R:['F','mul','v'],            pts:4},
+  {name:'Eₖ = ½ × m × v²', L:['Ek'], R:['half','mul','m','mul','v','sq'], pts:7},
+];
+
+/* ===== КОЛОДЫ ===== */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildVal(){let d=[];VAL.forEach(c=>{const n=(['m','v','t'].includes(c.id))?5:3;for(let i=0;i<n;i++)d.push(c.id);});return shuffle(d);}
+function buildSign(){let d=[];SIGN.forEach(c=>{const n=(c.id==='mul')?7:(c.id==='div')?6:3;for(let i=0;i<n;i++)d.push(c.id);});return shuffle(d);}
+
+const G={
+  deckVal:buildVal(), deckSign:buildSign(), discard:null,
+  players:[{hand:[],score:0},{hand:[],score:0}],
+  cur:0, drew:false, swapped:false,
+  // build state
+  building:false, side:null, placedL:[], placedR:[],
+  // selection for swap
+  selIdx:null,
+};
+
+function drawVal(){if(!G.deckVal.length)G.deckVal=buildVal();return G.deckVal.pop();}
+function drawSign(){if(!G.deckSign.length)G.deckSign=buildSign();return G.deckSign.pop();}
+
+function deal(){
+  for(let p=0;p<2;p++){
+    G.players[p].hand.push(drawVal(),drawVal(),drawSign()); // 2 величины + 1 знак
+  }
+}
+
+/* ===== ОТРИСОВКА ===== */
+function makeCard(id,{small=false,sel=false,dim=false,onclick=null}={}){
+  const c=BYID[id];const el=document.createElement('div');
+  el.className='card '+c.type+(small?' small':'')+(sel?' sel':'')+(dim?' dim':'');
+  el.innerHTML=`<div class="glyph">${c.g}</div><div class="sub">${c.sub}</div>`;
+  if(onclick&&!dim)el.onclick=onclick;
+  return el;
+}
+
+function render(){
+  // hands (обе открыты)
+  [0,1].forEach(p=>{
+    const cont=document.getElementById('hand'+(p+1));cont.innerHTML='';
+    G.players[p].hand.forEach((id,idx)=>{
+      const isCur=(p===G.cur);
+      const sel=(isCur&&G.selIdx===idx);
+      let onclick=null;
+      if(isCur && !G.building) onclick=()=>handSelect(idx);
+      if(isCur && G.building && G.side) onclick=()=>placeCard(idx);
+      cont.appendChild(makeCard(id,{sel,dim:(G.building&&!isCur),onclick}));
+    });
+    document.getElementById('sc'+(p+1)).textContent=G.players[p].score;
+  });
+  document.getElementById('np1').classList.toggle('active',G.cur===0);
+  document.getElementById('np2').classList.toggle('active',G.cur===1);
+
+  document.getElementById('cntVal').textContent=G.deckVal.length;
+  document.getElementById('cntSign').textContent=G.deckSign.length;
+  const d=document.getElementById('discard');
+  d.innerHTML=G.discard?`<div class="glyph" style="font-size:18px;color:${BYID[G.discard].type==='op'?'var(--coral)':'var(--cyan)'}">${BYID[G.discard].g}</div>`:'—';
+
+  // mode toggle
+  document.getElementById('pilesMode').style.display=G.building?'none':'flex';
+  document.getElementById('buildMode').classList.toggle('on',G.building);
+  document.getElementById('ctrlPiles').style.display=G.building?'none':'flex';
+  document.getElementById('ctrlBuild').style.display=G.building?'flex':'none';
+
+  if(G.building) renderBuild();
+
+  // swap button: блокируется, если обмен уже сделан или ничего не выбрано
+  document.getElementById('btnSwap').disabled = (G.selIdx===null || G.swapped);
+
+  // колоды гаснут после взятия карты за ход
+  const drewUp = G.drew && !G.building;
+  ['deckVal','deckSign'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.style.opacity = drewUp ? .32 : 1;
+    el.style.pointerEvents = drewUp ? 'none' : 'auto';
+  });
+}
+
+function renderBuild(){
+  ['L','R'].forEach(s=>{
+    const el=document.getElementById('side'+s);
+    el.classList.toggle('hot',G.side===s);
+    const arr=(s==='L')?G.placedL:G.placedR;
+    el.innerHTML='';
+    if(arr.length===0){
+      const ph=document.createElement('span');ph.className='ph';
+      ph.innerHTML=(s==='L')?'ЛЕВАЯ ЧАСТЬ<br>(нажми, потом карту)':'ПРАВАЯ ЧАСТЬ<br>(нажми, потом карту)';
+      el.appendChild(ph);
+    } else {
+      arr.forEach((id,i)=>{
+        const card=makeCard(id,{small:true,onclick:()=>unplace(s,i)});
+        el.appendChild(card);
+      });
+    }
+  });
+}
+
+/* ===== ВЫБОР НА РУКЕ (для обмена) ===== */
+function handSelect(idx){
+  G.selIdx=(G.selIdx===idx)?null:idx;
+  render();
+}
+
+/* ===== ВЗЯТЬ КАРТУ ===== */
+document.getElementById('deckVal').onclick=()=>takeCard('val');
+document.getElementById('deckSign').onclick=()=>takeCard('sign');
+function takeCard(kind){
+  if(G.building) return;
+  if(G.drew){setMsg('<span class="bad">За ход можно взять только одну карту из колоды.</span> Можно ещё обменяться, собрать формулу или передать ход.');return;}
+  G.players[G.cur].hand.push(kind==='val'?drawVal():drawSign());
+  G.drew=true;
+  setMsg(`Игрок ${G.cur+1} взял карту (${kind==='val'?'величина':'знак'}). Можно обменяться, собрать формулу или передать ход.`);
+  G.selIdx=null;
+  render();
+}
+
+/* ===== ОБМЕН 1↔1 ===== */
+document.getElementById('btnSwap').onclick=()=>{
+  if(G.selIdx===null||G.building) return;
+  if(G.swapped){setMsg('<span class="bad">Обмен за ход уже сделан.</span>');return;}
+  const giveId=G.players[G.cur].hand[G.selIdx];
+  const opp=(G.cur+1)%2;
+  if(G.players[opp].hand.length===0){setMsg('<span class="bad">У соперника нет карт для обмена.</span>');return;}
+  // выбрать карту соперника — кликом; делаем простой prompt-режим
+  setMsg('Обмен: <span class="gold">нажми карту соперника</span>, которую хочешь забрать взамен своей.');
+  // навесим временные обработчики на руку соперника
+  const cont=document.getElementById('hand'+(opp+1));
+  [...cont.children].forEach((el,i)=>{
+    el.classList.remove('dim');el.style.cursor='pointer';
+    el.onclick=()=>{
+      const takeId=G.players[opp].hand[i];
+      G.players[opp].hand[i]=giveId;
+      G.players[G.cur].hand[G.selIdx]=takeId;
+      G.selIdx=null;G.swapped=true;
+      setMsg(`<span class="good">Обмен совершён:</span> ${BYID[giveId].g} ↔ ${BYID[takeId].g}. Можно взять карту, собрать формулу или передать ход.`);
+      render();
+    };
+  });
+};
+
+/* ===== РЕЖИМ СБОРКИ ===== */
+document.getElementById('btnBuild').onclick=()=>{
+  G.building=true;G.side='L';G.placedL=[];G.placedR=[];G.selIdx=null;
+  setMsg('Режим сборки. Нажми <span class="gold">левую</span> или <span class="gold">правую</span> часть, затем карту на руке. «=» уже на поле.');
+  render();
+};
+document.getElementById('sideL').onclick=()=>{if(G.building){G.side='L';render();}};
+document.getElementById('sideR').onclick=()=>{if(G.building){G.side='R';render();}};
+
+function placeCard(idx){
+  if(!G.building||!G.side) return;
+  const id=G.players[G.cur].hand[idx];
+  if(G.side==='L')G.placedL.push(id);else G.placedR.push(id);
+  G.players[G.cur].hand.splice(idx,1);
+  render();
+}
+function unplace(side,i){
+  const arr=(side==='L')?G.placedL:G.placedR;
+  const id=arr.splice(i,1)[0];
+  G.players[G.cur].hand.push(id); // вернуть на руку
+  render();
+}
+
+document.getElementById('btnCancel').onclick=()=>{
+  // вернуть все карты на руку
+  G.players[G.cur].hand.push(...G.placedL,...G.placedR);
+  G.building=false;G.side=null;G.placedL=[];G.placedR=[];
+  setMsg('Сборка отменена, карты вернулись на руку.');
+  render();
+};
+
+document.getElementById('btnCheck').onclick=()=>{
+  const f=matchFormula(G.placedL,G.placedR);
+  if(f){
+    G.players[G.cur].score+=f.pts;
+    G.discard=[...G.placedL,...G.placedR].slice(-1)[0];
+    G.placedL=[];G.placedR=[];G.building=false;G.side=null;
+    setMsg(`<span class="good">★ ВЕРНО:</span> <span class="gold">${f.name}</span> <span class="good">+${f.pts} очк.</span> Передай ход.`);
+    render();
+  } else {
+    setMsg('<span class="bad">✗ Неверно.</span> Такой формулы нет. Поправь карты (нажми на карту в зоне, чтобы вернуть на руку) или нажми «Отмена».');
+  }
+};
+
+function matchFormula(L,R){
+  const key=(arr)=>arr.join('|');
+  for(const f of FORMULAS){
+    // принимаем как прямой, так и зеркальный порядок (L=R или R=L)
+    if((key(f.L)===key(L)&&key(f.R)===key(R)) || (key(f.L)===key(R)&&key(f.R)===key(L))) return f;
+  }
+  return null;
+}
+
+/* ===== ПЕРЕДАТЬ ХОД ===== */
+document.getElementById('btnPass').onclick=()=>{
+  if(G.building) return;
+  G.cur=(G.cur+1)%2;G.drew=false;G.swapped=false;G.selIdx=null;
+  setMsg(`Ход <span class="gold">Игрока ${G.cur+1}</span>. Возьми карту или поменяйся, затем собирай формулу.`);
+  render();
+};
+
+function setMsg(h){document.getElementById('msg').innerHTML=h;}
+
+/* ===== СТАРТ ===== */
+deal();render();
+</script>
+</body>
+</html>

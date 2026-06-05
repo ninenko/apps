@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФОРМУЛА :: ПРАВИЛА (2 ИГРОКА)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e27;--panel:#121a40;--cyan:#3fe0ff;--gold:#ffcf3f;--green:#5fff7a;
+    --coral:#ff6f6f;--purple:#b07fff;--line:#1f2d5c;--txt:#dfe7ff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:'Press Start 2P',monospace;
+    line-height:1.9;font-size:10px;letter-spacing:.5px;padding:30px 20px 60px;position:relative}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0,rgba(0,0,0,.12) 1px,transparent 2px,transparent 4px);mix-blend-mode:multiply}
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:18px;color:var(--gold);text-align:center;margin-bottom:6px;text-shadow:0 0 10px rgba(255,207,63,.4);line-height:1.5}
+  .sub{text-align:center;color:var(--cyan);font-size:9px;margin-bottom:30px}
+  .back-link{display:inline-block;font-size:8px;color:var(--cyan);text-decoration:none;border:1px solid var(--line);padding:6px 10px;margin-bottom:24px}
+  .back-link:hover{background:var(--panel)}
+  h2{font-size:12px;color:var(--cyan);margin:30px 0 14px;border-bottom:2px solid var(--line);padding-bottom:8px}
+  .panel{background:var(--panel);border:2px solid var(--line);padding:16px 18px;margin-bottom:14px}
+  p{margin-bottom:12px;font-size:9px;line-height:2}
+  .gold{color:var(--gold)} .cyan{color:var(--cyan)} .green{color:var(--green)} .coral{color:var(--coral)} .purple{color:var(--purple)}
+  ol{margin:0 0 0 18px} ol li{margin-bottom:12px;font-size:9px;line-height:2}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .mini{width:54px;height:74px;border:2px solid var(--line);border-radius:5px;background:#0d1535;
+    display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .mini .g{font-size:16px} .mini .s{font-size:5px;margin-top:6px;color:#9fb0e0;text-align:center;padding:0 2px}
+  .mini.op .g{color:var(--coral)} .mini.val .g{color:var(--cyan)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border:1px solid var(--line);padding:9px 10px;font-size:9px;text-align:left}
+  th{background:#0d1535;color:var(--cyan)}
+  td.f{color:var(--gold)} td.pts{color:var(--green);text-align:center;width:60px} td.len{text-align:center;color:#9fb0e0;width:70px}
+  tr.long td.f{color:#ffd86b;text-shadow:0 0 6px rgba(255,207,63,.4)}
+  .tip{border-left:4px solid var(--gold);background:rgba(255,207,63,.08);padding:12px 16px;font-size:9px;line-height:2;margin-top:10px}
+  .node{color:var(--gold);font-weight:bold}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="physics_deckbuilder_2p.html">◂ К ИГРЕ</a>
+  <h1>★ ФОРМУЛА ★<br>ПРАВИЛА (2 ИГРОКА)</h1>
+  <div class="sub">ДЕК-БИЛДЕР ПО ШКОЛЬНОЙ ФИЗИКЕ · ИГРА В ОТКРЫТУЮ</div>
+
+  <h2>ЦЕЛЬ</h2>
+  <div class="panel">
+    <p>Собирать <span class="cyan">осмысленные физические формулы</span> вида «левая часть <span class="gold">=</span> правая часть» и получать за них очки. Чем <span class="gold">длиннее</span> формула, тем больше очков. У кого больше очков — тот и выиграл.</p>
+  </div>
+
+  <h2>ДВЕ КОЛОДЫ</h2>
+  <div class="panel">
+    <p>В центре стола две колоды.</p>
+    <p><span class="cyan">ВЕЛИЧИНЫ</span> — то, из чего строится формула:</p>
+    <div class="legend">
+      <div class="mini val"><div class="g">m</div><div class="s">масса</div></div>
+      <div class="mini val"><div class="g">v</div><div class="s">скорость</div></div>
+      <div class="mini val"><div class="g">t</div><div class="s">время</div></div>
+      <div class="mini val"><div class="g">s</div><div class="s">путь</div></div>
+      <div class="mini val"><div class="g">a</div><div class="s">ускорение</div></div>
+      <div class="mini val"><div class="g">F</div><div class="s">сила</div></div>
+      <div class="mini val"><div class="g">p</div><div class="s">импульс</div></div>
+      <div class="mini val"><div class="g">A</div><div class="s">работа</div></div>
+      <div class="mini val"><div class="g">Eₖ</div><div class="s">кин. энергия</div></div>
+      <div class="mini val"><div class="g">P</div><div class="s">мощность</div></div>
+      <div class="mini val"><div class="g">ρ</div><div class="s">плотность</div></div>
+      <div class="mini val"><div class="g">V</div><div class="s">объём</div></div>
+    </div>
+    <p style="margin-top:16px"><span class="coral">ЗНАКИ</span> — связывают величины:</p>
+    <div class="legend">
+      <div class="mini op"><div class="g">×</div><div class="s">умножить</div></div>
+      <div class="mini op"><div class="g">/</div><div class="s">делить</div></div>
+      <div class="mini op"><div class="g">²</div><div class="s">квадрат</div></div>
+      <div class="mini op"><div class="g">½</div><div class="s">одна вторая</div></div>
+    </div>
+    <p style="margin-top:14px;font-size:8px;color:#9fb0e0">Знака <span class="gold">«=»</span> в колоде нет — он уже стоит в центре поля сборки по умолчанию.</p>
+  </div>
+
+  <h2>НАЧАЛО</h2>
+  <div class="panel">
+    <p>Каждый игрок начинает с <span class="gold">2 величин + 1 знак</span> на руке. Играют в <span class="cyan">открытую</span> — обе руки видны обоим, ходят по очереди.</p>
+  </div>
+
+  <h2>ХОД ИГРЫ</h2>
+  <div class="panel">
+    <p>В свой ход игрок может:</p>
+    <ol>
+      <li><span class="cyan">Взять одну карту</span> — нажать на колоду ВЕЛИЧИНЫ или ЗНАКИ. За ход — <span class="gold">только одна карта</span> из колоды.</li>
+      <li><span class="purple">Обменяться 1↔1</span> — выбрать свою карту, нажать «ОБМЕН», затем нажать карту соперника, которую забираешь взамен. Один обмен за ход.</li>
+    </ol>
+    <p>Взятие и обмен <span class="cyan">не мешают друг другу</span> — за ход можно и взять карту, и обменяться. Затем игрок может <span class="green">собрать формулу</span> или <span class="gold">передать ход</span>. Сборка формулы действие не тратит.</p>
+  </div>
+
+  <h2>СБОРКА ФОРМУЛЫ</h2>
+  <div class="panel">
+    <p>Нажми <span class="gold">«СОБРАТЬ ФОРМУЛУ»</span> — колоды сменяются на поле сборки со знаком <span class="gold">«=»</span> посередине. Нажми левую или правую часть, затем выкладывай карты с руки. Карту в зоне можно нажать, чтобы вернуть на руку.</p>
+    <p>Когда формула выложена — нажми <span class="green">«ПРОВЕРИТЬ ФОРМУЛУ»</span>. Если она есть в списке валидных — начисляются очки, карты уходят в сброс. Если нет — поправь и проверь снова или нажми «Отмена».</p>
+  </div>
+
+  <h2>ВСЕ ФОРМУЛЫ</h2>
+  <div class="panel">
+    <table>
+      <tr><th>Формула</th><th>Что значит</th><th class="len">Карт</th><th class="pts">Очки</th></tr>
+      <tr><td class="f">v = s / t</td><td>скорость</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">a = v / t</td><td>ускорение</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">s = v × t</td><td>путь</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">F = m × a</td><td>сила (2-й з-н Ньютона)</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">p = m × v</td><td>импульс</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">ρ = m / V</td><td>плотность</td><td class="len">4</td><td class="pts">3</td></tr>
+      <tr><td class="f">A = F × s</td><td>механическая работа</td><td class="len">4</td><td class="pts">4</td></tr>
+      <tr><td class="f">P = A / t</td><td>мощность</td><td class="len">4</td><td class="pts">4</td></tr>
+      <tr><td class="f">P = F × v</td><td>мощность через силу</td><td class="len">4</td><td class="pts">4</td></tr>
+      <tr class="long"><td class="f">Eₖ = ½ × m × v²</td><td>кинетическая энергия — ДЖЕКПОТ</td><td class="len">6</td><td class="pts">7</td></tr>
+    </table>
+    <p style="margin-top:12px;font-size:8px;color:#9fb0e0">Карты «=» в подсчёт не входят — он на поле по умолчанию. Левая и правая части засчитываются и в прямом, и в зеркальном порядке (s/t = v так же верно, как v = s/t).</p>
+  </div>
+
+  <h2>ХИТРОСТЬ: УЗЛОВЫЕ КАРТЫ</h2>
+  <div class="panel">
+    <p>Величины <span class="node">m</span>, <span class="node">v</span>, <span class="node">t</span> входят сразу в несколько формул, поэтому их в колоде больше. Вытянув такую карту, решай: пустить её в короткую формулу сейчас или придержать ради длинной <span class="gold">Eₖ</span>.</p>
+    <div class="tip">
+      Обмен 1↔1 — это рычаг давления: видя открытую руку соперника, можно забрать у него карту, которой ему не хватает для джекпота. Игра награждает <span class="cyan">понимание связей внутри предмета</span>, а не везение.
+    </div>
+  </div>
+
+  <h2>ДЛЯ ПРЕПОДАВАТЕЛЯ</h2>
+  <div class="panel">
+    <p>Версия на двоих хороша для парной работы магистрантов: открытые руки делают каждое решение видимым, а значит — <span class="cyan">обсуждаемым</span>. Просите пары проговаривать, почему берут именно эту карту — так механика превращается в рассуждение о структуре предмета. Каркас переносится на любой предмет: «величины + знаки» → «слова + правила», «реагенты + связи», «причины + следствия».</p>
+  </div>
+</div>
+</body>
+</html>
