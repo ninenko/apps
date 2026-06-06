@@ -78,6 +78,7 @@ HTML public/
 | story-of-programming-slides.html | https://ninenko.github.io/apps/lectures/story-of-programming-slides.html |
 | waterfall-vs-agile.html | https://ninenko.github.io/apps/lectures/waterfall-vs-agile.html |
 | essays/ai-gap/index.html | https://ninenko.github.io/apps/essays/ai-gap/index.html |
+| physics_mechanics.html | https://ninenko.github.io/apps/lectures/physics_mechanics.html |
 
 ### Оценки
 

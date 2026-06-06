@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФОРМУЛА :: РАЗБОР МЕХАНИК</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* тёмное на светлом для чтения */
+    --paper:#f5f1e6;
+    --paper2:#e8e1cd;
+    --ink:#14181f;
+    --ink2:#23293a;
+    --muted:#5a5246;
+    --line:#bdb295;
+    /* акценты из игры — затемнены для контраста на светлом */
+    --cyan:#0f6f8c;
+    --gold:#8a6508;
+    --green:#1f7a3a;
+    --coral:#a8331f;
+    --purple:#5f3a96;
+    /* «игровые» насыщенные версии для пиксель-карт */
+    --g-bg:#0d1535;--g-cyan:#3fe0ff;--g-gold:#ffcf3f;--g-green:#5fff7a;
+    --g-coral:#ff6f6f;--g-purple:#b07fff;--g-line:#1f2d5c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
+    line-height:1.85;font-size:15px;letter-spacing:0;font-weight:500;
+    padding:0 0 70px;position:relative;
+  }
+  /* пиксельный шрифт — только заголовки, метки и игровые элементы */
+  h1,h2,.num,header .sub,.toc .t,.deckcard,.lbl-deck,.cap,.vs,.equals,.arrow,
+  .card .glyph,.card .sub,footer .gold,.nav a{font-family:'Press Start 2P',monospace}
+  /* лёгкая бумажная текстура + еле заметные сканлайны */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(circle at 20% 10%,rgba(0,0,0,.03),transparent 40%),
+      repeating-linear-gradient(0deg,rgba(0,0,0,.015) 0,rgba(0,0,0,.015) 1px,transparent 2px,transparent 5px);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+  header{
+    text-align:center;padding:46px 0 30px;border-bottom:3px solid var(--ink);
+    margin-bottom:8px;
+  }
+  h1{font-size:20px;color:var(--ink);line-height:1.5;margin-bottom:12px}
+  h1 .star{color:var(--gold)}
+  header .sub{font-size:9px;color:var(--cyan);letter-spacing:1px}
+  header .ctx{font-size:12px;color:var(--ink2);margin-top:14px;line-height:1.8;font-family:'JetBrains Mono',monospace;font-weight:500}
+
+  .intro{
+    background:var(--paper2);border:2px solid var(--line);
+    padding:18px 20px;margin:26px 0;font-size:15px;line-height:1.8;color:var(--ink);font-weight:500;
+  }
+  .intro b{color:var(--ink);font-weight:700}
+
+  .mech{margin:40px 0;border-top:2px dashed var(--line);padding-top:30px}
+  .mech-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+  .num{
+    width:42px;height:42px;flex:none;border:3px solid var(--gold);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+    background:var(--paper2);
+  }
+  h2{font-size:13px;color:var(--ink);line-height:1.5}
+  .mech p{font-size:15px;line-height:1.85;color:var(--ink);margin-bottom:14px;font-weight:500}
+  .mech p b{color:var(--ink);font-weight:700}
+  .cyan{color:var(--cyan)} .gold{color:var(--gold)} .green{color:var(--green)}
+  .coral{color:var(--coral)} .purple{color:var(--purple)}
+
+  .sdt{
+    border-left:5px solid var(--cyan);background:rgba(15,111,140,.10);
+    padding:13px 16px;margin:16px 0;font-size:14px;line-height:1.8;color:var(--ink);font-weight:500;
+  }
+  .sdt b{color:var(--cyan);font-weight:700}
+  .paper-note{
+    border-left:5px solid var(--coral);background:rgba(168,51,31,.08);
+    padding:13px 16px;margin:16px 0;font-size:14px;line-height:1.8;color:var(--ink);font-weight:500;
+  }
+  .paper-note b{color:var(--coral);font-weight:700}
+  .takeaway{
+    border-left:5px solid var(--green);background:rgba(31,122,58,.10);
+    padding:13px 16px;margin:16px 0;font-size:14px;line-height:1.8;color:var(--ink);font-weight:500;
+  }
+  .takeaway b{color:var(--green);font-weight:700}
+
+  /* ===== ПИКСЕЛЬНЫЕ ИЛЛЮСТРАЦИИ (стиль игры) ===== */
+  .scene{
+    background:var(--g-bg);border:3px solid var(--g-line);border-radius:8px;
+    padding:20px 16px;margin:18px 0;position:relative;overflow:hidden;
+    box-shadow:0 4px 0 rgba(0,0,0,.15);
+  }
+  .scene::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.13) 0,rgba(0,0,0,.13) 1px,transparent 2px,transparent 4px);}
+  .scene .cap{position:relative;z-index:2;text-align:center;font-size:7px;color:#9fb0e0;margin-top:14px;letter-spacing:.5px;line-height:1.8}
+  .row{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+
+  .card{
+    width:58px;height:80px;border-radius:6px;border:2px solid var(--g-line);
+    background:#0a0e27;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;position:relative;
+  }
+  .card .glyph{font-size:18px;line-height:1}
+  .card .sub{font-size:5px;margin-top:8px;color:#9fb0e0;text-align:center;padding:0 2px}
+  .card.val .glyph{color:var(--g-cyan)} .card.op .glyph{color:var(--g-coral)}
+  .card.small{width:44px;height:62px}.card.small .glyph{font-size:13px}.card.small .sub{font-size:5px;margin-top:5px}
+
+  .deckcard{width:62px;height:84px;border-radius:6px;border:2px solid #26367a;
+    background:repeating-linear-gradient(45deg,#15205a 0 6px,#101945 6px 12px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#aab8ee;font-size:7px;text-align:center;padding:5px;position:relative}
+  .deckcard.signs{background:repeating-linear-gradient(45deg,#3a1a3a 0 6px,#2a1230 6px 12px);border-color:#7a3a7a;color:#e7b8ff}
+  .deckcard .cnt{position:absolute;bottom:4px;font-size:6px;color:var(--g-cyan)}
+  .deckcard.signs .cnt{color:var(--g-purple)}
+
+  .equals{font-size:24px;color:var(--g-gold);padding:0 4px}
+  .arrow{font-size:18px;color:var(--g-gold);padding:0 2px}
+  .vs{font-size:10px;color:var(--g-gold);padding:0 8px}
+  .lbl-deck{font-size:7px;color:#7f90c8;text-align:center;margin-top:6px}
+  .pile{display:flex;flex-direction:column;align-items:center}
+
+  .glow-gold{box-shadow:0 0 0 2px var(--g-gold),0 0 14px rgba(255,207,63,.5)}
+  .glow-cyan{box-shadow:0 0 0 2px var(--g-cyan),0 0 14px rgba(63,224,255,.5)}
+
+  .qbox{width:58px;height:80px;border-radius:6px;border:2px dashed #5566aa;
+    display:flex;align-items:center;justify-content:center;color:#7f90c8;font-size:24px;background:#0a0e27}
+
+  footer{margin-top:50px;border-top:3px solid var(--ink);padding-top:24px;text-align:center;font-size:8px;color:var(--muted);line-height:2}
+  .nav{text-align:center;margin:20px 0 0}
+  .nav a{font-size:8px;color:var(--cyan);text-decoration:none;border:2px solid var(--line);padding:8px 12px;display:inline-block;margin:4px}
+  .nav a:hover{background:var(--paper2)}
+
+  .toc{background:var(--paper2);border:2px solid var(--line);padding:16px 20px;margin:22px 0;font-size:14px;line-height:2;font-weight:500}
+  .toc a{color:var(--cyan);text-decoration:none;font-weight:700}
+  .toc a:hover{text-decoration:underline}
+  .toc .t{color:var(--gold);margin-bottom:10px;display:block;font-size:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="star">★</span> ФОРМУЛА <span class="star">★</span><br>РАЗБОР МЕХАНИК</h1>
+    <div class="sub">ЧТО НА САМОМ ДЕЛЕ ДЕЛАЕТ ИГРА · МЕТОДИЧКА ДЛЯ ПРЕПОДАВАТЕЛЯ</div>
+    <div class="ctx">Дек-билдер по физике — это не «викторина с карточками».<br>За каждой механикой стоит решение, которое заставляет ученика думать о структуре предмета.</div>
+  </header>
+
+  <div class="toc">
+    <span class="t">▸ МЕХАНИКИ В РАЗБОРЕ</span>
+    <a href="#m1">1. Формула как комбинация</a> · <a href="#m2">2. Выбор колоды</a> · <a href="#m3">3. Обмен карточками</a> · <a href="#m4">4. Короткая или длинная</a> · <a href="#m5">5. Неопределённость</a>
+  </div>
+
+  <div class="intro">
+    Главный принцип всего разбора: <b>карта сама по себе бессмысленна</b>. Отдельная «масса» или «делить» не стоит ничего — ценность рождается только в <b>комбинации</b>. Именно поэтому дек-билдер учит не зубрить элементы по отдельности, а удерживать в голове <b>связи между ними</b>. Ниже — пять механик и педагогический смысл каждой.
+  </div>
+
+  <!-- ============ 1 ============ -->
+  <div class="mech" id="m1">
+    <div class="mech-head"><div class="num">1</div><h2>ФОРМУЛА В ИГРОВОМ КОНТЕКСТЕ: ЗАПОМИНАНИЕ ЧЕРЕЗ СБОРКУ</h2></div>
+
+    <div class="scene">
+      <div class="row">
+        <div class="card val glow-cyan"><div class="glyph">F</div><div class="sub">сила</div></div>
+        <div class="equals">=</div>
+        <div class="card val"><div class="glyph">m</div><div class="sub">масса</div></div>
+        <div class="card op"><div class="glyph">×</div><div class="sub">умнож.</div></div>
+        <div class="card val"><div class="glyph">a</div><div class="sub">ускор.</div></div>
+      </div>
+      <div class="cap">Игрок не «вспоминает» F = m·a — он СОБИРАЕТ её руками из карт. Знак «=» уже на поле.</div>
+    </div>
+
+    <p>Обычное заучивание формулы пассивно: ученик смотрит на «F = m·a» и пытается удержать её в памяти как картинку. В игре он <b>конструирует</b> формулу: берёт «силу», ставит её слева от равенства, подбирает справа «массу», «умножить», «ускорение» — и только потом проверяет. Запоминание здесь становится <b>побочным продуктом действия</b>, а не самоцелью, и потому держится прочнее.</p>
+
+    <p>Важна и проверка: когда игрок жмёт <span class="green">«проверить формулу»</span>, он получает <b>мгновенную обратную связь</b> — верно или нет. Это превращает формулу из «текста, который задали выучить» в <b>работающий механизм</b>, который либо срабатывает, либо нет. Ошибка не наказывается оценкой, а просто не даёт очков — её можно тут же исправить и попробовать снова.</p>
+
+    <div class="sdt">
+      <b>SDT — компетентность.</b> Мгновенная проверка и засчитанная формула дают ощущение «я могу», «у меня получилось». Это то самое чувство роста, которое подпитывает внутреннюю мотивацию сильнее любой внешней награды.
+    </div>
+
+    <div class="takeaway">
+      <b>Что развивает.</b> Активное, а не пассивное запоминание формул; понимание формулы как равенства двух частей; привычку проверять результат.
+    </div>
+  </div>
+
+  <!-- ============ 2 ============ -->
+  <div class="mech" id="m2">
+    <div class="mech-head"><div class="num">2</div><h2>СИТУАЦИЯ ВЫБОРА: КАКУЮ КОЛОДУ БРАТЬ</h2></div>
+
+    <div class="scene">
+      <div class="row">
+        <div class="pile">
+          <div class="deckcard">ВЕЛИ-<br>ЧИНЫ<span class="cnt">24</span></div>
+          <div class="lbl-deck">величины</div>
+        </div>
+        <div class="vs">или</div>
+        <div class="pile">
+          <div class="deckcard signs">ЗНАКИ<span class="cnt">12</span></div>
+          <div class="lbl-deck">знаки</div>
+        </div>
+        <div class="arrow">▸</div>
+        <div class="qbox">?</div>
+      </div>
+      <div class="cap">Две закрытые колоды. У игрока на руке уже есть карты — что ему нужно ДОБРАТЬ?</div>
+    </div>
+
+    <p>Перед взятием карты игрок стоит перед простым с виду решением: тянуть из колоды <span class="cyan">величин</span> или <span class="coral">знаков</span>. Но чтобы выбрать осознанно, он должен посмотреть на свою руку и спросить себя: <b>чего мне не хватает для формулы?</b> Если на руке уже есть «m» и «a», но нет «×» — рациональнее идти в колоду знаков. Если знаков много, а величин мало — наоборот.</p>
+
+    <p>Это и есть скрытая работа механики: разделение колоды на два типа карт <b>заставляет ученика держать в голове грамматику формулы</b> — что у неё есть «слова» (величины) и «связки» (операторы), и что одно без другого не работает. Выбор колоды — это маленький диагностический акт: ребёнок оценивает собственный набор и планирует на шаг вперёд.</p>
+
+    <div class="sdt">
+      <b>SDT — автономия.</b> Игрок сам решает, что брать; никто не диктует. Даже такой микровыбор даёт чувство контроля над ситуацией, а это первая из трёх базовых потребностей по теории самодетерминации.
+    </div>
+
+    <div class="takeaway">
+      <b>Что развивает.</b> Планирование на шаг вперёд, понимание, что формула состоит из разнородных элементов, оценку собственных ресурсов («что у меня уже есть»).
+    </div>
+  </div>
+
+
+  <!-- ============ 3 ============ -->
+  <div class="mech" id="m3">
+    <div class="mech-head"><div class="num">3</div><h2>ОБМЕН КАРТОЧКАМИ: ДОБРОВОЛЬНЫЙ И НАСИЛЬСТВЕННЫЙ</h2></div>
+
+    <div class="scene">
+      <div class="row">
+        <div class="card val"><div class="glyph">v</div><div class="sub">скорость</div></div>
+        <div class="arrow">↔</div>
+        <div class="card op"><div class="glyph">½</div><div class="sub">½</div></div>
+      </div>
+      <div class="cap">Обмен 1↔1: отдаёшь «скорость», забираешь «½». Видя открытую руку соперника, выбираешь, что взять.</div>
+    </div>
+
+    <p>В цифровой версии обмен <b>добровольный и равноценный</b>: один к одному, по согласию. Но настоящая педагогическая ценность раскрывается, когда вы переносите механику на <b>бумагу</b> и получаете возможность настроить её «температуру».</p>
+
+    <p><b>Добровольный обмен</b> учит переговорам и кооперации: «отдай мне квадрат, а я тебе — путь, нам обоим станет лучше». Здесь дети ищут <span class="green">взаимную выгоду</span>, проговаривают, какая карта зачем нужна, — и попутно вслух рассуждают о формулах. Это мягкий, союзнический режим.</p>
+
+    <div class="paper-note">
+      <b>Бумажная версия — «насильственный» обмен.</b> Можно ввести карту-событие или правило: «забери у соседа одну карту по своему выбору, отдав любую свою». Это добавляет <span class="coral">давления и азарта</span>: видя открытую руку, ты можешь <b>отнять</b> у соперника тот самый «½», которого ему не хватает для джекпота. Режим делает игру конкурентной и эмоциональной — но требует более зрелой группы, иначе возникают обиды. Совет: вводить такой обмен дозированно и обсуждать чувства после партии.
+    </div>
+
+    <div class="paper-note">
+      <b>Бумажная версия — открытая и закрытая игра.</b> На бумаге вы регулируете и саму видимость рук. В <b>открытую</b> (как в цифровой версии) руки лежат на столе лицом вверх: каждый ход виден, его можно <span class="green">обсуждать и подсказывать</span>, обмен становится осмысленной торговлей — это режим для обучения и совместного разбора. В <b>закрытую</b> карты держат в руке втайне: добавляется <span class="coral">блеф, разведка и риск</span> («что соперник копит?»), игра становится острее и ближе к настоящей карточной. Открытость — это второй «регулятор температуры» наряду с добровольностью обмена: открытая партия мягче и обучательнее, закрытая — напряжённее и азартнее. На первых занятиях разумно играть в открытую, а закрытый режим включать, когда правила уже освоены.
+    </div>
+
+    <div class="sdt">
+      <b>SDT — связанность.</b> Любой обмен — это взаимодействие с другим человеком. Добровольный режим прямо укрепляет «чувство плеча»; даже конкурентный обмен держит игроков в живом контакте друг с другом, а не наедине с карточками.
+    </div>
+
+    <div class="takeaway">
+      <b>Что развивает.</b> Переговорные навыки, чтение чужой стратегии (по открытой руке), осознанное планирование («какая карта ценна не только мне»). Регулируя добровольность, учитель управляет уровнем конкуренции в классе.
+    </div>
+  </div>
+
+  <!-- ============ 4 ============ -->
+  <div class="mech" id="m4">
+    <div class="mech-head"><div class="num">4</div><h2>КОРОТКАЯ ИЛИ ДЛИННАЯ: СТАВКА НА СЛОЖНОСТЬ</h2></div>
+
+    <div class="scene">
+      <div class="row">
+        <div class="pile" style="align-items:center">
+          <div class="row" style="gap:5px">
+            <div class="card small val"><div class="glyph">p</div></div>
+            <div class="card small op"><div class="glyph">=</div></div>
+            <div class="card small val"><div class="glyph">m</div></div>
+            <div class="card small op"><div class="glyph">×</div></div>
+            <div class="card small val"><div class="glyph">v</div></div>
+          </div>
+          <div class="lbl-deck">p = m·v &nbsp;→&nbsp; <span style="color:var(--g-green)">+3</span> · быстро, надёжно</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="pile" style="align-items:center">
+          <div class="row" style="gap:4px">
+            <div class="card small val glow-gold"><div class="glyph">Eₖ</div></div>
+            <div class="card small op"><div class="glyph">=</div></div>
+            <div class="card small op"><div class="glyph">½</div></div>
+            <div class="card small op"><div class="glyph">×</div></div>
+            <div class="card small val"><div class="glyph">m</div></div>
+            <div class="card small op"><div class="glyph">×</div></div>
+            <div class="card small val"><div class="glyph">v</div></div>
+            <div class="card small op"><div class="glyph">²</div></div>
+          </div>
+          <div class="lbl-deck">Eₖ = ½·m·v² &nbsp;→&nbsp; <span style="color:var(--g-gold)">+7</span> · долго, рискованно</div>
+        </div>
+      </div>
+      <div class="cap">Две короткие формулы дадут +6 быстро. Один джекпот даёт +7, но пока копишь редкие карты — соперник ходит.</div>
+    </div>
+
+    <p>Это сердце игры — <b>выбор между темпом и величиной выигрыша</b>. Короткая формула на 4 карты приносит мало очков, но собирается легко и быстро. Длинная <span class="gold">Eₖ = ½·m·v²</span> приносит много, но требует редких карт — «½», «²» — и пока игрок их копит, соперник успевает собрать две короткие. Возникает <b>настоящее стратегическое решение</b>, а не механическое повторение.</p>
+
+    <p>Педагогически это ценно вдвойне. Во-первых, ученик вынужден <b>оценивать сложность</b> формулы — видеть, что Eₖ «дороже», потому что в ней больше структурных элементов. Во-вторых, он учится <b>взвешивать риск</b>: синица в руке или журавль в небе. Это перенос далеко за пределы физики — в любую ситуацию, где есть быстрый малый результат и медленный большой.</p>
+
+    <div class="sdt">
+      <b>SDT — автономия + компетентность.</b> Игрок сам выбирает уровень сложности (как зелёная/жёлтая/красная карточка в вашей презентации по SDT). Сильный решает рискнуть на джекпот; тот, кто менее уверен, набирает короткими и тоже чувствует успех. Игра <b>сама подстраивается под уровень</b> без вмешательства учителя.
+    </div>
+
+    <div class="takeaway">
+      <b>Что развивает.</b> Оценку сложности задачи, управление риском, долгосрочное планирование. Заодно — дифференциация: одна и та же игра работает и для сильного, и для слабого ученика.
+    </div>
+  </div>
+
+  <!-- ============ 5 ============ -->
+  <div class="mech" id="m5">
+    <div class="mech-head"><div class="num">5</div><h2>РАБОТА С НЕОПРЕДЕЛЁННОСТЬЮ</h2></div>
+
+    <div class="scene">
+      <div class="row">
+        <div class="pile">
+          <div class="deckcard">?<span class="cnt">??</span></div>
+          <div class="lbl-deck">что выпадет?</div>
+        </div>
+        <div class="arrow">▸</div>
+        <div class="card val" style="opacity:.5"><div class="glyph">t</div><div class="sub">время</div></div>
+        <div class="qbox" style="font-size:14px">или<br>?</div>
+      </div>
+      <div class="cap">Из закрытой колоды неизвестно, что придёт. Нужна не та карта — приходится перестраивать план.</div>
+    </div>
+
+    <p>Колоды закрыты, поэтому игрок <b>не знает заранее</b>, какую карту вытянет. Это вносит управляемую долю случайности — но, в отличие от чистой лотереи, здесь случайность <b>не решает исход</b>. Пришла не та карта? Игрок перестраивает план: пускает её в другую формулу, придерживает на будущее или идёт на обмен. <b>Неопределённость становится поводом для гибкости, а не для отчаяния.</b></p>
+
+    <p>Это важный навык, который школа редко тренирует прямо: <b>действовать в условиях неполной информации</b>. Хороший игрок в дек-билдер не злится на «плохую» карту, а спрашивает: «что я могу с ней сделать?» Ровно так же учёный работает с неожиданным результатом эксперимента, а человек — с непредвиденными обстоятельствами жизни.</p>
+
+    <div class="paper-note">
+      <b>Дозировка случайности.</b> В терминах Октализа непредсказуемость — это «любопытство» (светлый мотиватор), а тикающий дефицит редких карт — «избегание/дефицit» (тёмный). На бумаге вы регулируете градус: больше редких карт в колоде — меньше стресса; меньше — острее азарт. Стройте обучение на светлой стороне, а напряжение добавляйте дозированно.
+    </div>
+
+    <div class="sdt">
+      <b>SDT — компетентность через преодоление.</b> Справиться с «неудобной» картой и всё равно собрать формулу — мощное переживание мастерства. Именно преодолимая трудность, а не гарантированный успех, даёт самое сильное чувство «я смог».
+    </div>
+
+    <div class="takeaway">
+      <b>Что развивает.</b> Гибкость мышления, устойчивость к неудаче, умение перепланировать на ходу, спокойное отношение к случайности.
+    </div>
+  </div>
+
+  <footer>
+    ВСЕ ПЯТЬ МЕХАНИК СЛУЖАТ ОДНОМУ:<br>
+    научить видеть <span class="gold">СВЯЗИ ВНУТРИ ПРЕДМЕТА</span>, а не зубрить элементы по отдельности.<br><br>
+    Каркас переносится на любой предмет: величины+знаки → слова+правила,<br>реагенты+связи, причины+следствия.
+  </footer>
+
+  <div class="nav">
+    <a href="physics_deckbuilder_2p.html">◂ ИГРА (2 игрока)</a>
+    <a href="physics_rules_2p.html">ПРАВИЛА</a>
+  </div>
+</div>
+</body>
+</html>
