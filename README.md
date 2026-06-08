@@ -79,6 +79,7 @@ HTML public/
 | waterfall-vs-agile.html | https://ninenko.github.io/apps/lectures/waterfall-vs-agile.html |
 | essays/ai-gap/index.html | https://ninenko.github.io/apps/essays/ai-gap/index.html |
 | physics_mechanics.html | https://ninenko.github.io/apps/lectures/physics_mechanics.html |
+| ai-tutors.html | https://ninenko.github.io/apps/lectures/ai-tutors.html |
 
 ### Оценки
 
