@@ -1,0 +1,20 @@
+{
+  "brand": "Teach for Kyrgyzstan — Заманбап Мугалим",
+  "colors": {
+    "green":      { "hex": "#3f9a46", "use": "primary brand green; buttons, accents, active states" },
+    "green-dark": { "hex": "#2c6f34", "use": "button hover, darker accents" },
+    "green-deep": { "hex": "#1e4d24", "use": "headings, logo, deep green" },
+    "cream":      { "hex": "#faf6ec", "use": "page / document background" },
+    "card":       { "hex": "#ffffff", "use": "cards, surfaces" },
+    "ink":        { "hex": "#222a22", "use": "body text" },
+    "muted":      { "hex": "#6c7568", "use": "secondary text, captions" },
+    "gold":       { "hex": "#d99a2b", "use": "warm highlight; CTA on dark backgrounds" },
+    "ochre":      { "hex": "#c06a2e", "use": "secondary accent; Kyrgyz-language quotes" },
+    "line":       { "hex": "#e8e1d1", "use": "borders, dividers" }
+  },
+  "fonts": {
+    "sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    "serif": "Georgia, 'Times New Roman', serif",
+    "note": "Body/UI = sans. Editorial quotes = serif italic. The logo wordmark typeface ships inside the logo art — do not recreate it with system fonts."
+  }
+}
