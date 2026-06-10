@@ -1,20 +1,26 @@
 {
   "brand": "Teach for Kyrgyzstan — Заманбап Мугалим",
-  "colors": {
-    "green":      { "hex": "#3f9a46", "use": "primary brand green; buttons, accents, active states" },
-    "green-dark": { "hex": "#2c6f34", "use": "button hover, darker accents" },
-    "green-deep": { "hex": "#1e4d24", "use": "headings, logo, deep green" },
-    "cream":      { "hex": "#faf6ec", "use": "page / document background" },
-    "card":       { "hex": "#ffffff", "use": "cards, surfaces" },
-    "ink":        { "hex": "#222a22", "use": "body text" },
-    "muted":      { "hex": "#6c7568", "use": "secondary text, captions" },
-    "gold":       { "hex": "#d99a2b", "use": "warm highlight; CTA on dark backgrounds" },
-    "ochre":      { "hex": "#c06a2e", "use": "secondary accent; Kyrgyz-language quotes" },
-    "line":       { "hex": "#e8e1d1", "use": "borders, dividers" }
+  "primary": {
+    "green":      { "hex": "#99AF82", "use": "pale green — main brand surface (covers, heroes, social tiles); sampled from official 2025 Instagram materials" },
+    "green-dark": { "hex": "#73875D", "use": "hover states, small accents on white (derived shade)" },
+    "yellow":     { "hex": "#FFC607", "use": "accent squares / highlights only — never running text" },
+    "black":      { "hex": "#000000", "use": "logo on light, body text, headings", "cmyk": "0 0 0 100" },
+    "white":      { "hex": "#FFFFFF", "use": "logo on green/dark, text on green, page background" }
+  },
+  "auxiliary_brandbook_2023": {
+    "note": "Muted tints from the 2023 brandbook; backgrounds only, use sparingly.",
+    "sage-gray":     { "hex": "#A2B7B1", "cmyk": "30 04 20 16" },
+    "mint":          { "hex": "#C2D9CE", "cmyk": "27 03 20 03" },
+    "mint-pale":     { "hex": "#DCEFE3", "cmyk": "13 00 12 00" },
+    "warmgray":      { "hex": "#C1BAAA", "cmyk": "26 23 32 00" },
+    "warmgray-mid":  { "hex": "#CEC8BC", "cmyk": "19 17 24 00" },
+    "warmgray-soft": { "hex": "#E6E3DE", "cmyk": "09 08 10 00" },
+    "warmgray-pale": { "hex": "#F2F2ED", "cmyk": "04 03 05 00" },
+    "black-tints": "70% / 50% / 25% of black allowed; matte silver & matte gold only for special occasions"
   },
   "fonts": {
-    "sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    "serif": "Georgia, 'Times New Roman', serif",
-    "note": "Body/UI = sans. Editorial quotes = serif italic. The logo wordmark typeface ships inside the logo art — do not recreate it with system fonts."
+    "display": "Q3 DIN Condensed (fonts/Q3_DIN_Condensed.ttf) — headings, UPPERCASE; fallback Arial Narrow / Calibri Bold",
+    "body": "Calibri; fallback 'Segoe UI', Arial, Helvetica, sans-serif",
+    "note": "Logo wordmark typeface ships inside the logo art — never recreate it with fonts."
   }
 }
