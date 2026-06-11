@@ -1,7 +1,7 @@
 # Teach for Kyrgyzstan — Brand Kit
 «Заманбап Мугалим» · TEACH FOR KYRGYZSTAN
 
-Drop-in branding folder: logo, colors, fonts, CSS tokens and task-specific guides.
+Drop-in branding folder: logo, colors, fonts, patterns, CSS tokens and task-specific guides.
 Copy the whole folder into any project; an AI agent (or a person) then has everything
 needed to produce on-brand HTML, documents, slides, posters and social materials.
 
@@ -31,8 +31,9 @@ TfK-Brand-Kit/
 │   ├── web.md           ← HTML pages, web, email
 │   ├── documents.md     ← Word/PDF, letters, diplomas, cards (brandbook specs)
 │   ├── poster-social.md ← posters, slides, social tiles, badges, invitations
-│   └── brand-core.md    ← full reference: logo geometry, palette, grid, photo rules
+│   └── brand-core.md    ← full reference: logo geometry, palette, grid, backgrounds, photo rules
 ├── fonts/               ← Q3 DIN Condensed + Q3 DIN (ttf) + fonts.css (@font-face)
+├── patterns/            ← official background patterns as tiling SVGs (watermark, stripes, rows)
 ├── logo/
 │   ├── svg/             ← lockup & emblem in white / black (+ currentColor versions)
 │   ├── png/             ← transparent hi-res (Word/PPT/PDF) + favicon-512
@@ -43,7 +44,7 @@ TfK-Brand-Kit/
 ## The brand in five lines
 
 1. **Logo**: monochrome only — white on green/dark/photo, black on white/light. lockup = mark + wordmark, emblem = spruce mark alone. Never recolor, stretch, or rebuild with fonts.
-2. **Colors**: pale green `#99AF82` surfaces, black & white everything else, yellow `#FFC607` square accents (never text). Muted brandbook tints available for backgrounds.
+2. **Colors**: pale green `#99AF82` surfaces, black & white everything else, yellow `#FFC607` square accents (never text). Muted brandbook tints + official patterns for backgrounds.
 3. **Type**: Q3 DIN Condensed UPPERCASE for display; Calibri (→ Arial) for body.
 4. **Layout**: square modular grid, left-aligned everything, rectilinear (no rounded corners, shadows, gradients), the simplest option wins.
 5. **Tone**: warm, human, bilingual — Kyrgyz quotes with a Russian translation.
@@ -63,7 +64,10 @@ TfK-Brand-Kit/
 
 ## Changelog
 
-- **2026-06** — rebuilt from the 2023 brandbook + 2025 pale-green identity. Retired the
+- **2026-06 (b)** — full visual pass over all 46 brandbook pages: added official background
+  patterns (`patterns/` SVG tiles + CSS classes), photo-texture rules, logo geometry
+  (5X module, 2:3 lockup box), additional logo versions (gray, two-line TFK, circular badge).
+- **2026-06 (a)** — rebuilt from the 2023 brandbook + 2025 pale-green identity. Retired the
   unofficial saturated-green/cream/gold palette and green logo variants (kept in
   `source/legacy/`). Added Q3 DIN fonts, task-routed guides, new favicon.
 - **2025** — first version of the kit (pre-brandbook, inferred palette).

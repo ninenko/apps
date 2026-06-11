@@ -10,12 +10,13 @@
 <link rel="icon" href="TfK-Brand-Kit/logo/favicon.svg">
 ```
 
-Style with `var(--tfk-*)`: `--tfk-green #99AF82`, `--tfk-yellow #FFC607`, `--tfk-black`, `--tfk-white`, `--tfk-ink`, `--tfk-green-dark` (hover), plus muted tints `--tfk-mint`, `--tfk-warmgray-pale` etc. Ready classes: `.tfk-body .tfk-hero .tfk-h1..3 .tfk-display .tfk-btn .tfk-btn--yellow .tfk-card .tfk-quote .tfk-header .tfk-squares`.
+Style with `var(--tfk-*)`: `--tfk-green #99AF82`, `--tfk-yellow #FFC607`, `--tfk-black`, `--tfk-white`, `--tfk-ink`, `--tfk-green-dark` (hover), plus muted tints `--tfk-mint`, `--tfk-warmgray-pale` etc. Ready classes: `.tfk-body .tfk-hero .tfk-h1..3 .tfk-display .tfk-btn .tfk-btn--yellow .tfk-card .tfk-quote .tfk-header .tfk-squares .tfk-bg-watermark .tfk-bg-stripes .tfk-bg-rows`.
 
 ## Page anatomy (signature look)
 
 - **Hero / header band**: pale green `--tfk-green`, WHITE lockup top-left, huge white UPPERCASE Q3 DIN Condensed headline (think viewport-filling, `clamp(48px,12vw,160px)`), short white Calibri body text. Optional cluster of yellow squares in a corner (`.tfk-squares` or absolutely-positioned divs in a staircase/pixel pattern).
 - **Content**: white background, black text, Q3 DIN Condensed uppercase headings, generous whitespace. Rectilinear: **no border-radius, no box-shadows, no gradients**.
+- **Section backgrounds**: official brandbook patterns available as tiling SVGs — classes `.tfk-bg-watermark` (gray spruce marks), `.tfk-bg-stripes` (mint+beige diagonals), `.tfk-bg-rows` (vertical marks); files in `patterns/`. Use for footers, dividers, empty states — never behind body text.
 - **Buttons/links**: black button with white text (hover `--tfk-green-dark`), or yellow button with black text for the main CTA. Links `--tfk-green-dark`.
 - All text **left-aligned**; layout on a simple square grid; logo and headings flush to the left margin.
 

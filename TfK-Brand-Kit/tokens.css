@@ -49,6 +49,11 @@
 .tfk-squares i{background:var(--tfk-yellow)}
 .tfk-squares i:nth-child(even){background:transparent}
 
+/* Official brandbook background patterns (tiles in patterns/) — never behind body text */
+.tfk-bg-watermark{background:var(--tfk-white) url("patterns/emblem-watermark.svg") repeat}
+.tfk-bg-stripes{background:var(--tfk-white) url("patterns/stripes.svg") repeat}
+.tfk-bg-rows{background:var(--tfk-white) url("patterns/emblem-rows.svg") repeat}
+
 /* Header */
 .tfk-header{display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:14px 24px;background:var(--tfk-green)}

@@ -16,7 +16,8 @@
     "warmgray-mid":  { "hex": "#CEC8BC", "cmyk": "19 17 24 00" },
     "warmgray-soft": { "hex": "#E6E3DE", "cmyk": "09 08 10 00" },
     "warmgray-pale": { "hex": "#F2F2ED", "cmyk": "04 03 05 00" },
-    "black-tints": "70% / 50% / 25% of black allowed; matte silver & matte gold only for special occasions"
+    "black-tints": "70% / 50% / 25% of black allowed; matte silver & matte gold only for special occasions",
+    "pattern-colors": { "watermark-gray": "#D2D2D2", "stripe-mint": "#CCE4CE", "stripe-beige": "#D0C7B6", "stripe-dark": "#6C696A" }
   },
   "fonts": {
     "display": "Q3 DIN Condensed (fonts/Q3_DIN_Condensed.ttf) — headings, UPPERCASE; fallback Arial Narrow / Calibri Bold",

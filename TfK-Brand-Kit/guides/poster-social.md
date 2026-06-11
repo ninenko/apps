@@ -11,9 +11,14 @@
 - Accent: clusters of yellow `#FFC607` squares in pixel/staircase arrangements at corners or edges. Squares are the only decoration — no other ornaments, icons or clipart.
 - Alternative scheme: white field, black logo + black text, yellow squares. Photos: white logo over a calm area of the photo.
 
+## Brandbook backgrounds (alternative to the green field)
+
+- Official patterns (`patterns/` SVG tiles): spruce-mark watermark (light gray on white), mint+beige diagonal stripes, dark-gray stripes, vertical mark rows. Quiet, light, never under body text.
+- Natural photo textures: spruce branches, frost, stone/concrete, sand, paper — as banner strips or cover backgrounds, monochrome logo over a calm area.
+
 ## Layout discipline
 
-Square modular grid (module ≈ the emblem, proportions 2:3); whole number of modules; logo and text flush LEFT. Simplest composition wins. Partner logos, when required, sit in a strip along the bottom edge.
+Square modular grid (module ≈ the emblem); whole number of modules; logo and text flush LEFT. Simplest composition wins. Partner logos, when required, sit in a strip along the bottom edge.
 
 ## Formats
 
