@@ -26,6 +26,10 @@
   .help-link{position:absolute;top:8px;right:12px;font-size:7px;color:var(--cyan);
     text-decoration:none;border:1px solid var(--line);padding:5px 8px;z-index:5}
   .help-link:hover{background:var(--panel)}
+  .mode-btn{position:absolute;top:8px;left:12px;font-size:7px;color:var(--purple);
+    background:transparent;border:1px solid var(--purple);padding:5px 8px;z-index:5;
+    font-family:'Press Start 2P',monospace;cursor:pointer;letter-spacing:1px}
+  .mode-btn:hover{background:var(--panel)}
 
   #board{position:absolute;inset:0;display:flex;flex-direction:column;
     padding:34px 14px 12px;gap:8px}
@@ -67,8 +71,11 @@
   .deckcard:hover{box-shadow:0 0 12px rgba(63,224,255,.45)}
   .deckcard .cnt{position:absolute;bottom:5px;font-size:7px;color:var(--cyan)}
   .deckcard.signs{background:repeating-linear-gradient(45deg,#3a1a3a 0 6px,#2a1230 6px 12px);border-color:#7a3a7a;color:#e7b8ff}
-  .discard{width:66px;height:90px;border-radius:6px;border:2px solid var(--line);
+  .discard{width:66px;height:90px;border-radius:6px;border:2px solid var(--line);position:relative;
     background:var(--bg2);display:flex;align-items:center;justify-content:center;color:#7f90c8;font-size:8px}
+  .discard.takeable{cursor:pointer;border-color:var(--purple);box-shadow:0 0 10px rgba(176,127,255,.45)}
+  .discard.takeable:hover{box-shadow:0 0 16px rgba(176,127,255,.7)}
+  .discard .dcnt{position:absolute;bottom:4px;font-size:7px;color:var(--purple)}
 
   /* mode: build */
   .build{display:none;flex-direction:column;align-items:center;gap:14px}
@@ -84,6 +91,11 @@
   .equals{display:flex;align-items:center;font-size:30px;color:var(--gold);
     text-shadow:0 0 10px rgba(255,207,63,.5);padding:0 4px}
 
+  /* mode: choice (вариант «Две карты») */
+  .choice{display:none;flex-direction:column;align-items:center;gap:14px}
+  .choice.on{display:flex}
+  .choice-lbl{font-size:8px;color:var(--gold);text-align:center;max-width:440px;line-height:1.9;letter-spacing:.5px}
+
   .msg{min-height:30px;font-size:8px;color:var(--cyan);text-align:center;max-width:600px;line-height:1.9;letter-spacing:.5px}
   .msg .good{color:var(--green)} .msg .bad{color:var(--coral)} .msg .gold{color:var(--gold)}
 
@@ -94,12 +106,14 @@
   button.act:disabled{opacity:.3;cursor:not-allowed}
   button.gold{border-color:var(--gold);color:var(--gold)} button.gold:hover:not(:disabled){background:var(--gold);color:var(--bg)}
   button.coral{border-color:var(--coral);color:var(--coral)} button.coral:hover:not(:disabled){background:var(--coral);color:var(--bg)}
+  button.purple{border-color:var(--purple);color:var(--purple)} button.purple:hover:not(:disabled){background:var(--purple);color:var(--bg)}
 
   .pill{font-size:7px;color:#7f90c8;border:1px solid var(--line);padding:5px 9px;letter-spacing:1px}
   .pill b{color:var(--gold)}
 </style>
 </head>
 <body>
+<button class="mode-btn" id="btnMode">РЕЖИМ: БАЗА</button>
 <div class="title-bar">★ ФОРМУЛА ★ 2 ИГРОКА</div>
 <a class="help-link" href="physics_rules_2p.html" target="_blank">ПРАВИЛА ▸</a>
 
@@ -128,6 +142,12 @@
       </div>
     </div>
 
+    <!-- choice mode (вариант «Две карты») -->
+    <div class="choice" id="choiceMode">
+      <div class="choice-lbl">Ты вытянул <span style="color:var(--gold)">2 карты</span> — оставь одну, другая уйдёт в открытый сброс</div>
+      <div class="hand" id="choiceCards"></div>
+    </div>
+
     <!-- build mode -->
     <div class="build" id="buildMode">
       <div class="formula-line">
@@ -137,10 +157,11 @@
       </div>
     </div>
 
-    <div class="msg" id="msg">Ход <span class="gold">Игрока 1</span>. Возьми карту из колоды или поменяйся с соперником, затем собирай формулу.</div>
+    <div class="msg" id="msg">Ход <span class="gold">Игрока 1</span>. За ход — <span class="gold">взять карту ИЛИ обмен</span> (одно из двух), затем собирай формулу.</div>
 
     <div class="controls" id="ctrlPiles">
       <button class="act" id="btnSwap" disabled>ОБМЕН 1↔1</button>
+      <button class="act purple" id="btnTakeDiscard" style="display:none">ВЗЯТЬ СБРОС</button>
       <button class="act gold" id="btnBuild">СОБРАТЬ ФОРМУЛУ</button>
       <button class="act" id="btnPass">ПЕРЕДАТЬ ХОД ▸</button>
     </div>
@@ -173,7 +194,6 @@ const SIGN = [ // знаки (БЕЗ равно)
 const BYID = {}; VAL.forEach(c=>BYID[c.id]={...c,type:'val'}); SIGN.forEach(c=>BYID[c.id]={...c,type:'op'});
 
 /* ===== ФОРМУЛЫ: левая часть = правая часть ===== */
-// L и R — массивы id в правильном порядке
 const FORMULAS = [
   {name:'v = s / t',       L:['v'],  R:['s','div','t'],            pts:3},
   {name:'a = v / t',       L:['a'],  R:['v','div','t'],            pts:3},
@@ -193,13 +213,13 @@ function buildVal(){let d=[];VAL.forEach(c=>{const n=(['m','v','t'].includes(c.i
 function buildSign(){let d=[];SIGN.forEach(c=>{const n=(c.id==='mul')?7:(c.id==='div')?6:3;for(let i=0;i<n;i++)d.push(c.id);});return shuffle(d);}
 
 const G={
-  deckVal:buildVal(), deckSign:buildSign(), discard:null,
+  mode:'base',                 // 'base' | 'two'
+  deckVal:[], deckSign:[], discardPile:[],
   players:[{hand:[],score:0},{hand:[],score:0}],
-  cur:0, drew:false, swapped:false,
-  // build state
+  cur:0, acted:false,          // acted = за ход уже сделано ОДНО действие (взять / обмен / сброс)
   building:false, side:null, placedL:[], placedR:[],
-  // selection for swap
-  selIdx:null,
+  selIdx:null,                 // выбор карты на руке (для обмена)
+  choice:null,                 // вариант «Две карты»: {cards:[id,id]}
 };
 
 function drawVal(){if(!G.deckVal.length)G.deckVal=buildVal();return G.deckVal.pop();}
@@ -209,6 +229,15 @@ function deal(){
   for(let p=0;p<2;p++){
     G.players[p].hand.push(drawVal(),drawVal(),drawSign()); // 2 величины + 1 знак
   }
+}
+
+function resetRound(){
+  G.deckVal=buildVal(); G.deckSign=buildSign(); G.discardPile=[];
+  G.players=[{hand:[],score:0},{hand:[],score:0}];
+  G.cur=0; G.acted=false;
+  G.building=false; G.side=null; G.placedL=[]; G.placedR=[];
+  G.selIdx=null; G.choice=null;
+  deal();
 }
 
 /* ===== ОТРИСОВКА ===== */
@@ -228,9 +257,9 @@ function render(){
       const isCur=(p===G.cur);
       const sel=(isCur&&G.selIdx===idx);
       let onclick=null;
-      if(isCur && !G.building) onclick=()=>handSelect(idx);
+      if(isCur && !G.building && !G.choice) onclick=()=>handSelect(idx);
       if(isCur && G.building && G.side) onclick=()=>placeCard(idx);
-      cont.appendChild(makeCard(id,{sel,dim:(G.building&&!isCur),onclick}));
+      cont.appendChild(makeCard(id,{sel,dim:((G.building||G.choice)&&!isCur),onclick}));
     });
     document.getElementById('sc'+(p+1)).textContent=G.players[p].score;
   });
@@ -239,26 +268,51 @@ function render(){
 
   document.getElementById('cntVal').textContent=G.deckVal.length;
   document.getElementById('cntSign').textContent=G.deckSign.length;
-  const d=document.getElementById('discard');
-  d.innerHTML=G.discard?`<div class="glyph" style="font-size:18px;color:${BYID[G.discard].type==='op'?'var(--coral)':'var(--cyan)'}">${BYID[G.discard].g}</div>`:'—';
 
-  // mode toggle
-  document.getElementById('pilesMode').style.display=G.building?'none':'flex';
+  // сброс: верхняя карта + счётчик
+  const top=G.discardPile.length?G.discardPile[G.discardPile.length-1]:null;
+  const d=document.getElementById('discard');
+  const canTakeDiscard=(G.mode==='two' && !G.building && !G.choice && !G.acted && G.discardPile.length>0);
+  if(top){
+    d.innerHTML=`<div class="glyph" style="font-size:18px;color:${BYID[top].type==='op'?'var(--coral)':'var(--cyan)'}">${BYID[top].g}</div>`+
+      (G.discardPile.length>1?`<span class="dcnt">${G.discardPile.length}</span>`:'');
+  } else { d.innerHTML='—'; }
+  d.classList.toggle('takeable',canTakeDiscard);
+
+  // mode toggle button
+  document.getElementById('btnMode').textContent='РЕЖИМ: '+(G.mode==='two'?'2 КАРТЫ':'БАЗА');
+
+  // center: piles / choice / build
+  document.getElementById('pilesMode').style.display=(G.building||G.choice)?'none':'flex';
+  document.getElementById('choiceMode').classList.toggle('on',!!G.choice);
   document.getElementById('buildMode').classList.toggle('on',G.building);
-  document.getElementById('ctrlPiles').style.display=G.building?'none':'flex';
+  document.getElementById('ctrlPiles').style.display=(G.building||G.choice)?'none':'flex';
   document.getElementById('ctrlBuild').style.display=G.building?'flex':'none';
 
+  if(G.choice) renderChoice();
   if(G.building) renderBuild();
 
-  // swap button: блокируется, если обмен уже сделан или ничего не выбрано
-  document.getElementById('btnSwap').disabled = (G.selIdx===null || G.swapped);
+  // ОБМЕН: доступен, если выбрана карта и за ход ещё не было действия
+  document.getElementById('btnSwap').disabled=(G.selIdx===null || G.acted || !!G.choice);
 
-  // колоды гаснут после взятия карты за ход
-  const drewUp = G.drew && !G.building;
+  // ВЗЯТЬ СБРОС: только в режиме «Две карты»
+  const bTake=document.getElementById('btnTakeDiscard');
+  bTake.style.display=(G.mode==='two')?'inline-block':'none';
+  bTake.disabled=(G.acted || G.building || !!G.choice || G.discardPile.length===0);
+
+  // колоды гаснут, если действие за ход уже сделано (или идёт выбор карты)
+  const lock=(G.acted||G.choice)&&!G.building;
   ['deckVal','deckSign'].forEach(id=>{
     const el=document.getElementById(id);
-    el.style.opacity = drewUp ? .32 : 1;
-    el.style.pointerEvents = drewUp ? 'none' : 'auto';
+    el.style.opacity=lock?.32:1;
+    el.style.pointerEvents=lock?'none':'auto';
+  });
+}
+
+function renderChoice(){
+  const cont=document.getElementById('choiceCards');cont.innerHTML='';
+  G.choice.cards.forEach((id,i)=>{
+    cont.appendChild(makeCard(id,{onclick:()=>chooseKeep(i)}));
   });
 }
 
@@ -287,29 +341,62 @@ function handSelect(idx){
   render();
 }
 
-/* ===== ВЗЯТЬ КАРТУ ===== */
-document.getElementById('deckVal').onclick=()=>takeCard('val');
-document.getElementById('deckSign').onclick=()=>takeCard('sign');
-function takeCard(kind){
-  if(G.building) return;
-  if(G.drew){setMsg('<span class="bad">За ход можно взять только одну карту из колоды.</span> Можно ещё обменяться, собрать формулу или передать ход.');return;}
+/* ===== ВЗЯТЬ КАРТУ / ТЯНУТЬ ===== */
+document.getElementById('deckVal').onclick=()=>deckClick('val');
+document.getElementById('deckSign').onclick=()=>deckClick('sign');
+function deckClick(kind){
+  if(G.building||G.choice) return;
+  if(G.mode==='two') drawTwo(kind); else takeOne(kind);
+}
+
+function takeOne(kind){           // базовый режим — одна карта
+  if(G.acted){setMsg('<span class="bad">За ход — либо взять карту, либо обмен (одно из двух).</span> Действие уже сделано — собирай формулу или передай ход.');return;}
   G.players[G.cur].hand.push(kind==='val'?drawVal():drawSign());
-  G.drew=true;
-  setMsg(`Игрок ${G.cur+1} взял карту (${kind==='val'?'величина':'знак'}). Можно обменяться, собрать формулу или передать ход.`);
-  G.selIdx=null;
+  G.acted=true; G.selIdx=null;
+  setMsg(`Игрок ${G.cur+1} взял карту (${kind==='val'?'величина':'знак'}). Собирай формулу или передай ход.`);
   render();
 }
 
+function drawTwo(kind){           // режим «Две карты» — тянешь 2, оставляешь 1
+  if(G.acted){setMsg('<span class="bad">За ход — одно действие.</span> Уже сделано — собирай формулу или передай ход.');return;}
+  const c1=(kind==='val'?drawVal():drawSign());
+  const c2=(kind==='val'?drawVal():drawSign());
+  G.choice={cards:[c1,c2]}; G.selIdx=null;
+  setMsg('Ты вытянул <span class="gold">2 карты</span>. Оставь одну — другая уйдёт в открытый сброс.');
+  render();
+}
+function chooseKeep(i){
+  if(!G.choice) return;
+  const keep=G.choice.cards[i], drop=G.choice.cards[1-i];
+  G.players[G.cur].hand.push(keep);
+  G.discardPile.push(drop);
+  G.choice=null; G.acted=true;
+  setMsg(`<span class="good">Оставил:</span> ${BYID[keep].g}. <span class="bad">В сброс:</span> ${BYID[drop].g}. Собирай формулу или передай ход.`);
+  render();
+}
+
+/* ===== ВЗЯТЬ ВЕРХНЮЮ КАРТУ СБРОСА (режим «Две карты») ===== */
+function takeDiscard(){
+  if(G.mode!=='two'||G.building||G.choice) return;
+  if(G.acted){setMsg('<span class="bad">За ход — одно действие.</span> Уже сделано.');return;}
+  if(!G.discardPile.length){setMsg('<span class="bad">Сброс пуст.</span>');return;}
+  const id=G.discardPile.pop();
+  G.players[G.cur].hand.push(id);
+  G.acted=true; G.selIdx=null;
+  setMsg(`Игрок ${G.cur+1} взял из сброса: <span class="cyan">${BYID[id].g}</span>. Собирай формулу или передай ход.`);
+  render();
+}
+document.getElementById('btnTakeDiscard').onclick=takeDiscard;
+document.getElementById('discard').onclick=()=>{ if(G.mode==='two') takeDiscard(); };
+
 /* ===== ОБМЕН 1↔1 ===== */
 document.getElementById('btnSwap').onclick=()=>{
-  if(G.selIdx===null||G.building) return;
-  if(G.swapped){setMsg('<span class="bad">Обмен за ход уже сделан.</span>');return;}
+  if(G.selIdx===null||G.building||G.choice) return;
+  if(G.acted){setMsg('<span class="bad">За ход — либо обмен, либо взять карту (одно из двух).</span> Действие уже сделано.');return;}
   const giveId=G.players[G.cur].hand[G.selIdx];
   const opp=(G.cur+1)%2;
   if(G.players[opp].hand.length===0){setMsg('<span class="bad">У соперника нет карт для обмена.</span>');return;}
-  // выбрать карту соперника — кликом; делаем простой prompt-режим
   setMsg('Обмен: <span class="gold">нажми карту соперника</span>, которую хочешь забрать взамен своей.');
-  // навесим временные обработчики на руку соперника
   const cont=document.getElementById('hand'+(opp+1));
   [...cont.children].forEach((el,i)=>{
     el.classList.remove('dim');el.style.cursor='pointer';
@@ -317,8 +404,8 @@ document.getElementById('btnSwap').onclick=()=>{
       const takeId=G.players[opp].hand[i];
       G.players[opp].hand[i]=giveId;
       G.players[G.cur].hand[G.selIdx]=takeId;
-      G.selIdx=null;G.swapped=true;
-      setMsg(`<span class="good">Обмен совершён:</span> ${BYID[giveId].g} ↔ ${BYID[takeId].g}. Можно взять карту, собрать формулу или передать ход.`);
+      G.selIdx=null;G.acted=true;
+      setMsg(`<span class="good">Обмен совершён:</span> ${BYID[giveId].g} ↔ ${BYID[takeId].g}. Собирай формулу или передай ход.`);
       render();
     };
   });
@@ -326,6 +413,7 @@ document.getElementById('btnSwap').onclick=()=>{
 
 /* ===== РЕЖИМ СБОРКИ ===== */
 document.getElementById('btnBuild').onclick=()=>{
+  if(G.choice) return;
   G.building=true;G.side='L';G.placedL=[];G.placedR=[];G.selIdx=null;
   setMsg('Режим сборки. Нажми <span class="gold">левую</span> или <span class="gold">правую</span> часть, затем карту на руке. «=» уже на поле.');
   render();
@@ -343,12 +431,11 @@ function placeCard(idx){
 function unplace(side,i){
   const arr=(side==='L')?G.placedL:G.placedR;
   const id=arr.splice(i,1)[0];
-  G.players[G.cur].hand.push(id); // вернуть на руку
+  G.players[G.cur].hand.push(id);
   render();
 }
 
 document.getElementById('btnCancel').onclick=()=>{
-  // вернуть все карты на руку
   G.players[G.cur].hand.push(...G.placedL,...G.placedR);
   G.building=false;G.side=null;G.placedL=[];G.placedR=[];
   setMsg('Сборка отменена, карты вернулись на руку.');
@@ -359,7 +446,7 @@ document.getElementById('btnCheck').onclick=()=>{
   const f=matchFormula(G.placedL,G.placedR);
   if(f){
     G.players[G.cur].score+=f.pts;
-    G.discard=[...G.placedL,...G.placedR].slice(-1)[0];
+    G.discardPile.push(...G.placedL,...G.placedR); // карты формулы уходят в открытый сброс
     G.placedL=[];G.placedR=[];G.building=false;G.side=null;
     setMsg(`<span class="good">★ ВЕРНО:</span> <span class="gold">${f.name}</span> <span class="good">+${f.pts} очк.</span> Передай ход.`);
     render();
@@ -371,7 +458,6 @@ document.getElementById('btnCheck').onclick=()=>{
 function matchFormula(L,R){
   const key=(arr)=>arr.join('|');
   for(const f of FORMULAS){
-    // принимаем как прямой, так и зеркальный порядок (L=R или R=L)
     if((key(f.L)===key(L)&&key(f.R)===key(R)) || (key(f.L)===key(R)&&key(f.R)===key(L))) return f;
   }
   return null;
@@ -379,16 +465,27 @@ function matchFormula(L,R){
 
 /* ===== ПЕРЕДАТЬ ХОД ===== */
 document.getElementById('btnPass').onclick=()=>{
-  if(G.building) return;
-  G.cur=(G.cur+1)%2;G.drew=false;G.swapped=false;G.selIdx=null;
-  setMsg(`Ход <span class="gold">Игрока ${G.cur+1}</span>. Возьми карту или поменяйся, затем собирай формулу.`);
+  if(G.building||G.choice) return;
+  G.cur=(G.cur+1)%2;G.acted=false;G.selIdx=null;
+  const extra=(G.mode==='two')?' Тяни 2 карты, меняйся или возьми верх сброса.':'';
+  setMsg(`Ход <span class="gold">Игрока ${G.cur+1}</span>. За ход — одно действие, затем собирай формулу.${extra}`);
+  render();
+};
+
+/* ===== ПЕРЕКЛЮЧЕНИЕ РЕЖИМА ===== */
+document.getElementById('btnMode').onclick=()=>{
+  G.mode=(G.mode==='two')?'base':'two';
+  resetRound();
+  setMsg(G.mode==='two'
+    ? 'Режим <span class="gold">«ДВЕ КАРТЫ»</span>: тянешь — берёшь 2 карты, одну оставляешь, другую в открытый сброс. Можно взять верхнюю карту сброса. За ход — одно действие. Новая партия.'
+    : 'Базовый режим: за ход одно действие — взять одну карту ИЛИ обмен. Новая партия.');
   render();
 };
 
 function setMsg(h){document.getElementById('msg').innerHTML=h;}
 
 /* ===== СТАРТ ===== */
-deal();render();
+resetRound();render();
 </script>
 </body>
 </html>
