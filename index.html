@@ -246,7 +246,7 @@
       <a class="card" href="apps/binary-transistors-explorer.html">
         <span class="lang-badge lang-en">EN</span>
         <div class="card-icon">⚡</div>
-        <div class="card-title">Binary & Transistors Explorer</div>
+        <div class="card-title">Binary &amp; Transistors Explorer</div>
         <div class="card-desc">
           <span data-lang="en">Interactive visualisation of how transistors work and how binary numbers are built from them.</span>
           <span data-lang="ru">Интерактивная визуализация работы транзисторов и построения двоичных чисел.</span>
@@ -601,4 +601,35 @@
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.togg
+        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+      });
+      document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
+    }
+
+    const SECTIONS = ['apps', 'lectures', 'grades'];
+
+    function setFilter(filter) {
+      SECTIONS.forEach(key => {
+        const show = (filter === 'all' || filter === key);
+        document.getElementById('section-' + key).classList.toggle('hidden', !show);
+      });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+      localStorage.setItem('filter', filter);
+    }
+
+    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
+    const lang = localStorage.getItem('lang') || defaultLang;
+
+    const validFilters = ['all', ...SECTIONS];
+    let filter = localStorage.getItem('filter') || 'all';
+    if (!validFilters.includes(filter)) filter = 'all';  // migrate legacy 'both'
+
+    setLang(lang);
+    setFilter(filter);
+  </script>
+
+</body>
+</html>
