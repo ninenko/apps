@@ -575,6 +575,19 @@
         </span>
       </a>
 
+      <a class="card" href="apps/test2_results_TFK-125.html">
+        <span class="lang-badge lang-ru">RU</span>
+        <div class="card-icon">📝</div>
+        <div class="card-title">Психология и психофизиология — тест 2 (TFK-125)</div>
+        <div class="card-desc">
+          <span data-lang="en">Second test results for the "Psychology &amp; Psychophysiology in Human Development" course, group TFK-125 — enter your student ID to see your score, percentage, and question breakdown.</span>
+          <span data-lang="ru">Результаты второго теста по курсу «Психология и психофизиология в развитии человека», группа TFK-125. Введи свой ID, чтобы увидеть балл, процент и разбивку по вопросам.</span>
+        </div>
+        <span class="card-tag tag-grade">
+          <span data-lang="en">Test result</span><span data-lang="ru">Тест</span>
+        </span>
+      </a>
+
     </div>
   </div>
 
@@ -588,35 +601,4 @@
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
-      });
-      document.documentElement.lang = lang;
-      localStorage.setItem('lang', lang);
-    }
-
-    const SECTIONS = ['apps', 'lectures', 'grades'];
-
-    function setFilter(filter) {
-      SECTIONS.forEach(key => {
-        const show = (filter === 'all' || filter === key);
-        document.getElementById('section-' + key).classList.toggle('hidden', !show);
-      });
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
-      });
-      localStorage.setItem('filter', filter);
-    }
-
-    const defaultLang = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
-    const lang = localStorage.getItem('lang') || defaultLang;
-
-    const validFilters = ['all', ...SECTIONS];
-    let filter = localStorage.getItem('filter') || 'all';
-    if (!validFilters.includes(filter)) filter = 'all';  // migrate legacy 'both'
-
-    setLang(lang);
-    setFilter(filter);
-  </script>
-
-</body>
-</html>
+        btn.classList.togg
