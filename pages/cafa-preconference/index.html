@@ -191,7 +191,11 @@ footer{border-top:1px solid var(--line);background:var(--surface);padding:34px 0
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline;}
 footer p{margin:0;font-size:15px;color:var(--ink-3);}
 
-.logo{height:52px;width:auto;display:block;background:#fff;padding:6px 8px;border-radius:3px;}
+.logo-link{display:block;border-bottom:0;border-radius:4px;line-height:0;}
+.logo-link:hover{border-bottom:0;}
+.logo-link:hover .logo{box-shadow:0 0 0 2px var(--accent);}
+.logo-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+.logo{transition:box-shadow .15s ease;height:52px;width:auto;display:block;background:#fff;padding:6px 8px;border-radius:3px;}
 .lockup .divider{width:1px;height:30px;background:var(--line);display:inline-block;}
 @media (max-width:560px){.lockup .divider{display:none;} .lockup .sub{display:none;} .logo{height:44px;}}
 .foot-logo{height:44px;width:auto;background:#fff;padding:5px 7px;border-radius:3px;}
@@ -225,7 +229,10 @@ section{padding:58px 0;}
 <header class="masthead">
   <div class="wrap">
     <div class="lockup">
-      <img class="logo" alt="Bishkek International School" src="images/bis-logo.png">
+      <a class="logo-link" href="https://www.bis.kg/school/" target="_blank" rel="noopener"
+         aria-label="Bishkek International School — school website">
+        <img class="logo" alt="Bishkek International School" src="images/bis-logo.png">
+      </a>
       <span class="divider" aria-hidden="true"></span>
       <span class="sub">Pre-Conference</span>
     </div>
@@ -266,7 +273,7 @@ section{padding:58px 0;}
 
       <article class="card">
         <img class="portrait" alt="Ivan Ninenko" src="images/ivan-ninenko.jpg">
-        <p><strong>Ivan Ninenko</strong> is Strategic Lead for Education Systems Innovation at Bishkek International School. He has driven a Teach for Kyrgyzstan initiative <a href="https://ninenko.github.io/apps/pages/ai-tutors.html" target="_blank" rel="noopener">piloting AI-powered teaching assistants</a> across rural Kyrgyz public schools, and co-founded <a href="https://quantaquiz.com/" target="_blank" rel="noopener">QuantaQuiz</a>, an AI-powered testing and personalized-feedback platform.</p>
+        <p><strong>Ivan Ninenko</strong> is Strategic Lead for Education Systems Innovation at <a href="https://www.bis.kg/school/" target="_blank" rel="noopener">Bishkek International School</a>. He has driven a Teach for Kyrgyzstan initiative <a href="https://ninenko.github.io/apps/pages/ai-tutors.html" target="_blank" rel="noopener">piloting AI-powered teaching assistants</a> across rural Kyrgyz public schools, and co-founded <a href="https://quantaquiz.com/" target="_blank" rel="noopener">QuantaQuiz</a>, an AI-powered testing and personalized-feedback platform.</p>
       </article>
 
     </div>
