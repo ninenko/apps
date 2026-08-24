@@ -7,6 +7,7 @@
 Прямые ссылки:
 - `apps/` → `https://ninenko.github.io/apps/apps/имя-файла.html`
 - `lectures/` → `https://ninenko.github.io/apps/lectures/имя-файла.html`
+- `pages/` → `https://ninenko.github.io/apps/pages/имя-файла.html`
 
 ---
 
@@ -20,15 +21,16 @@
 
 ---
 
-## Три раздела сайта
+## Четыре раздела сайта
 
-Главная страница разбита на три раздела (фильтр + теги):
+Главная страница разбита на четыре раздела (фильтр + теги):
 
 1. **Приложения и игры** — интерактивные приложения, инструменты, игры, эмуляторы, анализаторы, визуализации.
 2. **Лекции и слайды** — слайды, презентации, материалы для чтения, эссе.
-3. **Оценки** — страницы с результатами и оценками студентов.
+3. **Веб-страницы** — длинные страницы-лонгриды, статьи, репортажи (не слайды).
+4. **Оценки** — страницы с результатами и оценками студентов.
 
-Разделов три, а папок две: раздел «Оценки» — это группировка на главной, его файлы физически лежат в `apps/` (чтобы не ломать публичные ссылки).
+Разделов четыре, а папок три: раздел «Оценки» — это группировка на главной, его файлы физически лежат в `apps/` (чтобы не ломать публичные ссылки).
 
 ---
 
@@ -38,12 +40,15 @@
 HTML public/
 ├── apps/       ← «Приложения и игры» + «Оценки»
 ├── lectures/   ← «Лекции и слайды»
+├── pages/      ← «Веб-страницы» (лонгриды и статьи)
 ├── essays/     ← лонгриды/эссе (в разделе «Лекции и слайды»)
 ├── index.html  ← главная страница сайта
 ├── .claude/    ← инструкции для Claude
 ```
 
-**Правило размещения:** слайды/презентация/чтение → `lectures/`; всё остальное, включая страницы оценок → `apps/`.
+**Правило размещения:** слайды/презентация → `lectures/`; длинная страница-статья/лонгрид → `pages/`; всё остальное, включая страницы оценок → `apps/`.
+
+> При переносе файла в другую папку в старом месте остаётся HTML-редирект, чтобы уже разосланные ссылки продолжали работать.
 
 ---
 
@@ -79,7 +84,14 @@ HTML public/
 | waterfall-vs-agile.html | https://ninenko.github.io/apps/lectures/waterfall-vs-agile.html |
 | essays/ai-gap/index.html | https://ninenko.github.io/apps/essays/ai-gap/index.html |
 | physics_mechanics.html | https://ninenko.github.io/apps/lectures/physics_mechanics.html |
-| ai-tutors.html | https://ninenko.github.io/apps/lectures/ai-tutors.html |
+| ai-tutors.html | ↪ переехал в `pages/` (старая ссылка редиректит) |
+
+### Веб-страницы
+
+| Файл | Ссылка |
+|------|--------|
+| ai-tutors.html | https://ninenko.github.io/apps/pages/ai-tutors.html |
+| cafa-preconference/index.html | https://ninenko.github.io/apps/pages/cafa-preconference/ |
 
 ### Оценки
 
@@ -88,3 +100,4 @@ HTML public/
 | neuroemo_Spring2026_semester_grades.html | https://ninenko.github.io/apps/apps/neuroemo_Spring2026_semester_grades.html |
 | neuroemo_results.html | https://ninenko.github.io/apps/apps/neuroemo_results.html |
 | grades_neuro_edu_test1.html | https://ninenko.github.io/apps/apps/grades_neuro_edu_test1.html |
+| test2_results_TFK-125.html | https://ninenko.github.io/apps/apps/test2_results_TFK-125.html |

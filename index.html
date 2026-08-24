@@ -181,6 +181,7 @@
     .tag-lecture { background: #1e1e2e; color: #818cf8; }
     .tag-essay { background: #1e1a2e; color: #c084fc; }
     .tag-grade { background: #2e2616; color: #fbbf24; }
+    .tag-page  { background: #16262e; color: #38bdf8; }
 
     footer {
       text-align: center;
@@ -217,6 +218,9 @@
     </button>
     <button class="filter-btn" data-filter="lectures" onclick="setFilter('lectures')">
       <span data-lang="en">Lectures &amp; slides</span><span data-lang="ru">Лекции и слайды</span>
+    </button>
+    <button class="filter-btn" data-filter="pages" onclick="setFilter('pages')">
+      <span data-lang="en">Webpages</span><span data-lang="ru">Веб-страницы</span>
     </button>
     <button class="filter-btn" data-filter="grades" onclick="setFilter('grades')">
       <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
@@ -513,7 +517,17 @@
         </span>
       </a>
 
-      <a class="card" href="lectures/ai-tutors.html">
+    </div>
+  </div>
+
+  <!-- 3. WEBPAGES -->
+  <div class="section-block" id="section-pages">
+    <div class="section-label">
+      <span data-lang="en">Webpages</span><span data-lang="ru">Веб-страницы</span>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="pages/ai-tutors.html">
         <span class="lang-badge lang-ru">RU</span>
         <div class="card-icon">🤖</div>
         <div class="card-title">ИИ приходит в кыргызские школы</div>
@@ -521,15 +535,28 @@
           <span data-lang="en">Rural Kyrgyz schoolteachers built their own AI assistants and ran them in real lessons — honest stories of breakthroughs and struggles from the classroom.</span>
           <span data-lang="ru">Учителя сельских школ Кыргызстана создали ИИ-ассистентов и запустили их на уроках. Честные истории успехов и трудностей из реальных классов.</span>
         </div>
-        <span class="card-tag tag-essay">
-          <span data-lang="en">Essay</span><span data-lang="ru">Эссе</span>
+        <span class="card-tag tag-page">
+          <span data-lang="en">Webpage</span><span data-lang="ru">Веб-страница</span>
+        </span>
+      </a>
+
+      <a class="card" href="pages/cafa-preconference/index.html">
+        <span class="lang-badge lang-en">EN</span>
+        <div class="card-icon">🎤</div>
+        <div class="card-title">CAFA 2026 Pre-Conference</div>
+        <div class="card-desc">
+          <span data-lang="en">The Current State of AI — what frontier models can and cannot do. Pre-conference at Bishkek International School, 25 September 2026, with Igor Chemerkin, Aidin Biibosunov and Ivan Ninenko.</span>
+          <span data-lang="ru">Текущее состояние ИИ — что фронтирные модели уже умеют, а что нет. Преконференция в Bishkek International School, 25 сентября 2026: Игорь Чемеркин, Айдин Бийбосунов, Иван Ниненко.</span>
+        </div>
+        <span class="card-tag tag-page">
+          <span data-lang="en">Webpage</span><span data-lang="ru">Веб-страница</span>
         </span>
       </a>
 
     </div>
   </div>
 
-  <!-- 3. GRADES -->
+  <!-- 4. GRADES -->
   <div class="section-block" id="section-grades">
     <div class="section-label">
       <span data-lang="en">Grades</span><span data-lang="ru">Оценки</span>
@@ -607,7 +634,7 @@
       localStorage.setItem('lang', lang);
     }
 
-    const SECTIONS = ['apps', 'lectures', 'grades'];
+    const SECTIONS = ['apps', 'lectures', 'pages', 'grades'];
 
     function setFilter(filter) {
       SECTIONS.forEach(key => {
