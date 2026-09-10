@@ -2100,10 +2100,11 @@ function drawUnitNode(g, spec){
   txt(g, 13, 60, (u.derived ? ids.length + " prior skills, ranked by reach" :
       u.clusters.length + " cluster" + (u.clusters.length === 1 ? "" : "s") + " · " + ids.length + " skill" + (ids.length === 1 ? "" : "s")),
       "sub", "var(--ink2)");
-  var cov = M ? (spec.student ? roll.assessed + " of " + roll.n + " assessed"
-                              : coverage(ids).assessed + "/" + coverage(ids).n + " assessed")
-              : "no class file loaded";
-  txt(g, 13, 76, cov, "tiny", "var(--muted)");
+  if (M){
+    var cov = spec.student ? roll.assessed + " of " + roll.n + " assessed"
+                           : coverage(ids).assessed + "/" + coverage(ids).n + " assessed";
+    txt(g, 13, 76, cov, "tiny", "var(--muted)");
+  }
 
   /* what is inside now hangs off the chip as satellites — see drawSatNode */
   if (u.noline && u.noline.length){
@@ -2253,7 +2254,8 @@ function renderUnitsTab(animate){
     }
   }
   if (sub){
-    sub.textContent = G.units.length + " chips: Prereq plus " + (G.units.length - 1) + " units, " +
+    sub.textContent = (M ? "" : "No class file loaded — the map is the plan, with no student data on it yet. ") +
+      G.units.length + " chips: Prereq plus " + (G.units.length - 1) + " units, " +
       G.skills.filter(function(s){ return String(s.grade) === "8"; }).length + " Grade 8 skills in " +
       G.CL.list.filter(function(c){ return c.id !== "PRE-C0"; }).length + " clusters. " +
       "The spine reflects the planner, not observed teaching — Term 1 classwork packets disagree with it about a strand's worth of content.";
