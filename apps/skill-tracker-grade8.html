@@ -365,8 +365,8 @@ svg.map .clpill:hover rect{stroke-width:2}
 @keyframes landflash{from{box-shadow:0 0 0 3px var(--accent)}to{box-shadow:0 0 0 3px transparent}}
 .skilldetail.landed{animation:landflash .9s ease-out}
 @media (prefers-reduced-motion: reduce){.skilldetail.landed{animation:none}}
-text.unfold{cursor:pointer}
-text.unfold:hover{fill:var(--accent)}
+text.unfold{cursor:pointer;pointer-events:auto;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:2px}
+text.unfold:hover{fill:var(--accent);text-decoration-color:currentColor}
 text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
 .openlist{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}
 .openlist .oc{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:2px 6px;
