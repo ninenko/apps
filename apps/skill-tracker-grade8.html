@@ -280,6 +280,22 @@ svg.map .spine{stroke:var(--rule);stroke-width:2}
 .gate .btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
 .backlist{margin-top:12px;padding:12px 14px;border:1px solid var(--warn);background:var(--warn-soft);border-radius:10px;font-size:13px}
 .backlist b{display:block;margin-bottom:5px}
+.backlist.oneline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--accent);
+  text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.linkbtn:hover{opacity:.75}
+.guide h3{margin:26px 0 6px;font-size:15px}
+.guide h3:first-child{margin-top:4px}
+.guide p{margin:8px 0;font-size:13.5px;line-height:1.6;max-width:72ch}
+.guide ul{margin:8px 0 8px 18px;font-size:13.5px;line-height:1.6;max-width:72ch}
+.guide li{margin:4px 0}
+.guide .term{font-weight:600}
+.guide .muted{color:var(--muted);font-size:12px}
+.guide code{font-size:12px}
+.guide table{font-size:13px}
+.guide .swatch{display:inline-block;width:34px;height:0;border-top-width:2.5px;vertical-align:middle;margin-right:8px}
+.guide .callout{margin:12px 0;padding:12px 14px;border-left:3px solid var(--accent);
+  background:var(--accent-soft);border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.6;max-width:72ch}
 .backlist .chips{margin-top:6px}
 
 
@@ -367,6 +383,7 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
     <button id="tab-class" role="tab" aria-selected="false" disabled>Class grid</button>
     <button id="tab-student" role="tab" aria-selected="false" disabled>Student</button>
     <button id="tab-load" role="tab" aria-selected="false">Files</button>
+    <button id="tab-guide" role="tab" aria-selected="false">How to read this</button>
   </nav>
 </header>
 
@@ -490,6 +507,14 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
 </section>
 
 <!-- ============ LOADER ============ -->
+<section id="view-guide" class="hide">
+  <div class="panel" style="margin-top:24px">
+    <h2>How to read this tool</h2>
+    <div class="sub">Written for someone opening it for the first time. No jargon that is not explained here.</div>
+    <div id="guideBody"></div>
+  </div>
+</section>
+
 <section id="view-load" class="hide loader">
   <div class="panel" style="margin-top:24px">
     <h2>Files</h2>
@@ -2266,6 +2291,154 @@ function renderUnitsTab(animate){
   renderDetail("units");
 }
 
+function backPairs(){
+  var out = [], seen = {};
+  (G.CL.back || []).forEach(function(e){
+    e.pairs.forEach(function(pair){
+      var k = pair[0] + ">" + pair[1];
+      if (seen[k]) return;
+      seen[k] = true;
+      out.push({ needs: pair[0], by: pair[1], from: e.from, to: e.to });
+    });
+  });
+  return out;
+}
+function goGuide(id){
+  var t = document.getElementById("g-" + id);
+  if (t && t.scrollIntoView) t.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* ============================================================ the guide
+   Plain language, for a teacher who has never seen the tool. Numbers and examples
+   are read from the loaded graph, so the page cannot drift from what is on screen. */
+function gEl(tag, cls, html){
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html != null) e.innerHTML = html;
+  return e;
+}
+function renderGuide(){
+  var host = document.getElementById("guideBody");
+  if (!host || !G) return;
+  host.innerHTML = "";
+  var w = gEl("div", "guide");
+  function sec(id, title){ var h = gEl("h3", null, title); h.id = "g-" + id; w.appendChild(h); }
+  function p(html){ w.appendChild(gEl("p", null, html)); }
+  function callout(html){ w.appendChild(gEl("div", "callout", html)); }
+  function ul(items){
+    var u = gEl("ul");
+    items.forEach(function(x){ u.appendChild(gEl("li", null, x)); });
+    w.appendChild(u);
+  }
+
+  var nG8 = G.skills.filter(function(x){ return String(x.grade) === "8"; }).length;
+  var nCl = G.CL.list.filter(function(c){ return c.id !== "PRE-C0"; }).length;
+  var nPre = (G.units[0] && G.units[0].skills.length) || 0;
+  var pairs = backPairs();
+
+  sec("what", "What this is");
+  p("A map of the Grade 8 maths year, built so you can answer one question quickly: <b>who is not ready for the unit I am about to teach, and what should I do about it?</b>");
+  p("It is a reading tool. It never changes your spreadsheets, and nothing you load leaves this computer — no upload, no account, no server. Close the tab and the student data is gone.");
+
+  sec("words", "The five words this tool uses");
+  ul([
+    "<span class='term'>Skill</span> — one thing a student can either do or not do, small enough to assess, like <i>“calculate a percentage increase”</i>. There are " + nG8 + " of them in Grade 8. Each has an id like <code>NUM-6</code> so it can be pointed at.",
+    "<span class='term'>Prerequisite</span> — skill A is a prerequisite of skill B if a student who cannot do A will not manage B. This is the whole engine: everything the tool says about readiness comes from these links.",
+    "<span class='term'>Cluster</span> — a handful of skills that belong together as one topic, like <i>Averages and spread</i>. There are " + nCl + ". Clusters exist to make the map readable; they are not something you teach.",
+    "<span class='term'>Unit</span> — a block in the school's plan for the year: Unit 0 through Unit 6. A unit is what you actually teach and when.",
+    "<span class='term'>Prereq</span> — the " + nPre + " Grade 6 and 7 skills that Grade 8 leans on. Not a unit, not taught this year — the floor the year stands on."
+  ]);
+  callout("Units and clusters are two different ways of cutting the same " + nG8 + " skills. A unit says <b>when</b> it is taught. A cluster says <b>what it is about</b>. They mostly line up, and where they do not, the tool says so rather than hiding it.");
+
+  sec("tabs", "What each tab shows you");
+  ul([
+    "<span class='term'>Units</span> — the year as a line, left to right in teaching order, with each unit's clusters floating above and below it. The dotted line marks where Grade 8 starts. Curved lines between units mean one unit needs something from another.",
+    "<span class='term'>Skills</span> — the dependency map, at three levels of detail. <b>12 clusters</b> is the overview; <b>77 skills</b> is everything; <b>mixed</b> is what you get by clicking <code>»</code> on a cluster — that one topic opens up while the rest stay folded, so you can look inside one thing without losing the year around it.",
+    "<span class='term'>Class grid</span> — students down the side, skills across the top, once you load a class file. Pick a unit as the target and it shows who is blocked.",
+    "<span class='term'>Student</span> — one student's map, with the deepest thing they are missing marked <i>teach first</i>."
+  ]);
+  p("Class grid and Student stay greyed out until you load a class file, because there is nothing honest to put in them before that.");
+
+  sec("depth", "What d0, d1, d2 mean");
+  p("The rows down the left of the dependency map. <b>d0</b> is a skill that needs nothing else on the map. <b>d1</b> needs something at d0. <b>d2</b> needs something at d1, and so on — it is the length of the longest chain leading into that skill.");
+  p("Depth is not the same as teaching order. A d4 skill is deep in the chain of what-needs-what; it is not necessarily taught fourth. Where those two disagree is exactly what the next section is about.");
+  callout("In the <b>mixed</b> view the depths are recalculated over whatever is currently on screen, so <code>d0</code> there will not match <code>d0</code> on the 12-cluster map. Same idea, different set of nodes.");
+
+  sec("order", "The notice: “needed before it is taught”");
+  p("Somewhere in the plan, a skill is listed as a prerequisite of something that is taught <b>earlier</b> than it is. That is a contradiction: a student cannot use a skill in October that they meet in February.");
+  p("These show on the Units tab as <b>amber dashed curves</b> running right-to-left, and on the dependency map as amber dashed edges. In this graph there " + (pairs.length === 1 ? "is one" : "are " + pairs.length) + ":");
+  var tbl = gEl("div", "tablewrap");
+  var t = gEl("table");
+  t.innerHTML = "<thead><tr><th>This skill…</th><th>…is needed by a skill taught earlier</th><th></th></tr></thead>";
+  var tb = document.createElement("tbody");
+  pairs.forEach(function(pr){
+    var a = G.byId[pr.needs] || {}, b = G.byId[pr.by] || {};
+    var ua = (G.unitOf[pr.needs] || []).map(function(k){ return G.unitBy[k].label; }).join("; ") || "—";
+    var ub = (G.unitOf[pr.by] || []).map(function(k){ return G.unitBy[k].label; }).join("; ") || "—";
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td><code>" + pr.needs + "</code> " + (a.name || "") + "<br><span class='muted'>" + ua + "</span></td>" +
+                   "<td><code>" + pr.by + "</code> " + (b.name || "") + "<br><span class='muted'>" + ub + "</span></td>" +
+                   "<td>taught later</td>";
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  tbl.appendChild(t);
+  w.appendChild(tbl);
+  p("<b>What to do about it.</b> Nothing automatic — this is a judgement call, and it is yours. One of three things is true, and only a teacher can say which:");
+  ul([
+    "<b>The link is wrong.</b> The later skill is not really needed; the earlier one can be taught without it, perhaps in a simpler form. Then the prerequisite should be removed from the sheet.",
+    "<b>The order is wrong.</b> The two units genuinely need swapping, or a piece of the later unit needs pulling forward.",
+    "<b>Both are right and it is handled in class.</b> You teach the needed bit informally when you get there. Then it is worth writing that down, because the plan does not currently say so."
+  ]);
+  p("The tool shows the contradiction on its face rather than quietly resolving it, because a wrong resolution is worse than a visible question.");
+
+  sec("lines", "The lines on the map, and what each one means");
+  p("Every line between two boxes means the same thing: <b>the one at the top is needed for the one at the bottom</b>. What changes is the styling, and each style says something specific.");
+  ul([
+    "<span class='swatch' style='border-top:2px solid var(--rule)'></span><b>Thin grey, solid</b> — an ordinary prerequisite, pointing the way the year runs. Most lines are these, and they are drawn faintly on purpose: they are the background, not the news.",
+    "<span class='swatch' style='border-top:2.5px dashed var(--warn)'></span><b>Amber, dashed</b> — the same kind of prerequisite, but running <i>backwards</i> against the teaching order. This is the contradiction described above, and the only reason a line is ever coloured without you selecting something.",
+    "<span class='swatch' style='border-top:2.5px solid var(--critical)'></span><b>Red, thicker</b> — appears when you click a box: everything that box <i>depends on</i>, upstream of it.",
+    "<span class='swatch' style='border-top:2.5px solid var(--m2)'></span><b>Blue, thicker</b> — also on click: everything that <i>depends on it</i>, downstream. Faded grey lines are the ones unrelated to what you selected."
+  ]);
+  p("Dashes on a <b>box outline</b> mean something different from dashes on a line: a dashed box is a group that is not taught this year — the Prereq chip and its skills. And the <b>vertical dotted rule</b> on the Units tab is not a connection at all; it is just the marker for where Grade 8 begins.");
+
+  sec("levels", "The mastery levels and the colours");
+  ul([
+    "<b>0 — no knowledge.</b> <b>1 — basic.</b> <b>2 — ok.</b> <b>3 — mastery.</b> Darker blue means further along.",
+    "<b>?</b> — inconclusive: the evidence exists but does not settle it.",
+    "<b>Blank</b> — not assessed. Deliberately not the same as zero, and never counted as one. Every group on screen carries a “k of n assessed” count so thin evidence looks thin."
+  ]);
+  p("<b>Ready</b> means level 2 or above. A student is <i>blocked</i> on a unit when something the unit needs sits below that line.");
+
+  sec("sources", "Where the information comes from");
+  ul([
+    "<b>The units, and their content lines</b> — from the school's own <i>MYP Mathematics Subject Group Overview 2026-2027</i> and <i>Grade 8 Unit Content 2026-2027</i>. The teaching order on the spine is the planner's order. There are no dates, because those documents carry none.",
+    "<b>The skills, their descriptions and what counts as mastery</b> — written by hand from those same content lines, one skill per assessable thing.",
+    "<b>The prerequisite links</b> — also written by hand. This is the part with the most judgement in it, and the part most worth arguing with.",
+    "<b>Student levels</b> — only ever from the class file you load. Nothing is inferred, guessed or carried over between classes."
+  ]);
+  p("Some things are <b>worked out by the tool</b> rather than typed by anyone: which prior-year skills count as Prereq, which clusters depend on which, the depth rows, and every roll-up from skills to clusters and units. That is on purpose — a second hand-written copy of the same fact is free to drift out of date.");
+
+  sec("trust", "What is not settled yet");
+  ul([
+    "<b>The prerequisite links have not been reviewed by the department.</b> They are a first draft. If one looks wrong to you, it may well be.",
+    "<b>The cluster names and groupings are new</b> and also unreviewed.",
+    "<b>Term 1 does not match.</b> The classwork packets actually teach ratio and rate in depth, scale drawings, similar figures, indirect measurement and simple interest. None of that is in the planner or in this map yet, so the first term is under-described here.",
+    "<b>Grade 6 and 7 are placeholders.</b> Only the " + nPre + " anchors that Grade 8 directly needs are modelled. When a student is blocked on prior-year arithmetic, the tool can currently only say that much, not which bit.",
+    "<b>The MYP criteria fields are boilerplate</b> and should not be relied on."
+  ]);
+  callout("The honest summary: the <b>structure</b> is trustworthy and the <b>student data</b> is exactly what you loaded. The <b>prerequisite judgements</b> are one person's first pass and need a maths department to argue with them.");
+
+  sec("files", "The two files");
+  ul([
+    "<b>The skill graph</b> — the map itself. Shared across the department, and a copy is built into this page so it opens with something to look at. Load your own to override it.",
+    "<b>The class mastery file</b> — one per class, never built in. Columns are skill ids, rows are students."
+  ]);
+  p("Both are read in your browser. <b>Anonymise names</b> replaces student names with placeholders if you are showing the screen to someone else.");
+
+  host.appendChild(w);
+}
+
 function renderBackList(){
   var host = document.getElementById("backList");
   if (!host) return;
@@ -2273,24 +2446,14 @@ function renderBackList(){
   var back = G.unitEdges.filter(function(e){ return e.back; });
   var cback = G.CL.back;
   if (!back.length && !cback.length) return;
-  var b = el("div", "backlist");
-  b.appendChild(el("b", null, (back.length || cback.length) + " prerequisite arc" + ((back.length || cback.length) === 1 ? "" : "s") + " run backwards against the planner's teaching order"));
-  var seen = {};
-  cback.forEach(function(e){
-    e.pairs.forEach(function(pair){
-      var k = pair[0] + ">" + pair[1];
-      if (seen[k]) return;
-      seen[k] = true;
-      var line = el("div");
-      line.style.marginTop = "6px";
-      var w = el("span");
-      w.appendChild(document.createTextNode((G.clById[e.from] || {}).name + " → " + (G.clById[e.to] || {}).name + ": "));
-      line.appendChild(w);
-      line.appendChild(skillChips([pair[0], pair[1]]));
-      b.appendChild(line);
-    });
-  });
-  b.appendChild(el("div", "sub", "A skill taught later is a prerequisite of one taught earlier. Either the order or the edge is wrong — a teacher has to decide which."));
+  var n = backPairs().length;
+  var b = el("div", "backlist oneline");
+  b.appendChild(document.createTextNode(
+    n + " skill" + (n === 1 ? " is" : "s are") + " needed before " +
+    (n === 1 ? "it is" : "they are") + " taught. "));
+  var more = el("button", "linkbtn", "What does that mean?");
+  more.addEventListener("click", function(){ show("guide"); location.hash = "#order"; goGuide("order"); });
+  b.appendChild(more);
   host.appendChild(b);
 }
 
@@ -3074,7 +3237,7 @@ function renderDetail(view){
 }
 
 /* ============================================================ nav */
-var VIEWS = ["units", "skills", "class", "student", "load"];
+var VIEWS = ["units", "skills", "class", "student", "load", "guide"];
 function show(name){
   var prev = VIEW;
   VIEW = name;
@@ -3087,6 +3250,7 @@ function show(name){
   if (name === "class"){ renderClass(); renderDetail("class"); }
   if (name === "student"){ renderStudent(); renderDetail("student"); }
   if (name === "load") renderIssues(document.getElementById("loadIssues"));
+  if (name === "guide") renderGuide();
 }
 
 /* ============================================================ boot */
