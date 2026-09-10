@@ -280,7 +280,13 @@ svg.map .spine{stroke:var(--rule);stroke-width:2}
 .gate .btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
 .backlist{margin-top:12px;padding:12px 14px;border:1px solid var(--warn);background:var(--warn-soft);border-radius:10px;font-size:13px}
 .backlist b{display:block;margin-bottom:5px}
-.backlist.oneline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.backlist.oneline{display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  margin-top:10px;padding:0;border:0;background:none;border-radius:0;
+  font-size:12px;color:var(--muted)}
+.backlist.oneline::before{content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--warn);flex:none;opacity:.8}
+.backlist.oneline .linkbtn{font-size:12px;color:var(--muted);text-decoration-color:var(--rule)}
+.backlist.oneline .linkbtn:hover{color:var(--accent);text-decoration-color:currentColor;opacity:1}
 .linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--accent);
   text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .linkbtn:hover{opacity:.75}
