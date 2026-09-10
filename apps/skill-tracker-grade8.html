@@ -333,6 +333,9 @@ svg.map .clpill:hover rect{stroke-width:2}
 @keyframes landflash{from{box-shadow:0 0 0 3px var(--accent)}to{box-shadow:0 0 0 3px transparent}}
 .skilldetail.landed{animation:landflash .9s ease-out}
 @media (prefers-reduced-motion: reduce){.skilldetail.landed{animation:none}}
+text.unfold{cursor:pointer}
+text.unfold:hover{fill:var(--accent)}
+text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
 .openlist{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}
 .openlist .oc{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:2px 6px;
   border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink2)}
@@ -1755,37 +1758,22 @@ function drawSkillNode(g, spec){
   }
 }
 
-/* the invitation to unfold. Its own hit area: unfolding must not disturb the selection,
-   so it swallows the click before the node's own handler sees it. */
-function unfoldTag(g, spec, cid, n){
-  var open = !!OPEN[cid];
-  var w = 22 + String(n).length * 7, h = 20;
-  var x = spec.w - 12 - w, y = spec.h - h - 10;
-  var t = sv("g", "utag" + (open ? " open" : ""));
-  t.setAttribute("transform", "translate(" + x + "," + y + ")");
-  var r = sv("rect");
-  r.setAttribute("width", w); r.setAttribute("height", h); r.setAttribute("rx", 6);
-  r.setAttribute("fill", open ? "var(--accent)" : "var(--accent-soft)");
-  r.setAttribute("stroke", open ? "var(--accent)" : "var(--rule)");
-  t.appendChild(r);
-  var lb = sv("text", "tiny");
-  lb.setAttribute("x", w / 2); lb.setAttribute("y", 14);
-  lb.setAttribute("text-anchor", "middle");
-  lb.setAttribute("fill", open ? "var(--panel)" : "var(--accent)");
-  lb.textContent = (open ? "«" : "»") + " " + n;
-  t.appendChild(lb);
-  var ti = sv("title");
-  ti.textContent = open ? "fold these " + n + " skills back into " + cid
-                        : "open these " + n + " skills in place — the selection stays put";
-  t.appendChild(ti);
+/* The invitation to unfold is the count line itself: "10 skills »". Not a separate
+   control — one thing to read, one thing to click. It swallows the click before the
+   node's own handler sees it, so unfolding never disturbs the selection. */
+function unfoldLine(g, spec, cid, base){
+  var t = txt(g, 13, spec.h - 13, base + "  »", "tiny unfold", "var(--muted)");
   t.setAttribute("role", "button");
   t.setAttribute("tabindex", "0");
-  t.style.cursor = "pointer";
+  var n = (G.CL.members[cid] || []).length;
+  var ti = sv("title");
+  ti.textContent = "open these " + n + " skills in place — the selection stays put";
+  t.appendChild(ti);
   t.addEventListener("click", function(e){ e.stopPropagation(); toggleOpen(cid); });
   t.addEventListener("keydown", function(e){
     if (e.key === "Enter" || e.key === " "){ e.preventDefault(); e.stopPropagation(); toggleOpen(cid); }
   });
-  g.appendChild(t);
+  return t;
 }
 
 function drawClusterNode(g, spec){
@@ -1810,8 +1798,8 @@ function drawClusterNode(g, spec){
   g.appendChild(t2);
   var cov = spec.student ? (roll.assessed + " of " + roll.n + " assessed")
                          : (ids.length + " skill" + (ids.length === 1 ? "" : "s") + (M ? " · " + coverage(ids).assessed + "/" + coverage(ids).n + " assessed" : ""));
-  txt(g, 13, spec.h - 13, cov, "tiny", "var(--muted)");
-  if (!spec.student && ids.length) unfoldTag(g, spec, c.id, ids.length);
+  if (!spec.student && ids.length) unfoldLine(g, spec, c.id, cov);
+  else txt(g, 13, spec.h - 13, cov, "tiny", "var(--muted)");
   var ti = sv("title");
   ti.textContent = c.id + " · " + c.name +
     "\nUnit" + (uks.length === 1 ? "" : "s") + ": " + uks.map(function(k){ return G.unitBy[k].label; }).join("; ") +
