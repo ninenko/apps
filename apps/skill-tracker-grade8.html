@@ -379,6 +379,21 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
 .ulegend .lead{color:var(--muted);font-size:11.5px;margin-right:2px}
 .oddflag{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;font-size:11px;
   background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+.nc-tabs{margin:14px 0 18px}
+.nc-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+.nc-toolbar select{font-size:12.5px;padding:5px 9px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
+.nc-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid;white-space:nowrap}
+.nc-badge.hi{color:var(--critical);border-color:var(--critical);background:var(--warn-soft)}
+.nc-badge.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.nc-badge.open{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.nc-badge.off{color:var(--muted);border-color:var(--rule);background:var(--plane)}
+.nc-card{border:1px solid var(--rule);border-radius:10px;padding:13px 15px;background:var(--surface);margin:12px 0;max-width:78ch}
+.nc-card.off{opacity:.62}
+.nc-card-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.nc-card-h .t{font-weight:650;font-size:14px}
+.nc-card dl{margin:8px 0 0;font-size:12.5px;line-height:1.55}
+.nc-card dt{color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;margin-top:7px}
+.nc-card dd{margin:2px 0 0}
 </style>
 </head>
 <body>
@@ -527,7 +542,12 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
 <section id="view-check" class="hide">
   <div class="panel" style="margin-top:24px">
     <h2>Needs check</h2>
-    <div class="sub">Places where the plan and the prerequisites contradict each other. The tool will not decide these — a maths teacher has to.</div>
+    <div class="sub">Three separate lists with three separate owners: where the plan and the prerequisites contradict each other, what ISA measured that the graph has no node for, and why the ISA data itself can’t be leaned on as-is yet.</div>
+    <div class="seg nc-tabs" role="group" aria-label="Needs check view">
+      <button id="chkSubClashes" aria-pressed="true">Plan clashes</button>
+      <button id="chkSubGaps" aria-pressed="false">Gaps in the graph</button>
+      <button id="chkSubIssues" aria-pressed="false">Issues with ISA</button>
+    </div>
     <div id="checkBody"></div>
   </div>
 </section>
@@ -609,6 +629,7 @@ var SAMPLE = { mastery: [["student", "NUM-1", "NUM-2", "ALG-1", "ALG-2", "ALG-3"
 "use strict";
 /* ============================================================ state */
 var G = null, M = null, VIEW = "units", ANON = false, SELECTED = null, SELECTED_UNIT = null;
+var CHECK_SUB = "clashes", CHECK_SEV = "all";
 var ZOOM = "cluster";           /* "cluster" | "mixed" | "skill" — Skills tab only */
 var OPEN = {};                  /* cluster ids unfolded in the mixed zoom */
 function openCount(){ return Object.keys(OPEN).length; }
@@ -2397,6 +2418,11 @@ function skillCard(id){
 }
 
 function renderCheck(){
+  if (CHECK_SUB === "gaps") return renderCheckGaps();
+  if (CHECK_SUB === "issues") return renderCheckIssues();
+  renderCheckClashes();
+}
+function renderCheckClashes(){
   var host = document.getElementById("checkBody");
   if (!host || !G) return;
   host.innerHTML = "";
@@ -2490,6 +2516,166 @@ function renderCheck(){
   link.appendChild(document.createTextNode(" — it explains skills, prerequisites, clusters and units in plain terms."));
   w.appendChild(link);
 
+  host.appendChild(w);
+}
+
+/* ============================================================ ISA needs-check panel
+   Content source: ISA-gap-analysis-what-the-graph-misses.md, 2026-09-14. UNREVIEWED --
+   every row here is a proposal for a unit owner, not a finished decision. */
+var NEEDS_CHECK_ISA = {
+  gaps: [
+    { id:"A", t:"Multi-step problems containing a unit conversion", sev:"hi",
+      evidence:"Items 5.1, 5.2, 21.2 — 8% correct in class vs 30–37% for the ISA cohort. The largest measured weakness on the paper.",
+      where:"No node at Grade 8, and nothing upstream either.",
+      status:"Needs a Grade 8 decision — no owner yet." },
+    { id:"B", t:"Reading values off a bar or column chart", sev:"hi",
+      evidence:"Items 9, 10.1, 10.2, 11.1, 11.2, 23 — six items, the largest single block in the crosswalk.",
+      where:"Currently mis-mapped onto STA-19 (rebuilding a frequency table from a histogram) — the deepest node in the statistics chain. Unit 6 teaches frequency tables, stem-and-leaf and histograms; no bar or column charts.",
+      status:"Lands in the Grade 6 / Grade 7 graph when built." },
+    { id:"C", t:"Probability", sev:"open",
+      evidence:"Items 16, 17 — simple and compound chance, expected occurrences over repeated trials.",
+      where:"The strand is named “Statistics & Probability” and currently has no probability node at all.",
+      status:"Open decision — to be settled from what Grade 6/7 actually teach (Ivan, 2026-09-14)." },
+    { id:"D", t:"Systematic counting / combinatorics", sev:"md",
+      evidence:"Item 12 — number of games for a given number of teams.",
+      where:"No node anywhere.",
+      status:"No owner yet." },
+    { id:"E", t:"Factors, multiples and LCM", sev:"md",
+      evidence:"Items 4, 26 — Grade 6 content; the class is well behind the ISA cohort on it.",
+      where:"No dedicated node. Item 4 currently sits inside NUM-2, a placeholder (see Issues with ISA).",
+      status:"Lands in the Grade 6 graph when built." },
+    { id:"F", t:"3D views, plans and elevations", sev:"md",
+      evidence:"Items 3, 25 — shadows of solids from two directions; counting blocks in a stack from alternate views.",
+      where:"No node; GEO-C3 covers surface area and volume only.",
+      status:"Lands in the Grade 6 / Grade 7 graph when built." },
+    { id:"G", t:"Position and compass direction", sev:"md",
+      evidence:"Item 15 — 8-point compass bearings relative to a point.",
+      where:"No node anywhere.",
+      status:"Lands in the Grade 6 / Grade 7 graph when built." },
+    { id:"H", t:"Map scale and scale drawing", sev:"hi",
+      evidence:"Item 14 — estimating a trail length from a map, without correctly using the given scale.",
+      where:"No node — and the same content already logged as the Term 1 conflict: real classwork teaches scale drawings, similar figures and indirect measurement, none of which are in the graph or the planner.",
+      status:"No owner yet." },
+    { id:"I", t:"Reading a value off a linear graph", sev:"md",
+      evidence:"Item 28 — use a given linear graph to extrapolate a value.",
+      where:"ALG-16 exists but only for producing a line from an equation — the reverse direction. No node for reading one.",
+      status:"No owner yet." },
+    { id:"J", t:"Estimating and comparing angle size", sev:"md",
+      evidence:"Items 34, 35, plus two items in the Review/Diagnostic item map already marked “not in graph”.",
+      where:"Currently mis-mapped onto GEO-12 (complementary / supplementary / vertically opposite angles) — about angle relationships, not estimation or classification.",
+      status:"No owner yet." },
+    { id:"K", t:"Judging whether a claim about a chart, table or shape is true", sev:"off",
+      evidence:"Items 10.1, 10.2, 13, 19.1, 19.2, 24 — six items share this one demand. The class’s second-largest differential weakness against the ISA cohort.",
+      where:"Not a topic, so it can’t be a skill row without distorting the graph — closer to a reasoning demand that should be tagged across existing skills. No mechanism for that today.",
+      status:"Out of scope — decided not to force it into a row (Ivan, 2026-09-14)." }
+  ],
+  issues: [
+    { t:"The crosswalk measures topic adjacency, not skill identity", sev:"hi",
+      detail:"16 “good”, 17 “partial”, 9 “none” — reported as 19 of 87 subskills touched, 22%. Re-checked against each skill’s mastery criteria rather than its topic, about a third of the matches turn out to name a skill that describes a different action, often the reverse one.",
+      why:"Every row here feeds the tracker seed directly. A wrong match doesn’t stay a documentation problem — it puts a mastery state on a skill the student was never assessed on. Corrected working estimate: 12–14 of 87 subskills, 14–16%, not 22%." },
+    { t:"STA-19 carries the single worst mismatch — six items, one wrong node", sev:"hi",
+      detail:"Items 9, 10.1, 10.2, 11.1, 11.2, 23 are mapped to STA-19, “reconstructs the frequency table from a histogram” — the deepest node in the statistics chain. None of the six items involve a histogram; they read values off bar and column charts. Item 23 is the easiest chart item on the paper (91% cohort correct) and is attached to the hardest statistics node in the graph.",
+      why:"A student who can read the tallest bar on a chart gets credited on a node that requires rebuilding a frequency table from a histogram — and, by prerequisite traversal, is implicitly credited as ready across the whole STA-C3 chain behind it." },
+    { t:"Item 28 → ALG-16: the match runs backwards", sev:"md",
+      detail:"Item 28 asks to read a value off a given linear graph. ALG-16 is “draws an accurate line from an equation” — production, not reading.",
+      why:"No node exists for the direction the item actually tests, so crediting ALG-16 from this item credits the wrong skill." },
+    { t:"Item 6 → GEO-25: mapped onto a contested node", sev:"md",
+      detail:"Item 6 (a data-table volume calculation, 89% cohort correct) is mapped “partial” to GEO-25, volume of prisms and cylinders — a node itself flagged as absent from the taught content.",
+      why:"An easy item ends up propping up a skill node whose own place in the graph is unresolved." },
+    { t:"Items 34 and 35 → GEO-12: same wrong target, two different skills", sev:"md",
+      detail:"GEO-12 is complementary / supplementary / vertically-opposite angles. Item 34 is about elevation, not angle relationships. Item 35 is angle classification plus estimation — closer to GEO-15 / GEO-4.",
+      why:"Two items measuring two different things are both being read onto one node that matches neither." },
+    { t:"Items 4 and 26 test the same thing but got opposite verdicts", sev:"md",
+      detail:"Item 4 (common multiples from two rates) is mapped “partial” to NUM-2. Item 26 (lowest common multiple, more directly) is mapped to nothing. Both are factors-and-multiples items.",
+      why:"The “none” verdict is the right one for both — the crosswalk isn’t internally consistent even on near-identical items." },
+    { t:"Item 14 is mapped in despite being flagged as discounted", sev:"hi",
+      detail:"Item 14 (estimate a trail length from a map, without correctly using the given scale) is mapped to NUM-2. The source analysis already says this item should be discounted — a high score on it isn’t good news.",
+      why:"A discounted item is still feeding a prerequisite node that more than 20 Grade 8 skills sit behind." },
+    { t:"NUM-2 is a whole-unit placeholder absorbing anything numeric with no real home", sev:"md",
+      detail:"Items 4, 11.1, 11.2, 14, 27.1 and 27.2 all land on NUM-2 regardless of what they actually test.",
+      why:"Same structural problem as NUM-1 being a prerequisite of 65 of the 87 rows — it only goes away once the Grade 7 graph exists to give these items real homes." },
+    { t:"Strand systems don’t line up between ISA and the graph", sev:"md",
+      detail:"ISA uses Quantity / Space & Shape / Change & Relationships / Uncertainty & Data. The graph uses Number / Algebra / Geometry / Statistics & Probability. ISA’s Quantity strand splits across the graph’s Number and Geometry (e.g. measurement items 1, 2, 20 are Quantity).",
+      why:"Any strand-level comparison between the two tables is invalid — it looks like it should compare cleanly and it can’t." },
+    { t:"The edge-level “@level” tag looks like ISA’s process dimension, and isn’t", sev:"md",
+      detail:"The graph’s prerequisite-edge tags are recognise / compute / reason — a demand level on a link between two skills. ISA’s process codes are Formulating / Employing / Interpreting / Reasoning — a classification of the item itself. “reason” ≠ “Reasoning”.",
+      why:"Anyone reading both documents side by side will assume a correspondence that doesn’t exist unless this is stated explicitly." },
+    { t:"The class’s one strong result risks being read as “reasoning is fine”", sev:"md",
+      detail:"Item 24 (analyse a series of graphs to pick a fair scoring system, ISA’s Reasoning process, Level 7) is the class’s strongest result relative to the ISA cohort. It sits alongside six much weaker items that share a different, narrower demand: judging whether a claim about a chart, table or shape is true.",
+      why:"Filed under one “reasoning” label, the specific weakness — verifying claims — gets diluted by the one item where the class does fine. The distinction is what makes the finding actionable." },
+    { t:"“Good / partial / none” hides direction and severity", sev:"hi",
+      detail:"A genuine match and a reversed match (item reads, skill produces) currently look the same in the crosswalk — both are just a skill id in a cell.",
+      why:"The fix is a three-way verdict — same skill / adjacent / no node — with only “same skill” feeding the tracker seed. Until the crosswalk is redone that way, “good” can’t be trusted at face value." },
+    { t:"Re-keying the seed isn’t enough — it has to shrink before it grows", sev:"hi",
+      detail:"The existing 475-row tracker seed was built from the uncorrected crosswalk. The STA-19 block and the direction-reversed rows have to come out, not just be re-labelled.",
+      why:"Expect the corrected seed to cover 12–14 skills, not the 19 currently claimed — a smaller number that’s actually trustworthy." }
+  ]
+};
+
+function ncBadge(sev){
+  var lab = { hi:"High", md:"Medium", open:"Open decision", off:"Out of scope" }[sev] || sev;
+  return "<span class=\"nc-badge " + sev + "\">" + lab + "</span>";
+}
+
+function renderCheckGaps(){
+  var host = document.getElementById("checkBody");
+  host.innerHTML = "";
+  var w = gEl("div", "guide");
+  w.appendChild(gEl("p", null,
+    "What ISA measured that this graph has no node for. Source: <i>ISA-gap-analysis-what-the-graph-misses.md</i>, 2026-09-14. " +
+    "<b>Unreviewed</b> — every row here is a proposal for a unit owner, not a finished decision."));
+
+  var bar = gEl("div", "nc-toolbar");
+  var lab = document.createElement("label");
+  lab.textContent = "Severity";
+  lab.style.fontSize = "11.5px"; lab.style.color = "var(--muted)";
+  lab.setAttribute("for", "ncSevFilter");
+  var sel = document.createElement("select");
+  sel.id = "ncSevFilter";
+  [["all","All"], ["hi","High"], ["md","Medium"], ["open","Open decision"], ["off","Out of scope"]].forEach(function(p){
+    var o = document.createElement("option"); o.value = p[0]; o.textContent = p[1];
+    if (p[0] === CHECK_SEV) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.addEventListener("change", function(){ CHECK_SEV = this.value; renderCheckGaps(); });
+  bar.appendChild(lab); bar.appendChild(sel);
+  w.appendChild(bar);
+
+  var rows = NEEDS_CHECK_ISA.gaps.filter(function(g){ return CHECK_SEV === "all" || g.sev === CHECK_SEV; });
+  if (!rows.length) w.appendChild(gEl("p", null, "No rows at this severity."));
+  rows.forEach(function(g){
+    var c = gEl("div", "nc-card" + (g.sev === "off" ? " off" : ""));
+    var h = gEl("div", "nc-card-h", "<span class=\"t\">" + g.id + " \u00b7 " + g.t + "</span>" + ncBadge(g.sev));
+    c.appendChild(h);
+    var dl = document.createElement("dl");
+    dl.innerHTML =
+      "<dt>Evidence</dt><dd>" + g.evidence + "</dd>" +
+      "<dt>Where it sits</dt><dd>" + g.where + "</dd>" +
+      "<dt>Status</dt><dd>" + g.status + "</dd>";
+    c.appendChild(dl);
+    w.appendChild(c);
+  });
+  host.appendChild(w);
+}
+
+function renderCheckIssues(){
+  var host = document.getElementById("checkBody");
+  host.innerHTML = "";
+  var w = gEl("div", "guide");
+  w.appendChild(gEl("p", null,
+    "Why the ISA crosswalk can’t be leaned on as-is, including where it is already mis-wired into the tracker seed. " +
+    "Source: <i>ISA-gap-analysis-what-the-graph-misses.md</i>, 2026-09-14. <b>Unreviewed.</b> These are standing caveats, not a work list — most of them do not go away on their own."));
+  NEEDS_CHECK_ISA.issues.forEach(function(x){
+    var c = gEl("div", "nc-card");
+    var h = gEl("div", "nc-card-h", "<span class=\"t\">" + x.t + "</span>" + ncBadge(x.sev));
+    c.appendChild(h);
+    var dl = document.createElement("dl");
+    dl.innerHTML =
+      "<dt>Detail</dt><dd>" + x.detail + "</dd>" +
+      "<dt>Why it matters</dt><dd>" + x.why + "</dd>";
+    c.appendChild(dl);
+    w.appendChild(c);
+  });
   host.appendChild(w);
 }
 
@@ -3581,6 +3767,15 @@ VIEWS.forEach(function(v){
   document.getElementById("tab-" + v).addEventListener("click", function(){
     if (this.disabled) return;
     show(v);
+  });
+});
+["chkSubClashes", "chkSubGaps", "chkSubIssues"].forEach(function(id, i){
+  document.getElementById(id).addEventListener("click", function(){
+    CHECK_SUB = ["clashes", "gaps", "issues"][i];
+    ["chkSubClashes", "chkSubGaps", "chkSubIssues"].forEach(function(bid){
+      document.getElementById(bid).setAttribute("aria-pressed", String(bid === id));
+    });
+    renderCheck();
   });
 });
 document.getElementById("zoomCluster").addEventListener("click", function(){ setZoom("cluster"); });
