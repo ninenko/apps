@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Diagnostic 8 - teacher check (public)</title>
+<style>
+  :root {
+    --bg: #f5f4f1; --panel: #ffffff; --ink: #1c1b1a; --muted: #6b6863;
+    --line: #e3e0da; --accent: #8a6d3b; --good: #3f7a4d; --bad: #b3492f;
+    --warn: #b8860b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 0 4rem; background: var(--bg); color: var(--ink);
+    font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  header {
+    position: sticky; top: 0; z-index: 5; background: var(--panel);
+    border-bottom: 1px solid var(--line); padding: .75rem 1rem;
+  }
+  h1 { font-size: 1.05rem; margin: 0 0 .5rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  .toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .toggle button {
+    border: 0; background: var(--panel); padding: .4rem .8rem; cursor: pointer; font: inherit;
+  }
+  .toggle button.active { background: var(--accent); color: #fff; }
+  input[type=text] {
+    flex: 1 1 200px; padding: .45rem .6rem; border: 1px solid var(--line);
+    border-radius: 8px; font: inherit; min-width: 140px;
+  }
+  .progress { font-size: .85rem; color: var(--muted); margin-left: auto; }
+  button.export {
+    border: 1px solid var(--accent); background: var(--accent); color: #fff;
+    padding: .45rem .8rem; border-radius: 8px; font: inherit; cursor: pointer;
+  }
+  main { padding: 1rem; max-width: 900px; margin: 0 auto; }
+  .excluded { background: #fff7e6; border: 1px solid #e7cf9a; border-radius: 10px;
+    padding: .75rem 1rem; margin-bottom: 1.25rem; }
+  .excluded h2 { font-size: .95rem; margin: 0 0 .5rem; }
+  .excl-item { display: flex; gap: .75rem; padding: .5rem 0; border-top: 1px solid #eedcae; }
+  .excl-item:first-of-type { border-top: 0; }
+  .excl-item img { width: 90px; border-radius: 6px; border: 1px solid var(--line); }
+  .excl-meta { flex: 1; }
+  .excl-meta .why { color: var(--muted); font-size: .85rem; }
+  .excl-controls select, .excl-controls input { font: inherit; padding: .3rem; margin-top: .3rem; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    margin-bottom: 1rem; overflow: hidden;
+  }
+  .card > summary {
+    padding: .6rem .9rem; cursor: pointer; font-weight: 600; list-style: none;
+    display: flex; justify-content: space-between; gap: .5rem;
+  }
+  .card > summary::-webkit-details-marker { display: none; }
+  .card > summary .count { color: var(--muted); font-weight: 400; }
+  .item { border-top: 1px solid var(--line); padding: .75rem .9rem; display: grid;
+    grid-template-columns: 130px 1fr; gap: .75rem; }
+  .item img { width: 100%; border-radius: 6px; border: 1px solid var(--line); cursor: zoom-in; }
+  .item .field { margin: 0 0 .3rem; }
+  .item .label { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .02em; }
+  .item .value { font-size: .95rem; }
+  .badge { display: inline-block; padding: .05rem .5rem; border-radius: 999px; font-size: .78rem; }
+  .badge.correct { background: #e4f2e6; color: var(--good); }
+  .badge.wrong { background: #fbe7e2; color: var(--bad); }
+  .badge.other { background: #fbf1da; color: var(--warn); }
+  .decide { display: flex; gap: .5rem; margin-top: .5rem; flex-wrap: wrap; }
+  .decide select, .decide input[type=text] { font: inherit; padding: .35rem; border: 1px solid var(--line); border-radius: 6px; }
+  .decide select { min-width: 120px; }
+  .decide input[type=text] { flex: 1 1 160px; }
+  .decided { outline: 2px solid var(--good); outline-offset: -2px; }
+  @media (max-width: 520px) {
+    .item { grid-template-columns: 1fr; }
+    .item img { max-width: 220px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Diagnostic 8 - teacher check (public)</h1>
+  <div class="controls">
+    <div class="toggle">
+      <button id="tabQuestion" class="active">By question</button>
+      <button id="tabStudent">By student</button>
+    </div>
+    <input type="text" id="filter" placeholder="Filter (name, code, question)...">
+    <button class="export" id="exportBtn">Export CSV</button>
+    <span class="progress" id="progress"></span>
+  </div>
+</header>
+<main>
+  <section class="excluded" id="excludedSection">
+    <h2>Excluded papers (D16-D18) - confirm or reject</h2>
+    <div id="excludedList"></div>
+  </section>
+  <div id="groups"></div>
+</main>
+<script>
+const PUBLIC_MODE = true;
+const RECORDS = [{"code": "D04", "blank_id": "Q01", "prompt_short": "Scale factor, right triangles", "key_answer": "1/3", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D04_Q01.png", "q_num": 1, "q_part": "", "q_sort": "01", "student_order": 3}, {"code": "D06", "blank_id": "Q01", "prompt_short": "Scale factor, right triangles", "key_answer": "1/3", "read_as": "1 2/3", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D06_Q01.png", "q_num": 1, "q_part": "", "q_sort": "01", "student_order": 5}, {"code": "D07", "blank_id": "Q01", "prompt_short": "Scale factor, right triangles", "key_answer": "1/3", "read_as": "1/3", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D07_Q01.png", "q_num": 1, "q_part": "", "q_sort": "01", "student_order": 10}, {"code": "D04", "blank_id": "Q02", "prompt_short": "Scale factor, squares", "key_answer": "3", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D04_Q02.png", "q_num": 2, "q_part": "", "q_sort": "02", "student_order": 3}, {"code": "D04", "blank_id": "Q03a", "prompt_short": "Part-to-part ratio, cheese puffs", "key_answer": "3:8", "read_as": "3:8", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D04_Q03a.png", "q_num": 3, "q_part": "a", "q_sort": "03a", "student_order": 3}, {"code": "D01", "blank_id": "Q03b", "prompt_short": "Part-to-whole ratio, cheese puffs", "key_answer": "3:11", "read_as": "3:8", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D01_Q03b.png", "q_num": 3, "q_part": "b", "q_sort": "03b", "student_order": 1}, {"code": "D04", "blank_id": "Q03c", "prompt_short": "Proportion of whole as fraction", "key_answer": "3/11", "read_as": "", "proposed_status": "cannot make out numerator or denominator", "why": "cannot make out numerator or denominator", "crop": "D04_Q03c.png", "q_num": 3, "q_part": "c", "q_sort": "03c", "student_order": 3}, {"code": "D04", "blank_id": "Q04a", "prompt_short": "Part-to-part ratio, kiwis", "key_answer": "7:5", "read_as": "7:5", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D04_Q04a.png", "q_num": 4, "q_part": "a", "q_sort": "04a", "student_order": 3}, {"code": "D04", "blank_id": "Q04b", "prompt_short": "Part-to-whole ratio, kiwis", "key_answer": "7:12", "read_as": "7:12", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D04_Q04b.png", "q_num": 4, "q_part": "b", "q_sort": "04b", "student_order": 3}, {"code": "D04", "blank_id": "Q04c", "prompt_short": "Proportion of whole as fraction", "key_answer": "7/12", "read_as": "", "proposed_status": "cannot make out numerator or denominator", "why": "cannot make out numerator or denominator", "crop": "D04_Q04c.png", "q_num": 4, "q_part": "c", "q_sort": "04c", "student_order": 3}, {"code": "D01", "blank_id": "Q05a", "prompt_short": "Shaded amount as improper fraction", "key_answer": "9/8", "read_as": "1/8", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D01_Q05a.png", "q_num": 5, "q_part": "a", "q_sort": "05a", "student_order": 1}, {"code": "D10", "blank_id": "Q05a", "prompt_short": "Shaded amount as improper fraction", "key_answer": "9/8", "read_as": "9", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q05a.png", "q_num": 5, "q_part": "a", "q_sort": "05a", "student_order": 7}, {"code": "D02", "blank_id": "Q05a", "prompt_short": "Shaded amount as improper fraction", "key_answer": "9/8", "read_as": "", "proposed_status": "no_response", "why": "low confidence (proposed: no_response)", "crop": "D02_Q05a.png", "q_num": 5, "q_part": "a", "q_sort": "05a", "student_order": 8}, {"code": "D12", "blank_id": "Q05a", "prompt_short": "Shaded amount as improper fraction", "key_answer": "9/8", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D12_Q05a.png", "q_num": 5, "q_part": "a", "q_sort": "05a", "student_order": 9}, {"code": "D09", "blank_id": "Q05b", "prompt_short": "Shaded amount as mixed number", "key_answer": "1 1/8", "read_as": "1/8", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D09_Q05b.png", "q_num": 5, "q_part": "b", "q_sort": "05b", "student_order": 2}, {"code": "D10", "blank_id": "Q05b", "prompt_short": "Shaded amount as mixed number", "key_answer": "1 1/8", "read_as": "1", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q05b.png", "q_num": 5, "q_part": "b", "q_sort": "05b", "student_order": 7}, {"code": "D02", "blank_id": "Q05b", "prompt_short": "Shaded amount as mixed number", "key_answer": "1 1/8", "read_as": "", "proposed_status": "no_response", "why": "low confidence (proposed: no_response)", "crop": "D02_Q05b.png", "q_num": 5, "q_part": "b", "q_sort": "05b", "student_order": 8}, {"code": "D12", "blank_id": "Q06a", "prompt_short": "Shaded amount as improper fraction", "key_answer": "11/4", "read_as": "12/11", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D12_Q06a.png", "q_num": 6, "q_part": "a", "q_sort": "06a", "student_order": 9}, {"code": "D07", "blank_id": "Q07", "prompt_short": "Subtract mixed numbers, simplest form", "key_answer": "1 71/90", "read_as": "161/90", "proposed_status": "form_only: equivalent value, not in the required form", "why": "form_only: equivalent value, not in the required form", "crop": "D07_Q07.png", "q_num": 7, "q_part": "", "q_sort": "07", "student_order": 10}, {"code": "D10", "blank_id": "Q08", "prompt_short": "Add mixed numbers, simplest form", "key_answer": "3 67/70", "read_as": "3 7/17", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q08.png", "q_num": 8, "q_part": "", "q_sort": "08", "student_order": 7}, {"code": "D07", "blank_id": "Q08", "prompt_short": "Add mixed numbers, simplest form", "key_answer": "3 67/70", "read_as": "277/70", "proposed_status": "form_only: equivalent value, not in the required form", "why": "form_only: equivalent value, not in the required form", "crop": "D07_Q08.png", "q_num": 8, "q_part": "", "q_sort": "08", "student_order": 10}, {"code": "D04", "blank_id": "Q11a", "prompt_short": "Common-value pair, Sarah store", "key_answer": "1|3.33 (one possible)", "read_as": "6|3.3", "proposed_status": "pair does not share a common quantity or price", "why": "pair does not share a common quantity or price", "crop": "D04_Q11a.png", "q_num": 11, "q_part": "a", "q_sort": "11a", "student_order": 3}, {"code": "D04", "blank_id": "Q11b", "prompt_short": "Common-value pair, Julieta store", "key_answer": "1|3.24 (one possible)", "read_as": "4|3.2", "proposed_status": "pair does not share a common quantity or price", "why": "pair does not share a common quantity or price", "crop": "D04_Q11b.png", "q_num": 11, "q_part": "b", "q_sort": "11b", "student_order": 3}, {"code": "D01", "blank_id": "Q12c", "prompt_short": "Which store is cheaper", "key_answer": "Enola", "read_as": "Enola", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D01_Q12c.png", "q_num": 12, "q_part": "c", "q_sort": "12c", "student_order": 1}, {"code": "D04", "blank_id": "Q15", "prompt_short": "Percent of trip travelled", "key_answer": "99", "read_as": "1", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D04_Q15.png", "q_num": 15, "q_part": "", "q_sort": "15", "student_order": 3}, {"code": "D10", "blank_id": "Q15", "prompt_short": "Percent of trip travelled", "key_answer": "99", "read_as": "10", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q15.png", "q_num": 15, "q_part": "", "q_sort": "15", "student_order": 7}, {"code": "D04", "blank_id": "Q16", "prompt_short": "Percent Economics majors", "key_answer": "78", "read_as": "81", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D04_Q16.png", "q_num": 16, "q_part": "", "q_sort": "16", "student_order": 3}, {"code": "D05", "blank_id": "Q16", "prompt_short": "Percent Economics majors", "key_answer": "78", "read_as": "58", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D05_Q16.png", "q_num": 16, "q_part": "", "q_sort": "16", "student_order": 4}, {"code": "D06", "blank_id": "Q16", "prompt_short": "Percent Economics majors", "key_answer": "78", "read_as": "", "proposed_status": "answer seen but not transcribed", "why": "answer seen but not transcribed", "crop": "D06_Q16.png", "q_num": 16, "q_part": "", "q_sort": "16", "student_order": 5}, {"code": "D10", "blank_id": "Q16", "prompt_short": "Percent Economics majors", "key_answer": "78", "read_as": "40", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q16.png", "q_num": 16, "q_part": "", "q_sort": "16", "student_order": 7}, {"code": "D13", "blank_id": "Q17", "prompt_short": "Population growth 2010-15, nearest 100", "key_answer": "14000", "read_as": "", "proposed_status": "answer seen but not transcribed", "why": "answer seen but not transcribed", "crop": "D13_Q17.png", "q_num": 17, "q_part": "", "q_sort": "17", "student_order": 11}, {"code": "D04", "blank_id": "Q18", "prompt_short": "Population 2020 after +7% then -3%", "key_answer": "255300", "read_as": "255323", "proposed_status": "form_only: unrounded value", "why": "form_only: unrounded value", "crop": "D04_Q18.png", "q_num": 18, "q_part": "", "q_sort": "18", "student_order": 3}, {"code": "D12", "blank_id": "Q18", "prompt_short": "Population 2020 after +7% then -3%", "key_answer": "255300", "read_as": "255323.4", "proposed_status": "form_only: unrounded value", "why": "form_only: unrounded value", "crop": "D12_Q18.png", "q_num": 18, "q_part": "", "q_sort": "18", "student_order": 9}, {"code": "D14", "blank_id": "Q18", "prompt_short": "Population 2020 after +7% then -3%", "key_answer": "255300", "read_as": "", "proposed_status": "answer seen but not transcribed", "why": "answer seen but not transcribed", "crop": "D14_Q18.png", "q_num": 18, "q_part": "", "q_sort": "18", "student_order": 12}, {"code": "D04", "blank_id": "Q19", "prompt_short": "Evaluate 5y-1, y=4", "key_answer": "19", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D04_Q19.png", "q_num": 19, "q_part": "", "q_sort": "19", "student_order": 3}, {"code": "D03", "blank_id": "Q19", "prompt_short": "Evaluate 5y-1, y=4", "key_answer": "19", "read_as": "19", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D03_Q19.png", "q_num": 19, "q_part": "", "q_sort": "19", "student_order": 6}, {"code": "D04", "blank_id": "Q20", "prompt_short": "Evaluate 6z-6w, z=7 w=4", "key_answer": "18", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D04_Q20.png", "q_num": 20, "q_part": "", "q_sort": "20", "student_order": 3}, {"code": "D03", "blank_id": "Q20", "prompt_short": "Evaluate 6z-6w, z=7 w=4", "key_answer": "18", "read_as": "18", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D03_Q20.png", "q_num": 20, "q_part": "", "q_sort": "20", "student_order": 6}, {"code": "D06", "blank_id": "Q23", "prompt_short": "Solve 26 - 5z = -49", "key_answer": "15", "read_as": "", "proposed_status": "answer seen but not transcribed", "why": "answer seen but not transcribed", "crop": "D06_Q23.png", "q_num": 23, "q_part": "", "q_sort": "23", "student_order": 5}, {"code": "D03", "blank_id": "Q23", "prompt_short": "Solve 26 - 5z = -49", "key_answer": "15", "read_as": "4.60", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D03_Q23.png", "q_num": 23, "q_part": "", "q_sort": "23", "student_order": 6}, {"code": "D10", "blank_id": "Q23", "prompt_short": "Solve 26 - 5z = -49", "key_answer": "15", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D10_Q23.png", "q_num": 23, "q_part": "", "q_sort": "23", "student_order": 7}, {"code": "D05", "blank_id": "Q24", "prompt_short": "Solve -18 + 5z = 37", "key_answer": "11", "read_as": "", "proposed_status": "cannot make out the digits inside the circle", "why": "cannot make out the digits inside the circle", "crop": "D05_Q24.png", "q_num": 24, "q_part": "", "q_sort": "24", "student_order": 4}, {"code": "D10", "blank_id": "Q24", "prompt_short": "Solve -18 + 5z = 37", "key_answer": "11", "read_as": "47", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D10_Q24.png", "q_num": 24, "q_part": "", "q_sort": "24", "student_order": 7}, {"code": "D10", "blank_id": "Q25", "prompt_short": "Solve 5(2y+1) = -45", "key_answer": "-5", "read_as": "", "proposed_status": "crossed out, no surviving final answer", "why": "crossed out, no surviving final answer", "crop": "D10_Q25.png", "q_num": 25, "q_part": "", "q_sort": "25", "student_order": 7}, {"code": "D14", "blank_id": "Q27", "prompt_short": "Estimate angle GHI, nearest 10", "key_answer": "30 (key prints 27)", "read_as": "", "proposed_status": "answer seen but not transcribed", "why": "answer seen but not transcribed", "crop": "D14_Q27.png", "q_num": 27, "q_part": "", "q_sort": "27", "student_order": 12}, {"code": "D04", "blank_id": "Q28", "prompt_short": "Missing angle on straight line", "key_answer": "49", "read_as": "", "proposed_status": "no discernible numeral for angle a", "why": "no discernible numeral for angle a", "crop": "D04_Q28.png", "q_num": 28, "q_part": "", "q_sort": "28", "student_order": 3}, {"code": "D01", "blank_id": "Q29x", "prompt_short": "Angle x in diagram", "key_answer": "35", "read_as": "35", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D01_Q29x.png", "q_num": 29, "q_part": "x", "q_sort": "29x", "student_order": 1}, {"code": "D05", "blank_id": "Q29x", "prompt_short": "Angle x in diagram", "key_answer": "35", "read_as": "35", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D05_Q29x.png", "q_num": 29, "q_part": "x", "q_sort": "29x", "student_order": 4}, {"code": "D10", "blank_id": "Q29x", "prompt_short": "Angle x in diagram", "key_answer": "35", "read_as": "", "proposed_status": "Cannot confidently attribute the scattered numbers to x.", "why": "Cannot confidently attribute the scattered numbers to x.", "crop": "D10_Q29x.png", "q_num": 29, "q_part": "x", "q_sort": "29x", "student_order": 7}, {"code": "D02", "blank_id": "Q29x", "prompt_short": "Angle x in diagram", "key_answer": "35", "read_as": "35", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D02_Q29x.png", "q_num": 29, "q_part": "x", "q_sort": "29x", "student_order": 8}, {"code": "D01", "blank_id": "Q29y", "prompt_short": "Angle y in diagram", "key_answer": "125", "read_as": "90", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D01_Q29y.png", "q_num": 29, "q_part": "y", "q_sort": "29y", "student_order": 1}, {"code": "D05", "blank_id": "Q29y", "prompt_short": "Angle y in diagram", "key_answer": "125", "read_as": "90", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D05_Q29y.png", "q_num": 29, "q_part": "y", "q_sort": "29y", "student_order": 4}, {"code": "D10", "blank_id": "Q29y", "prompt_short": "Angle y in diagram", "key_answer": "125", "read_as": "", "proposed_status": "Cannot confidently attribute the scattered numbers to y.", "why": "Cannot confidently attribute the scattered numbers to y.", "crop": "D10_Q29y.png", "q_num": 29, "q_part": "y", "q_sort": "29y", "student_order": 7}, {"code": "D02", "blank_id": "Q29y", "prompt_short": "Angle y in diagram", "key_answer": "125", "read_as": "35", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D02_Q29y.png", "q_num": 29, "q_part": "y", "q_sort": "29y", "student_order": 8}, {"code": "D01", "blank_id": "Q30x", "prompt_short": "Angle x in diagram", "key_answer": "54", "read_as": "54", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D01_Q30x.png", "q_num": 30, "q_part": "x", "q_sort": "30x", "student_order": 1}, {"code": "D05", "blank_id": "Q30x", "prompt_short": "Angle x in diagram", "key_answer": "54", "read_as": "36", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D05_Q30x.png", "q_num": 30, "q_part": "x", "q_sort": "30x", "student_order": 4}, {"code": "D02", "blank_id": "Q30x", "prompt_short": "Angle x in diagram", "key_answer": "54", "read_as": "54", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D02_Q30x.png", "q_num": 30, "q_part": "x", "q_sort": "30x", "student_order": 8}, {"code": "D01", "blank_id": "Q30y", "prompt_short": "Angle y in diagram", "key_answer": "36", "read_as": "36", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D01_Q30y.png", "q_num": 30, "q_part": "y", "q_sort": "30y", "student_order": 1}, {"code": "D05", "blank_id": "Q30y", "prompt_short": "Angle y in diagram", "key_answer": "36", "read_as": "54", "proposed_status": "wrong", "why": "low confidence (proposed: wrong)", "crop": "D05_Q30y.png", "q_num": 30, "q_part": "y", "q_sort": "30y", "student_order": 4}, {"code": "D02", "blank_id": "Q30y", "prompt_short": "Angle y in diagram", "key_answer": "36", "read_as": "36", "proposed_status": "correct", "why": "low confidence (proposed: correct)", "crop": "D02_Q30y.png", "q_num": 30, "q_part": "y", "q_sort": "30y", "student_order": 8}];
+const EXCLUDED = [{"code": "D16", "file": "Diag8_NoName_20260915-1644.pdf", "prompt_short": "Unnamed spare copy - confirm exclusion from marking", "why": "visually confirmed spare copy, no answers (16 Sept)", "crop": "D16_sheet.jpg"}, {"code": "D17", "file": "Diag8_NoName_20260915-1645.pdf", "prompt_short": "Unnamed spare copy - confirm exclusion from marking", "why": "visually confirmed spare copy, no answers (16 Sept)", "crop": "D17_sheet.jpg"}, {"code": "D18", "file": "Diag8_NoName_20260915-1646.pdf", "prompt_short": "Unnamed spare copy - confirm exclusion from marking", "why": "visually confirmed spare copy, no answers (16 Sept)", "crop": "D18_sheet.jpg"}];
+const STATUS_OPTIONS = ["correct", "wrong", "no_response", "unreadable", "exclude"];
+const STORE_KEY = "d8check_v2";
+const TOTAL = RECORDS.length;
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) { return {}; }
+}
+function saveStore(store) {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
+}
+let STORE = loadStore();
+
+function keyFor(r) { return r.code + "|" + r.blank_id; }
+function studentLabel(r) {
+  return PUBLIC_MODE ? r.code : (r.code + (r.name ? " - " + r.name : ""));
+}
+function badgeClass(status) {
+  if (status === "correct") return "correct";
+  if (status === "wrong") return "wrong";
+  return "other";
+}
+
+function updateProgress() {
+  let decided = 0;
+  RECORDS.forEach(r => { if ((STORE[keyFor(r)] || {}).status) decided++; });
+  document.getElementById("progress").textContent = decided + " of " + TOTAL + " decided";
+}
+
+function itemHtml(r, showStudent) {
+  const st = STORE[keyFor(r)] || {};
+  const decidedClass = st.status ? "decided" : "";
+  const qLabel = "Q" + r.q_num + (r.q_part || "");
+  const header = showStudent ? studentLabel(r) : (qLabel + " - " + r.prompt_short);
+  return `
+  <div class="item ${decidedClass}" data-key="${keyFor(r)}" data-search="${(qLabel + ' ' + r.prompt_short + ' ' + studentLabel(r)).toLowerCase()}">
+    <img src="img/${r.crop}" loading="lazy" alt="${qLabel} crop" onclick="window.open(this.src)">
+    <div>
+      <div class="field"><span class="label">${showStudent ? 'Question' : 'Student'}</span><div class="value">${showStudent ? qLabel + ' - ' + r.prompt_short : studentLabel(r)}</div></div>
+      <div class="field"><span class="label">Key answer</span><div class="value">${r.key_answer || '(n/a)'}</div></div>
+      <div class="field"><span class="label">AI read</span><div class="value">${r.read_as || '(nothing read)'}</div></div>
+      <div class="field"><span class="label">Proposed</span><div class="value"><span class="badge ${badgeClass(r.proposed_status)}">${r.proposed_status}</span></div></div>
+      <div class="field"><span class="label">Why uncertain</span><div class="value">${r.why}</div></div>
+      <div class="decide">
+        <select class="statusSel">
+          <option value="">-- decide --</option>
+          ${STATUS_OPTIONS.map(o => `<option value="${o}" ${st.status===o?'selected':''}>${o}</option>`).join("")}
+        </select>
+        <input type="text" class="noteInput" placeholder="note (optional)" value="${(st.note||'').replace(/"/g,'&quot;')}">
+      </div>
+    </div>
+  </div>`;
+}
+
+function groupHtml(title, items, showStudent) {
+  const count = items.length;
+  return `<details class="card" open>
+    <summary>${title} <span class="count">${count} to check</span></summary>
+    ${items.map(r => itemHtml(r, showStudent)).join("")}
+  </details>`;
+}
+
+function render() {
+  const mode = document.getElementById("tabQuestion").classList.contains("active") ? "question" : "student";
+  const groups = document.getElementById("groups");
+  let html = "";
+  if (mode === "question") {
+    const byQ = {};
+    RECORDS.forEach(r => { (byQ[r.q_sort] = byQ[r.q_sort] || []).push(r); });
+    Object.keys(byQ).sort().forEach(q => {
+      const items = byQ[q];
+      const label = "Q" + items[0].q_num + (items[0].q_part || "") + " - " + items[0].prompt_short;
+      html += groupHtml(label, items, false);
+    });
+  } else {
+    const byS = {};
+    RECORDS.forEach(r => { (byS[r.code] = byS[r.code] || []).push(r); });
+    Object.keys(byS).sort((a,b) => {
+      const oa = byS[a][0].student_order, ob = byS[b][0].student_order;
+      return oa - ob;
+    }).forEach(code => {
+      const items = byS[code].sort((a,b) => a.q_sort.localeCompare(b.q_sort));
+      html += groupHtml(studentLabel(items[0]), items, true);
+    });
+  }
+  groups.innerHTML = html;
+  attachHandlers();
+  applyFilter();
+  updateProgress();
+}
+
+function attachHandlers() {
+  document.querySelectorAll(".item").forEach(el => {
+    const key = el.getAttribute("data-key");
+    const sel = el.querySelector(".statusSel");
+    const note = el.querySelector(".noteInput");
+    sel.addEventListener("change", () => {
+      STORE[key] = STORE[key] || {};
+      STORE[key].status = sel.value;
+      saveStore(STORE);
+      el.classList.toggle("decided", !!sel.value);
+      updateProgress();
+    });
+    note.addEventListener("input", () => {
+      STORE[key] = STORE[key] || {};
+      STORE[key].note = note.value;
+      saveStore(STORE);
+    });
+  });
+}
+
+function applyFilter() {
+  const q = document.getElementById("filter").value.trim().toLowerCase();
+  document.querySelectorAll(".card").forEach(card => {
+    let anyVisible = false;
+    card.querySelectorAll(".item").forEach(item => {
+      const match = !q || item.getAttribute("data-search").includes(q);
+      item.style.display = match ? "" : "none";
+      if (match) anyVisible = true;
+    });
+    card.style.display = anyVisible ? "" : "none";
+  });
+}
+
+function renderExcluded() {
+  const store = STORE;
+  const list = document.getElementById("excludedList");
+  list.innerHTML = EXCLUDED.map(r => {
+    const key = "exclude|" + r.code;
+    const st = store[key] || {};
+    return `<div class="excl-item" data-exkey="${key}">
+      <img src="img/${r.crop}" loading="lazy" alt="${r.code} page 1">
+      <div class="excl-meta">
+        <div><strong>${r.code}</strong> - ${r.file}</div>
+        <div class="why">${r.why}</div>
+        <div class="excl-controls">
+          <select class="exSel">
+            <option value="">-- decide --</option>
+            <option value="confirm_exclude" ${st.status==='confirm_exclude'?'selected':''}>Confirm: exclude (spare copy)</option>
+            <option value="reject_exclude" ${st.status==='reject_exclude'?'selected':''}>Reject: include in marking</option>
+          </select>
+          <input type="text" class="exNote" placeholder="note (optional)" value="${(st.note||'').replace(/"/g,'&quot;')}">
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".excl-item").forEach(el => {
+    const key = el.getAttribute("data-exkey");
+    const sel = el.querySelector(".exSel");
+    const note = el.querySelector(".exNote");
+    sel.addEventListener("change", () => { STORE[key] = STORE[key] || {}; STORE[key].status = sel.value; saveStore(STORE); });
+    note.addEventListener("input", () => { STORE[key] = STORE[key] || {}; STORE[key].note = note.value; saveStore(STORE); });
+  });
+}
+
+function csvEscape(v) {
+  v = (v === undefined || v === null) ? "" : String(v);
+  if (/[",\n]/.test(v)) return '"' + v.replace(/"/g, '""') + '"';
+  return v;
+}
+
+function exportCsv() {
+  const cols = ["code", "first_name", "file", "blank_id", "prompt_short", "key_answer", "read_as", "proposed_status", "why", "crop", "ivan_status", "ivan_note", "q_num", "q_part", "q_sort", "student_order", "name"];
+  const lines = [cols.join(",")];
+  RECORDS.forEach(r => {
+    const st = STORE[keyFor(r)] || {};
+    const row = Object.assign({}, r, { ivan_status: st.status || "", ivan_note: st.note || "" });
+    if (!("name" in row)) row.name = "";
+    if (!("first_name" in row)) row.first_name = PUBLIC_MODE ? "" : (row.name || "");
+    if (!("file" in row)) row.file = "";
+    lines.push(cols.map(c => csvEscape(row[c])).join(","));
+  });
+  EXCLUDED.forEach(r => {
+    const key = "exclude|" + r.code;
+    const st = STORE[key] || {};
+    const row = { code: r.code, first_name: "", file: r.file, blank_id: "EXCLUDED_SPARE",
+      prompt_short: r.prompt_short, key_answer: "", read_as: "", proposed_status: "exclude",
+      why: r.why, crop: r.crop, ivan_status: st.status || "", ivan_note: st.note || "",
+      q_num: "", q_part: "", q_sort: "", student_order: "", name: "" };
+    lines.push(cols.map(c => csvEscape(row[c])).join(","));
+  });
+  const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "CHECK-for-Ivan_v2.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+document.getElementById("tabQuestion").addEventListener("click", () => {
+  document.getElementById("tabQuestion").classList.add("active");
+  document.getElementById("tabStudent").classList.remove("active");
+  render();
+});
+document.getElementById("tabStudent").addEventListener("click", () => {
+  document.getElementById("tabStudent").classList.add("active");
+  document.getElementById("tabQuestion").classList.remove("active");
+  render();
+});
+document.getElementById("filter").addEventListener("input", applyFilter);
+document.getElementById("exportBtn").addEventListener("click", exportCsv);
+
+renderExcluded();
+render();
+</script>
+</body>
+</html>
