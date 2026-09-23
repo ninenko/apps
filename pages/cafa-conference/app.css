@@ -155,8 +155,11 @@
 #cafa .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
 #cafa .tag{font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sky-2);color:var(--navy-2);}
 #cafa .tag.fmt{background:#fff;border:1px solid var(--line);color:var(--ink-2);}
-#cafa .wk-b h4{font-size:13.5px;font-weight:600;margin:10px 0 2px;color:var(--ink);}
+#cafa .wk-b h4{font-size:13.5px;font-weight:600;margin:14px 0 4px;color:var(--ink);}
 #cafa .wk-b a{display:inline-block;margin-top:10px;font-size:15px;}
+#cafa ol.take{counter-reset:tk;display:grid;gap:8px;margin-top:6px;}
+#cafa ol.take li{counter-increment:tk;display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:baseline;line-height:1.45;}
+#cafa ol.take li::before{content:counter(tk,decimal-leading-zero);font-family:"Lexend",sans-serif;font-size:12.5px;font-weight:700;color:var(--royal);letter-spacing:.02em;border-top:2px solid var(--royal);padding-top:3px;}
 #cafa .detail{padding:0 16px 16px;font-size:15.5px;color:var(--ink-2);}
 #cafa .detail .spk{display:grid;gap:6px;margin-top:8px;}
 #cafa .detail .spk b{color:var(--ink);font-family:"Lexend",sans-serif;font-weight:600;}

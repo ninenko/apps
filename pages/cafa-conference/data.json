@@ -178,8 +178,12 @@
       ],
       "format": "Interactive Workshop",
       "description": "AI can now solve almost every problem in our curriculum in seconds — which forces an uncomfortable question for every subject, not just maths: if the machine can produce the answer, what are we actually here to teach? This session reframes mathematics from answer-getting (now largely automatable) toward the durable skills AI can’t replace: reasoning, justification, modelling real situations, and recognising when a confident output is simply wrong. Working from concrete before-and-after examples, participants will see how familiar tasks and assessments can be redesigned to stay meaningful in an AI-saturated classroom — protecting academic integrity without resorting to bans. The framework is deliberately transferable: every head of department leaves with a lens to apply to their own subject.",
-      "learn": "Distinguish answer-getting from the reasoning, justification and modelling skills that remain valuable; apply a simple framework for redesigning tasks and assessments; protect academic integrity without bans or detection tools; redesign one of your own tasks during the session.",
-      "doc": "https://docs.google.com/document/d/1d413pihsrw3eoPtzxSPuUXpSko8-A8pe5vJtJIgkdlQ/edit?usp=sharing",
+      "learn": [
+        "Distinguish “answer-getting” — the part AI now automates — from the reasoning, justification and modelling skills that remain genuinely valuable to teach.",
+        "Apply a simple framework for redesigning familiar tasks and assessments so they stay meaningful when every student has AI on hand.",
+        "Protect academic integrity without relying on bans or detection tools.",
+        "Take the same lens back to your own subject — mathematical in its examples, cross-curricular in its logic — and redesign one of your own tasks during the session."
+      ],
       "keywords": "AI maths math academic integrity"
     },
     {
@@ -196,8 +200,11 @@
       ],
       "format": "Discussion-Based Session",
       "description": "For students to thrive in a global world, they will not only need a strong IQ but also a high EQ. Communication, understanding and empathising with the opinions and feelings of others, and knowing how to make decisions are all involved in this area. Participants will learn about emotional intelligence for their own lives, and how to practically help their students grow in this key area.",
-      "learn": "The main points of emotional intelligence; how to grow in EQ yourself; how to help students grow in EQ.",
-      "doc": "https://docs.google.com/document/d/1l7A7oNe5FkGs9ixYIe90dfrzI_F1P6o2OnkHDvv7QIk/edit?usp=sharing",
+      "learn": [
+        "The main points of emotional intelligence.",
+        "How to grow in EQ yourself.",
+        "How to help your students grow in EQ."
+      ],
       "keywords": "SEL EQ"
     },
     {
@@ -213,8 +220,12 @@
       ],
       "format": "Interactive Workshop",
       "description": "Effective assessment is more than assigning grades — it is a powerful tool for supporting and improving student learning. Participants will explore the key characteristics of high-quality assessment and, through practical examples and collaborative activities, examine how to design meaningful assessment tasks, develop clear success criteria and rubrics, and make assessment more transparent and objective for students.",
-      "learn": "Apply the key characteristics of high-quality assessment; check your own assessments against them; analyse good and bad examples; explore how students can take responsibility for their own learning.",
-      "doc": "https://docs.google.com/document/d/1fTueecT5xwdNs2E9cqLqmHoOKlIveKI8Ry1U2YHN2qU/edit?usp=sharing",
+      "learn": [
+        "Learn and apply the key characteristics of high-quality assessment.",
+        "Check whether your own assessments have or lack the key principles.",
+        "Analyse good and bad examples of assessment tasks.",
+        "Explore how students can take responsibility for their own learning."
+      ],
       "keywords": "rubrics"
     },
     {
@@ -231,8 +242,10 @@
       ],
       "format": "Interactive Workshop",
       "description": "A practical session exploring simple, effective strategies teachers can use tomorrow to develop pupils’ critical thinking: questioning techniques, discussion strategies, and classroom activities that encourage pupils to think deeply, make connections, explain their reasoning, and become more independent learners. Practical and interactive, with a focus on discussion and group work.",
-      "learn": "Practical strategies for using discussion and group work to develop pupils’ critical thinking, collaboration and communication.",
-      "doc": "https://docs.google.com/document/d/1PWOIn8nMcstnpMFfbM3ST-nmc7LSMH39c314r8Wv2_U/edit?usp=sharing",
+      "learn": [
+        "Practical strategies for using discussion and group work to develop pupils’ critical thinking.",
+        "Ways to build collaboration and communication skills alongside it."
+      ],
       "keywords": "maths math"
     },
     {
@@ -248,8 +261,10 @@
       ],
       "format": "Interactive Workshop",
       "description": "An interactive session on the relationship between choice, engagement and culture in the classroom. While 21st-century approaches emphasise learner autonomy and inquiry, could the choices we provide sometimes create hidden constraints? Through the lens of culturally responsive teaching, participants examine how students from different backgrounds may experience motivation, engagement and agency differently, and how classroom practices can be adapted thoughtfully rather than applied universally.",
-      "learn": "How choice, engagement, motivation and agency connect; how cultural and educational backgrounds shape students’ comfort with autonomy, inquiry, participation and decision-making.",
-      "doc": "https://docs.google.com/document/d/1VMG0VeIB4V_0pmT7tUY53S4Ujb-Mzk4HmAduxoZlbaQ/edit?usp=sharing"
+      "learn": [
+        "How choice, engagement, motivation and agency are connected.",
+        "How cultural and educational backgrounds may influence students’ comfort with autonomy, inquiry, participation and decision-making."
+      ]
     },
     {
       "id": "S1-6",
@@ -266,8 +281,11 @@
       ],
       "format": "Discussion-Based Session",
       "description": "By the time most students begin university counselling, critical windows for building direction, skills and confidence have already closed. This session presents a field-tested alternative: a two-semester Uni Prep curriculum for Grade 8, built and delivered at Muras International School, Osh — career exploration, goal-setting, 21st-century skills, study habits and the basics of global higher education, with a no-grades, reflection-based assessment model.",
-      "learn": "A tested framework for starting university readiness in middle school, with tools for early career exploration and goal-setting; a worksheet to map your own school’s readiness timeline.",
-      "doc": "https://docs.google.com/document/d/1wL2TJJ1NIu9QUfq858zJ_Nq2YR71-bL3rKFQH1pResg/edit?usp=sharing"
+      "learn": [
+        "How to start university readiness in middle school — not just senior year — using a real, tested framework.",
+        "Practical tools for early career exploration, goal-setting and a no-grades reflection model.",
+        "A worksheet to map your own school’s readiness timeline and connect it to senior-year counselling outcomes."
+      ]
     },
     {
       "id": "S2-1",
@@ -283,8 +301,9 @@
       ],
       "format": "Hands-on Activity",
       "description": "In our push for technology, we have forgotten to teach our children about life outside the screens. Children are no longer connected to the natural world or the tactility of the human body. This session introduces teachers to outdoor learning and the value of old-school survival skills. No screens allowed!",
-      "learn": "The outdoors is the cheapest and best teaching resource you will ever need.",
-      "doc": "https://docs.google.com/document/d/10NPP273vtBMC3f5ReVXtnXsmwxb0JvyeNnM8zi0GJkc/edit?usp=sharing"
+      "learn": [
+        "The outdoors is the cheapest and best teaching resource you will ever need."
+      ]
     },
     {
       "id": "S2-2",
@@ -301,8 +320,10 @@
       ],
       "format": "Presentation",
       "description": "Compares key aspects of flipped versus traditional teaching, first tried in a university Statics course at the University at Buffalo (SUNY) and later in high-school maths and physics. Student performance improved measurably and academic integrity improved with it — but the shift needs additional instructional staff. Student survey opinions argue for a consistent semester-long approach and flexibility for different learning styles.",
-      "learn": "A data-informed rationale for flipped-classroom pedagogy; ideas to try in your own classroom.",
-      "doc": "https://docs.google.com/document/d/1P1b3ljBQWo5zRu_J4gWls_ZRRWRXyp0OFj1uootebSc/edit?usp=sharing",
+      "learn": [
+        "A data-informed rationale for flipped-classroom pedagogy.",
+        "Ideas to try in your own classroom."
+      ],
       "keywords": "maths math physics"
     },
     {
@@ -319,8 +340,10 @@
       ],
       "format": "Interactive Workshop",
       "description": "How teachers can create engaging, meaningful learning experiences with simple, low-cost resources — hands-on, playful, and connected to children’s real-life experiences. Adaptable examples across subjects in Early Years and Primary; in the last part, participants use everyday materials to design their own short interactive learning activity.",
-      "learn": "One or two new ideas to use in your lessons, and an understanding of meaningful learning.",
-      "doc": "https://docs.google.com/document/d/1XSuRLCmMqatfy99n4msB8QwuDnmGpD1O5h0ZTzbOghI/edit?usp=sharing"
+      "learn": [
+        "One or two new ideas to use in your lessons.",
+        "An understanding of what makes learning meaningful."
+      ]
     },
     {
       "id": "S2-4",
@@ -335,8 +358,10 @@
       ],
       "format": "Discussion-Based Session",
       "description": "Tips, tricks, and collaborative discussions on how to maintain positive human connections in the classroom.",
-      "learn": "Practical ideas for kindly redirecting student behaviour and creating an atmosphere where positive collaboration is possible.",
-      "doc": "https://docs.google.com/document/d/11RqZEolVEgWOkbcjfzm9QmovITmYQHs9thgVtKceUbQ/edit?usp=sharing"
+      "learn": [
+        "Practical ideas on how to kindly redirect student behaviour.",
+        "How to create an atmosphere where positive collaboration is possible."
+      ]
     },
     {
       "id": "S2-5",
@@ -353,8 +378,11 @@
       ],
       "format": "Presentation",
       "description": "Every English classroom includes students at different levels of readiness, yet tasks are often designed for one average level. A model of differentiated instruction built on three task types — reproductive, productive and creative — with how AI tools can quickly generate differentiated tasks at each level, and how assessment and feedback fit the model. Drawn from Grade 6 teaching and master’s research.",
-      "learn": "A three-level framework for differentiating tasks that works in any subject; using AI to generate differentiated tasks quickly; assessing progress meaningfully across levels.",
-      "doc": "https://docs.google.com/document/d/1I62s3uu_Y5OzMl8_D37gsFzntBKNvqyprXl9dHk2HL8/edit?usp=sharing",
+      "learn": [
+        "A practical three-level framework for differentiating tasks — reproductive, productive and creative — that works in any subject, not only English.",
+        "How to design tasks matched to students’ readiness, and use AI tools to generate differentiated tasks quickly.",
+        "How to assess student progress meaningfully across the three levels."
+      ],
       "keywords": "AI EAL ELL"
     },
     {
@@ -370,8 +398,10 @@
       ],
       "format": "Interactive Workshop",
       "description": "What Social-Emotional Learning (SEL) means and why it matters; how to include SEL in everyday classroom activities and routines; and how SEL practices help students manage emotions, build positive relationships, communicate and make responsible decisions — and how SEL affects engagement, behaviour, confidence and learning.",
-      "learn": "Different SEL practices and simple ways to use them to create a positive, supportive and welcoming classroom.",
-      "doc": "https://docs.google.com/document/d/1cW_fkxtmaLeZ3flAItfCZwYK0JW_rz8XpGS7zRWEsOY/edit?usp=sharing",
+      "learn": [
+        "What different SEL practices look like in everyday classroom routines.",
+        "How they help students understand and manage emotions, build positive relationships, communicate and make responsible decisions."
+      ],
       "keywords": "SEL"
     },
     {
@@ -388,8 +418,10 @@
       ],
       "format": "Hands-on Activity",
       "description": "A game does things a worksheet cannot: a student can take a real risk and see what happens without it costing anything that matters, and the shared story it produces is unusually good ground for reflection. The obstacle has always been design time — and AI is now a capable design partner that argues about rules, proposes alternatives and plays out every sequence of your dice. We walk the full pipeline on a topic the room chooses, with a worked IGCSE Business example. The game itself ends up on paper — no screens when it is played.",
-      "learn": "How to get from a curriculum objective to a playable game. Leave with a checklist, an example, and the start of your own game.",
-      "doc": "https://docs.google.com/document/d/1UfCQ44T--ywZwWTAyJvdwbq-ffdAZUCz0RzIBLX5LqI/edit?usp=sharing",
+      "learn": [
+        "How to get from a curriculum objective to a playable game.",
+        "A checklist, a worked example, and the start of your own game."
+      ],
       "keywords": "AI games play"
     },
     {
@@ -405,8 +437,11 @@
       ],
       "format": "Interactive Workshop",
       "description": "Mathematics should not stop at finding the correct answer. This session shows how to contextualise primary mathematics through real-world situations and put the emphasis on the “why” behind mathematical thinking — what information matters, which strategy fits, whether the answer makes sense — with language as a key part of understanding and communicating reasoning.",
-      "learn": "Practical ways to connect maths to real life, use language to build understanding of context, and use story-based tasks to develop problem-solving and communication.",
-      "doc": "https://docs.google.com/document/d/1nBoxJE3Y6FXbCgwn32HzbRkAfPq3x76Ps978md94x1U/edit?usp=sharing",
+      "learn": [
+        "Practical ways to make mathematics meaningful by connecting it to real-life situations.",
+        "Using language to help students understand the context and explain their reasoning.",
+        "How story-based, contextualised tasks develop problem-solving, communication and higher-order thinking."
+      ],
       "keywords": "maths math"
     },
     {
@@ -423,8 +458,12 @@
       ],
       "format": "Interactive Workshop",
       "description": "How inquiry-based learning supports engagement, meaningful communication and deeper thinking. Starting with a provocation, participants move through interactive stations on the inquiry cycle, inquiry phases and language support — with a focus on open-ended questions, the teacher as facilitator, and scaffolding so every learner can take part.",
-      "learn": "The stages of the inquiry cycle; an inquiry-based lesson experienced as a learner; jigsaw reading as a research strategy; analysing and connecting information.",
-      "doc": "https://docs.google.com/document/d/1yTluerPfRQrIDZP63AaTiSh5l14k6KlIBtPmOB0KQTQ/edit?usp=sharing"
+      "learn": [
+        "Understand the stages of the inquiry cycle.",
+        "Experience an inquiry-based lesson as learners.",
+        "Use jigsaw reading as a research strategy.",
+        "Analyse and connect information to build understanding."
+      ]
     },
     {
       "id": "S3-4",
@@ -441,8 +480,11 @@
       ],
       "format": "Presentation",
       "description": "Ways to group students, provide feedback, develop self-reflection, and strengthen collaboration among students.",
-      "learn": "Helping groups be more effective; evaluating work done in groups; helping students reflect on their contribution and identify areas to grow.",
-      "doc": "https://docs.google.com/document/d/1QADHpxl8Z4hgdQEKI0MrVNhOutma39vO4ngfPh6nCPI/edit?usp=sharing"
+      "learn": [
+        "How to help groups be more effective.",
+        "How to evaluate the work students have done within their groups.",
+        "How to help students reflect on their group contribution and identify areas to grow."
+      ]
     },
     {
       "id": "S3-5",
@@ -458,8 +500,11 @@
       ],
       "format": "Interactive Workshop",
       "description": "An introduction to Social-Emotional Learning through the five CASEL competencies, built around one question: how might we transform schools from systems of discipline into communities of care? Empathy and human-centred design for learning, with an inclusive welcome, active engagement and a reflective close.",
-      "learn": "Analyse the five CASEL competencies; strategies for a human-centred learning environment; a plan to integrate SEL in teaching and learning.",
-      "doc": "https://docs.google.com/document/d/1rbI1AJdZcf2Q-EYOp5FsqZmLVNRedjjNJQxxfjYvwkA/edit?usp=sharing",
+      "learn": [
+        "Analyse the five SEL competencies of the CASEL framework and connect them.",
+        "Strategies for a human-centred approach to the learning environment.",
+        "Practise developing a plan to integrate SEL in teaching and learning."
+      ],
       "keywords": "SEL CASEL"
     },
     {
@@ -477,8 +522,12 @@
       ],
       "format": "Interactive Workshop",
       "description": "As AI tools become ubiquitous, students’ ability to collaborate, communicate and build on each other’s ideas matters more than ever. A hands-on design challenge that needs both human ingenuity and critical use of AI, and a practical 4-step framework — Collaboration 4.0 — for designing collaborative projects that build active listening, constructive feedback and shared problem-solving.",
-      "learn": "The Collaboration 4.0 framework; five low-prep strategies for collaboration skills; a lesson plan redesigned in a design sprint; positioning AI as a team member rather than a shortcut.",
-      "doc": "https://docs.google.com/document/d/1aSQI8GXsgniyxLG-OpSKsr6X4aPdiJ__Q-dJd43j3_E/edit?usp=sharing",
+      "learn": [
+        "Collaboration 4.0: a practical 4-step framework for designing collaborative learning that uses AI as a support, not a replacement for thinking.",
+        "Five low-prep, classroom-ready strategies for active listening, constructive feedback and consensus-building.",
+        "A concrete lesson plan, redesigned during a hands-on design sprint.",
+        "How to position AI as a “team member” that amplifies — rather than bypasses — creativity, critical thinking and problem-solving."
+      ],
       "keywords": "AI"
     },
     {
