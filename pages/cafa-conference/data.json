@@ -1,5 +1,5 @@
 {
-  "_README": "Edit this file to change the programme, workshops, rooms or links. Participants and their sign-ups live in participants.csv. After editing, push both files to GitHub; the bis.kg page reads them live (allow ~10 minutes for GitHub's cache).",
+  "_README": "Edit this file to change the programme, workshops, rooms or links. Participants and their sign-ups live in participants.csv. Times are Bishkek time; each day's 'iso' date drives the live 'Now / Next' panel. Push to GitHub after editing; the bis.kg page reads it live (~10 min cache).",
   "event": {
     "registerUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeHcyBa1picGfIR0wtMsRcwL8Dov6HJCfeh_e-Sry5aZnhwfw/viewform?usp=dialog",
     "preconferenceUrl": "https://www.bis.kg/school/cafa-preconference/",
@@ -52,9 +52,9 @@
         {
           "time": "12:00 – 15:30",
           "title": "Pre-Conference: The Current State of AI — What Frontier Models Can and Cannot Do",
-          "note": "Ivan Ninenko (BIS) · Igor Chemerkin (OloloPro, Bishkek AI Community) · Aidin Biibosunov (Differentia Bio, creator of AIsuluu)",
           "tag": "pre",
-          "link": "preconferenceUrl"
+          "link": "preconferenceUrl",
+          "expand": "pre"
         },
         {
           "time": "15:30 – 16:30",
@@ -68,14 +68,16 @@
           "time": "16:45 – 18:00",
           "title": "Keynote: Foundations for productive use of AI",
           "note": "Peter Nilsson — AI literacy and the impact of AI on schools",
-          "tag": "keynote"
+          "tag": "keynote",
+          "expand": "keynote"
         },
         {
           "time": "18:30 – 20:00",
           "title": "BBQ reception at BIS",
           "tag": "social"
         }
-      ]
+      ],
+      "iso": "2026-09-25"
     },
     {
       "day": "Saturday",
@@ -89,19 +91,18 @@
           "time": "9:00 – 10:15",
           "title": "Keynote: AI in teaching & learning",
           "note": "Peter Nilsson — avoiding cognitive off-loading, promoting appropriate cognitive out-sourcing, other skills needed in a time of AI",
-          "tag": "keynote"
+          "tag": "keynote",
+          "expand": "keynote"
         },
         {
           "time": "10:30 – 11:30",
           "title": "Breakout Session 1",
-          "note": "Six workshops — choose one",
           "tag": "session",
           "session": "S1"
         },
         {
           "time": "11:45 – 12:45",
           "title": "Breakout Session 2",
-          "note": "Six workshops — choose one",
           "tag": "session",
           "session": "S2"
         },
@@ -119,7 +120,6 @@
         {
           "time": "13:30 – 14:30",
           "title": "Breakout Session 3",
-          "note": "Six workshops — choose one",
           "tag": "session",
           "session": "S3"
         },
@@ -133,10 +133,11 @@
         {
           "time": "16:00 – 17:00",
           "title": "Closing panel",
-          "note": "Keynote speaker and pre-conference speakers",
+          "note": "Peter Nilsson with pre-conference speakers Ivan Ninenko, Igor Chemerkin and Aidin Biibosunov",
           "tag": "keynote"
         }
-      ]
+      ],
+      "iso": "2026-09-26"
     },
     {
       "day": "Sunday",
@@ -147,7 +148,8 @@
           "title": "Optional trip to Ala Archa",
           "tag": "social"
         }
-      ]
+      ],
+      "iso": "2026-09-27"
     }
   ],
   "sessions": {
@@ -616,5 +618,23 @@
       "role": "QSIB Middle School Teacher",
       "org": "QSI International School of Bishkek"
     }
-  ]
+  ],
+  "preconference": {
+    "title": "The Current State of AI — What Frontier Models Can and Cannot Do",
+    "blurb": "Practitioners show what today’s models and agents already do — live, with real tasks and real failure cases.",
+    "speakers": [
+      {
+        "name": "Ivan Ninenko",
+        "role": "Strategic Lead for Education Systems Innovation, BIS"
+      },
+      {
+        "name": "Igor Chemerkin",
+        "role": "AI Mentor at OloloPro, founder of the Bishkek AI Community"
+      },
+      {
+        "name": "Aidin Biibosunov",
+        "role": "Computational Biology Researcher, Differentia Bio; creator of AIsuluu"
+      }
+    ]
+  }
 }
