@@ -7,18 +7,13 @@
         "name": "Bojana Askovic",
         "role": "Activities Director, Bishkek International School",
         "email": "baskovic@bis.kg"
-      },
-      {
-        "name": "Tatyana Astashova",
-        "role": "CAFA Administrative Assistant",
-        "email": "cafa@tashschool.org"
       }
     ]
   },
   "keynote": {
     "name": "Peter Nilsson",
-    "photo": "",
-    "site": "http://peternilsson.us",
+    "photo": "images/peter-nilsson.jpg",
+    "site": "https://peternilsson.us/",
     "bioUrl": "https://docs.google.com/document/d/1mzwUib44EQMAugZkoo60HVrcQXziLKgnSQbR-jchBXE/edit?usp=sharing",
     "bookTitle": "Irreplaceable: How AI Changes Everything (And Nothing) in Teaching and Learning",
     "bookUrl": "https://www.irreplaceable.info/",
@@ -660,24 +655,7 @@
       "name": "Central Asia Federation of Athletics, Activities and Arts (CAFA)",
       "logo": "images/cafa-logo.png",
       "text": "A regional network connecting international and private schools across Central Asia, including Kyrgyzstan, Kazakhstan, Uzbekistan and Tajikistan. It brings students and educators together for sport, the arts and academic competition, fostering cooperation, leadership, resilience and sportsmanship.",
-      "points": [
-        [
-          "Athletics:",
-          "cross-country, track and field, football, basketball, volleyball and badminton."
-        ],
-        [
-          "Activities & arts:",
-          "music festivals, art exchanges, drama events and student leadership forums."
-        ],
-        [
-          "Professional development:",
-          "educator conferences such as this one, Architects of Tomorrow."
-        ],
-        [
-          "Member schools include",
-          "QSI International School of Bishkek, Tashkent International School, Almaty International School and Tien Shan International School."
-        ]
-      ],
+      "points": [],
       "url": "",
       "urlLabel": ""
     }
