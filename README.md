@@ -94,6 +94,7 @@ HTML public/
 |------|--------|
 | ai-tutors.html | https://ninenko.github.io/apps/pages/ai-tutors.html |
 | cafa-preconference/index.html | https://ninenko.github.io/apps/pages/cafa-preconference/ |
+| cafa-conference/index.html | https://ninenko.github.io/apps/pages/cafa-conference/ |
 
 ### Оценки
 
