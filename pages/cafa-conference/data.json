@@ -1,712 +1,776 @@
 {
-  "_README": "Edit this file to change the programme, workshops, rooms or links. Participants and their sign-ups live in participants.csv. Times are Bishkek time; each day's 'iso' date drives the live 'Now / Next' panel. Push to GitHub after editing; the bis.kg page reads it live (~10 min cache).",
-  "event": {
-    "preconferenceUrl": "https://www.bis.kg/school/cafa-preconference/",
-    "contacts": [
-      {
-        "name": "Bojana Askovic",
-        "role": "Activities Director, Bishkek International School",
-        "email": "baskovic@bis.kg"
-      }
-    ]
-  },
-  "keynote": {
-    "name": "Peter Nilsson",
-    "photo": "images/peter-nilsson.jpg",
-    "site": "https://peternilsson.us/",
-    "bioUrl": "https://docs.google.com/document/d/1mzwUib44EQMAugZkoo60HVrcQXziLKgnSQbR-jchBXE/edit?usp=sharing",
-    "bookTitle": "Irreplaceable: How AI Changes Everything (And Nothing) in Teaching and Learning",
-    "bookUrl": "https://www.irreplaceable.info/",
-    "bio": "Educator, author and musician with over 20 years in schools as head of school, administrator, teacher, tutor, coach and board member. Most recently Head of School at King’s Academy in Jordan; before that he taught English and digital humanities at Deerfield Academy. Founder of Athena Lab and editor of The Educator’s Notebook; he has spoken at the OECD, the College Board and NAIS, and serves on the advisory boards of SXSW EDU and the Center for Curriculum Redesign.",
-    "talks": [
-      {
-        "when": "Fri 16:45",
-        "title": "Foundations for productive use of AI",
-        "note": "AI literacy and the impact of AI on schools"
-      },
-      {
-        "when": "Sat 9:00",
-        "title": "AI in teaching & learning",
-        "note": "Avoiding cognitive off-loading · Promoting appropriate cognitive out-sourcing · Other skills needed in a time of AI"
-      }
-    ]
-  },
-  "programme": [
-    {
-      "day": "Friday",
-      "date": "25 September",
-      "items": [
-        {
-          "time": "11:00 – 12:00",
-          "title": "Pre-conference registration",
-          "tag": "pre"
-        },
-        {
-          "time": "12:00 – 15:30",
-          "title": "Pre-Conference: The Current State of AI — What Frontier Models Can and Cannot Do",
-          "tag": "pre",
-          "link": "preconferenceUrl",
-          "expand": "pre"
-        },
-        {
-          "time": "15:30 – 16:30",
-          "title": "Registration and student-led tours of the BIS campus"
-        },
-        {
-          "time": "16:30 – 16:45",
-          "title": "Welcome"
-        },
-        {
-          "time": "16:45 – 18:00",
-          "title": "Keynote: Foundations for productive use of AI",
-          "note": "Peter Nilsson — AI literacy and the impact of AI on schools",
-          "tag": "keynote",
-          "expand": "keynote"
-        },
-        {
-          "time": "18:30 – 20:00",
-          "title": "BBQ reception at BIS",
-          "tag": "social"
-        }
-      ],
-      "iso": "2026-09-25"
-    },
-    {
-      "day": "Saturday",
-      "date": "26 September",
-      "items": [
-        {
-          "time": "8:30 – 9:00",
-          "title": "Coffee and registration"
-        },
-        {
-          "time": "9:00 – 10:15",
-          "title": "Keynote: AI in teaching & learning",
-          "note": "Peter Nilsson — avoiding cognitive off-loading, promoting appropriate cognitive out-sourcing, other skills needed in a time of AI",
-          "tag": "keynote",
-          "expand": "keynote"
-        },
-        {
-          "time": "10:30 – 11:30",
-          "title": "Breakout Session 1",
-          "tag": "session",
-          "session": "S1"
-        },
-        {
-          "time": "11:45 – 12:45",
-          "title": "Breakout Session 2",
-          "tag": "session",
-          "session": "S2"
-        },
-        {
-          "time": "12:45 – 13:30",
-          "title": "Lunch",
-          "tag": "social"
-        },
-        {
-          "time": "13:15 – 14:45",
-          "title": "CAFA Fall Meeting",
-          "note": "School Directors and AD/ACs · BIS Internal Meeting Room",
-          "tag": "meeting"
-        },
-        {
-          "time": "13:30 – 14:30",
-          "title": "Breakout Session 3",
-          "tag": "session",
-          "session": "S3"
-        },
-        {
-          "time": "14:45 – 16:00",
-          "title": "Job-alike sessions",
-          "note": "Meet colleagues in the same role",
-          "tag": "session",
-          "session": "JA"
-        },
-        {
-          "time": "16:00 – 17:00",
-          "title": "Closing panel",
-          "note": "Peter Nilsson with pre-conference speakers Ivan Ninenko, Igor Chemerkin and Aidin Biibosunov",
-          "tag": "keynote"
-        }
-      ],
-      "iso": "2026-09-26"
-    },
-    {
-      "day": "Sunday",
-      "date": "27 September",
-      "items": [
-        {
-          "time": "9:00 – 14:00",
-          "title": "Optional trip to Ala Archa",
-          "tag": "social"
-        }
-      ],
-      "iso": "2026-09-27"
-    }
-  ],
-  "sessions": {
-    "S1": {
-      "label": "Session 1",
-      "time": "10:30 – 11:30"
-    },
-    "S2": {
-      "label": "Session 2",
-      "time": "11:45 – 12:45"
-    },
-    "S3": {
-      "label": "Session 3",
-      "time": "13:30 – 14:30"
-    },
-    "JA": {
-      "label": "Job-alike",
-      "time": "14:45 – 16:00"
-    }
-  },
-  "workshops": [
-    {
-      "id": "S1-1",
-      "session": "S1",
-      "room": "",
-      "title": "When the Machine Can Do the Maths: What’s Left to Teach When AI Solves the Problem?",
-      "presenter": "Alisher Kakenov",
-      "role": "Head of Mathematics",
-      "org": "BIS",
-      "audience": [
-        "Middle School",
-        "High School",
-        "Leadership"
-      ],
-      "format": "Interactive Workshop",
-      "description": "AI can now solve almost every problem in our curriculum in seconds — which forces an uncomfortable question for every subject, not just maths: if the machine can produce the answer, what are we actually here to teach? This session reframes mathematics from answer-getting (now largely automatable) toward the durable skills AI can’t replace: reasoning, justification, modelling real situations, and recognising when a confident output is simply wrong. Working from concrete before-and-after examples, participants will see how familiar tasks and assessments can be redesigned to stay meaningful in an AI-saturated classroom — protecting academic integrity without resorting to bans. The framework is deliberately transferable: every head of department leaves with a lens to apply to their own subject.",
-      "learn": [
-        "Distinguish “answer-getting” — the part AI now automates — from the reasoning, justification and modelling skills that remain genuinely valuable to teach.",
-        "Apply a simple framework for redesigning familiar tasks and assessments so they stay meaningful when every student has AI on hand.",
-        "Protect academic integrity without relying on bans or detection tools.",
-        "Take the same lens back to your own subject — mathematical in its examples, cross-curricular in its logic — and redesign one of your own tasks during the session."
-      ],
-      "keywords": "AI maths math academic integrity"
-    },
-    {
-      "id": "S1-2",
-      "session": "S1",
-      "room": "",
-      "title": "Emotional Intelligence: In this new age of AI, how do we as educators help our students (and ourselves) grow in EQ",
-      "presenter": "Chas Hahn",
-      "role": "Athletics Director",
-      "org": "Silk Road Academy, Dushanbe",
-      "audience": [
-        "Whole School",
-        "Leadership"
-      ],
-      "format": "Discussion-Based Session",
-      "description": "For students to thrive in a global world, they will not only need a strong IQ but also a high EQ. Communication, understanding and empathising with the opinions and feelings of others, and knowing how to make decisions are all involved in this area. Participants will learn about emotional intelligence for their own lives, and how to practically help their students grow in this key area.",
-      "learn": [
-        "The main points of emotional intelligence.",
-        "How to grow in EQ yourself.",
-        "How to help your students grow in EQ."
-      ],
-      "keywords": "SEL EQ"
-    },
-    {
-      "id": "S1-3",
-      "session": "S1",
-      "room": "",
-      "title": "Rethinking Assessment in the Classroom",
-      "presenter": "Yana Karpenko",
-      "role": "Head of Language Acquisition, Middle / High School",
-      "org": "BIS",
-      "audience": [
-        "Whole School"
-      ],
-      "format": "Interactive Workshop",
-      "description": "Effective assessment is more than assigning grades — it is a powerful tool for supporting and improving student learning. Participants will explore the key characteristics of high-quality assessment and, through practical examples and collaborative activities, examine how to design meaningful assessment tasks, develop clear success criteria and rubrics, and make assessment more transparent and objective for students.",
-      "learn": [
-        "Learn and apply the key characteristics of high-quality assessment.",
-        "Check whether your own assessments have or lack the key principles.",
-        "Analyse good and bad examples of assessment tasks.",
-        "Explore how students can take responsibility for their own learning."
-      ],
-      "keywords": "rubrics"
-    },
-    {
-      "id": "S1-4",
-      "session": "S1",
-      "room": "",
-      "title": "Teaching Critical Thinking to Support Student Learning & Growth",
-      "presenter": "Branka Kovacevic",
-      "role": "Mathematics Teacher & PYP Mathematics Lead",
-      "org": "BIS",
-      "audience": [
-        "Primary",
-        "Middle School"
-      ],
-      "format": "Interactive Workshop",
-      "description": "A practical session exploring simple, effective strategies teachers can use tomorrow to develop pupils’ critical thinking: questioning techniques, discussion strategies, and classroom activities that encourage pupils to think deeply, make connections, explain their reasoning, and become more independent learners. Practical and interactive, with a focus on discussion and group work.",
-      "learn": [
-        "Practical strategies for using discussion and group work to develop pupils’ critical thinking.",
-        "Ways to build collaboration and communication skills alongside it."
-      ],
-      "keywords": "maths math"
-    },
-    {
-      "id": "S1-5",
-      "session": "S1",
-      "room": "",
-      "title": "Designing Choice: Rethinking Engagement Through Culture",
-      "presenter": "Makiko Inaba",
-      "role": "High School Academic Director, DP Coordinator",
-      "org": "BIS",
-      "audience": [
-        "Whole School"
-      ],
-      "format": "Interactive Workshop",
-      "description": "An interactive session on the relationship between choice, engagement and culture in the classroom. While 21st-century approaches emphasise learner autonomy and inquiry, could the choices we provide sometimes create hidden constraints? Through the lens of culturally responsive teaching, participants examine how students from different backgrounds may experience motivation, engagement and agency differently, and how classroom practices can be adapted thoughtfully rather than applied universally.",
-      "learn": [
-        "How choice, engagement, motivation and agency are connected.",
-        "How cultural and educational backgrounds may influence students’ comfort with autonomy, inquiry, participation and decision-making."
-      ]
-    },
-    {
-      "id": "S1-6",
-      "session": "S1",
-      "room": "",
-      "title": "Start at 13, Not 16: Why University Readiness Belongs in Middle School",
-      "presenter": "Talantbek Sapitov",
-      "role": "Academic Mentor & College Counselor",
-      "org": "MentorUp",
-      "audience": [
-        "Middle School",
-        "High School",
-        "Leadership"
-      ],
-      "format": "Discussion-Based Session",
-      "description": "By the time most students begin university counselling, critical windows for building direction, skills and confidence have already closed. This session presents a field-tested alternative: a two-semester Uni Prep curriculum for Grade 8, built and delivered at Muras International School, Osh — career exploration, goal-setting, 21st-century skills, study habits and the basics of global higher education, with a no-grades, reflection-based assessment model.",
-      "learn": [
-        "How to start university readiness in middle school — not just senior year — using a real, tested framework.",
-        "Practical tools for early career exploration, goal-setting and a no-grades reflection model.",
-        "A worksheet to map your own school’s readiness timeline and connect it to senior-year counselling outcomes."
-      ]
-    },
-    {
-      "id": "S2-1",
-      "session": "S2",
-      "room": "",
-      "title": "Going Forward by Looking Back",
-      "presenter": "Genevieve Maser",
-      "role": "EPIC Coordinator",
-      "org": "BIS",
-      "audience": [
-        "Primary",
-        "Middle School"
-      ],
-      "format": "Hands-on Activity",
-      "description": "In our push for technology, we have forgotten to teach our children about life outside the screens. Children are no longer connected to the natural world or the tactility of the human body. This session introduces teachers to outdoor learning and the value of old-school survival skills. No screens allowed!",
-      "learn": [
-        "The outdoors is the cheapest and best teaching resource you will ever need."
-      ]
-    },
-    {
-      "id": "S2-2",
-      "session": "S2",
-      "room": "",
-      "title": "‘Flipped’ vs Traditional Pedagogy: Case Study in Mathematical Physics",
-      "presenter": "Dr. Stuart S. Chen",
-      "role": "AP Calculus and AP Physics Teacher",
-      "org": "Tien Shan International School, Almaty",
-      "audience": [
-        "Middle School",
-        "High School",
-        "Leadership"
-      ],
-      "format": "Presentation",
-      "description": "Compares key aspects of flipped versus traditional teaching, first tried in a university Statics course at the University at Buffalo (SUNY) and later in high-school maths and physics. Student performance improved measurably and academic integrity improved with it — but the shift needs additional instructional staff. Student survey opinions argue for a consistent semester-long approach and flexibility for different learning styles.",
-      "learn": [
-        "A data-informed rationale for flipped-classroom pedagogy.",
-        "Ideas to try in your own classroom."
-      ],
-      "keywords": "maths math physics"
-    },
-    {
-      "id": "S2-3",
-      "session": "S2",
-      "room": "",
-      "title": "Making Learning Meaningful: Interactive Teaching with Simple Resources",
-      "presenter": "Altynai Isabekova",
-      "role": "Primary Homeroom Teacher",
-      "org": "BIS",
-      "audience": [
-        "Early Years",
-        "Primary"
-      ],
-      "format": "Interactive Workshop",
-      "description": "How teachers can create engaging, meaningful learning experiences with simple, low-cost resources — hands-on, playful, and connected to children’s real-life experiences. Adaptable examples across subjects in Early Years and Primary; in the last part, participants use everyday materials to design their own short interactive learning activity.",
-      "learn": [
-        "One or two new ideas to use in your lessons.",
-        "An understanding of what makes learning meaningful."
-      ]
-    },
-    {
-      "id": "S2-4",
-      "session": "S2",
-      "room": "",
-      "title": "Conquering the Class Clown: Answering your Classroom Management Questions",
-      "presenter": "Elizabeth Schalchlin",
-      "role": "LEAP Coordinator, ELL Teacher",
-      "org": "Tien Shan International School, Almaty",
-      "audience": [
-        "Whole School"
-      ],
-      "format": "Discussion-Based Session",
-      "description": "Tips, tricks, and collaborative discussions on how to maintain positive human connections in the classroom.",
-      "learn": [
-        "Practical ideas on how to kindly redirect student behaviour.",
-        "How to create an atmosphere where positive collaboration is possible."
-      ]
-    },
-    {
-      "id": "S2-5",
-      "session": "S2",
-      "room": "",
-      "title": "Differentiated English Teaching: Reproductive, Productive, and Creative Tasks with AI Support",
-      "presenter": "Sultangazy kyzy Zhenishkul",
-      "role": "English Teacher, Teach for Kyrgyzstan alumna",
-      "org": "Kalem Academy School",
-      "audience": [
-        "Primary",
-        "Middle School",
-        "High School"
-      ],
-      "format": "Presentation",
-      "description": "Every English classroom includes students at different levels of readiness, yet tasks are often designed for one average level. A model of differentiated instruction built on three task types — reproductive, productive and creative — with how AI tools can quickly generate differentiated tasks at each level, and how assessment and feedback fit the model. Drawn from Grade 6 teaching and master’s research.",
-      "learn": [
-        "A practical three-level framework for differentiating tasks — reproductive, productive and creative — that works in any subject, not only English.",
-        "How to design tasks matched to students’ readiness, and use AI tools to generate differentiated tasks quickly.",
-        "How to assess student progress meaningfully across the three levels."
-      ],
-      "keywords": "AI EAL ELL"
-    },
-    {
-      "id": "S2-6",
-      "session": "S2",
-      "room": "",
-      "title": "Social-Emotional Learning in Primary School",
-      "presenter": "Kanykei Tursunalieva",
-      "role": "PYP Co-Teacher",
-      "org": "BIS",
-      "audience": [
-        "Primary"
-      ],
-      "format": "Interactive Workshop",
-      "description": "What Social-Emotional Learning (SEL) means and why it matters; how to include SEL in everyday classroom activities and routines; and how SEL practices help students manage emotions, build positive relationships, communicate and make responsible decisions — and how SEL affects engagement, behaviour, confidence and learning.",
-      "learn": [
-        "What different SEL practices look like in everyday classroom routines.",
-        "How they help students understand and manage emotions, build positive relationships, communicate and make responsible decisions."
-      ],
-      "keywords": "SEL"
-    },
-    {
-      "id": "S3-1",
-      "session": "S3",
-      "room": "",
-      "title": "Rapid Game Design for Your Classroom",
-      "presenter": "Ivan Ninenko",
-      "role": "Strategic Lead, Education Systems Innovation",
-      "org": "BIS",
-      "audience": [
-        "Middle School",
-        "High School"
-      ],
-      "format": "Hands-on Activity",
-      "description": "A game does things a worksheet cannot: a student can take a real risk and see what happens without it costing anything that matters, and the shared story it produces is unusually good ground for reflection. The obstacle has always been design time — and AI is now a capable design partner that argues about rules, proposes alternatives and plays out every sequence of your dice. We walk the full pipeline on a topic the room chooses, with a worked IGCSE Business example. The game itself ends up on paper — no screens when it is played.",
-      "learn": [
-        "How to get from a curriculum objective to a playable game.",
-        "A checklist, a worked example, and the start of your own game."
-      ],
-      "keywords": "AI games play"
-    },
-    {
-      "id": "S3-2",
-      "session": "S3",
-      "room": "",
-      "title": "Beyond the Answer: Making Primary Mathematics Real, Reasoned and Relevant",
-      "presenter": "Nirupma Palia",
-      "role": "PYP Teacher",
-      "org": "BIS",
-      "audience": [
-        "Primary"
-      ],
-      "format": "Interactive Workshop",
-      "description": "Mathematics should not stop at finding the correct answer. This session shows how to contextualise primary mathematics through real-world situations and put the emphasis on the “why” behind mathematical thinking — what information matters, which strategy fits, whether the answer makes sense — with language as a key part of understanding and communicating reasoning.",
-      "learn": [
-        "Practical ways to make mathematics meaningful by connecting it to real-life situations.",
-        "Using language to help students understand the context and explain their reasoning.",
-        "How story-based, contextualised tasks develop problem-solving, communication and higher-order thinking."
-      ],
-      "keywords": "maths math"
-    },
-    {
-      "id": "S3-3",
-      "session": "S3",
-      "room": "",
-      "title": "Inquiry in Action: Engaging Every Learner",
-      "presenter": "Elvira Tonueva",
-      "role": "Head of Language Acquisition in PYP",
-      "org": "BIS",
-      "audience": [
-        "Primary",
-        "Middle School"
-      ],
-      "format": "Interactive Workshop",
-      "description": "How inquiry-based learning supports engagement, meaningful communication and deeper thinking. Starting with a provocation, participants move through interactive stations on the inquiry cycle, inquiry phases and language support — with a focus on open-ended questions, the teacher as facilitator, and scaffolding so every learner can take part.",
-      "learn": [
-        "Understand the stages of the inquiry cycle.",
-        "Experience an inquiry-based lesson as learners.",
-        "Use jigsaw reading as a research strategy.",
-        "Analyse and connect information to build understanding."
-      ]
-    },
-    {
-      "id": "S3-4",
-      "session": "S3",
-      "room": "",
-      "title": "Collaboration & Communication Among Students",
-      "presenter": "Liza DeGarmo",
-      "role": "Teacher",
-      "org": "Tien Shan International School, Almaty",
-      "audience": [
-        "Middle School",
-        "High School",
-        "Leadership"
-      ],
-      "format": "Presentation",
-      "description": "Ways to group students, provide feedback, develop self-reflection, and strengthen collaboration among students.",
-      "learn": [
-        "How to help groups be more effective.",
-        "How to evaluate the work students have done within their groups.",
-        "How to help students reflect on their group contribution and identify areas to grow."
-      ]
-    },
-    {
-      "id": "S3-5",
-      "session": "S3",
-      "room": "",
-      "title": "Social-Emotional Learning and Human-Centred Skills",
-      "presenter": "Aigul Karimova",
-      "role": "Assistant Professor / Program Coordinator",
-      "org": "American University of Central Asia",
-      "audience": [
-        "Whole School",
-        "Leadership"
-      ],
-      "format": "Interactive Workshop",
-      "description": "An introduction to Social-Emotional Learning through the five CASEL competencies, built around one question: how might we transform schools from systems of discipline into communities of care? Empathy and human-centred design for learning, with an inclusive welcome, active engagement and a reflective close.",
-      "learn": [
-        "Analyse the five SEL competencies of the CASEL framework and connect them.",
-        "Strategies for a human-centred approach to the learning environment.",
-        "Practise developing a plan to integrate SEL in teaching and learning."
-      ],
-      "keywords": "SEL CASEL"
-    },
-    {
-      "id": "S3-6",
-      "session": "S3",
-      "room": "",
-      "title": "Beyond the Chatbot: Designing Collaborative Classrooms for the AI Era",
-      "presenter": "Rahul Baldota",
-      "role": "Head of Science Department",
-      "org": "BIS",
-      "audience": [
-        "Middle School",
-        "High School",
-        "Whole School"
-      ],
-      "format": "Interactive Workshop",
-      "description": "As AI tools become ubiquitous, students’ ability to collaborate, communicate and build on each other’s ideas matters more than ever. A hands-on design challenge that needs both human ingenuity and critical use of AI, and a practical 4-step framework — Collaboration 4.0 — for designing collaborative projects that build active listening, constructive feedback and shared problem-solving.",
-      "learn": [
-        "Collaboration 4.0: a practical 4-step framework for designing collaborative learning that uses AI as a support, not a replacement for thinking.",
-        "Five low-prep, classroom-ready strategies for active listening, constructive feedback and consensus-building.",
-        "A concrete lesson plan, redesigned during a hands-on design sprint.",
-        "How to position AI as a “team member” that amplifies — rather than bypasses — creativity, critical thinking and problem-solving."
-      ],
-      "keywords": "AI"
-    },
-    {
-      "id": "JA-1",
-      "session": "JA",
-      "room": "Internal Meeting Room",
-      "title": "School Directors",
-      "presenter": "David Grant",
-      "role": "BIS Head of School",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-2",
-      "session": "JA",
-      "room": "",
-      "title": "Language Acquisition up to Grade 5",
-      "presenter": "Elvira Tonueva",
-      "role": "BIS Head of Language Acquisition in PYP",
-      "org": "BIS",
-      "keywords": "EAL"
-    },
-    {
-      "id": "JA-3",
-      "session": "JA",
-      "room": "",
-      "title": "Language Acquisition Grades 6 to 12",
-      "presenter": "Yana Karpenko",
-      "role": "BIS Head of Language Acquisition in Middle/High School",
-      "org": "BIS",
-      "keywords": "EAL"
-    },
-    {
-      "id": "JA-4",
-      "session": "JA",
-      "room": "",
-      "title": "Design & Technology",
-      "presenter": "Francois Spies",
-      "role": "BIS Head of Computer Science & Design",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-5",
-      "session": "JA",
-      "room": "",
-      "title": "Physical & Health Education",
-      "presenter": "Chas Hahn",
-      "role": "Athletics Director",
-      "org": "Silk Road Academy, Dushanbe"
-    },
-    {
-      "id": "JA-6",
-      "session": "JA",
-      "room": "",
-      "title": "Counselling",
-      "presenter": "Asmana Matraimova",
-      "role": "BIS Lead Counsellor",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-7",
-      "session": "JA",
-      "room": "",
-      "title": "Early Years Homeroom Teachers",
-      "presenter": "Altynai Isabekova",
-      "role": "BIS Grade 0 Homeroom Teacher",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-8",
-      "session": "JA",
-      "room": "",
-      "title": "Performing Arts",
-      "presenter": "Munara Korpotaeva",
-      "role": "BIS Head of Performing Arts",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-9",
-      "session": "JA",
-      "room": "",
-      "title": "University & Career Counselling",
-      "presenter": "Lané Spies",
-      "role": "BIS Senior University and Career Counsellor",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-10",
-      "session": "JA",
-      "room": "",
-      "title": "National Curriculum",
-      "presenter": "Gulgaaky Kadyrkulova",
-      "role": "BIS Russian National Curriculum Teacher",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-11",
-      "session": "JA",
-      "room": "",
-      "title": "Visual Arts",
-      "presenter": "Moeeza Shuaib",
-      "role": "BIS Head of Visual Arts Department",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-12",
-      "session": "JA",
-      "room": "",
-      "title": "Mathematics",
-      "presenter": "Ahmed Hashem",
-      "role": "BIS Mathematics & Physics Teacher",
-      "org": "BIS",
-      "keywords": "maths math"
-    },
-    {
-      "id": "JA-13",
-      "session": "JA",
-      "room": "",
-      "title": "Science",
-      "presenter": "Rahul Baldota",
-      "role": "BIS Head of Science Department",
-      "org": "BIS"
-    },
-    {
-      "id": "JA-14",
-      "session": "JA",
-      "room": "",
-      "title": "Middle School Teaching",
-      "presenter": "Ripul Sharma",
-      "role": "QSIB Middle School Teacher",
-      "org": "QSI International School of Bishkek"
-    }
-  ],
-  "preconference": {
-    "title": "The Current State of AI — What Frontier Models Can and Cannot Do",
-    "blurb": "Practitioners show what today’s models and agents already do — live, with real tasks and real failure cases.",
-    "speakers": [
-      {
-        "name": "Ivan Ninenko",
-        "role": "Strategic Lead for Education Systems Innovation, BIS"
-      },
-      {
-        "name": "Igor Chemerkin",
-        "role": "AI Mentor at OloloPro, founder of the Bishkek AI Community"
-      },
-      {
-        "name": "Aidin Biibosunov",
-        "role": "Computational Biology Researcher, Differentia Bio; creator of AIsuluu"
-      }
-    ]
-  },
-  "organisers": [
-    {
-      "key": "bis",
-      "role": "Host school",
-      "name": "Bishkek International School",
-      "logo": "images/bis-logo.png",
-      "text": "An IB World School in Bishkek, Kyrgyzstan, offering an international education from the early years to the IB Diploma. BIS hosts the 2026 conference on its campus.",
-      "points": [
-        [
-          "Programmes:",
-          "IB Primary Years, Middle Years and Diploma Programmes, plus Cambridge IGCSE."
-        ],
-        [
-          "Location:",
-          "Bishkek, Kyrgyzstan."
-        ]
-      ],
-      "url": "https://www.bis.kg/school/",
-      "urlLabel": "bis.kg"
-    },
-    {
-      "key": "cafa",
-      "role": "Organising network",
-      "name": "Central Asia Federation of Athletics, Activities and Arts (CAFA)",
-      "logo": "images/cafa-logo.png",
-      "text": "A regional network connecting international and private schools across Central Asia, including Kyrgyzstan, Kazakhstan, Uzbekistan and Tajikistan. It brings students and educators together for sport, the arts and academic competition, fostering cooperation, leadership, resilience and sportsmanship.",
-      "points": [],
-      "url": "",
-      "urlLabel": ""
-    }
+ "_README": "Edit this file to change the programme, workshops, rooms or links. 'rooms' lists each room and where it is (shown as a tip when a room is tapped). Participants and their sign-ups live in participants.csv. Times are Bishkek time; each day's 'iso' date drives the live 'Now / Next' panel. Push to GitHub after editing; the bis.kg page reads it live (~10 min cache).",
+ "event": {
+  "preconferenceUrl": "https://www.bis.kg/school/cafa-preconference/",
+  "contacts": [
+   {
+    "name": "Bojana Askovic",
+    "role": "Activities Director, Bishkek International School",
+    "email": "baskovic@bis.kg"
+   }
   ]
+ },
+ "keynote": {
+  "name": "Peter Nilsson",
+  "photo": "images/peter-nilsson.jpg",
+  "site": "https://peternilsson.us/",
+  "bioUrl": "https://docs.google.com/document/d/1mzwUib44EQMAugZkoo60HVrcQXziLKgnSQbR-jchBXE/edit?usp=sharing",
+  "bookTitle": "Irreplaceable: How AI Changes Everything (And Nothing) in Teaching and Learning",
+  "bookUrl": "https://www.irreplaceable.info/",
+  "bio": "Educator, author and musician with over 20 years in schools as head of school, administrator, teacher, tutor, coach and board member. Most recently Head of School at King’s Academy in Jordan; before that he taught English and digital humanities at Deerfield Academy. Founder of Athena Lab and editor of The Educator’s Notebook; he has spoken at the OECD, the College Board and NAIS, and serves on the advisory boards of SXSW EDU and the Center for Curriculum Redesign.",
+  "talks": [
+   {
+    "when": "Fri 16:45",
+    "title": "Foundations for productive use of AI",
+    "note": "AI literacy and the impact of AI on schools"
+   },
+   {
+    "when": "Sat 9:00",
+    "title": "AI in teaching & learning",
+    "note": "Avoiding cognitive off-loading · Promoting appropriate cognitive out-sourcing · Other skills needed in a time of AI"
+   }
+  ],
+  "short": "Educator and author, most recently Head of School at King’s Academy in Jordan. Co-author of Irreplaceable: How AI Changes Everything (And Nothing) in Teaching and Learning.",
+  "bioLong": [
+   "Peter has served as a head of school, administrator, teacher, tutor, coach and board member for over 20 years. Before King’s Academy he taught English and digital humanities at Deerfield Academy, where his digital humanities course won a 2017 Wolfram Innovation Award — the first given to a high school teacher. He is vice-chair of the board of trustees at the Canterbury School in Fort Wayne, Indiana.",
+   "He founded Athena Lab, a platform for teachers to share practice, and edits The Educator’s Notebook, a newsletter on education and learning. He has worked with schools around the world, spoken at the OECD, the College Board and NAIS, and serves on the advisory boards of SXSW EDU and the Center for Curriculum Redesign, and on the advisory team for the Middle States Association’s Responsible AI in Learning endorsement.",
+   "He is also a musician and composer; his current project, Schooled the Musical, has had readings in New York, San Diego and Austin."
+  ]
+ },
+ "programme": [
+  {
+   "day": "Friday",
+   "date": "25 September",
+   "items": [
+    {
+     "time": "11:00 – 12:00",
+     "title": "Pre-conference registration",
+     "tag": "pre"
+    },
+    {
+     "time": "12:00 – 15:30",
+     "title": "Pre-Conference: The Current State of AI — What Frontier Models Can and Cannot Do",
+     "tag": "pre",
+     "link": "preconferenceUrl",
+     "expand": "pre"
+    },
+    {
+     "time": "15:30 – 16:30",
+     "title": "Registration and student-led tours of the BIS campus"
+    },
+    {
+     "time": "16:30 – 16:45",
+     "title": "Welcome"
+    },
+    {
+     "time": "16:45 – 18:00",
+     "title": "Keynote: Foundations for productive use of AI",
+     "note": "Peter Nilsson — AI literacy and the impact of AI on schools",
+     "tag": "keynote",
+     "expand": "keynote"
+    },
+    {
+     "time": "18:30 – 20:00",
+     "title": "BBQ reception at BIS",
+     "tag": "social"
+    }
+   ],
+   "iso": "2026-09-25"
+  },
+  {
+   "day": "Saturday",
+   "date": "26 September",
+   "items": [
+    {
+     "time": "8:30 – 9:00",
+     "title": "Coffee and registration"
+    },
+    {
+     "time": "9:00 – 10:15",
+     "title": "Keynote: AI in teaching & learning",
+     "note": "Peter Nilsson — avoiding cognitive off-loading, promoting appropriate cognitive out-sourcing, other skills needed in a time of AI",
+     "tag": "keynote",
+     "expand": "keynote"
+    },
+    {
+     "time": "10:30 – 11:30",
+     "title": "Breakout Session 1",
+     "tag": "session",
+     "session": "S1"
+    },
+    {
+     "time": "11:45 – 12:45",
+     "title": "Breakout Session 2",
+     "tag": "session",
+     "session": "S2"
+    },
+    {
+     "time": "12:45 – 13:30",
+     "title": "Lunch",
+     "tag": "social"
+    },
+    {
+     "time": "13:15 – 14:45",
+     "title": "CAFA Fall Meeting",
+     "note": "School Directors and AD/ACs · BIS Internal Meeting Room",
+     "tag": "meeting"
+    },
+    {
+     "time": "13:30 – 14:30",
+     "title": "Breakout Session 3",
+     "tag": "session",
+     "session": "S3"
+    },
+    {
+     "time": "14:45 – 16:00",
+     "title": "Job-alike sessions",
+     "note": "Meet colleagues in the same role",
+     "tag": "session",
+     "session": "JA"
+    },
+    {
+     "time": "16:00 – 17:00",
+     "title": "Closing panel",
+     "note": "Peter Nilsson with pre-conference speakers Ivan Ninenko, Igor Chemerkin and Aidin Biibosunov",
+     "tag": "keynote"
+    }
+   ],
+   "iso": "2026-09-26"
+  },
+  {
+   "day": "Sunday",
+   "date": "27 September",
+   "items": [
+    {
+     "time": "9:00 – 14:00",
+     "title": "Optional trip to Ala Archa",
+     "tag": "social"
+    }
+   ],
+   "iso": "2026-09-27"
+  }
+ ],
+ "sessions": {
+  "S1": {
+   "label": "Session 1",
+   "time": "10:30 – 11:30"
+  },
+  "S2": {
+   "label": "Session 2",
+   "time": "11:45 – 12:45"
+  },
+  "S3": {
+   "label": "Session 3",
+   "time": "13:30 – 14:30"
+  },
+  "JA": {
+   "label": "Job-alike",
+   "time": "14:45 – 16:00"
+  }
+ },
+ "workshops": [
+  {
+   "id": "S1-1",
+   "session": "S1",
+   "room": "A3",
+   "title": "When the Machine Can Do the Maths: What’s Left to Teach When AI Solves the Problem?",
+   "presenter": "Alisher Kakenov",
+   "role": "Head of Mathematics",
+   "org": "BIS",
+   "audience": [
+    "Middle School",
+    "High School",
+    "Leadership"
+   ],
+   "format": "Interactive Workshop",
+   "description": "AI can now solve almost every problem in our curriculum in seconds — which forces an uncomfortable question for every subject, not just maths: if the machine can produce the answer, what are we actually here to teach? This session reframes mathematics from answer-getting (now largely automatable) toward the durable skills AI can’t replace: reasoning, justification, modelling real situations, and recognising when a confident output is simply wrong. Working from concrete before-and-after examples, participants will see how familiar tasks and assessments can be redesigned to stay meaningful in an AI-saturated classroom — protecting academic integrity without resorting to bans. The framework is deliberately transferable: every head of department leaves with a lens to apply to their own subject.",
+   "learn": [
+    "Distinguish “answer-getting” — the part AI now automates — from the reasoning, justification and modelling skills that remain genuinely valuable to teach.",
+    "Apply a simple framework for redesigning familiar tasks and assessments so they stay meaningful when every student has AI on hand.",
+    "Protect academic integrity without relying on bans or detection tools.",
+    "Take the same lens back to your own subject — mathematical in its examples, cross-curricular in its logic — and redesign one of your own tasks during the session."
+   ],
+   "keywords": "AI maths math academic integrity"
+  },
+  {
+   "id": "S1-2",
+   "session": "S1",
+   "room": "T3",
+   "title": "Emotional Intelligence: In this new age of AI, how do we as educators help our students (and ourselves) grow in EQ",
+   "presenter": "Chas Hahn",
+   "role": "Athletics Director",
+   "org": "Silk Road Academy, Dushanbe",
+   "audience": [
+    "Whole School",
+    "Leadership"
+   ],
+   "format": "Discussion-Based Session",
+   "description": "For students to thrive in a global world, they will not only need a strong IQ but also a high EQ. Communication, understanding and empathising with the opinions and feelings of others, and knowing how to make decisions are all involved in this area. Participants will learn about emotional intelligence for their own lives, and how to practically help their students grow in this key area.",
+   "learn": [
+    "The main points of emotional intelligence.",
+    "How to grow in EQ yourself.",
+    "How to help your students grow in EQ."
+   ],
+   "keywords": "SEL EQ"
+  },
+  {
+   "id": "S1-3",
+   "session": "S1",
+   "room": "T5",
+   "title": "Rethinking Assessment in the Classroom",
+   "presenter": "Yana Karpenko",
+   "role": "Head of Language Acquisition, Middle / High School",
+   "org": "BIS",
+   "audience": [
+    "Whole School"
+   ],
+   "format": "Interactive Workshop",
+   "description": "Effective assessment is more than assigning grades — it is a powerful tool for supporting and improving student learning. Participants will explore the key characteristics of high-quality assessment and, through practical examples and collaborative activities, examine how to design meaningful assessment tasks, develop clear success criteria and rubrics, and make assessment more transparent and objective for students.",
+   "learn": [
+    "Learn and apply the key characteristics of high-quality assessment.",
+    "Check whether your own assessments have or lack the key principles.",
+    "Analyse good and bad examples of assessment tasks.",
+    "Explore how students can take responsibility for their own learning."
+   ],
+   "keywords": "rubrics"
+  },
+  {
+   "id": "S1-4",
+   "session": "S1",
+   "room": "S1",
+   "title": "Teaching Critical Thinking to Support Student Learning & Growth",
+   "presenter": "Branka Kovacevic",
+   "role": "Mathematics Teacher & PYP Mathematics Lead",
+   "org": "BIS",
+   "audience": [
+    "Primary",
+    "Middle School"
+   ],
+   "format": "Interactive Workshop",
+   "description": "A practical session exploring simple, effective strategies teachers can use tomorrow to develop pupils’ critical thinking: questioning techniques, discussion strategies, and classroom activities that encourage pupils to think deeply, make connections, explain their reasoning, and become more independent learners. Practical and interactive, with a focus on discussion and group work.",
+   "learn": [
+    "Practical strategies for using discussion and group work to develop pupils’ critical thinking.",
+    "Ways to build collaboration and communication skills alongside it."
+   ],
+   "keywords": "maths math"
+  },
+  {
+   "id": "S1-5",
+   "session": "S1",
+   "room": "S2",
+   "title": "Designing Choice: Rethinking Engagement Through Culture",
+   "presenter": "Makiko Inaba",
+   "role": "High School Academic Director, DP Coordinator",
+   "org": "BIS",
+   "audience": [
+    "Whole School"
+   ],
+   "format": "Interactive Workshop",
+   "description": "An interactive session on the relationship between choice, engagement and culture in the classroom. While 21st-century approaches emphasise learner autonomy and inquiry, could the choices we provide sometimes create hidden constraints? Through the lens of culturally responsive teaching, participants examine how students from different backgrounds may experience motivation, engagement and agency differently, and how classroom practices can be adapted thoughtfully rather than applied universally.",
+   "learn": [
+    "How choice, engagement, motivation and agency are connected.",
+    "How cultural and educational backgrounds may influence students’ comfort with autonomy, inquiry, participation and decision-making."
+   ]
+  },
+  {
+   "id": "S1-6",
+   "session": "S1",
+   "room": "A2",
+   "title": "Start at 13, Not 16: Why University Readiness Belongs in Middle School",
+   "presenter": "Talantbek Sapitov",
+   "role": "Academic Mentor & College Counselor",
+   "org": "MentorUp",
+   "audience": [
+    "Middle School",
+    "High School",
+    "Leadership"
+   ],
+   "format": "Discussion-Based Session",
+   "description": "By the time most students begin university counselling, critical windows for building direction, skills and confidence have already closed. This session presents a field-tested alternative: a two-semester Uni Prep curriculum for Grade 8, built and delivered at Muras International School, Osh — career exploration, goal-setting, 21st-century skills, study habits and the basics of global higher education, with a no-grades, reflection-based assessment model.",
+   "learn": [
+    "How to start university readiness in middle school — not just senior year — using a real, tested framework.",
+    "Practical tools for early career exploration, goal-setting and a no-grades reflection model.",
+    "A worksheet to map your own school’s readiness timeline and connect it to senior-year counselling outcomes."
+   ]
+  },
+  {
+   "id": "S2-1",
+   "session": "S2",
+   "room": "T5",
+   "title": "Going Forward by Looking Back",
+   "presenter": "Genevieve Maser",
+   "role": "EPIC Coordinator",
+   "org": "BIS",
+   "audience": [
+    "Primary",
+    "Middle School"
+   ],
+   "format": "Hands-on Activity",
+   "description": "In our push for technology, we have forgotten to teach our children about life outside the screens. Children are no longer connected to the natural world or the tactility of the human body. This session introduces teachers to outdoor learning and the value of old-school survival skills. No screens allowed!",
+   "learn": [
+    "The outdoors is the cheapest and best teaching resource you will ever need."
+   ]
+  },
+  {
+   "id": "S2-2",
+   "session": "S2",
+   "room": "A2",
+   "title": "‘Flipped’ vs Traditional Pedagogy: Case Study in Mathematical Physics",
+   "presenter": "Dr. Stuart S. Chen",
+   "role": "AP Calculus and AP Physics Teacher",
+   "org": "Tien Shan International School, Almaty",
+   "audience": [
+    "Middle School",
+    "High School",
+    "Leadership"
+   ],
+   "format": "Presentation",
+   "description": "Compares key aspects of flipped versus traditional teaching, first tried in a university Statics course at the University at Buffalo (SUNY) and later in high-school maths and physics. Student performance improved measurably and academic integrity improved with it — but the shift needs additional instructional staff. Student survey opinions argue for a consistent semester-long approach and flexibility for different learning styles.",
+   "learn": [
+    "A data-informed rationale for flipped-classroom pedagogy.",
+    "Ideas to try in your own classroom."
+   ],
+   "keywords": "maths math physics"
+  },
+  {
+   "id": "S2-3",
+   "session": "S2",
+   "room": "S2",
+   "title": "Making Learning Meaningful: Interactive Teaching with Simple Resources",
+   "presenter": "Altynai Isabekova",
+   "role": "Primary Homeroom Teacher",
+   "org": "BIS",
+   "audience": [
+    "Early Years",
+    "Primary"
+   ],
+   "format": "Interactive Workshop",
+   "description": "How teachers can create engaging, meaningful learning experiences with simple, low-cost resources — hands-on, playful, and connected to children’s real-life experiences. Adaptable examples across subjects in Early Years and Primary; in the last part, participants use everyday materials to design their own short interactive learning activity.",
+   "learn": [
+    "One or two new ideas to use in your lessons.",
+    "An understanding of what makes learning meaningful."
+   ]
+  },
+  {
+   "id": "S2-4",
+   "session": "S2",
+   "room": "S1",
+   "title": "Conquering the Class Clown: Answering your Classroom Management Questions",
+   "presenter": "Elizabeth Schalchlin",
+   "role": "LEAP Coordinator, ELL Teacher",
+   "org": "Tien Shan International School, Almaty",
+   "audience": [
+    "Whole School"
+   ],
+   "format": "Discussion-Based Session",
+   "description": "Tips, tricks, and collaborative discussions on how to maintain positive human connections in the classroom.",
+   "learn": [
+    "Practical ideas on how to kindly redirect student behaviour.",
+    "How to create an atmosphere where positive collaboration is possible."
+   ]
+  },
+  {
+   "id": "S2-5",
+   "session": "S2",
+   "room": "T3",
+   "title": "Differentiated English Teaching: Reproductive, Productive, and Creative Tasks with AI Support",
+   "presenter": "Sultangazy kyzy Zhenishkul",
+   "role": "English Teacher, Teach for Kyrgyzstan alumna",
+   "org": "Kalem Academy School",
+   "audience": [
+    "Primary",
+    "Middle School",
+    "High School"
+   ],
+   "format": "Presentation",
+   "description": "Every English classroom includes students at different levels of readiness, yet tasks are often designed for one average level. A model of differentiated instruction built on three task types — reproductive, productive and creative — with how AI tools can quickly generate differentiated tasks at each level, and how assessment and feedback fit the model. Drawn from Grade 6 teaching and master’s research.",
+   "learn": [
+    "A practical three-level framework for differentiating tasks — reproductive, productive and creative — that works in any subject, not only English.",
+    "How to design tasks matched to students’ readiness, and use AI tools to generate differentiated tasks quickly.",
+    "How to assess student progress meaningfully across the three levels."
+   ],
+   "keywords": "AI EAL ELL"
+  },
+  {
+   "id": "S2-6",
+   "session": "S2",
+   "room": "A3",
+   "title": "Social-Emotional Learning in Primary School",
+   "presenter": "Kanykei Tursunalieva",
+   "role": "PYP Co-Teacher",
+   "org": "BIS",
+   "audience": [
+    "Primary"
+   ],
+   "format": "Interactive Workshop",
+   "description": "What Social-Emotional Learning (SEL) means and why it matters; how to include SEL in everyday classroom activities and routines; and how SEL practices help students manage emotions, build positive relationships, communicate and make responsible decisions — and how SEL affects engagement, behaviour, confidence and learning.",
+   "learn": [
+    "What different SEL practices look like in everyday classroom routines.",
+    "How they help students understand and manage emotions, build positive relationships, communicate and make responsible decisions."
+   ],
+   "keywords": "SEL"
+  },
+  {
+   "id": "S3-1",
+   "session": "S3",
+   "room": "T3",
+   "title": "Rapid Game Design for Your Classroom",
+   "presenter": "Ivan Ninenko",
+   "role": "Strategic Lead, Education Systems Innovation",
+   "org": "BIS",
+   "audience": [
+    "Middle School",
+    "High School"
+   ],
+   "format": "Hands-on Activity",
+   "description": "A game does things a worksheet cannot: a student can take a real risk and see what happens without it costing anything that matters, and the shared story it produces is unusually good ground for reflection. The obstacle has always been design time — and AI is now a capable design partner that argues about rules, proposes alternatives and plays out every sequence of your dice. We walk the full pipeline on a topic the room chooses, with a worked IGCSE Business example. The game itself ends up on paper — no screens when it is played.",
+   "learn": [
+    "How to get from a curriculum objective to a playable game.",
+    "A checklist, a worked example, and the start of your own game."
+   ],
+   "keywords": "AI games play"
+  },
+  {
+   "id": "S3-2",
+   "session": "S3",
+   "room": "A3",
+   "title": "Beyond the Answer: Making Primary Mathematics Real, Reasoned and Relevant",
+   "presenter": "Nirupma Palia",
+   "role": "PYP Teacher",
+   "org": "BIS",
+   "audience": [
+    "Primary"
+   ],
+   "format": "Interactive Workshop",
+   "description": "Mathematics should not stop at finding the correct answer. This session shows how to contextualise primary mathematics through real-world situations and put the emphasis on the “why” behind mathematical thinking — what information matters, which strategy fits, whether the answer makes sense — with language as a key part of understanding and communicating reasoning.",
+   "learn": [
+    "Practical ways to make mathematics meaningful by connecting it to real-life situations.",
+    "Using language to help students understand the context and explain their reasoning.",
+    "How story-based, contextualised tasks develop problem-solving, communication and higher-order thinking."
+   ],
+   "keywords": "maths math"
+  },
+  {
+   "id": "S3-3",
+   "session": "S3",
+   "room": "S1",
+   "title": "Inquiry in Action: Engaging Every Learner",
+   "presenter": "Elvira Tonueva",
+   "role": "Head of Language Acquisition in PYP",
+   "org": "BIS",
+   "audience": [
+    "Primary",
+    "Middle School"
+   ],
+   "format": "Interactive Workshop",
+   "description": "How inquiry-based learning supports engagement, meaningful communication and deeper thinking. Starting with a provocation, participants move through interactive stations on the inquiry cycle, inquiry phases and language support — with a focus on open-ended questions, the teacher as facilitator, and scaffolding so every learner can take part.",
+   "learn": [
+    "Understand the stages of the inquiry cycle.",
+    "Experience an inquiry-based lesson as learners.",
+    "Use jigsaw reading as a research strategy.",
+    "Analyse and connect information to build understanding."
+   ]
+  },
+  {
+   "id": "S3-4",
+   "session": "S3",
+   "room": "S2",
+   "title": "Collaboration & Communication Among Students",
+   "presenter": "Liza DeGarmo",
+   "role": "Teacher",
+   "org": "Tien Shan International School, Almaty",
+   "audience": [
+    "Middle School",
+    "High School",
+    "Leadership"
+   ],
+   "format": "Presentation",
+   "description": "Ways to group students, provide feedback, develop self-reflection, and strengthen collaboration among students.",
+   "learn": [
+    "How to help groups be more effective.",
+    "How to evaluate the work students have done within their groups.",
+    "How to help students reflect on their group contribution and identify areas to grow."
+   ]
+  },
+  {
+   "id": "S3-5",
+   "session": "S3",
+   "room": "T5",
+   "title": "Social-Emotional Learning and Human-Centred Skills",
+   "presenter": "Aigul Karimova",
+   "role": "Assistant Professor / Program Coordinator",
+   "org": "American University of Central Asia",
+   "audience": [
+    "Whole School",
+    "Leadership"
+   ],
+   "format": "Interactive Workshop",
+   "description": "An introduction to Social-Emotional Learning through the five CASEL competencies, built around one question: how might we transform schools from systems of discipline into communities of care? Empathy and human-centred design for learning, with an inclusive welcome, active engagement and a reflective close.",
+   "learn": [
+    "Analyse the five SEL competencies of the CASEL framework and connect them.",
+    "Strategies for a human-centred approach to the learning environment.",
+    "Practise developing a plan to integrate SEL in teaching and learning."
+   ],
+   "keywords": "SEL CASEL"
+  },
+  {
+   "id": "S3-6",
+   "session": "S3",
+   "room": "A2",
+   "title": "Beyond the Chatbot: Designing Collaborative Classrooms for the AI Era",
+   "presenter": "Rahul Baldota",
+   "role": "Head of Science Department",
+   "org": "BIS",
+   "audience": [
+    "Middle School",
+    "High School",
+    "Whole School"
+   ],
+   "format": "Interactive Workshop",
+   "description": "As AI tools become ubiquitous, students’ ability to collaborate, communicate and build on each other’s ideas matters more than ever. A hands-on design challenge that needs both human ingenuity and critical use of AI, and a practical 4-step framework — Collaboration 4.0 — for designing collaborative projects that build active listening, constructive feedback and shared problem-solving.",
+   "learn": [
+    "Collaboration 4.0: a practical 4-step framework for designing collaborative learning that uses AI as a support, not a replacement for thinking.",
+    "Five low-prep, classroom-ready strategies for active listening, constructive feedback and consensus-building.",
+    "A concrete lesson plan, redesigned during a hands-on design sprint.",
+    "How to position AI as a “team member” that amplifies — rather than bypasses — creativity, critical thinking and problem-solving."
+   ],
+   "keywords": "AI"
+  },
+  {
+   "id": "JA-1",
+   "session": "JA",
+   "room": "Internal Meeting Room",
+   "title": "School Directors",
+   "presenter": "David Grant",
+   "role": "BIS Head of School",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-2",
+   "session": "JA",
+   "room": "S1",
+   "title": "Language Acquisition up to Grade 5",
+   "presenter": "Elvira Tonueva",
+   "role": "BIS Head of Language Acquisition in PYP",
+   "org": "BIS",
+   "keywords": "EAL"
+  },
+  {
+   "id": "JA-3",
+   "session": "JA",
+   "room": "T3",
+   "title": "Language Acquisition Grades 6 to 12",
+   "presenter": "Yana Karpenko",
+   "role": "BIS Head of Language Acquisition in Middle/High School",
+   "org": "BIS",
+   "keywords": "EAL"
+  },
+  {
+   "id": "JA-4",
+   "session": "JA",
+   "room": "EC1",
+   "title": "Design & Technology",
+   "presenter": "Francois Spies",
+   "role": "BIS Head of Computer Science & Design",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-5",
+   "session": "JA",
+   "room": "A3",
+   "title": "Physical & Health Education",
+   "presenter": "Chas Hahn",
+   "role": "Athletics Director",
+   "org": "Silk Road Academy, Dushanbe"
+  },
+  {
+   "id": "JA-6",
+   "session": "JA",
+   "room": "A2",
+   "title": "Counselling",
+   "presenter": "Asmana Matraimova",
+   "role": "BIS Lead Counsellor",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-7",
+   "session": "JA",
+   "room": "S2",
+   "title": "Early Years Homeroom Teachers",
+   "presenter": "Altynai Isabekova",
+   "role": "BIS Grade 0 Homeroom Teacher",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-8",
+   "session": "JA",
+   "room": "EC3",
+   "title": "Performing Arts",
+   "presenter": "Munara Korpotaeva",
+   "role": "BIS Head of Performing Arts",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-9",
+   "session": "JA",
+   "room": "EC4",
+   "title": "University & Career Counselling",
+   "presenter": "Lané Spies",
+   "role": "BIS Senior University and Career Counsellor",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-10",
+   "session": "JA",
+   "room": "EC2",
+   "title": "National Curriculum",
+   "presenter": "Gulgaaky Kadyrkulova",
+   "role": "BIS Russian National Curriculum Teacher",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-11",
+   "session": "JA",
+   "room": "E-C Terrace 1",
+   "title": "Visual Arts",
+   "presenter": "Moeeza Shuaib",
+   "role": "BIS Head of Visual Arts Department",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-12",
+   "session": "JA",
+   "room": "E-C Terrace 2",
+   "title": "Mathematics",
+   "presenter": "Ahmed Hashem",
+   "role": "BIS Mathematics & Physics Teacher",
+   "org": "BIS",
+   "keywords": "maths math"
+  },
+  {
+   "id": "JA-13",
+   "session": "JA",
+   "room": "Secondary Library",
+   "title": "Science",
+   "presenter": "Rahul Baldota",
+   "role": "BIS Head of Science Department",
+   "org": "BIS"
+  },
+  {
+   "id": "JA-14",
+   "session": "JA",
+   "room": "T5",
+   "title": "Middle School Teaching",
+   "presenter": "Ripul Sharma",
+   "role": "QSIB Middle School Teacher",
+   "org": "QSI International School of Bishkek"
+  }
+ ],
+ "preconference": {
+  "title": "The Current State of AI — What Frontier Models Can and Cannot Do",
+  "blurb": "Practitioners show what today’s models and agents already do — live, with real tasks and real failure cases.",
+  "speakers": [
+   {
+    "name": "Ivan Ninenko",
+    "role": "Strategic Lead for Education Systems Innovation, BIS"
+   },
+   {
+    "name": "Igor Chemerkin",
+    "role": "AI Mentor at OloloPro, founder of the Bishkek AI Community"
+   },
+   {
+    "name": "Aidin Biibosunov",
+    "role": "Computational Biology Researcher, Differentia Bio; creator of AIsuluu"
+   }
+  ]
+ },
+ "organisers": [
+  {
+   "key": "bis",
+   "role": "Host school",
+   "name": "Bishkek International School",
+   "logo": "images/bis-logo.png",
+   "text": "An IB World School in Bishkek, Kyrgyzstan, offering an international education from the early years to the IB Diploma. BIS hosts the 2026 conference on its campus.",
+   "points": [
+    [
+     "Programmes:",
+     "IB Primary Years, Middle Years and Diploma Programmes, plus Cambridge IGCSE."
+    ],
+    [
+     "Location:",
+     "Bishkek, Kyrgyzstan."
+    ]
+   ],
+   "url": "https://www.bis.kg/school/",
+   "urlLabel": "bis.kg"
+  },
+  {
+   "key": "cafa",
+   "role": "Organising network",
+   "name": "Central Asia Federation of Athletics, Activities and Arts (CAFA)",
+   "logo": "images/cafa-logo.png",
+   "text": "A regional network connecting international and private schools across Central Asia, including Kyrgyzstan, Kazakhstan, Uzbekistan and Tajikistan. It brings students and educators together for sport, the arts and academic competition, fostering cooperation, leadership, resilience and sportsmanship.",
+   "points": [],
+   "url": "",
+   "urlLabel": ""
+  }
+ ],
+ "rooms": [
+  {
+   "room": "S1",
+   "location": "Main building, 2nd floor"
+  },
+  {
+   "room": "S2",
+   "location": "Main building, 2nd floor"
+  },
+  {
+   "room": "T3",
+   "location": "Main building, 3rd floor"
+  },
+  {
+   "room": "T5",
+   "location": "Main building, 3rd floor"
+  },
+  {
+   "room": "A2",
+   "location": "Annex building, 1st floor"
+  },
+  {
+   "room": "A3",
+   "location": "Annex building, 2nd floor"
+  },
+  {
+   "room": "EC1",
+   "location": "E-Centre"
+  },
+  {
+   "room": "EC2",
+   "location": "E-Centre"
+  },
+  {
+   "room": "EC3",
+   "location": "E-Centre"
+  },
+  {
+   "room": "EC4",
+   "location": "E-Centre"
+  },
+  {
+   "room": "E-C Terrace 1",
+   "location": "E-Centre"
+  },
+  {
+   "room": "E-C Terrace 2",
+   "location": "E-Centre"
+  },
+  {
+   "room": "Secondary Library",
+   "location": "Main building, 2nd floor"
+  },
+  {
+   "room": "Internal Meeting Room",
+   "location": "Main building, 1st floor"
+  }
+ ]
 }
