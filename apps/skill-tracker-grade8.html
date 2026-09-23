@@ -555,15 +555,15 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
     <div class="sub">The skill graph is shared across the department; a copy is built into this page so it opens without an upload. The mastery file is one per class and is never built in. Both stay on this machine — nothing is uploaded.</div>
     <div class="drops">
       <div class="drop" id="drop-graph">
-        <h3>1 · Skill graph</h3>
-        <p>g8_skill_graph_4.xlsx<br>Shared, one per grade</p>
+        <h3>Skill graph — already built in</h3>
+        <p><b>Nothing to do here.</b> skill_graph_7 (Grades 6–8) is inside this page.<br>Only load a file to replace it with a newer graph.</p>
         <button class="btn ghost" onclick="document.getElementById('f-graph').click()">Choose file</button>
         <input type="file" id="f-graph" accept=".xlsx,.xls,.csv">
         <div class="file" id="name-graph"></div>
       </div>
       <div class="drop" id="drop-mastery">
-        <h3>2 · Class mastery</h3>
-        <p>class_mastery_8A.xlsx<br>One per class — drop its <code>_checked_by</code> file with it</p>
+        <h3>Class file — load this</h3>
+        <p>class_mastery_….csv or .xlsx — one per class.<br>Optional: add its <code>_checked_by</code> file too, to show which cells AI marked.</p>
         <button class="btn ghost" onclick="document.getElementById('f-mastery').click()">Choose file</button>
         <input type="file" id="f-mastery" accept=".xlsx,.xls,.csv" multiple>
         <div class="file" id="name-mastery"></div>
@@ -572,7 +572,7 @@ text.unfold:focus{outline:2px solid var(--accent);outline-offset:2px}
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
       <button class="btn" id="goBtn" disabled>Use these files</button>
       <button class="btn ghost" id="demoBtn">Use the sample class</button>
-      <span style="color:var(--muted);font-size:12.5px">Drag files onto the boxes, or click Choose file. Loading a graph replaces the built-in copy.</span>
+      <span style="color:var(--muted);font-size:12.5px">Usually you load only the class file. Drag it onto its box or click Choose file, then Use these files.</span>
     </div>
   </div>
   <div id="loadIssues"></div>
