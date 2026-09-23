@@ -1,10 +1,7 @@
 {
   "_README": "Edit this file to change the programme, workshops, rooms or links. Participants and their sign-ups live in participants.csv. Times are Bishkek time; each day's 'iso' date drives the live 'Now / Next' panel. Push to GitHub after editing; the bis.kg page reads it live (~10 min cache).",
   "event": {
-    "registerUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeHcyBa1picGfIR0wtMsRcwL8Dov6HJCfeh_e-Sry5aZnhwfw/viewform?usp=dialog",
     "preconferenceUrl": "https://www.bis.kg/school/cafa-preconference/",
-    "mainFee": "150 USD",
-    "preFee": "10 USD",
     "contacts": [
       {
         "name": "Bojana Askovic",
@@ -636,5 +633,53 @@
         "role": "Computational Biology Researcher, Differentia Bio; creator of AIsuluu"
       }
     ]
-  }
+  },
+  "organisers": [
+    {
+      "key": "bis",
+      "role": "Host school",
+      "name": "Bishkek International School",
+      "logo": "images/bis-logo.png",
+      "text": "An IB World School in Bishkek, Kyrgyzstan, offering an international education from the early years to the IB Diploma. BIS hosts the 2026 conference on its campus.",
+      "points": [
+        [
+          "Programmes:",
+          "IB Primary Years, Middle Years and Diploma Programmes, plus Cambridge IGCSE."
+        ],
+        [
+          "Location:",
+          "Bishkek, Kyrgyzstan."
+        ]
+      ],
+      "url": "https://www.bis.kg/school/",
+      "urlLabel": "bis.kg"
+    },
+    {
+      "key": "cafa",
+      "role": "Organising network",
+      "name": "Central Asia Federation of Athletics, Activities and Arts (CAFA)",
+      "logo": "images/cafa-logo.png",
+      "text": "A regional network connecting international and private schools across Central Asia, including Kyrgyzstan, Kazakhstan, Uzbekistan and Tajikistan. It brings students and educators together for sport, the arts and academic competition, fostering cooperation, leadership, resilience and sportsmanship.",
+      "points": [
+        [
+          "Athletics:",
+          "cross-country, track and field, football, basketball, volleyball and badminton."
+        ],
+        [
+          "Activities & arts:",
+          "music festivals, art exchanges, drama events and student leadership forums."
+        ],
+        [
+          "Professional development:",
+          "educator conferences such as this one, Architects of Tomorrow."
+        ],
+        [
+          "Member schools include",
+          "QSI International School of Bishkek, Tashkent International School, Almaty International School and Tien Shan International School."
+        ]
+      ],
+      "url": "",
+      "urlLabel": ""
+    }
+  ]
 }
