@@ -391,11 +391,14 @@
     var roomText = function(w){ return w.room ? "Room <b>"+esc(w.room)+"</b>" : "Room TBC"; };
 
     /* ---------- live now / next ---------- */
+    function itemRef(it){ var d=P.indexOf(it._day); return d+"-"+it._day.items.indexOf(it); }
     function describe(it, short){
       var s = it.session, pk = s && st.picks[s];
-      if (pk) return '<div class="what"><button data-jump="'+s+'"'+(pk.w.id?' data-w="'+pk.w.id+'"':'')+'>'+esc(pk.w.title)+'</button></div><div class="sub">'+(pk.lead?'<b>You are presenting</b> &middot; ':'Your '+esc(S[s].label.toLowerCase())+' &middot; ')+roomText(pk.w)+'</div>';
+      var other = P.indexOf(it._day) !== dayOf(clock()) ? esc(it._day.day)+' '+esc(it._day.date)+' &middot; ' : '';
+      if (pk) return '<div class="what"><button data-jump="'+s+'"'+(pk.w.id?' data-w="'+pk.w.id+'"':'')+'>'+esc(pk.w.title)+'</button></div><div class="sub">'+(pk.lead?'<b>You are presenting</b> &middot; ':'Your '+esc(S[s].label.toLowerCase())+' &middot; ')+other+roomText(pk.w)+'</div>';
       var n = s ? W.filter(function(w){ return w.session===s; }).length : 0;
-      return '<div class="what">'+(s?'<button data-jump="'+s+'">'+esc(it.title)+'</button>':esc(it.title))+'</div><div class="sub">'+esc(it.time)+(s?' &middot; '+n+' options, tap to choose':(it.note && !short?' &middot; '+esc(it.note):''))+'</div>';
+      var btn = s ? '<button data-jump="'+s+'">' : '<button data-item="'+itemRef(it)+'">';
+      return '<div class="what">'+btn+esc(it.title)+'</button></div><div class="sub">'+other+esc(it.time)+(s?' &middot; '+n+' options, tap to choose':(it.note && !short?' &middot; '+esc(it.note):''))+'</div>';
     }
     function renderLive(){
       var now = clock(), box = $("#cafa-live");
@@ -403,7 +406,7 @@
       var nxt = ALL.filter(function(it){ return it._s>now; }).sort(function(a,b){ return a._s-b._s; });
       var first = ALL[0], last = ALL[ALL.length-1];
       if (now < first._s && dayOf(now) < 0){
-        box.innerHTML = '<div class="nownext"><div class="nn wide"><div class="lbl">Coming up</div><div class="what">Starts Friday 25 September, '+esc(startOf(first))+'</div><div class="sub">Tap a breakout session below to see its workshops, or search for a topic.</div></div></div>';
+        box.innerHTML = '<div class="nownext"><div class="nn wide"><div class="lbl">Coming up &middot; '+esc(first._day.day)+' '+esc(first._day.date)+', '+esc(startOf(first))+'</div><div class="what"><button data-item="'+itemRef(first)+'">'+esc(first.title)+'</button></div><div class="sub">The conference starts on '+esc(first._day.day)+'. Workshops are on '+esc(P[satIdx].day)+': <button data-jump="S1" style="color:var(--royal);text-decoration:underline;text-underline-offset:3px">see the breakout sessions</button>, or search for a topic.</div></div></div>';
         return;
       }
       if (now >= last._e){
@@ -427,8 +430,10 @@
       find.hidden=true; picks.hidden=false; change.hidden=false;
       $("#cafa-me-title").textContent = st.me.name;
       var any=false;
-      picks.innerHTML = Object.keys(S).map(function(k){
-        var pk = st.picks[k], t='<span class="t">'+esc(startOf({time:S[k].time}))+' &middot; '+esc(S[k].label)+'</span>';
+      var today = dayOf(clock());
+      var dayNote = '<p class="hint" style="margin:-4px 0 2px">All your workshops are on <b style="color:var(--ink)">'+esc(P[satIdx].day)+' '+esc(P[satIdx].date)+'</b>'+(today===satIdx?' (today)':today===satIdx-1?' (tomorrow)':'')+'.</p>';
+      picks.innerHTML = dayNote + Object.keys(S).map(function(k){
+        var pk = st.picks[k], t='<span class="t">'+esc(P[satIdx].day.slice(0,3))+' '+esc(startOf({time:S[k].time}))+' &middot; '+esc(S[k].label)+'</span>';
         if (!pk) return '<div class="pick none">'+t+'<span class="w">Not recorded yet</span></div>';
         any=true;
         return '<button class="pick" data-jump="'+k+'"'+(pk.w.id?' data-w="'+pk.w.id+'"':'')+'>'+t+'<span class="w">'+esc(pk.w.title)+'<small>'+(pk.lead?'You are presenting &middot; ':'')+(pk.w.room?esc(pk.w.room):'Room TBC')+'</small></span></button>';
@@ -570,7 +575,17 @@
       var el = (wid && document.getElementById("cafa-w-"+wid)) || document.getElementById("cafa-i-"+sess);
       if (el) el.scrollIntoView({behavior:"smooth", block: wid ? "center" : "start"});
     }
-    root.addEventListener("click", function(e){ var j=e.target.closest("[data-jump]"); if (j) jump(j.dataset.jump, j.dataset.w); });
+    function jumpItem(ref){
+      var a = ref.split("-"), d = +a[0], i = +a[1], it = P[d] && P[d].items[i]; if (!it) return;
+      if (it.session) return jump(it.session);
+      clearQ(); st.day = d; if (it.expand) st.open[ref] = true;
+      renderDays(); renderProg();
+      var el = document.getElementById("cafa-i-"+ref); if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    root.addEventListener("click", function(e){
+      var j=e.target.closest("[data-jump]"); if (j) return jump(j.dataset.jump, j.dataset.w);
+      var k=e.target.closest("[data-item]"); if (k) jumpItem(k.dataset.item);
+    });
 
     /* ---------- about ---------- */
     var ASSET = "";
