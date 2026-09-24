@@ -1,0 +1,39 @@
+{
+ "_README": "Edit this file to change the pre-conference page text, speakers or takeaways. Push to GitHub after editing (see the guide) — the bis.kg page reads it live (~10 min cache). Photos live in images/ next to this file.",
+ "pageTitle": "Pre-Conference — The Current State of AI | Bishkek International School",
+ "pageDescription": "Pre-Conference, Friday 25 September 2026, 12:00-15:30 at Bishkek International School: what frontier AI models and agents can and cannot do.",
+ "event": {
+  "dateLine": "Friday 25 September 2026 · Bishkek",
+  "dateTimeLine": "Friday 25 September · 12:00–15:30",
+  "title": "The Current State of AI",
+  "subtitle": "What frontier models can and cannot do",
+  "deck": "Practitioners show what today’s models and agents already do — live, with real tasks and real failure cases.",
+  "time": "12:00–15:30",
+  "venue": "Bishkek International School",
+  "cafaConferenceUrl": "https://www.bis.kg/school/cafa-conference-2026/"
+ },
+ "speakersHeading": "Three practitioners, three vantage points",
+ "speakers": [
+  {
+   "name": "Igor Chemerkin",
+   "photo": "images/igor-chemerkin.jpg",
+   "bio": "<strong>Igor Chemerkin</strong> is <a href=\"https://pro.ololo.city/course/ai-dlya-biznesa\" target=\"_blank\" rel=\"noopener\">AI Mentor at OloloPro</a> where he trains and consults different businesses on AI integration. Igor worked as a senior software developer for over 9 years and then gradually shifted to AI mentorship. He is the founder of the <a href=\"https://t.me/ai_in_kg\" target=\"_blank\" rel=\"noopener\">Bishkek AI community</a>."
+  },
+  {
+   "name": "Aidin Biibosunov",
+   "photo": "images/aidin-biibosunov.jpg",
+   "bio": "<strong>Aidin Biibosunov</strong> is a Computational Biology Researcher at <a href=\"https://differentiabio.com/\" target=\"_blank\" rel=\"noopener\">Differentia Bio</a>, where he works on mathematical modeling of the immune system. As a Teach for Kyrgyzstan fellow teaching math in a rural public school, he built <a href=\"https://aisuluu.aidinbii.me/\" target=\"_blank\" rel=\"noopener\">AIsuluu</a> — an AI assistant that grades handwritten math homework and gives each student personalized feedback."
+  },
+  {
+   "name": "Ivan Ninenko",
+   "photo": "images/ivan-ninenko.jpg",
+   "bio": "<strong>Ivan Ninenko</strong> is Strategic Lead for Education Systems Innovation at <a href=\"https://www.bis.kg/school/\" target=\"_blank\" rel=\"noopener\">Bishkek International School</a>. He has driven a Teach for Kyrgyzstan initiative <a href=\"https://ninenko.github.io/apps/pages/ai-tutors.html\" target=\"_blank\" rel=\"noopener\">piloting AI-powered teaching assistants</a> across rural Kyrgyz public schools, and co-founded <a href=\"https://quantaquiz.com/\" target=\"_blank\" rel=\"noopener\">QuantaQuiz</a>, an AI-powered testing and personalized-feedback platform."
+  }
+ ],
+ "takeawaysHeading": "A shared, current picture of the technology — before we discuss the skills.",
+ "takeaways": [
+  {"title": "What AI can already automate", "text": "Which slices of the working week are genuinely handed over."},
+  {"title": "How AI agents work", "text": "Plan, use a tool, check the result — and where the loop breaks."},
+  {"title": "How fast things are changing", "text": "The slope we are on — and what the next year plausibly holds."}
+ ]
+}
