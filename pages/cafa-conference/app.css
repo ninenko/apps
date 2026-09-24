@@ -152,7 +152,7 @@
 #cafa button.wk-h:hover .wt{color:var(--royal);}
 #cafa .wk-h .wb{font-size:14.5px;color:var(--ink-2);margin-top:3px;}
 #cafa .wk-h .wb b{color:var(--ink);font-weight:600;}
-#cafa .room{display:inline-block;font-family:"Lexend",sans-serif;font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--sky-2);color:var(--navy-2);white-space:nowrap;}
+#cafa .room{display:inline-block;font-family:"Lexend",sans-serif;font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--sky-2);color:var(--navy-2);white-space:normal;line-height:1.35;}
 #cafa .room.tbc{background:transparent;border:1px dashed #C4D0E2;color:var(--ink-3);}
 #cafa .plus{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:var(--royal);transition:transform .2s;}
 #cafa .plus svg{width:14px;height:14px;}
