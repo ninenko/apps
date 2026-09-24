@@ -20,8 +20,8 @@ body{font-family:var(--serif);color:var(--ink);-webkit-font-smoothing:antialiase
 body.idle{cursor:none}
 
 /* fixed 1920x1080 stage, scaled to fit */
-#viewport{position:fixed;inset:0;display:grid;place-items:center}
-#stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--ground);transform-origin:center center;flex:none}
+#viewport{position:fixed;inset:0;overflow:hidden;background:#000}
+#stage{width:1920px;height:1080px;position:absolute;left:50%;top:50%;overflow:hidden;background:var(--ground);transform-origin:center center;transform:translate(-50%,-50%)}
 
 /* ---------- shared background ---------- */
 .bg{position:absolute;inset:0;pointer-events:none}
@@ -217,7 +217,7 @@ body.idle #hint{opacity:0}
         <h2><span>Ivan</span><span>Ninenko</span></h2>
         <p class="role">Strategic Lead, Education Systems Innovation</p>
         <p class="org">Bishkek International School</p>
-        <p class="note">Piloting AI teaching assistants in rural Kyrgyz public schools; co-founder of QuantaQuiz, an AI testing and feedback platform.</p>
+        <p class="note">Piloting AI teaching assistants in rural Kyrgyz public schools; co&#8209;founder of QuantaQuiz, an AI testing and feedback platform.</p>
       </div>
     </div>
   </section>
@@ -234,7 +234,7 @@ body.idle #hint{opacity:0}
 <script>
 (function(){
   var stage=document.getElementById('stage');
-  function fit(){var s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='scale('+s+')';}
+  function fit(){var s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
   addEventListener('resize',fit);fit();
 
   /* split title into characters for the slow reveal */
