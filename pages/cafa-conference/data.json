@@ -172,7 +172,7 @@
     {
       "id": "S1-1",
       "session": "S1",
-      "room": "",
+      "room": "Room A3 · Annex building, 2nd floor",
       "title": "When the Machine Can Do the Maths: What’s Left to Teach When AI Solves the Problem?",
       "presenter": "Alisher Kakenov",
       "role": "Head of Mathematics",
@@ -195,7 +195,7 @@
     {
       "id": "S1-2",
       "session": "S1",
-      "room": "",
+      "room": "Room T3 · Main building, 3rd floor",
       "title": "Emotional Intelligence: In this new age of AI, how do we as educators help our students (and ourselves) grow in EQ",
       "presenter": "Chas Hahn",
       "role": "Athletics Director",
@@ -216,7 +216,7 @@
     {
       "id": "S1-3",
       "session": "S1",
-      "room": "",
+      "room": "Room T5 · Main building, 3rd floor",
       "title": "Rethinking Assessment in the Classroom",
       "presenter": "Yana Karpenko",
       "role": "Head of Language Acquisition, Middle / High School",
@@ -237,7 +237,7 @@
     {
       "id": "S1-4",
       "session": "S1",
-      "room": "",
+      "room": "Room S1 · Main building, 2nd floor",
       "title": "Teaching Critical Thinking to Support Student Learning & Growth",
       "presenter": "Branka Kovacevic",
       "role": "Mathematics Teacher & PYP Mathematics Lead",
@@ -257,7 +257,7 @@
     {
       "id": "S1-5",
       "session": "S1",
-      "room": "",
+      "room": "Room S2 · Main building, 2nd floor",
       "title": "Designing Choice: Rethinking Engagement Through Culture",
       "presenter": "Makiko Inaba",
       "role": "High School Academic Director, DP Coordinator",
@@ -275,7 +275,7 @@
     {
       "id": "S1-6",
       "session": "S1",
-      "room": "",
+      "room": "Room A2 · Annex building, 1st floor",
       "title": "Start at 13, Not 16: Why University Readiness Belongs in Middle School",
       "presenter": "Talantbek Sapitov",
       "role": "Academic Mentor & College Counselor",
@@ -296,7 +296,7 @@
     {
       "id": "S2-1",
       "session": "S2",
-      "room": "",
+      "room": "Room T5 · Main building, 3rd floor",
       "title": "Going Forward by Looking Back",
       "presenter": "Genevieve Maser",
       "role": "EPIC Coordinator",
@@ -314,7 +314,7 @@
     {
       "id": "S2-2",
       "session": "S2",
-      "room": "",
+      "room": "Room A2 · Annex building, 1st floor",
       "title": "‘Flipped’ vs Traditional Pedagogy: Case Study in Mathematical Physics",
       "presenter": "Dr. Stuart S. Chen",
       "role": "AP Calculus and AP Physics Teacher",
@@ -335,7 +335,7 @@
     {
       "id": "S2-3",
       "session": "S2",
-      "room": "",
+      "room": "Room S2 · Main building, 2nd floor",
       "title": "Making Learning Meaningful: Interactive Teaching with Simple Resources",
       "presenter": "Altynai Isabekova",
       "role": "Primary Homeroom Teacher",
@@ -354,7 +354,7 @@
     {
       "id": "S2-4",
       "session": "S2",
-      "room": "",
+      "room": "Room S1 · Main building, 2nd floor",
       "title": "Conquering the Class Clown: Answering your Classroom Management Questions",
       "presenter": "Elizabeth Schalchlin",
       "role": "LEAP Coordinator, ELL Teacher",
@@ -372,7 +372,7 @@
     {
       "id": "S2-5",
       "session": "S2",
-      "room": "",
+      "room": "Room T3 · Main building, 3rd floor",
       "title": "Differentiated English Teaching: Reproductive, Productive, and Creative Tasks with AI Support",
       "presenter": "Sultangazy kyzy Zhenishkul",
       "role": "English Teacher, Teach for Kyrgyzstan alumna",
@@ -394,7 +394,7 @@
     {
       "id": "S2-6",
       "session": "S2",
-      "room": "",
+      "room": "Room A3 · Annex building, 2nd floor",
       "title": "Social-Emotional Learning in Primary School",
       "presenter": "Kanykei Tursunalieva",
       "role": "PYP Co-Teacher",
@@ -413,7 +413,7 @@
     {
       "id": "S3-1",
       "session": "S3",
-      "room": "",
+      "room": "Room T3 · Main building, 3rd floor",
       "title": "Rapid Game Design for Your Classroom",
       "presenter": "Ivan Ninenko",
       "role": "Strategic Lead, Education Systems Innovation",
@@ -433,7 +433,7 @@
     {
       "id": "S3-2",
       "session": "S3",
-      "room": "",
+      "room": "Room A3 · Annex building, 2nd floor",
       "title": "Beyond the Answer: Making Primary Mathematics Real, Reasoned and Relevant",
       "presenter": "Nirupma Palia",
       "role": "PYP Teacher",
@@ -453,7 +453,7 @@
     {
       "id": "S3-3",
       "session": "S3",
-      "room": "",
+      "room": "Room S1 · Main building, 2nd floor",
       "title": "Inquiry in Action: Engaging Every Learner",
       "presenter": "Elvira Tonueva",
       "role": "Head of Language Acquisition in PYP",
@@ -474,7 +474,7 @@
     {
       "id": "S3-4",
       "session": "S3",
-      "room": "",
+      "room": "Room S2 · Main building, 2nd floor",
       "title": "Collaboration & Communication Among Students",
       "presenter": "Liza DeGarmo",
       "role": "Teacher",
@@ -495,7 +495,7 @@
     {
       "id": "S3-5",
       "session": "S3",
-      "room": "",
+      "room": "Room T5 · Main building, 3rd floor",
       "title": "Social-Emotional Learning and Human-Centred Skills",
       "presenter": "Aigul Karimova",
       "role": "Assistant Professor / Program Coordinator",
@@ -516,7 +516,7 @@
     {
       "id": "S3-6",
       "session": "S3",
-      "room": "",
+      "room": "Room A2 · Annex building, 1st floor",
       "title": "Beyond the Chatbot: Designing Collaborative Classrooms for the AI Era",
       "presenter": "Rahul Baldota",
       "role": "Head of Science Department",
@@ -539,7 +539,7 @@
     {
       "id": "JA-1",
       "session": "JA",
-      "room": "Internal Meeting Room",
+      "room": "Internal Meeting Room · Main building, 1st floor",
       "title": "School Directors",
       "presenter": "David Grant",
       "role": "BIS Head of School",
@@ -548,7 +548,7 @@
     {
       "id": "JA-2",
       "session": "JA",
-      "room": "",
+      "room": "Room S1 · Main building, 2nd floor",
       "title": "Language Acquisition up to Grade 5",
       "presenter": "Elvira Tonueva",
       "role": "BIS Head of Language Acquisition in PYP",
@@ -558,7 +558,7 @@
     {
       "id": "JA-3",
       "session": "JA",
-      "room": "",
+      "room": "Room T3 · Main building, 3rd floor",
       "title": "Language Acquisition Grades 6 to 12",
       "presenter": "Yana Karpenko",
       "role": "BIS Head of Language Acquisition in Middle/High School",
@@ -568,7 +568,7 @@
     {
       "id": "JA-4",
       "session": "JA",
-      "room": "",
+      "room": "Room EC1 · E-Centre",
       "title": "Design & Technology",
       "presenter": "Francois Spies",
       "role": "BIS Head of Computer Science & Design",
@@ -577,7 +577,7 @@
     {
       "id": "JA-5",
       "session": "JA",
-      "room": "",
+      "room": "Room A3 · Annex building, 2nd floor",
       "title": "Physical & Health Education",
       "presenter": "Chas Hahn",
       "role": "Athletics Director",
@@ -586,7 +586,7 @@
     {
       "id": "JA-6",
       "session": "JA",
-      "room": "",
+      "room": "Room A2 · Annex building, 1st floor",
       "title": "Counselling",
       "presenter": "Asmana Matraimova",
       "role": "BIS Lead Counsellor",
@@ -595,7 +595,7 @@
     {
       "id": "JA-7",
       "session": "JA",
-      "room": "",
+      "room": "Room S2 · Main building, 2nd floor",
       "title": "Early Years Homeroom Teachers",
       "presenter": "Altynai Isabekova",
       "role": "BIS Grade 0 Homeroom Teacher",
@@ -604,7 +604,7 @@
     {
       "id": "JA-8",
       "session": "JA",
-      "room": "",
+      "room": "Room EC3 · E-Centre",
       "title": "Performing Arts",
       "presenter": "Munara Korpotaeva",
       "role": "BIS Head of Performing Arts",
@@ -613,7 +613,7 @@
     {
       "id": "JA-9",
       "session": "JA",
-      "room": "",
+      "room": "Room EC4 · E-Centre",
       "title": "University & Career Counselling",
       "presenter": "Lané Spies",
       "role": "BIS Senior University and Career Counsellor",
@@ -622,7 +622,7 @@
     {
       "id": "JA-10",
       "session": "JA",
-      "room": "",
+      "room": "Room EC2 · E-Centre",
       "title": "National Curriculum",
       "presenter": "Gulgaaky Kadyrkulova",
       "role": "BIS Russian National Curriculum Teacher",
@@ -631,7 +631,7 @@
     {
       "id": "JA-11",
       "session": "JA",
-      "room": "",
+      "room": "E-C Terrace 1 · E-Centre",
       "title": "Visual Arts",
       "presenter": "Moeeza Shuaib",
       "role": "BIS Head of Visual Arts Department",
@@ -640,7 +640,7 @@
     {
       "id": "JA-12",
       "session": "JA",
-      "room": "",
+      "room": "E-C Terrace 2 · E-Centre",
       "title": "Mathematics",
       "presenter": "Ahmed Hashem",
       "role": "BIS Mathematics & Physics Teacher",
@@ -650,7 +650,7 @@
     {
       "id": "JA-13",
       "session": "JA",
-      "room": "",
+      "room": "Secondary Library · Main building, 2nd floor",
       "title": "Science",
       "presenter": "Rahul Baldota",
       "role": "BIS Head of Science Department",
@@ -659,7 +659,7 @@
     {
       "id": "JA-14",
       "session": "JA",
-      "room": "",
+      "room": "Room T5 · Main building, 3rd floor",
       "title": "Middle School Teaching",
       "presenter": "Ripul Sharma",
       "role": "QSIB Middle School Teacher",

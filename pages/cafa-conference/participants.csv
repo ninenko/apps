@@ -9,12 +9,12 @@ Zhibek Kenzhebaeva,Bishkek International School,BIS,S1-2,S2-4,S3-5,JA-6
 Kyzjibek Tekenova,Bishkek International School,BIS,S1-2,S2-4,S3-5,JA-6
 Yana Karpenko,Bishkek International School,BIS,,S2-5,S3-3,
 Kanykei Tursunalieva,Bishkek International School,BIS,S1-2,,S3-4,JA-7
-Elina Ignatova,Bishkek International School,BIS,S1-2,S2-4,S3-2,
+Elina Ignatova,Bishkek International School,BIS,S1-2,S2-4,S3-2,JA-7
 Zharkynai Ilebaeva,Bishkek International School,BIS,S1-6,S2-4,S3-5,JA-2
 Maria-Mart Jana van Eeden,Bishkek International School,BIS,S1-4,S2-3,S3-2,JA-12
 Aizirek Dzhakypbekova,Bishkek International School,BIS,S1-4,S2-2,S3-3,JA-7
 Bivo Chongo,Bishkek International School,BIS,S1-3,S2-1,S3-3,JA-7
-Makiko Inaba,Bishkek International School,BIS,,S2-4,S3-5,
+Makiko Inaba,Bishkek International School,BIS,,S2-4,S3-5,JA-3
 Ainura Moldalieva,Bishkek International School,BIS,S1-2,S2-4,S3-4,JA-3
 Saikal Alamanova,Bishkek International School,BIS,S1-2,S2-4,S3-5,JA-3
 Elvira Tonueva,Bishkek International School,BIS,S1-2,S2-4,,
@@ -32,7 +32,7 @@ Moeeza Shuaib,Bishkek International School,BIS,,,,
 Natalia Lebedeva,Bishkek International School,BIS,S1-2,S2-3,S3-4,JA-8
 Alisher Kakenov,Bishkek International School,BIS,,,,
 Branka Kovacevic,Bishkek International School,BIS,,S2-2,S3-3,JA-4
-Daniel Bilog,Bishkek International School,BIS,S1-1,S2-4,S3-4,JA-12
+Daniel Bilog,Bishkek International School,BIS,S1-1,S2-4,S3-2,JA-12
 Lané Spies,Bishkek International School,BIS,S1-6,S2-1,S3-6,
 Ahmed Hashem,Bishkek International School,BIS,,,,
 Gulbara Akunova,Bishkek International School,BIS,S1-6,S2-4,S3-5,JA-14
@@ -98,7 +98,7 @@ Evelyn Marolf,Kazakhstan International School,KIS,S1-3,S2-1,S3-6,
 Christine Wicker,Tien Shan International School,TSIS,S1-6,S2-5,S3-1,JA-1
 Maria Tanthapanichkul,Tien Shan International School,TSIS,S1-3,S2-4,S3-1,JA-5
 Elizabeth Schalchlin,Tien Shan International School,TSIS,S1-4,,S3-1,JA-10
-Dr. Stuart Chen,Tien Shan International School,TSIS,S1-1,,S3-6,
+Dr. Stuart Chen,Tien Shan International School,TSIS,S1-1,,S3-6,JA-12
 Jenny Issabekova,Tien Shan International School,TSIS,S1-3,S2-4,S3-6,JA-11
 Rami Akhdab,Tien Shan International School,TSIS,S1-2,S2-4,S3-5,JA-6
 Liza DeGarmo,Tien Shan International School,TSIS,S1-5,,,JA-14
@@ -130,3 +130,4 @@ Peter Nilsson,Keynote Speaker,,,,,
 Igor Chemerkin,Pre-Conference Speaker,,,,,
 Aidin Biibosunov,Pre-Conference Speaker,,,,,
 Ivan Ninenko,Pre-Conference Speaker,,,,,
+Meder Akhmetov,Bishkek International School,BIS,,,,JA-11
