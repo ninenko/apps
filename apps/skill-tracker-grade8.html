@@ -2607,21 +2607,43 @@ function renderCheck(){
     h2.id = "chk-other";
     w.appendChild(h2);
     w.appendChild(gEl("p", null, "Not contradictions, but places where the sheet is doing something unusual and a person should agree that it is right."));
-    var u2 = gEl("ul");
-    noline.forEach(function(x){
-      u2.appendChild(gEl("li", null, "<b>Assessed but not taught on paper.</b> <code>" + x.id + "</code> " + x.name +
-        " is assessed by a unit summative but does not appear in that unit's content list. Either the content list is missing a line or the task is assessing something the unit does not teach."));
-    });
-    dual.forEach(function(x){
-      u2.appendChild(gEl("li", null, "<b>In two units at once.</b> <code>" + x.id + "</code> " + x.name +
-        " is listed in the content of " + (G.unitOf[x.id] || []).map(function(k){ return G.unitBy[k].label; }).join(" and ") +
-        ". It is held as one skill tagged to both, which is honest but means it is counted in both units' totals."));
-    });
-    odd.forEach(function(id){
-      u2.appendChild(gEl("li", null, "<b>Grouped against its strand.</b> <code>" + id + "</code> " + (G.byId[id] || {}).name +
-        " — " + (G.CL.odd[id] || []).join("; ") + ". Grouped this way on purpose, because of what it feeds, but it is a judgement worth confirming."));
-    });
-    w.appendChild(u2);
+    if (noline.length || dual.length){
+      var u2 = gEl("ul");
+      noline.forEach(function(x){
+        u2.appendChild(gEl("li", null, "<b>Assessed but not taught on paper.</b> <code>" + x.id + "</code> " + x.name +
+          " is assessed by a unit summative but does not appear in that unit's content list. Either the content list is missing a line or the task is assessing something the unit does not teach."));
+      });
+      dual.forEach(function(x){
+        u2.appendChild(gEl("li", null, "<b>In two units at once.</b> <code>" + x.id + "</code> " + x.name +
+          " is listed in the content of " + (G.unitOf[x.id] || []).map(function(k){ return G.unitBy[k].label; }).join(" and ") +
+          ". It is held as one skill tagged to both, which is honest but means it is counted in both units' totals."));
+      });
+      w.appendChild(u2);
+    }
+    if (odd.length){
+      w.appendChild(gEl("p", null, "<b>Grouped against its strand.</b> " + odd.length + " skill" + (odd.length === 1 ? "" : "s") +
+        " sit in a cluster that feeds a different unit than their own strand would suggest. Each was grouped that way on purpose, because of what it feeds — folded by strand below so the pattern is easier to scan. Still a judgement worth confirming."));
+      var oddByStrand = {};
+      odd.forEach(function(id){
+        var strand = (G.byId[id] || {}).strand || "Unassigned";
+        (oddByStrand[strand] = oddByStrand[strand] || []).push(id);
+      });
+      var strandOrder = ["Number", "Algebra", "Geometry", "Statistics & Probability"];
+      Object.keys(oddByStrand).sort(function(a, b){
+        var ia = strandOrder.indexOf(a); if (ia === -1) ia = 99;
+        var ib = strandOrder.indexOf(b); if (ib === -1) ib = 99;
+        return ia - ib || a.localeCompare(b);
+      }).forEach(function(strand){
+        var ids = oddByStrand[strand];
+        w.appendChild(gEl("h4", null, strand + " (" + ids.length + ")"));
+        var u3 = gEl("ul");
+        ids.forEach(function(id){
+          u3.appendChild(gEl("li", null, "<code>" + id + "</code> " + (G.byId[id] || {}).name +
+            " — " + (G.CL.odd[id] || []).join("; ")));
+        });
+        w.appendChild(u3);
+      });
+    }
   }
 
   w.appendChild(gEl("h3", null, "If you are not sure what any of this means"));
