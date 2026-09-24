@@ -25,7 +25,7 @@
 #precafa .hero .wrap{padding-top:76px;padding-bottom:72px;position:relative;z-index:1;}
 #precafa .hero .eyebrow{color:var(--hero-accent);}
 #precafa .rule{height:1px;background:var(--hero-line);margin:26px 0 30px;}
-#precafa h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;letter-spacing:-.028em;line-height:1.02;font-size:clamp(38px,6.4vw,74px);margin:16px 0 0;text-wrap:balance;}
+#precafa h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;letter-spacing:-.028em;line-height:1.02;font-size:clamp(38px,6.4vw,74px);margin:16px 0 0;text-wrap:balance;color:var(--hero-ink);}
 #precafa h1 .dim{color:var(--hero-ink-2);font-weight:500;}
 #precafa .hero .deck{font-size:clamp(18px,2.1vw,21px);color:var(--hero-ink-2);max-width:60ch;margin:22px 0 0;}
 #precafa .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
@@ -38,7 +38,7 @@
 /* body sections */
 #precafa section{padding:58px 0;}
 #precafa section + section{border-top:1px solid var(--line);}
-#precafa h2{font-family:"Archivo",system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,34px);letter-spacing:-.02em;line-height:1.15;margin:12px 0 0;text-wrap:balance;}
+#precafa h2{font-family:"Archivo",system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,34px);letter-spacing:-.02em;line-height:1.15;margin:12px 0 0;text-wrap:balance;color:var(--ink);}
 #precafa p{margin:18px 0 0;max-width:66ch;color:var(--ink-2);}
 #precafa p.lede{font-size:20px;color:var(--ink);}
 #precafa strong{color:var(--ink);font-weight:600;}
