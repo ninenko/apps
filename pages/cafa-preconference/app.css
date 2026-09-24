@@ -44,7 +44,7 @@
 #precafa strong{color:var(--ink);font-weight:600;}
 
 /* speakers */
-#precafa .speakers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:36px;}
+#precafa .speakers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:36px;}
 @media (max-width:860px){#precafa .speakers{grid-template-columns:1fr;}}
 #precafa .card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:30px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;}
 #precafa .portrait{width:190px;height:190px;border-radius:50%;object-fit:cover;display:block;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);filter:saturate(.96);}

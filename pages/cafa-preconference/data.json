@@ -12,7 +12,7 @@
   "venue": "Bishkek International School",
   "cafaConferenceUrl": "https://www.bis.kg/school/cafa-conference-2026/"
  },
- "speakersHeading": "Three practitioners, three vantage points",
+ "speakersHeading": "Four practitioners, four vantage points",
  "speakers": [
   {
    "name": "Igor Chemerkin",
@@ -25,6 +25,11 @@
    "bio": "<strong>Aidin Biibosunov</strong> is a Computational Biology Researcher at <a href=\"https://differentiabio.com/\" target=\"_blank\" rel=\"noopener\">Differentia Bio</a>, where he works on mathematical modeling of the immune system. As a Teach for Kyrgyzstan fellow teaching math in a rural public school, he built <a href=\"https://aisuluu.aidinbii.me/\" target=\"_blank\" rel=\"noopener\">AIsuluu</a> — an AI assistant that grades handwritten math homework and gives each student personalized feedback."
   },
   {
+   "name": "Aidil Umarov",
+   "photo": "images/aidil-umarov.jpg",
+   "bio": "<strong>Aidil Umarov</strong> is Lead Software Engineer at EPAM Kyrgyzstan, the local branch of the global digital transformation and software engineering giant EPAM Systems. <a href=\"https://www.epam.com/\" target=\"_blank\" rel=\"noopener\">EPAM Systems</a> is a global provider of digital platform engineering, software development, and AI-enabled transformation services, ranked among the <a href=\"https://finance.yahoo.com/news/newsweek-ranks-epam-among-top-150200997.html\" target=\"_blank\" rel=\"noopener\">Top 5 in IT Services &amp; Consulting by Newsweek</a>."
+  },
+  {
    "name": "Ivan Ninenko",
    "photo": "images/ivan-ninenko.jpg",
    "bio": "<strong>Ivan Ninenko</strong> is Strategic Lead for Education Systems Innovation at <a href=\"https://www.bis.kg/school/\" target=\"_blank\" rel=\"noopener\">Bishkek International School</a>. He has driven a Teach for Kyrgyzstan initiative <a href=\"https://ninenko.github.io/apps/pages/ai-tutors.html\" target=\"_blank\" rel=\"noopener\">piloting AI-powered teaching assistants</a> across rural Kyrgyz public schools, and co-founded <a href=\"https://quantaquiz.com/\" target=\"_blank\" rel=\"noopener\">QuantaQuiz</a>, an AI-powered testing and personalized-feedback platform."
@@ -32,8 +37,17 @@
  ],
  "takeawaysHeading": "A shared, current picture of the technology — before we discuss the skills.",
  "takeaways": [
-  {"title": "What AI can already automate", "text": "Which slices of the working week are genuinely handed over."},
-  {"title": "How AI agents work", "text": "Plan, use a tool, check the result — and where the loop breaks."},
-  {"title": "How fast things are changing", "text": "The slope we are on — and what the next year plausibly holds."}
+  {
+   "title": "What AI can already automate",
+   "text": "Which slices of the working week are genuinely handed over."
+  },
+  {
+   "title": "How AI agents work",
+   "text": "Plan, use a tool, check the result — and where the loop breaks."
+  },
+  {
+   "title": "How fast things are changing",
+   "text": "The slope we are on — and what the next year plausibly holds."
+  }
  ]
 }
