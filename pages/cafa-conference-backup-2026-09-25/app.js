@@ -149,7 +149,6 @@
     /* ---------- me ---------- */
     function renderMe(){
       var find = $("#cafa-me-find"), picks = $("#cafa-picks"), change = $("#cafa-me-change");
-      $("#cafa-me").classList.toggle("dark", !st.me);
       if (!st.me){ find.hidden=false; picks.hidden=true; change.hidden=true; $("#cafa-me-title").textContent="Your workshops"; return; }
       find.hidden=true; picks.hidden=false; change.hidden=false;
       $("#cafa-me-title").textContent = st.me.name;
@@ -163,27 +162,6 @@
         return '<button class="pick" data-jump="'+k+'"'+(pk.w.id?' data-w="'+pk.w.id+'"':'')+'>'+t+'<span class="w">'+esc(pk.w.title)+'<small>'+(pk.lead?'You are presenting &middot; ':'')+(pk.w.room?esc(pk.w.room):'Room TBC')+'</small></span></button>';
       }).join("") + (any && Object.keys(S).every(function(k){ return st.picks[k]; }) ? '' : '<p class="hint" style="margin-top:4px">Workshop sign-ups are sent to registered participants by email. Your choices appear here once recorded.</p>');
     }
-    /* typing animation in the empty name box (placeholder only; stops while focused or filled) */
-    (function(){
-      var inp = $("#cafa-name"); if (!inp) return;
-      var phrases = ["Enter your name here", "Type your name to see your workshops", "Start typing your name\u2026"];
-      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce){ inp.placeholder = phrases[0]; return; }
-      var pi = 0, ci = 0, del = false, paused = false;
-      inp.addEventListener("focus", function(){ paused = true; inp.placeholder = "Your name"; });
-      inp.addEventListener("blur", function(){ paused = false; });
-      function tick(){
-        var delay = del ? 35 : 80;
-        if (!paused && !inp.value){
-          var ph = phrases[pi];
-          if (!del){ ci++; if (ci >= ph.length){ ci = ph.length; del = true; delay = 1800; } }
-          else { ci--; if (ci <= 0){ ci = 0; del = false; pi = (pi + 1) % phrases.length; delay = 400; } }
-          inp.placeholder = ph.slice(0, ci) + "|";
-        }
-        setTimeout(tick, delay);
-      }
-      tick();
-    })();
     function setMe(p){
       st.me = p; st.picks = p ? picksOf(p) : {};
       store.set("cafa26-me", p ? p.name : null);

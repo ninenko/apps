@@ -84,15 +84,6 @@
 #cafa .input:focus{border-color:var(--royal);}
 #cafa .input::placeholder{color:#8A96AE;}
 #cafa .field .mag{position:absolute;left:14px;top:14px;width:20px;height:20px;color:var(--ink-3);pointer-events:none;}
-/* "Your workshops" highlighted: dark card while no name is entered (25 Sept) */
-#cafa .me.dark{background:linear-gradient(135deg,#0E2356 0%,#16307A 100%);border-color:#0E2356;box-shadow:0 10px 28px rgba(14,35,86,.28);}
-#cafa .me.dark .me-h h2{color:#FFFFFF;}
-#cafa .me.dark p.hint{color:#C9D6F0;}
-#cafa .me.dark .input{background:#16307A;border-color:#3D5A9E;color:#FFFFFF;caret-color:#FFFFFF;}
-#cafa .me.dark .input:focus{border-color:#8FB3FF;box-shadow:0 0 0 3px rgba(143,179,255,.25);}
-#cafa .me.dark .input::placeholder{color:#687EB7;opacity:1;}
-#cafa .me.dark .field .mag{color:#9FB4E3;}
-#cafa .me.dark .field .clear{color:#C9D6F0;}
 #cafa .field .clear{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;display:none;place-items:center;color:var(--ink-3);}
 #cafa .field.has .clear{display:grid;}
 #cafa .field .clear:hover{background:var(--sky-2);}
