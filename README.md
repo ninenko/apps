@@ -88,6 +88,7 @@ HTML public/
 | physics_mechanics.html | https://ninenko.github.io/apps/lectures/physics_mechanics.html |
 | ai-tutors.html | ↪ переехал в `pages/` (старая ссылка редиректит) |
 | cafa-preconference-speaker-slides.html | https://ninenko.github.io/apps/lectures/cafa-preconference-speaker-slides.html |
+| cafa-preconference-title-page.html | https://ninenko.github.io/apps/lectures/cafa-preconference-title-page.html |
 
 ### Веб-страницы
 
