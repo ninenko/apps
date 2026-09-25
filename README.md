@@ -89,6 +89,7 @@ HTML public/
 | ai-tutors.html | ↪ переехал в `pages/` (старая ссылка редиректит) |
 | cafa-preconference-speaker-slides.html | https://ninenko.github.io/apps/lectures/cafa-preconference-speaker-slides.html |
 | cafa-preconference-title-page.html | https://ninenko.github.io/apps/lectures/cafa-preconference-title-page.html |
+| cafa-preconference-title-page-matrix.html | https://ninenko.github.io/apps/lectures/cafa-preconference-title-page-matrix.html |
 
 ### Веб-страницы
 
