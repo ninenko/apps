@@ -245,3 +245,10 @@
   --content-width:100%;--container-max-width:100%;--padding-top:0px;--padding-right:0px;--padding-bottom:0px;--padding-left:0px;--gap:0px;--row-gap:0px;--column-gap:0px;--margin-top:0px;--margin-bottom:0px;
 }
 #cafa-root{width:100%;display:block;}
+
+#cafa .badge.cancel{background:#C62828;color:#fff;}
+#cafa .wk.cancelled{background:#FDF3F3;border-color:#F0C4C4;}
+#cafa .wk.cancelled .wk-h .wt{text-decoration:line-through;text-decoration-color:#C62828;color:var(--ink-3);}
+#cafa .wk.cancelled .room{opacity:.6;}
+#cafa .cancel-note{margin:0 0 10px;padding:8px 12px;border-radius:8px;background:#C62828;color:#fff;font-weight:600;font-size:14.5px;}
+#cafa .cancel-txt{color:#C62828;}

@@ -330,7 +330,9 @@
         "A data-informed rationale for flipped-classroom pedagogy.",
         "Ideas to try in your own classroom."
       ],
-      "keywords": "maths math physics"
+      "keywords": "maths math physics",
+      "cancelled": true,
+      "cancelNote": "This session has been cancelled. Please choose another Session 2 workshop."
     },
     {
       "id": "S2-3",
