@@ -73,6 +73,7 @@ HTML public/
 | word-embeddings-2d.html | https://ninenko.github.io/apps/apps/word-embeddings-2d.html |
 | bis-timetable.html | https://ninenko.github.io/apps/apps/bis-timetable.html |
 | skill-tracker-grade8.html | https://ninenko.github.io/apps/apps/skill-tracker-grade8.html |
+| sector-explorer.html | https://ninenko.github.io/apps/apps/sector-explorer.html |
 
 ### Лекции и слайды
 
