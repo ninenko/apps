@@ -78,7 +78,7 @@
 
   <div class="ask"><b>Explore.</b>
     <ol>
-      <li>Look at the primary sector. Is its share of jobs bigger or smaller than its share of GDP? What does that tell you?</li>
+      <li>Look at the primary sector. Is its share of jobs bigger or smaller than its share of the economy? What does that tell you?</li>
       <li>Change the year. Which sector gets bigger over time? Which gets smaller?</li>
       <li>Compare Country A with Country B. What is the biggest difference?</li>
     </ol>
@@ -86,7 +86,7 @@
 
   <footer>
     Data: World Bank, World Development Indicators (downloaded on 1 October 2026 and saved inside this page, so it also works without the internet).
-    Share of GDP: NV.AGR.TOTL.ZS, NV.IND.TOTL.ZS, NV.SRV.TOTL.ZS. Share of jobs (modelled ILO estimates): SL.AGR.EMPL.ZS, SL.IND.EMPL.ZS, SL.SRV.EMPL.ZS.
+    Share of the economy (GDP = the value of everything a country makes in a year): NV.AGR.TOTL.ZS, NV.IND.TOTL.ZS, NV.SRV.TOTL.ZS. Share of jobs (modelled ILO estimates): SL.AGR.EMPL.ZS, SL.IND.EMPL.ZS, SL.SRV.EMPL.ZS.
     Industry also includes mining, electricity and construction. Grey "Other" is taxes on products, which the World Bank does not put in a sector. Companies are examples: many companies work in more than one sector, and we put each one where its main work is. "No number" means the World Bank has no number for that year.
   </footer>
 </div>
@@ -170,7 +170,7 @@ function render(){
   const list = [[a,"A"]]; if (b) list.push([b,"B"]);
   $("out").innerHTML = list.map(([iso,who]) =>
     `<div class="panel"><h3><span class="tag${who}">${who}</span>${NAME[iso]}</h3>` +
-    block("Share of GDP (the money)", rowsFor(iso,"gdp"), cur) + block("Share of jobs (the workers)", rowsFor(iso,"jobs"), cur) + companies(iso) + `</div>`).join("");
+    block("Share of the economy (the money)", rowsFor(iso,"gdp"), cur) + block("Share of jobs (the workers)", rowsFor(iso,"jobs"), cur) + companies(iso) + `</div>`).join("");
 }
 ["selA","selB"].forEach(id => $(id).addEventListener("change", render));
 $("rngY").addEventListener("input", render);
