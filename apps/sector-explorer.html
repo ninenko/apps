@@ -44,7 +44,9 @@
   .bar{display:flex;height:46px;border-radius:10px;overflow:hidden;background:var(--neut)}
   .bar span{display:block;height:100%}
   .bar .O{background:#C9C0B9} .bar .P{background:var(--green)} .bar .S{background:var(--pink)} .bar .T{background:var(--amber)}
-  .vals{margin-top:6px;font-size:17px;font-weight:700}
+  html{overflow-y:scroll}
+  #yl{display:inline-block;min-width:3.4ch}
+  .vals{min-height:2.95em;margin-top:6px;font-size:17px;font-weight:700}
   .vals span{margin-right:12px;white-space:nowrap}
   .vO{color:var(--muted)} .vP{color:var(--green)} .vS{color:var(--pink)} .vT{color:#7A520C}
   button{font:inherit;font-weight:700;padding:8px 14px;border-radius:8px;border:1px solid var(--maroon);background:var(--maroon);color:#fff;cursor:pointer}
@@ -53,7 +55,7 @@
   .co h4{margin:0 0 6px;font-size:17px}
   .co p{margin:4px 0;font-size:16px}
   .nodata{padding:12px;border-radius:10px;background:var(--neut);color:var(--muted)}
-  @media (max-width:700px){.panel{padding:8px}.panel h3{font-size:16px}.row{font-size:15px}.vals{font-size:13px}.vals span{margin-right:6px}.co h4{font-size:15px}.co p,.co li{font-size:13px!important}}
+  @media (max-width:700px){.panel{padding:8px}.panel h3{font-size:16px}.row{font-size:15px}.vals{font-size:13px;min-height:4.6em}.vals span{margin-right:6px}.co h4{font-size:15px}.co p,.co li{font-size:13px!important}}
 </style>
 </head>
 <body>
@@ -147,50 +149,65 @@ function chart(rows, cur){
       g += `<polygon points="${up.concat(dn).join(" ")}" fill="${COLS[k]}" fill-opacity="${k === "O" ? .6 : .88}"/>`;
     });
   });
-  g += `<line x1="${X(cur)}" x2="${X(cur)}" y1="${M.t}" y2="${H-M.b}" stroke="#2B2320" stroke-width="2"/>`;
+  g += `<line class="mk" x1="${X(cur)}" x2="${X(cur)}" y1="${M.t}" y2="${H-M.b}" stroke="#2B2320" stroke-width="2"/>`;
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
 }
-function values(rows, cur){
+function valuesHTML(rows, cur){
   const r = rows.find(x => x.y === cur);
-  if (!r) return `<div class="vals"><b>${cur}</b> &nbsp; <span class="note">No number for this year.</span></div>`;
+  if (!r) return `<b>${cur}</b> &nbsp; <span class="note">No number for this year.</span>`;
   const other = 100 - (r.p + r.s + r.t);
-  return `<div class="vals"><b>${cur}</b> &nbsp; <span class="vP">Primary ${f(r.p)}</span><span class="vS">Secondary ${f(r.s)}</span><span class="vT">Tertiary ${f(r.t)}</span>` + (other > 1.5 ? `<span class="vO">Other (taxes) ${f(other)}</span>` : "") + `</div>`;
+  return `<b>${cur}</b> &nbsp; <span class="vP">Primary ${f(r.p)}</span><span class="vS">Secondary ${f(r.s)}</span><span class="vT">Tertiary ${f(r.t)}</span>` + (other > 1.5 ? `<span class="vO">Other (taxes) ${f(other)}</span>` : "");
 }
+let blocks = [];
 function block(title, rows, cur){
-  if (!rows.length) return `<div class="row">${title}</div><div class="nodata">The World Bank has no numbers for this country.</div>`;
-  return `<div class="row">${title} <small>(${rows[0].y}–${rows[rows.length-1].y})</small></div>` + chart(rows, cur) + values(rows, cur);
+  if (!rows.length) return `<div class="row">${title}</div><div class="nodata">We have no numbers for this country.</div>`;
+  const i = blocks.push(rows) - 1;
+  return `<div class="blk" data-i="${i}"><div class="row">${title} <small>(${rows[0].y}–${rows[rows.length-1].y})</small></div>` + chart(rows, cur) + `<div class="vals">${valuesHTML(rows, cur)}</div></div>`;
 }
 const DEF = {P:"taking things from nature", S:"making things", T:"giving a service"};
 function companies(iso){
   const c = CO[iso]; if (!c) return "";
   return `<div class="co"><h4>Companies you could work for</h4>` + ["P","S","T"].map(k => `<p class="v${k}"><b>${LAB[k]}</b> <small style="font-weight:400;color:var(--muted)">(${DEF[k]})</small></p><ul style="margin:0 0 6px 20px;padding:0;color:var(--ink);font-size:16px">` + c[k].map(([n,a]) => `<li><b>${n}</b> — ${a}</li>`).join("") + `</ul>`).join("") + `</div>`;
 }
-function render(){
+
+// build the charts once (when the country changes) ...
+function build(){
   const a = $("selA").value, b = $("selB").value, cur = +$("rngY").value;
-  $("yl").textContent = cur;
-  history.replaceState(null, "", `?a=${a}&b=${b}&y=${cur}`);
+  blocks = [];
   const list = [[a,"A"]]; if (b) list.push([b,"B"]);
   $("out").innerHTML = list.map(([iso,who]) =>
     `<div class="panel"><h3><span class="tag${who}">${who}</span>${NAME[iso]}</h3>` +
     block("Share of the economy (the money)", rowsFor(iso,"gdp"), cur) + block("Share of jobs (the workers)", rowsFor(iso,"jobs"), cur) + companies(iso) + `</div>`).join("");
+  setYear(cur);
 }
-["selA","selB"].forEach(id => $(id).addEventListener("change", render));
-$("rngY").addEventListener("input", render);
+// ... and when the year changes, only move the marker and swap the numbers (nothing else moves)
+function setYear(cur){
+  $("yl").textContent = cur;
+  history.replaceState(null, "", `?a=${$("selA").value}&b=${$("selB").value}&y=${cur}`);
+  document.querySelectorAll("#out .blk").forEach(el => {
+    const rows = blocks[+el.dataset.i], mk = el.querySelector(".mk");
+    mk.setAttribute("x1", X(cur)); mk.setAttribute("x2", X(cur));
+    el.querySelector(".vals").innerHTML = valuesHTML(rows, cur);
+  });
+}
+["selA","selB"].forEach(id => $(id).addEventListener("change", build));
+$("rngY").addEventListener("input", () => setYear(+$("rngY").value));
 // move the year by pointing at a chart (mouse or finger)
 $("out").addEventListener("pointermove", e => {
   const svg = e.target.closest && e.target.closest("svg.chart"); if (!svg) return;
   const r = svg.getBoundingClientRect(); if (!r.width) return;
   const vx = (e.clientX - r.left) / r.width * W;
-  $("rngY").value = Math.max(Y0, Math.min(Y1, Math.round(Y0 + (vx - M.l) / (W - M.l - M.r) * (Y1 - Y0)))); render();
+  const yr = Math.max(Y0, Math.min(Y1, Math.round(Y0 + (vx - M.l) / (W - M.l - M.r) * (Y1 - Y0))));
+  if (yr !== +$("rngY").value){ $("rngY").value = yr; setYear(yr); }
 });
 let timer = null;
 $("play").addEventListener("click", () => {
   if (timer){ clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; return; }
   if (+$("rngY").value >= Y1) $("rngY").value = Y0;
   $("play").textContent = "❚❚ Stop";
-  timer = setInterval(() => { const v = +$("rngY").value + 1; $("rngY").value = v; render(); if (v >= Y1){ clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; } }, 350);
+  timer = setInterval(() => { const v = +$("rngY").value + 1; $("rngY").value = v; setYear(v); if (v >= Y1){ clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; } }, 350);
 });
-render();
+build();
 </script>
 </body>
 </html>
