@@ -1,0 +1,325 @@
+/* PISA 2025 microsite: site styles (B0, 2026-10-03). Builds on assets/tfk-tokens.css (copied from TfK-Brand-Kit, unchanged).
+   Rules: left-aligned, square grid, no border-radius, no box-shadow, no gradients. Yellow is never text.
+   Contrast ratios for every pair used here are recorded in DESIGN.md §3. */
+
+/* ---------- Fonts (self-hosted subsets; see assets/fonts/SOURCES.txt) ---------- */
+@font-face{font-family:"Oswald TfK";src:url("fonts/oswald-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:optional}
+@font-face{font-family:"Carlito";src:url("fonts/carlito-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:optional}
+@font-face{font-family:"Carlito";src:url("fonts/carlito-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:optional}
+@font-face{font-family:"Carlito";src:url("fonts/carlito-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:optional}
+
+/* ---------- Tokens ---------- */
+:root{
+  /* type (D-10 proposed: Oswald for headings in every language; Q3 DIN not used on the site) */
+  --f-head:"Oswald TfK","Arial Narrow","Roboto Condensed","Liberation Sans Narrow",sans-serif;
+  --f-body:"Carlito",Calibri,Arial,Helvetica,sans-serif;
+  /* grid: 8px unit, 24px square module */
+  --u:8px; --mod:24px; --gutter:16px; --measure:68ch; --wrap:1200px;
+  /* text & surfaces (ratios on white unless stated) */
+  --c-bg:#FFFFFF;
+  --c-text:#000000;          /* 21.0 */
+  --c-ink:#1A1A1A;           /* 17.4; body copy */
+  --c-muted:#4D4D4D;         /* 8.45; secondary text, captions, axis text */
+  --c-brand:#99AF82;         /* brand green surface; text on it = black (8.81) only */
+  --c-soft:#F2F2ED;          /* warm-grey-pale surface; black 18.7, muted 7.53 */
+  --c-mint:#C2D9CE;          /* mint surface; black 14.1, muted 5.68 */
+  --c-rule:#000000;          /* structural rules */
+  --c-hair:#BFBFBF;          /* decorative hairlines only (1.84, non-essential) */
+  --c-link:#000000;          /* links: black + underline (kit's #73875D = 3.92, fails body text) */
+  --c-link-hover:#4F6B3A;    /* green-deep, derived from brand hue: 6.01 on white */
+  --c-btn-hover:#4F6B3A;     /* white on it 6.01 (kit's #73875D gives 3.92, fails) */
+  --c-focus:#000000;
+  --c-accent:#FFC607;        /* yellow: squares and marker fills only, never text */
+  /* data (chart) tokens, validated in DESIGN.md §4 */
+  --data-kgz:#000000;        /* Kyrgyzstan: black + bold direct label */
+  --data-oecd:#8C8C8C;       /* OECD average: 3.36:1; reference line/mark, dashed */
+  --data-peer:#4F6B3A;       /* peers: 6.01:1; filled circle */
+  --data-highlight:#FFC607;  /* fill only, always with 1px #000 outline */
+  --data-highlight-edge:#000000;
+  --data-nonpisa:#6C696A;    /* non-PISA: border/stroke 5.43:1 + hatch + «не PISA» badge */
+  --data-nonpisa-fill:url("patterns/hatch-nonpisa.svg");
+  --data-se:#4D4D4D;         /* SE whiskers: 8.45:1 */
+  --data-grid:#E6E3DE;       /* gridlines: recessive, non-essential */
+  --data-axis:#808080;       /* axis baseline */
+  --data-axis-text:#4D4D4D;  /* tick and axis labels */
+}
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box;border-radius:0;box-shadow:none}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font-family:var(--f-body);font-size:18px;line-height:1.55;text-align:left;
+  font-variant-numeric:lining-nums}
+img,svg{max-width:100%;height:auto;display:block}
+p,ul,ol,dl,table,figure,blockquote{margin:0 0 var(--mod)}
+a{color:var(--c-link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{color:var(--c-link-hover);text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.on-brand :focus-visible{outline-color:#000}
+.skip{position:absolute;left:var(--gutter);top:-100px;background:#000;color:#fff;padding:var(--u) calc(var(--u)*2);z-index:10}
+.skip:focus{top:var(--u)}
+.wrap{max-width:var(--wrap);margin:0;padding-inline:var(--gutter)}
+@media (min-width:768px){:root{--gutter:40px}}
+.prose{max-width:var(--measure)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums lining-nums}
+
+/* ---------- Headings (uppercase, left, Oswald 500) ---------- */
+h1,h2,h3,.h-display{font-family:var(--f-head);font-weight:500;text-transform:uppercase;color:var(--c-text);
+  letter-spacing:.01em;margin:0 0 calc(var(--u)*2);overflow-wrap:break-word;hyphens:manual}
+.h-display{font-size:clamp(40px,11vw,128px);line-height:.98}
+h1{font-size:clamp(36px,8vw,88px);line-height:1}
+h2{font-size:clamp(28px,5vw,48px);line-height:1.05}
+h3{font-size:clamp(20px,2.6vw,26px);line-height:1.15}
+.kicker{font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:15px;color:var(--c-muted);margin:0 0 var(--u)}
+
+/* ---------- D-11: work-in-progress band (top of every page) ---------- */
+.wip{background:var(--c-soft);border-bottom:1px solid var(--c-rule);font-size:15px;line-height:1.4}
+.wip .wrap{display:flex;flex-wrap:wrap;gap:var(--u) calc(var(--u)*3);align-items:baseline;padding-block:var(--u)}
+.wip__mark{display:inline-block;width:12px;height:12px;background:var(--c-accent);outline:1px solid #000;margin-right:var(--u);vertical-align:-1px}
+.wip p{margin:0}
+
+/* ---------- Hero band ---------- */
+.hero{background:var(--c-brand);color:var(--c-text);position:relative;overflow:hidden}
+.hero .wrap{padding-block:calc(var(--mod)*2) calc(var(--mod)*3)}
+.hero__logo{width:200px;margin-bottom:calc(var(--mod)*2)}
+.hero h1,.hero .h-display{color:var(--c-text);max-width:14ch}
+.hero__lead{font-size:clamp(18px,2.2vw,22px);max-width:46ch;color:var(--c-text)}
+.squares{position:absolute;right:0;top:0;display:grid;grid-template-columns:repeat(4,var(--mod));grid-auto-rows:var(--mod)}
+.squares i{background:var(--c-accent)} .squares i.o{background:transparent}
+@media (max-width:599px){.squares{grid-template-columns:repeat(3,16px);grid-auto-rows:16px}}
+
+/* ---------- Section header ---------- */
+.section{padding-block:calc(var(--mod)*3) calc(var(--mod)*2)}
+.section__head{border-top:2px solid var(--c-rule);padding-top:calc(var(--u)*2);margin-bottom:calc(var(--mod)*1.5)}
+.section__head .kicker span{color:var(--c-text)}
+
+/* ---------- Number row ---------- */
+.numrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--c-rule);margin:0 0 var(--mod);padding:0;list-style:none}
+.numrow li{padding:calc(var(--u)*2) calc(var(--u)*2) calc(var(--u)*2) 0;border-bottom:1px solid var(--c-hair)}
+.numrow__v{font-family:var(--f-head);font-weight:500;font-size:clamp(40px,7vw,72px);line-height:1;color:var(--c-text);display:block;font-variant-numeric:tabular-nums lining-nums}
+.numrow__l{font-size:16px;color:var(--c-ink);display:block;margin-top:var(--u)}
+.numrow__se{font-size:14px;color:var(--c-muted);display:block}
+
+/* ---------- Sample line (D-09 A: coverage once, here) ---------- */
+.sample{font-size:15px;line-height:1.45;color:var(--c-ink);border-left:4px solid var(--c-rule);padding-left:calc(var(--u)*1.5);max-width:var(--measure)}
+.sample b{font-weight:700}
+
+/* ---------- Quote: English original + translation ---------- */
+.quote{border-left:4px solid var(--c-brand);padding-left:calc(var(--u)*2);max-width:var(--measure);margin-inline:0}
+.quote__orig{font-style:italic;margin:0 0 var(--u)}
+.quote__tr{margin:0 0 var(--u)}
+.quote__tr::before{content:attr(data-label);display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--c-muted)}
+.quote cite{display:block;font-style:normal;font-size:14px;color:var(--c-muted)}
+
+/* ---------- Badge ---------- */
+.badge{display:inline-block;font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.05em;font-size:14px;line-height:1;
+  padding:5px 8px 4px;border:1px solid #000;background:#fff;color:#000;vertical-align:middle}
+
+/* ---------- Non-PISA card (rule 3: visible label + distinct treatment every time) ---------- */
+.nonpisa{border:2px solid var(--data-nonpisa);background:#fff;display:grid;grid-template-columns:16px 1fr;max-width:860px;margin-bottom:var(--mod)}
+.nonpisa::before{content:"";background:var(--data-nonpisa-fill) repeat;border-right:2px solid var(--data-nonpisa)}
+.nonpisa__body{padding:calc(var(--u)*2) calc(var(--u)*2.5)}
+.nonpisa__head{display:flex;flex-wrap:wrap;gap:var(--u) calc(var(--u)*1.5);align-items:center;margin-bottom:var(--u)}
+.nonpisa__head h3{margin:0}
+.nonpisa__src{font-size:14px;color:var(--c-muted);margin:0}
+
+/* ---------- Regional-estimate note (D-01) ---------- */
+.regional{background:var(--c-soft);border-top:2px solid var(--c-rule);padding:calc(var(--u)*1.5) calc(var(--u)*2);font-size:15px;max-width:var(--measure);margin-bottom:var(--mod)}
+.regional p{margin:0 0 var(--u)} .regional p:last-child{margin:0}
+
+/* ---------- Years-behind unit (rule 5: caution in the same visual unit, cannot be hidden) ---------- */
+.yrs{border:2px solid var(--c-rule);max-width:760px;margin-bottom:var(--mod)}
+.yrs__main{padding:calc(var(--u)*2) calc(var(--u)*2.5)}
+.yrs__caution{background:var(--c-soft);border-top:1px solid var(--c-rule);padding:calc(var(--u)*1.5) calc(var(--u)*2.5);font-size:15px}
+.yrs__caution p{margin:0 0 var(--u)} .yrs__caution p:last-child{margin:0}
+.yrs__caution [lang="en"]{font-style:italic}
+
+/* ---------- Chart frame: title, takeaway, chart, source, table ---------- */
+.chart{margin:0 0 calc(var(--mod)*2);max-width:960px}
+.chart__title{margin-bottom:var(--u)}
+.chart__take{font-size:18px;max-width:var(--measure);margin-bottom:calc(var(--u)*2)}
+.chart__plot{border-top:1px solid var(--c-rule);padding-top:calc(var(--u)*2)}
+.chart__src{font-size:14px;color:var(--c-muted);margin:var(--u) 0 calc(var(--u)*1.5)}
+.chart details{border-top:1px solid var(--c-hair);padding-top:var(--u)}
+.chart summary{cursor:pointer;font-weight:700;font-size:16px;padding-block:var(--u);width:max-content}
+.chart summary:focus-visible{outline-offset:4px}
+.toggle{display:flex;flex-wrap:wrap;gap:0;margin:0 0 calc(var(--u)*2);border:0;padding:0}
+.toggle legend{font-size:14px;color:var(--c-muted);margin-bottom:var(--u);padding:0}
+.toggle label{border:1px solid #000;margin:-1px 0 0 -1px;padding:8px 14px;font-size:16px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center}
+.toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.toggle input:checked+label{background:#000;color:#fff}
+.toggle input:focus-visible+label{outline:3px solid #000;outline-offset:2px;position:relative}
+
+/* Two drawings per chart: SVG text must never render below 13px. Wide viewBox 960, narrow viewBox 360 (labels above marks). */
+.plot-narrow{display:none}
+@media (max-width:599px){.plot-wide{display:none}.plot-narrow{display:block}}
+
+/* ---------- Tables (chart data, data page) ---------- */
+table{border-collapse:collapse;font-size:16px;width:100%;max-width:960px}
+caption{text-align:left;font-weight:700;padding-bottom:var(--u)}
+th,td{text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--c-hair);vertical-align:top}
+thead th{border-bottom:2px solid var(--c-rule);font-weight:700}
+td.n,th.n{font-variant-numeric:tabular-nums lining-nums;text-align:left}
+.table-scroll{overflow-x:auto;max-width:100%;position:relative}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-block;background:#000;color:#fff;font-family:var(--f-body);font-weight:700;padding:12px 22px;text-decoration:none;border:0;min-height:44px}
+.btn:hover{background:var(--c-btn-hover);color:#fff}
+.btn--yellow{background:var(--c-accent);color:#000}
+.btn--yellow:hover{background:#000;color:#fff}
+
+/* ---------- Footer (D-11 items: error invitation, AI acknowledgement) ---------- */
+.footer-band{height:calc(var(--mod)*3);background:#fff url("patterns/emblem-watermark.svg") repeat;border-top:2px solid var(--c-rule)}
+.footer{background:var(--c-soft);padding-block:calc(var(--mod)*2);font-size:16px}
+.footer__logo{width:180px;margin-bottom:calc(var(--mod))}
+.footer__grid{display:grid;gap:var(--mod);grid-template-columns:1fr}
+@media (min-width:768px){.footer__grid{grid-template-columns:repeat(3,1fr)}}
+.footer h2{font-size:20px}
+.footer p{max-width:var(--measure)}
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ---------- Print / forced colours ---------- */
+@media (forced-colors:active){.nonpisa,.yrs,.badge{border-color:CanvasText}.squares{display:none}}
+@media print{.wip{border:1px solid #000}.hero{background:#fff}.squares,.footer-band{display:none}}
+
+/* ---------- B5 charts (2026-10-04): SVG sizing, notes, no-JS toggles, checklist ---------- */
+.plot-wide,.plot-narrow{width:100%;height:auto}
+.plot-wide{max-width:720px}
+.plot-narrow{max-width:420px}
+.view+.view{margin-top:calc(var(--u)*3)}
+.view__cap{font-weight:700;font-size:16px;margin:0 0 var(--u)}
+.chart__note{font-size:14px;color:var(--c-muted);margin:var(--u) 0 0;max-width:var(--measure)}
+.chart table+table{margin-top:calc(var(--u)*3)}
+.chart tbody th[scope="rowgroup"]{background:var(--c-soft);font-weight:700;border-bottom:1px solid var(--c-hair)}
+.chart tbody th[scope="row"]{font-weight:400}
+.checklist{list-style:none;margin:0;padding:0;max-width:760px}
+.checklist li{border-top:1px solid var(--c-hair);padding:var(--u) 0 calc(var(--u)*1.5)}
+.checklist__h{display:flex;flex-wrap:wrap;gap:var(--u) calc(var(--u)*1.5);align-items:center;margin:0 0 4px;font-weight:700}
+.checklist li p:last-child{margin:0;max-width:var(--measure)}
+/* Toggles work without JavaScript: radio state selects one view. Browsers without :has() show every view in turn (nothing is lost). */
+@supports selector(:has(*)){
+  .chart:has(.toggle) .view{display:none}
+  .chart:has(input[data-d="science"]:checked) .view[data-d="science"]:not([data-m]){display:block}
+  .chart:has(input[data-d="science"]:checked):has(input[data-m="mean"]:checked) .view[data-d="science"][data-m="mean"]{display:block}
+  .chart:has(input[data-d="science"]:checked):has(input[data-m="below"]:checked) .view[data-d="science"][data-m="below"]{display:block}
+  .chart:has(input[data-d="reading"]:checked) .view[data-d="reading"]:not([data-m]){display:block}
+  .chart:has(input[data-d="reading"]:checked):has(input[data-m="mean"]:checked) .view[data-d="reading"][data-m="mean"]{display:block}
+  .chart:has(input[data-d="reading"]:checked):has(input[data-m="below"]:checked) .view[data-d="reading"][data-m="below"]{display:block}
+  .chart:has(input[data-d="maths"]:checked) .view[data-d="maths"]:not([data-m]){display:block}
+  .chart:has(input[data-d="maths"]:checked):has(input[data-m="mean"]:checked) .view[data-d="maths"][data-m="mean"]{display:block}
+  .chart:has(input[data-d="maths"]:checked):has(input[data-m="below"]:checked) .view[data-d="maths"][data-m="below"]{display:block}
+  .chart:has(input[data-d="cps"]:checked) .view[data-d="cps"]:not([data-m]){display:block}
+  .chart:has(input[data-d="cps"]:checked):has(input[data-m="mean"]:checked) .view[data-d="cps"][data-m="mean"]{display:block}
+  .chart:has(input[data-d="cps"]:checked):has(input[data-m="below"]:checked) .view[data-d="cps"][data-m="below"]{display:block}
+}
+@media print{.chart:has(.toggle) .view{display:block!important}.toggle{display:none}}
+
+/* B5: containers that hold a chart must not grow with it (grid min-content) and must leave the chart its full width */
+.nonpisa{grid-template-columns:16px minmax(0,1fr)}
+.nonpisa__body{min-width:0}
+.regional:has(>.chart){max-width:960px;padding-inline:0}
+.regional:has(>.chart)>p{padding-inline:calc(var(--u)*2)}
+
+
+/* ---------- F2: source lines, computed caption and (?) pop-up (D-18, D-20), keyboard-focus tooltips ---------- */
+.src{position:relative;font-size:14px;color:var(--c-muted);margin:var(--u) 0 calc(var(--u)*1.5);max-width:var(--measure)}
+.chart__src.src{max-width:none}
+.nonpisa__src.src,.regional__src.src{margin:0;max-width:none}
+.src__item{display:inline}
+.src__item+.src__item{margin-left:.25em}
+.src a{color:var(--c-muted)}
+.pop{display:inline-block;vertical-align:middle;position:static}
+.chart details.pop{border-top:0;padding-top:0}
+.pop>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin-left:.3em;
+  border:2px solid #000;background:#fff;color:#000;font-family:var(--f-head);font-weight:500;font-size:15px;line-height:1;vertical-align:middle}
+.pop>summary::-webkit-details-marker{display:none}
+.pop>summary:hover{background:#000;color:#fff}
+.pop>summary:focus-visible{outline:3px solid var(--c-focus);outline-offset:3px}
+.pop[open]>summary{background:#000;color:#fff}
+.pop__body{position:absolute;left:0;right:0;max-width:40rem;top:100%;z-index:20;margin-top:6px;padding:calc(var(--u)*1.5) calc(var(--u)*2);background:#fff;color:#1A1A1A;
+  border:2px solid #000;font-size:15px;line-height:1.45;text-align:left}
+.pop__body p{margin:0}
+.datatable .src__item--computed{white-space:normal}
+.datatable .pop__body{position:static;margin-top:6px;max-width:34rem}
+.datatable .pop{display:block}
+.datatable td .pop>summary{margin-left:0}
+.regional:has(>.chart)>.regional__src{padding-inline:calc(var(--u)*2)}
+.badge--computed{display:inline-block;font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.05em;font-size:14px;line-height:1;padding:calc(var(--u)*.6) var(--u);border:2px solid #000;background:#fff;color:#000}
+/* SVG data marks: hover and keyboard focus show the same value bubble (the native <title> tooltip is not used: it is hover-only) */
+.mk{outline:none}
+.mk:focus-visible{outline:3px solid var(--c-focus);outline-offset:3px}
+.mk>.tip{visibility:hidden;pointer-events:none}
+.mk:hover>.tip,.mk:focus>.tip{visibility:visible}
+@media (forced-colors:active){.pop>summary,.pop__body{border-color:CanvasText}}
+
+/* ---------- M2 regional map (2026-10-04): chart-map. No JavaScript: radios + :has() pick the domain, :target opens a panel. ---------- */
+.mapsvg{display:block;width:100%;height:auto;max-width:720px}
+.mapsvg .map-n{display:none}
+@media (max-width:599px){.mapsvg .map-w{display:none}.mapsvg .map-n{display:inline}}
+.mapz{--f:var(--f-science)}
+.mapz .mz-f{fill:var(--f)}
+.mapz:hover .mz-f,.mapz:focus .mz-f{stroke:#000;stroke-width:3}
+.mapz:focus-visible{outline:3px solid var(--c-focus,#000);outline-offset:2px}
+.chart--map .dv,.chart .map .dv,.chart .mapkey .dv{display:none}
+.chart .dv[data-d="science"]{display:inline}
+@supports selector(:has(*)){
+  .chart:has(input[data-d="reading"]:checked) .mapz{--f:var(--f-reading)}
+  .chart:has(input[data-d="maths"]:checked) .mapz{--f:var(--f-maths)}
+  .chart:has(input[data-d="cps"]:checked) .mapz{--f:var(--f-cps)}
+  .chart:has(input[data-d]:checked:not([data-d="science"])) .dv[data-d="science"]{display:none}
+  .chart:has(input[data-d="reading"]:checked) .dv[data-d="reading"],
+  .chart:has(input[data-d="maths"]:checked) .dv[data-d="maths"],
+  .chart:has(input[data-d="cps"]:checked) .dv[data-d="cps"]{display:inline}
+}
+.maplegend{margin:calc(var(--u)*2) 0 var(--u)}
+.maplegend__h{font-size:15px;margin:0 0 var(--u);color:var(--c-muted,#4D4D4D)}
+.maplegend__ramp{display:flex;flex-wrap:wrap;gap:6px 16px;list-style:none;margin:0;padding:0;font-size:15px}
+.maplegend__ramp li{display:flex;align-items:center;gap:6px}
+.mapkey__sw{display:inline-block;width:22px;height:16px;border:1px solid #000;flex:none;vertical-align:-3px}
+.mapkey__sw--hatch{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4' stroke='%23FFFFFF' stroke-width='2'/%3E%3C/svg%3E")}
+.mapkey__circ{display:inline-block;width:16px;height:16px;border:1.5px solid #000;border-radius:50%!important;flex:none}
+.mapkey{list-style:none;margin:calc(var(--u)*2) 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0}
+.mapkey a{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 8px;border:1px solid #000;margin:-1px 0 0 -1px;text-decoration:none;color:#000}
+.mapkey a:hover{background:var(--c-warm-pale,#F2F2ED)}
+.mapkey__name{font-weight:700}
+.mapkey__tag{font-style:italic;font-size:14px}
+.mapkey .dv[data-d]{margin-left:auto;font-weight:700}
+.mapzones{margin:calc(var(--u)*2) 0}
+.mapzones__hint{font-size:15px;color:var(--c-muted,#4D4D4D)}
+.mapzone{display:none;border-top:2px solid #000;padding:calc(var(--u)*2) 0;scroll-margin-top:24px}
+.mapzone:target{display:block}
+.mapzone:focus{outline:none}
+.mapzones:has(.mapzone:target) .mapzones__hint{display:none}
+.mapzone h4{font-size:22px;margin:0 0 var(--u)}
+.mapzone h5{font-size:17px;margin:calc(var(--u)*2) 0 var(--u)}
+.mapzone table{font-size:15px}
+.mapzone .sig{font-size:13px}
+.mapzone .sig--no{font-style:italic}
+.mapzone__src{font-size:14px;margin:4px 0 var(--u)}
+@media print{.mapzone{display:block}.mapzones__hint{display:none}}
+@media (forced-colors:active){.mapz .mz-f{stroke:CanvasText}}
+@media (min-width:600px){.mapz>.tip{display:none}}   /* names are printed on the wide map; the bubble names the zone on narrow screens */
+
+/* ---------- B7: assembly, accessibility ---------- */
+.chart__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+/* skip link before each chart: hidden until it has keyboard focus, then a 44 px target */
+.skip-chart:not(:focus){position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.skip-chart:focus{display:inline-block;margin:8px 0;padding:10px 16px;min-height:44px;box-sizing:border-box;background:#000;color:#fff;font-weight:700;text-decoration:underline}
+
+/* B7 SVG classes (charts/_lib.js svgClasses): stroke styles that were repeated as attributes on every mark */
+.wk{stroke:#4D4D4D;stroke-width:1.5}.ax{stroke:#808080;stroke-width:1}.gr{stroke:#E6E3DE;stroke-width:1}.tb{stroke:#000;stroke-width:1.5}
+.ring{stroke:#fff;stroke-width:2}.halo{stroke:#fff;stroke-width:4;stroke-linejoin:round;paint-order:stroke}
+
+/* compact header of the data and methods pages (page title is the h1) */
+.hero--compact .wrap{padding-block:calc(var(--mod)*1.5)}
+.hero--compact .hero__logo{width:140px;height:auto;margin:0;display:block}
+.hero__home{display:inline-block;min-height:44px}
+.prose h2{font-size:clamp(22px,3.2vw,30px);line-height:1.15;margin-top:calc(var(--u)*5)}
+.section__head h1{font-size:clamp(32px,6vw,56px)}
+
+/* B9b F4: text on the brand green (#99AF82) is black (8.8:1); only this colour changes, chart palette untouched */
+.hero .numrow__se,.hero .chart__src,.hero .chart__src a,.hero .src__item,.hero .sample__src,.hero .sample__src a,.hero .chart__take{color:#000000}
+/* B9b F1: approved paragraph after chart G */
+.chart-after{margin:calc(var(--u)*2) 0 calc(var(--mod))}
