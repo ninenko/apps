@@ -1,0 +1,8 @@
+Font sources (google/fonts main branch), sha256 at download:
+oswald	https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/Oswald%5Bwght%5D.ttf	5b38c246e255a12f5712d640d56bcced0472466fc68983d2d0410ec0457c2817
+oswald-ofl	https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/OFL.txt	0fd731a904b729a4e02eaf5e8ebd06783edd9abe400e8882760160230675b652
+carlito-r	https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Regular.ttf	f6418f708baede9789daef5d458c0f53d2a888af9820e8062934e504fedc6595
+carlito-b	https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Bold.ttf	bb5d20f79b82599ec72983597437373a80f2d2085fa91fc144fd74e876a594db
+carlito-i	https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Italic.ttf	0b019225e58d702bfedcbd35c21696769f8ee115cb6343f84c2f240312450d1c
+carlito-ofl	https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/OFL.txt	58402f82a7c332a700294988fe7554fbb0a63a8d27ccc1ee3bbc640311990a00
+Subset unicodes: U+0020-007E,U+00A0-00FF,U+0401,U+0410-044F,U+0451,U+04A2-04A3,U+04AE-04AF,U+04E8-04E9,U+2009,U+2010-2014,U+2018-201E,U+2026,U+202F,U+2030,U+2116,U+2192,U+2212,U+2248,U+2264-2265
