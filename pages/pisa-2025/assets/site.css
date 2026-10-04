@@ -323,3 +323,36 @@ td.n,th.n{font-variant-numeric:tabular-nums lining-nums;text-align:left}
 .hero .numrow__se,.hero .chart__src,.hero .chart__src a,.hero .src__item,.hero .sample__src,.hero .sample__src a,.hero .chart__take{color:#000000}
 /* B9b F1: approved paragraph after chart G */
 .chart-after{margin:calc(var(--u)*2) 0 calc(var(--mod))}
+
+/* ---------- V2a (D-30, 2026-10-04): collapsed source lines, explained terms, jump links, sample note ---------- */
+/* item 1: every source line is a <details>, closed by default; the summary keeps the computed marker visible */
+details.srcbox{display:block;max-width:var(--measure)}
+.chart details.srcbox{border-top:0;padding-top:0}
+.chart__src.srcbox,.regional__src.srcbox,.nonpisa__src.srcbox{max-width:none}
+details.srcbox>summary{cursor:pointer;font-weight:400;font-size:14px;color:var(--c-muted);padding-block:4px;width:auto;min-height:24px;list-style-position:inside}
+.chart details.srcbox>summary{font-weight:400;font-size:14px;width:auto}
+details.srcbox>summary:hover{color:var(--c-ink)}
+details.srcbox>summary:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.srcbox__mark{color:var(--c-ink)}
+.srcbox__body{padding:4px 0 2px}
+.hero details.srcbox>summary,.hero .srcbox__mark,.hero .srcbox__body,.hero .srcbox__body a{color:#000000}
+/* items 2 and 6: an explained term; the tooltip opens on hover, tap (focus) and keyboard focus; works without JavaScript */
+.term{position:relative;display:inline}
+.term__t{border-bottom:1px dotted currentColor;cursor:help}
+.term__t:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.term__tip{display:none;position:absolute;left:0;top:100%;z-index:30;margin-top:6px;width:min(26rem,calc(100vw - 32px));padding:calc(var(--u)*1.25) calc(var(--u)*1.5);
+  background:#fff;color:#1A1A1A;border:2px solid #000;font-size:15px;line-height:1.45;font-weight:400;text-align:left;white-space:normal}
+.term:hover>.term__tip,.term:focus-within>.term__tip{display:block}
+@media (max-width:599px){.term__tip{position:static;width:auto;margin:6px 0}}   /* narrow screens: the explanation opens in the text flow, under the term */
+@media (forced-colors:active){.term__tip{border-color:CanvasText}}
+/* item 5: jump links at the top of the gaps section */
+.jumps{margin:0 0 calc(var(--u)*2)}
+.jumps ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--u)}
+.jumps a{display:inline-flex;align-items:center;min-height:44px;padding:6px 14px;border:1px solid #000;color:#000;text-decoration:none;font-size:16px}
+.jumps a:hover{background:#000;color:#fff}
+.jumps a:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.chart{scroll-margin-top:calc(var(--u)*2)}
+/* item 2: sample line block (line, coverage note, collapsed source) */
+.sample p{margin:0 0 4px}
+.sample__note{font-size:14px;color:var(--c-ink)}
+.sample details.srcbox{margin:0}

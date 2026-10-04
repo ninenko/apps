@@ -5,6 +5,9 @@
   var openPops = function () { return Array.prototype.slice.call(document.querySelectorAll('details.pop[open]')); };
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' && e.key !== 'Esc') return;
+    // V2a: Esc also dismisses an explained-term tooltip (it is shown while its term has focus)
+    var ae = document.activeElement;
+    if (ae && ae.classList && ae.classList.contains('term__t')) { ae.blur(); return; }
     var o = openPops();
     if (!o.length) return;
     var active = document.activeElement && document.activeElement.closest ? document.activeElement.closest('details.pop') : null;
