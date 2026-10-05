@@ -609,3 +609,11 @@ details.orig>summary:focus-visible{outline:3px solid var(--c-focus);outline-offs
 .section__srcnote{font-size:15px;margin:0 0 var(--mod)}
 /* V8d: home intro as wide as the heading (14ch of the 128px heading = 7.48em) */
 .hero__lead{max-width:min(100%,calc(clamp(40px,11vw,128px)*7.48))}
+
+/* ---------- V9a (D-49): items page — every text block uses the full width of the content column (same as the answer tables); text after the table ---------- */
+.section[data-tag="items"] .prose,.section[data-tag="items"] .section__take,.section[data-tag="items"] .section__intro,.section[data-tag="items"] .itemsnote,
+.section[data-tag="items"] .section__srcnote,.section[data-tag="items"] .itemtable__take,.section[data-tag="items"] .itemtable .chart__note,
+.section[data-tag="items"] .itemtable__src,.section[data-tag="items"] .src,.section[data-tag="items"] .sample,.section[data-tag="items"] .quote,
+.section[data-tag="items"] .orig__body,.section[data-tag="items"] .prose p,.section[data-tag="items"] .prose li,.section[data-tag="items"] .prose blockquote{max-width:none}
+.itemtable__after{margin:0 0 var(--u)}
+.itemtable__after p:last-child{margin-bottom:var(--u)}
