@@ -356,3 +356,29 @@ details.srcbox>summary:focus-visible{outline:3px solid var(--c-focus);outline-of
 .sample p{margin:0 0 4px}
 .sample__note{font-size:14px;color:var(--c-ink)}
 .sample details.srcbox{margin:0}
+
+/* ---------- V3a (D-32, 2026-10-05): centred page, full-width charts, intro «Главные разрывы», no gap under collapsed tables ---------- */
+/* item 4: the page is centred; charts, map, tables, number row and the intro use the whole wrap; running text about 75ch */
+:root{--measure:75ch}
+.wrap{margin-inline:auto}
+.chart,table,.regional:has(>.chart){max-width:none}
+.plot-wide,.mapsvg{max-width:none}
+/* item 2: intro block under the hero; each line opens with an underlined link to its chart in the gaps section */
+.section[data-tag="intro"]{padding-block:calc(var(--mod)*2) 0}
+.keygaps{margin:0 0 var(--mod)}
+.keygaps__list{list-style:none;margin:0 0 var(--mod);padding:0;display:grid;gap:0;grid-template-columns:1fr}
+@media (min-width:1024px){.keygaps__list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:calc(var(--mod)*2)}}
+.keygaps__list li{border-top:1px solid var(--c-rule);padding:calc(var(--u)*1.5) 0 calc(var(--u)*2);font-size:18px;line-height:1.5}
+.keygaps__link{font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.02em;font-size:20px;color:var(--c-text);
+  text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em;margin-right:.25em}
+.keygaps__link:hover{color:var(--c-link-hover)}
+.keygaps__link:focus-visible{outline:3px solid var(--c-focus);outline-offset:3px}
+.keygaps__note{font-size:15px;color:var(--c-ink);max-width:var(--measure);margin:0}
+/* the jump lands with the chart heading in view (no sticky header on this site, so a small margin is enough) */
+.chart{scroll-margin-top:calc(var(--mod)*1)}
+/* item 5: a section that ends with a chart (closed data table) no longer adds chart margin + section padding + next section padding */
+.section>:last-child{margin-bottom:0}
+.section:has(>figure.chart:last-child,>.regional:last-child,>.nonpisa:last-child){padding-bottom:0}
+.section:has(>figure.chart:last-child,>.regional:last-child,>.nonpisa:last-child)+.section{padding-top:calc(var(--mod)*2)}
+.regional>.chart:last-child,.nonpisa__body>.chart:last-child{margin-bottom:0}
+.hero .wrap>.chart:last-child{margin-bottom:0}
