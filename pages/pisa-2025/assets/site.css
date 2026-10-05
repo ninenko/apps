@@ -3,7 +3,7 @@
    Contrast ratios for every pair used here are recorded in DESIGN.md §3. */
 
 /* ---------- Fonts (self-hosted subsets; see assets/fonts/SOURCES.txt) ---------- */
-@font-face{font-family:"Oswald TfK";src:url("fonts/oswald-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:optional}
+@font-face{font-family:"Oswald TfK";src:url("fonts/oswald-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"Carlito";src:url("fonts/carlito-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:optional}
 @font-face{font-family:"Carlito";src:url("fonts/carlito-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:optional}
 @font-face{font-family:"Carlito";src:url("fonts/carlito-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:optional}
@@ -521,3 +521,47 @@ details.srcbox--section{margin-top:calc(var(--u)*2)}
 .covblock blockquote{border-left:3px solid var(--c-rule);padding-left:calc(var(--u)*2);margin-left:0}
 .covblock blockquote p{margin-bottom:var(--u)}
 .covblock blockquote cite{font-size:14px;color:var(--c-muted)}
+
+/* ---------- V6a (D-45 items 1-2, 2026-10-05): centred column, wider gutters, tabs at the top of every page ----------
+   One column, centred; headings, text, sample lines, charts and tables share its left edge. Running text keeps a ~70ch measure and
+   stays left-aligned (no justify). Full-width bands (tabs, WIP, hero, footer) keep their background edge to edge, content in the column. */
+:root{--gutter:clamp(16px,4vw,40px);--measure:70ch}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter);box-sizing:border-box}
+main .section,main .prose,main p{text-align:left}
+/* tabs: first thing on every page; the row wraps inside itself on narrow screens (never pushes the page sideways); no JavaScript */
+.tabs{border-bottom:1px solid var(--c-rule);background:#fff}
+.tabs__row{display:flex;flex-wrap:wrap;gap:0 calc(var(--u)*3);min-width:0}
+.tabs a{white-space:nowrap}
+@media (max-width:599px){.tabs__row{gap:0 calc(var(--u)*2)}.tabs a{font-size:14px;letter-spacing:.03em;min-height:40px}}
+/* page heading of the results and gaps pages, in the compact green band */
+.pagehead__title{margin:calc(var(--u)*2) 0 0;color:var(--c-text);max-width:none}
+
+/* ---------- V6c (D-45 items 5, 7, 8, 2026-10-05): visible explanations ----------
+   «Что значит уровень 2» under chart B and «Что такое «достаток семьи»» under chart I are open text blocks (no click needed);
+   OECD quotations sit in a ruled blockquote, English first, our translation under it, page in the cite line.
+   A term marked [[term:key?|…]] shows a small «(?)» after its words; the explanation opens on hover, tap and keyboard focus. */
+.level2{margin-top:calc(var(--mod)*1.25);padding-top:var(--mod);border-top:1px solid var(--c-hair);max-width:var(--measure)}
+.level2__title{font-size:20px;line-height:1.2;margin:0 0 var(--u)}
+.level2 .chart__more-body>p,.level2 .chart__more-body>ul{max-width:var(--measure)}
+.level2 blockquote,.chart-after blockquote,.prose blockquote{border-left:3px solid var(--c-rule);padding-left:calc(var(--u)*2);margin-left:0;max-width:var(--measure)}
+.level2 blockquote p,.chart-after blockquote p,.prose blockquote p{margin-bottom:var(--u)}
+.level2 blockquote ul,.chart-after blockquote ul,.prose blockquote ul{padding-left:1.2em;margin-bottom:var(--u)}
+.level2 blockquote cite,.chart-after blockquote cite,.prose blockquote cite{font-size:14px;color:var(--c-muted)}
+.chart-after{margin-bottom:var(--mod)}
+.chart-after h3{margin-top:var(--mod)}
+.term__q{font-size:.8em;margin-left:.15em;color:var(--c-muted);white-space:nowrap}
+.term--q .term__t{border-bottom-style:dotted}
+
+/* ---------- V6d (D-45 fresh-eyes audit, 2026-10-05): CSS-only fixes. Screenshots and defect list: QA/V6d/. ----------
+   1) Oswald (headings, D-10) now font-display:swap (top of file): with "optional" a first visit often showed headings in a fallback face.
+   2) Temporary block «Предварительное сравнение» hangs into the gutter: its text and chart keep the column left edge (V6a one-edge rule).
+   3) Data-page tables: minimum widths so long source cells are not squeezed into narrow columns (the «Все цифры сайта» table was about 55 000 px tall at 360 and 768 px); the caption stays in view while the table scrolls sideways.
+   4) Hero headline: more air between the large heading and the lead on wide screens. */
+.tmpblock{padding-inline:12px;margin-inline:-14px}
+@media (min-width:768px){.tmpblock{padding-inline:20px;margin-inline:-22px}}
+.datasrc table{min-width:720px}
+.dataind table{min-width:1000px}
+.datatable table{min-width:1080px}
+.table-scroll caption{position:sticky;left:0;text-align:left;max-width:calc(100vw - 2*var(--gutter))}
+.hero .h-display{margin-bottom:clamp(16px,2.5vw,32px)}
+.table-scroll .pop__body{max-width:min(22rem,calc(100vw - 2*var(--gutter)))}   /* the (?) explanation inside a wide table never runs past the screen edge */
