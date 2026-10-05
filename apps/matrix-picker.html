@@ -683,6 +683,7 @@
       <div class="panel-title"><span class="icon">▸</span> INPUT NAMES</div>
       <textarea class="name-input" id="nameInput" placeholder="// Paste names here, one per line...&#10;// e.g.&#10;// Aigerim&#10;// Rohan&#10;// Dmitry"></textarea>
       <button class="btn btn-load" onclick="loadNames()">▸ LOAD NAMES</button>
+      <button class="btn btn-load btn-secondary" onclick="loadClass('g9')">▸ LOAD G9 BUSINESS (11)</button>
     </div>
 
     <!-- Active Pool -->
@@ -834,6 +835,23 @@ function loadNames() {
   currentName = null;
   chosenInline.classList.remove('active');
   nameInput.value = '';
+  renderPool();
+  renderLog();
+  updatePickBtn();
+}
+
+// --- Class presets ---
+const CLASSES = {
+  g9: ['Rimma', 'Evelina', 'Deniz', 'Dastan', 'Aidan', 'Amin', 'Dimash', 'Asad', 'Artur', 'Seytek', 'Temirlan']
+};
+
+function loadClass(key) {
+  const names = CLASSES[key];
+  if (!names) return;
+  pool = [...names];
+  picked = [];
+  currentName = null;
+  chosenInline.classList.remove('active');
   renderPool();
   renderLog();
   updatePickBtn();
