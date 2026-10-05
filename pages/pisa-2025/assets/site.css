@@ -382,3 +382,113 @@ details.srcbox>summary:focus-visible{outline:3px solid var(--c-focus);outline-of
 .section:has(>figure.chart:last-child,>.regional:last-child,>.nonpisa:last-child)+.section{padding-top:calc(var(--mod)*2)}
 .regional>.chart:last-child,.nonpisa__body>.chart:last-child{margin-bottom:0}
 .hero .wrap>.chart:last-child{margin-bottom:0}
+
+/* V4a (D-33 items 1-2): one «Источники» box per index section; data page tables */
+.srcnote{font-size:14px;color:var(--c-muted);margin:var(--u) 0 calc(var(--u)*1.5)}
+.srcnote a{color:var(--c-muted)}
+.hero .srcnote{color:#000000}
+details.srcbox--section{margin-top:calc(var(--u)*2)}
+.srclist{margin:4px 0 0;padding-left:1.1em;font-size:14px;color:var(--c-muted)}
+.srclist li{margin:2px 0}
+.srclist .src__item+.src__item{margin-left:0}
+.datasrc table,.dataind table{font-size:14px}
+.datasrc th[scope=row],.dataind th[scope=row]{font-weight:600;text-align:left;vertical-align:top}
+.datasrc td,.dataind td{vertical-align:top}
+.datasrc__group th{background:var(--c-tint,#f2f2f2);text-align:left;font-family:inherit}
+.datasrc__link a{overflow-wrap:anywhere;word-break:break-word}
+.dataind__vars{overflow-wrap:anywhere}
+.dataind .src__item--computed{white-space:normal;display:block;margin-top:4px}
+.dataind .pop__body{position:static;margin-top:6px;max-width:30rem}
+.dataind .pop{display:block}
+
+/* V4c (D-33 item 4): temporary block «Предварительное сравнение» after chart S; D-35 asterisk note; C-43 -> C-44 pair */
+.tmpblock{border:2px dashed #000;padding:calc(var(--u)*2) var(--gutter) calc(var(--u)*1);margin:calc(var(--mod)*1) 0 calc(var(--mod)*2);background:#fff}
+.tmpblock__head{display:flex;flex-wrap:wrap;gap:var(--u) calc(var(--u)*1.5);align-items:center;margin:0 0 var(--u)}
+.tmpblock__mark{margin:0;font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.05em;font-size:15px;line-height:1;
+  background:var(--c-accent);color:#000;border:1px solid #000;padding:calc(var(--u)*.6) var(--u)}
+.tmpblock__title{margin:0 0 var(--u)}
+.tmpblock__intro p{max-width:var(--measure)}
+.tmpblock .chart{margin-bottom:calc(var(--mod)*1.5)}
+.tmpblock .chart:last-child{margin-bottom:0}
+.sig{display:block;font-size:14px;color:var(--c-ink);white-space:normal}
+.sig--no{font-style:italic}
+.pop--star>summary{width:22px;height:22px;font-size:16px;margin-left:.2em}
+.chart td .pop .pop__body{position:static;margin-top:6px;min-width:12rem;max-width:22rem;white-space:normal;font-size:14px}
+.chart td .pop{display:inline}
+.pairbox{border-top:1px solid #000;margin:calc(var(--u)*2) 0 0;padding-top:var(--u);max-width:var(--measure)}
+.pairbox__h{font-weight:700;margin:0 0 var(--u)}
+.pairlist{list-style:none;margin:0 0 var(--u);padding:0}
+.pairlist li{padding:4px 0;border-bottom:1px solid var(--c-hair)}
+.pairlist .pair__arrow{padding-inline:.4em}
+.caveats{margin:var(--u) 0 0;padding-left:1.1em;font-size:15px;max-width:var(--measure)}
+.caveats li{margin:2px 0}
+@media (forced-colors:active){.tmpblock{border-color:CanvasText}.tmpblock__mark{border-color:CanvasText}}
+
+/* ---------- V4b (D-33 item 3, 2026-10-05): UI pass. Visual only: no numbers, copy or section order changed; D-10 fonts and palette;
+   no new colours (existing tokens only, ratios in DESIGN.md §3). ---------- */
+/* 1. site navigation: a real bar under the header, 44 px targets, current page marked (aria-current) */
+.sitenav{border-bottom:1px solid var(--c-rule);background:#fff}
+.sitenav .wrap{display:flex;flex-wrap:wrap;gap:0 calc(var(--u)*3)}
+.sitenav a{display:inline-flex;align-items:center;min-height:44px;font-family:var(--f-head);font-weight:500;text-transform:uppercase;letter-spacing:.05em;
+  font-size:15px;color:var(--c-text);text-decoration:none;border-bottom:3px solid transparent;padding-top:3px}
+.sitenav a:hover{color:var(--c-link-hover);border-bottom-color:var(--c-link-hover)}
+.sitenav a[aria-current="page"]{border-bottom-color:var(--c-text)}
+/* 2. sample line («Выборка») and the regional note no longer touch the heading or box that follows */
+.sample{margin:0 0 calc(var(--mod)*1.5)}
+.sample+.regional{margin-top:calc(var(--u)*-1)}
+.regional{max-width:var(--measure)}
+.regional+figure.chart,.regional+.regional{margin-top:calc(var(--mod)*1.5)}
+/* 3. the D-18 caption and its (?) stay on one line (the source note is now a <div>; data tables no longer force the button onto a new line) */
+.srcnote{display:block}
+.srcnote .src__item--computed,.dataind .src__item--computed,.datatable .src__item--computed{white-space:normal}
+.srcnote .pop,.datatable .pop,.dataind .pop{display:inline-block}
+.srcnote .pop[open],.datatable .pop[open],.dataind .pop[open]{display:inline}
+/* 4. charts: SVG labels keep close to body size. The wide drawing (viewBox 720) is capped at 880 px (labels about 21 px instead of 27);
+   titles, takeaway, toggles, source and table still use the full width (D-32 item 4). The map gets the same cap. */
+.chart__plot .plot-wide{max-width:880px}
+.chart .mapsvg{max-width:880px}
+/* 5. one heading scale: every chart title (h2 in the hero, h3 in sections, h4 in the temporary block) is the same Oswald 500 title */
+.chart__title{font-family:var(--f-head);font-weight:500;text-transform:uppercase;color:var(--c-text);letter-spacing:.01em;
+  font-size:clamp(20px,2.6vw,26px);line-height:1.15;margin:0 0 var(--u)}
+.hero .chart__title{font-size:clamp(22px,3vw,32px)}
+.tmpblock .chart__title{font-size:clamp(18px,2.2vw,22px)}
+.section__take{max-width:var(--measure)}
+/* sub-headings of the data and methods pages: same size on both pages, a rule and space above (data page h2s were 48 px, glued to tables) */
+.section>h2,.prose h2{font-size:clamp(22px,3vw,30px);line-height:1.15}
+.section>h2{border-top:1px solid var(--c-rule);padding-top:calc(var(--u)*2);margin-top:calc(var(--mod)*2.5)}
+.section>.section__head+h2,.section>.prose+h2:first-of-type{margin-top:calc(var(--mod)*2)}
+.prose h2{border-top:1px solid var(--c-hair);padding-top:calc(var(--u)*2)}
+.prose>h2:first-child{border-top:0;padding-top:0;margin-top:0}
+.section>.table-scroll{margin-bottom:var(--mod)}
+/* 6. data page tables: codes never break inside («C-/01»), numbers right next to their SE */
+.datatable td:first-child,.dataind td:last-child{white-space:nowrap}
+.datatable td.num{font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}
+/* 7. hero: no double rule above the number row; no empty band under the hero table */
+.chart__plot>.numrow:first-child{border-top:0}
+.hero .chart{margin-bottom:calc(var(--u)*2)}
+.hero details.srcbox--section{margin-top:0}
+/* 8. map: the panel's chart sits inside the grey box with the same inset as the text above it (wide screens; narrow keeps full width) */
+@media (min-width:600px){
+  .regional:has(>.chart){padding-inline:calc(var(--u)*2)}
+  .regional:has(>.chart)>p,.regional:has(>.chart)>.regional__src{padding-inline:0}
+}
+.regional:has(>.chart){max-width:none}
+/* map key: equal cells; the «наш расчёт» tag goes under the name instead of squeezing it; values aligned right */
+.mapkey{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));background:#fff}
+.mapkey li{display:flex}
+.mapkey a{flex:1;flex-wrap:wrap;align-content:center;column-gap:8px;row-gap:0;background:#fff}
+.mapkey__name{flex:1 1 0;min-width:0}
+.mapkey__tag{flex:0 0 100%;order:3;padding-left:30px;line-height:1.3;color:var(--c-muted)}
+.mapkey .dv[data-d]{order:2;font-variant-numeric:tabular-nums lining-nums}
+/* 9. keygaps and section jumps: a little more air between the intro list and the note / source */
+.keygaps__list{margin-bottom:calc(var(--u)*2)}
+.keygaps__note{margin-bottom:calc(var(--u)*1.5)}
+/* 10. temporary block: inner chart titles in Oswald (item 5), the block's caption + (?) on one line, less empty space at the top */
+.tmpblock__intro p:last-child{margin-bottom:var(--u)}
+.tmpblock .chart:first-of-type{margin-top:calc(var(--u)*2)}
+@media (max-width:599px){.tmpblock{padding-inline:calc(var(--u)*1.5)}}
+/* 11. WIP band: tighter on phones (wide screens keep one line per item) */
+@media (max-width:599px){.wip{font-size:14px}.wip .wrap{gap:4px}}
+/* 12. footer: columns align to the top rule; the methods page's closing blocks get the same spacing as everywhere else */
+.footer__grid>div{border-top:1px solid var(--c-rule);padding-top:var(--u)}
+.footer h2{margin-bottom:var(--u)}
