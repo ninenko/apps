@@ -607,3 +607,5 @@ details.orig>summary:focus-visible{outline:3px solid var(--c-focus);outline-offs
 .orig__body,blockquote.orig__body{border-left:2px solid var(--c-hair);padding-left:calc(var(--u)*2);margin:var(--u) 0 0}
 .orig__body p:last-child{margin-bottom:0}
 .section__srcnote{font-size:15px;margin:0 0 var(--mod)}
+/* V8d: home intro as wide as the heading (14ch of the 128px heading = 7.48em) */
+.hero__lead{max-width:min(100%,calc(clamp(40px,11vw,128px)*7.48))}
