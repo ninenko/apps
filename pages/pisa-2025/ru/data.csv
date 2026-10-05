@@ -49,10 +49,6 @@ C-07,C-07.reading.girls,357.75,2.86,points,verified,pisa,I.B1.2c.2,"Source: OECD
 C-07,C-07.reading.boys,330.99,2.64,points,verified,pisa,I.B1.2c.2,"Source: OECD, PISA 2025 Database, Table I.B1.2c.2",2026-10-04
 C-07,C-07.maths.girls,364.03,2.38,points,verified,pisa,I.B1.2c.3,"Source: OECD, PISA 2025 Database, Table I.B1.2c.3",2026-10-04
 C-07,C-07.maths.boys,363.58,2.13,points,verified,pisa,I.B1.2c.3,"Source: OECD, PISA 2025 Database, Table I.B1.2c.3",2026-10-04
-C-08,C-08.bishkek,397.03,5.89,points,verified,pisa_regional,I.B2.1,"Source: OECD, PISA 2025 Database, Table I.B2.1",2026-10-04
-C-08,C-08.chuy,365.08,4.78,points,verified,pisa_regional,I.B2.1,"Source: OECD, PISA 2025 Database, Table I.B2.1",2026-10-04
-C-08,C-08.jalalabad,338.78,3.84,points,verified,pisa_regional,I.B2.1,"Source: OECD, PISA 2025 Database, Table I.B2.1",2026-10-04
-C-08,C-08.osh,337.58,5.32,points,verified,pisa_regional,I.B2.1,"Source: OECD, PISA 2025 Database, Table I.B2.1",2026-10-04
 C-09,C-09.city,396.3,4.2,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-09,C-09.rural,341,2,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-09,C-09.gap,55.3,4.6,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
@@ -199,143 +195,12 @@ C-34,C-34.cps.bishkek,431.6,6.5,points,computed,pisa,PISA 2025 student data file
 C-34,C-34.cps.outside,376,2.4,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-34,C-34.cps.gap,55.5,7,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-34,C-34.share_outside,78.8,,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-08,C-08.bishkek.reading,383.46,6.12,points,verified,pisa_regional,I.B2.2,"Source: OECD, PISA 2025 Database, Table I.B2.2",2026-10-04
-C-08,C-08.bishkek.maths,394.69,5.2,points,verified,pisa_regional,I.B2.3,"Source: OECD, PISA 2025 Database, Table I.B2.3",2026-10-04
-C-08,C-08.bishkek.cps,431.58,6.53,points,verified,pisa_regional,I.B2.4,"Source: OECD, PISA 2025 Database, Table I.B2.4",2026-10-04
-C-08,C-08.chuy.reading,348.34,5.44,points,verified,pisa_regional,I.B2.2,"Source: OECD, PISA 2025 Database, Table I.B2.2",2026-10-04
-C-08,C-08.chuy.maths,361.66,4.07,points,verified,pisa_regional,I.B2.3,"Source: OECD, PISA 2025 Database, Table I.B2.3",2026-10-04
-C-08,C-08.chuy.cps,395.12,5.38,points,verified,pisa_regional,I.B2.4,"Source: OECD, PISA 2025 Database, Table I.B2.4",2026-10-04
-C-08,C-08.jalalabad.reading,315.14,4.45,points,verified,pisa_regional,I.B2.2,"Source: OECD, PISA 2025 Database, Table I.B2.2",2026-10-04
-C-08,C-08.jalalabad.maths,344.43,3.32,points,verified,pisa_regional,I.B2.3,"Source: OECD, PISA 2025 Database, Table I.B2.3",2026-10-04
-C-08,C-08.jalalabad.cps,364.36,4.11,points,verified,pisa_regional,I.B2.4,"Source: OECD, PISA 2025 Database, Table I.B2.4",2026-10-04
-C-08,C-08.osh.reading,319.76,6.37,points,verified,pisa_regional,I.B2.2,"Source: OECD, PISA 2025 Database, Table I.B2.2",2026-10-04
-C-08,C-08.osh.maths,345.27,5.14,points,verified,pisa_regional,I.B2.3,"Source: OECD, PISA 2025 Database, Table I.B2.3",2026-10-04
-C-08,C-08.osh.cps,349.58,5.88,points,verified,pisa_regional,I.B2.4,"Source: OECD, PISA 2025 Database, Table I.B2.4",2026-10-04
-C-37,C-37.science,357.37,3.38,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-39,C-39.science,381.73,13.94,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-37,C-37.reading,337.26,3.33,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-39,C-39.reading,368.33,16.64,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-37,C-37.maths,358.61,3.27,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-39,C-39.maths,382.2,13.68,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-37,C-37.cps,377.39,3.53,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-39,C-39.cps,413.83,16.17,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-36,C-36.bishkek.students,1345,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-36,C-36.bishkek.schools,34,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.chuy.students,1054,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.chuy.schools,31,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.jalalabad.students,1176,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.jalalabad.schools,34,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.osh.students,901,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.osh.schools,33,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.oshcity.students,370,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.oshcity.schools,9,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.four.students,1799,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.four.schools,54,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.public.schools,188,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.public.students,6459,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.private.schools,7,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-36,C-36.private.students,186,,count,computed,pisa,PISA 2025 student and school data files,"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.bishkek_chuy,31.95,7.54,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.bishkek_jalalabad,58.25,7.04,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.bishkek_osh,59.45,7.95,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.bishkek_oshcity,15.3,15.15,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.bishkek_four,39.66,6.67,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.chuy_jalalabad,26.31,6.12,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.chuy_osh,27.5,7.18,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.chuy_oshcity,-16.65,14.7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.chuy_four,7.71,5.87,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.jalalabad_osh,1.2,6.58,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.1",2026-10-04
-C-38,C-38.science.jalalabad_oshcity,-42.96,14.45,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.jalalabad_four,-18.59,5.11,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.osh_oshcity,-44.15,14.91,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.osh_four,-19.79,6.28,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.science.oshcity_four,24.36,14.34,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.bishkek_chuy,35.13,8.2,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.bishkek_jalalabad,68.33,7.54,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.bishkek_osh,63.7,8.86,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.bishkek_oshcity,15.14,17.72,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.bishkek_four,46.2,6.98,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.chuy_jalalabad,33.2,7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.chuy_osh,28.57,8.37,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.chuy_oshcity,-19.99,17.51,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.chuy_four,11.07,6.41,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.jalalabad_osh,-4.63,7.7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.2",2026-10-04
-C-38,C-38.reading.jalalabad_oshcity,-53.19,17.23,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.jalalabad_four,-22.13,5.58,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.osh_oshcity,-48.56,17.79,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.osh_four,-17.5,7.2,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.reading.oshcity_four,31.06,16.97,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.bishkek_chuy,33.03,6.48,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.bishkek_jalalabad,50.26,6.15,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.bishkek_osh,49.42,7.32,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.bishkek_oshcity,12.49,14.64,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.bishkek_four,36.08,6.16,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.chuy_jalalabad,17.23,5.19,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.chuy_osh,16.39,6.53,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.chuy_oshcity,-20.54,14.28,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.chuy_four,3.05,5.29,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.jalalabad_osh,-0.84,6.11,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.3",2026-10-04
-C-38,C-38.maths.jalalabad_oshcity,-37.77,14.03,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.jalalabad_four,-14.18,4.7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.osh_oshcity,-36.93,14.6,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.osh_four,-13.34,6.1,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.maths.oshcity_four,23.59,14.06,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.bishkek_chuy,36.46,8.51,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.bishkek_jalalabad,67.22,7.63,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.bishkek_osh,81.99,8.83,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.bishkek_oshcity,17.75,17.35,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.bishkek_four,54.18,7.54,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.chuy_jalalabad,30.76,6.65,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.chuy_osh,45.54,8.03,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.chuy_oshcity,-18.71,17.07,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.chuy_four,17.73,6.41,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.jalalabad_osh,14.78,7.15,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database, from Table I.B2.4",2026-10-04
-C-38,C-38.cps.jalalabad_oshcity,-49.47,16.61,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.jalalabad_four,-13.04,5.4,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.osh_oshcity,-64.25,17.15,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.osh_four,-27.81,7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
-C-38,C-38.cps.oshcity_four,36.44,16.55,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-07,C-07.science.girls_ahead,13.34,2.49,points,verified,pisa,I.B1.2c.1,"Source: OECD, PISA 2025 Database, Table I.B1.2c.1",2026-10-04
 C-07,C-07.reading.girls_ahead,26.76,2.65,points,verified,pisa,I.B1.2c.2,"Source: OECD, PISA 2025 Database, Table I.B1.2c.2",2026-10-04
 C-41,C-41.bishkek.students,1345,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-41,C-41.bishkek.schools,34,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.students,370,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.schools,9,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.students,4930,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.schools,152,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.science,397.03,5.89,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.reading,383.46,6.12,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.maths,394.69,5.2,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.cps,431.58,6.53,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.science,381.73,13.94,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.reading,368.33,16.64,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.maths,382.2,13.68,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.cps,413.83,16.17,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.science,351.22,2.08,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.reading,331.44,2.32,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.maths,353.6,1.91,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.cps,373.38,2.23,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.lang.kyrgyz,38.3,2.2,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.lang.russian,61.7,2.2,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.bishkek.lang.uzbek,0,,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.lang.kyrgyz,29.8,2.5,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.lang.russian,65.4,2.4,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.oshcity.lang.uzbek,4.8,3.6,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.lang.kyrgyz,67.8,1.9,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.lang.russian,26.9,1.8,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-41,C-41.rest.lang.uzbek,5.3,1.4,percent,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.science.bishkek_oshcity,15.3,15.15,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.science.bishkek_rest,45.81,6.21,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.science.oshcity_rest,30.51,14.08,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.reading.bishkek_oshcity,15.14,17.72,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.reading.bishkek_rest,52.02,6.57,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.reading.oshcity_rest,36.89,16.8,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.maths.bishkek_oshcity,12.49,14.64,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.maths.bishkek_rest,41.09,5.53,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.maths.oshcity_rest,28.6,13.8,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.cps.bishkek_oshcity,17.75,17.35,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.cps.bishkek_rest,58.2,6.97,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
-C-42,C-42.cps.oshcity_rest,40.45,16.3,points,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-43,C-43.ru.schools,9,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-43,C-43.ru.students,355,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-43,C-43.ky.schools,6,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
@@ -394,3 +259,70 @@ C-45,C-45.range.top,90,,percent,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Da
 C-45,C-45.range.n,34,,count,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
 C-45,C-45.below.n,12,,count,computed,pisa,I.A2.1 (count computed from the table),"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-45,C-45.below.total,91,,count,computed,pisa,I.A2.1 (count computed from the table),"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-51,C-51.oecd_n,38,,count,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-51,C-51.partners_n,53,,count,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-46,C-46.q1.diff,667,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-46,C-46.q1.kgz,3.6,1.1,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q1.oecd,25.6,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q1.n,524,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q1.schools,170,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q2.diff,605,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-46,C-46.q2.kgz,7.1,1.4,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q2.oecd,39.2,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q2.n,512,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q2.schools,171,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.diff1,559,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-46,C-46.q3.diff2,625,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-46,C-46.q3.diff3,762,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-46,C-46.q3.kgz_full,0.7,0.4,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.kgz_partial,30.1,1.8,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.oecd_full,12.1,0.2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.oecd_partial,32.7,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.n,645,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.q3.schools,178,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.sel.q1,28.9,3.8,points,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-46,C-46.sel.q3,20.4,3.7,points,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.n,756,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.schools,183,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.sel,7.3,3.6,points,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.show1.diff,351,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-47,C-47.show1.kgz,64,1.8,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.show1.oecd,91.7,0.2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.show2.diff,405,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-47,C-47.show2.kgz,44.7,2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.show2.oecd,82.4,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.learn3.diff,481,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-47,C-47.learn3.kgz,23.9,1.6,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.learn3.oecd,66.5,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.apply3.diff,687,,points,verified,pisa,Vol I Annex C,"Source: OECD, PISA 2025 Results (Volume I), Annex C",2026-10-05
+C-47,C-47.apply3.kgz,0.7,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-47,C-47.apply3.oecd,15.4,0.2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.n,970,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.schools,188,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.n,645,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.schools,182,,count,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q1.diff,388,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.lob.q1.kgz,43.5,1.7,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q1.oecd,68.7,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q2.diff,454,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.lob.q2.kgz,26.3,1.4,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q2.oecd,56.7,0.3,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q3.diff,665,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.lob.q3.kgz,1.9,0.5,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.q3.oecd,14.3,0.2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q1.diff,727,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.ff.q1.kgz,4.4,0.7,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q1.oecd,11.4,0.2,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q2.diff,624,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.ff.q2.kgz,31.2,2.1,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q2.oecd,43.6,0.4,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q3.diff_partial,441,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.ff.q3.kgz_partial,35.7,2.1,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q3.oecd_partial,58.8,,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q3.diff_full,726,,points,verified,pisa,Science Released Item Descriptions,"Source: OECD, PISA 2025 Science Released Item Descriptions",2026-10-05
+C-49,C-49.ff.q3.kgz_full,2.5,0.6,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.q3.oecd_full,7.7,,percent,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.lob.sel_below,21.8,2.5,points,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-49,C-49.ff.sel,2.2,3.1,points,computed,pisa,PISA 2025 cognitive and LDW item data files,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-50,C-50.below_1a,49.1,,percent,verified,pisa,I.B1.2a.12,"Source: OECD, PISA 2025 Database, Table I.B1.2a.12",2026-10-05
+C-50,C-50.below_2,81.2,,percent,verified,pisa,I.B1.2a.12,"Source: OECD, PISA 2025 Database, Table I.B1.2a.12",2026-10-05
