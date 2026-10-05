@@ -492,3 +492,32 @@ details.srcbox--section{margin-top:calc(var(--u)*2)}
 /* 12. footer: columns align to the top rule; the methods page's closing blocks get the same spacing as everywhere else */
 .footer__grid>div{border-top:1px solid var(--c-rule);padding-top:var(--u)}
 .footer h2{margin-bottom:var(--u)}
+
+/* ---------- V5a (D-40, 2026-10-05): no empty space under closed data tables. Measured in Chromium (test/v5a.test.js):
+   closed-table summary -> next visible element inside a section <= 24 px; last closed table -> next section's top rule <= 48 px. ---------- */
+.chart{margin-bottom:calc(var(--u)*2)}
+.tmpblock .chart{margin-bottom:calc(var(--u)*2)}
+.hero .wrap{padding-bottom:calc(var(--mod)*2)}
+.tmpblock{margin-bottom:var(--u)}
+.regional+.regional{margin-top:var(--u)}
+.section.section:has(>.regional:last-child,>.nonpisa:last-child)+.section{padding-top:calc(var(--mod)*1.5)}
+.regional:has(+.regional){margin-bottom:var(--u)}
+
+/* V5a (item 13): the (?) pop-up of the D-18 caption opens right under its own (?). .pop is position:static and .src__item is inline,
+   so the absolute .pop__body needs a positioned block around the caption: the caption line itself (the (?) is always its last item).
+   left/right 0 keep the window inside the caption block, which never exceeds the page width (no overflow at 360 px). */
+.srcnote,.sample__src,.chart__src,.section__src,.regional__src,.nonpisa__src,.mapzone__src,.tmpblock__src,.footer .src{position:relative}
+.srcnote .pop__body,.sample__src .pop__body,.chart__src .pop__body{max-width:min(40rem,100%)}
+
+/* ---------- V5c (D-42, D-43, D-44, 2026-10-05): data-page block «Выборка и охват» ---------- */
+.covblock h3{margin-top:calc(var(--mod)*1.25)}
+.covblock blockquote{max-width:var(--measure)}
+.covcount{position:relative;margin:0 0 var(--mod);max-width:var(--measure)}                 /* the (?) of the «12 из 91» caption is the last item of this block: its pop-up opens right under it (V5a item 13) */
+.covcount .pop__body{max-width:min(40rem,100%)}
+.covtable{border-top:1px solid var(--c-hair);padding-top:var(--u);margin-top:var(--u);max-width:var(--measure)}
+.covtable>summary{cursor:pointer;font-weight:700;font-size:16px;padding-block:var(--u);width:max-content}
+.covtable>summary:focus-visible{outline:3px solid var(--c-focus);outline-offset:4px}
+.covblock__src{margin-top:var(--u)}
+.covblock blockquote{border-left:3px solid var(--c-rule);padding-left:calc(var(--u)*2);margin-left:0}
+.covblock blockquote p{margin-bottom:var(--u)}
+.covblock blockquote cite{font-size:14px;color:var(--c-muted)}
