@@ -830,13 +830,10 @@ function loadNames() {
   const names = raw.split('\n').map(n => n.trim()).filter(n => n.length > 0);
   if (names.length === 0) return;
 
-  pool = [...names];
-  picked = [];
-  currentName = null;
-  chosenInline.classList.remove('active');
+  // Add to the existing pool (skip names already in pool); keep log and pending pick
+  names.forEach(n => { if (!pool.includes(n)) pool.push(n); });
   nameInput.value = '';
   renderPool();
-  renderLog();
   updatePickBtn();
 }
 
