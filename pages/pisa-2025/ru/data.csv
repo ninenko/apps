@@ -295,3 +295,5 @@ C-38,C-38.cps.jalalabad_four,-13.04,5.4,points,computed,pisa,I.B2.1-I.B2.4 and P
 C-38,C-38.cps.osh_oshcity,-64.25,17.15,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-38,C-38.cps.osh_four,-27.81,7,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
 C-38,C-38.cps.oshcity_four,36.44,16.55,points,computed,pisa,I.B2.1-I.B2.4 and PISA 2025 student data file (differences computed),"calculations based on OECD, PISA 2025 Database",2026-10-04
+C-07,C-07.science.girls_ahead,13.34,2.49,points,verified,pisa,I.B1.2c.1,"Source: OECD, PISA 2025 Database, Table I.B1.2c.1",2026-10-04
+C-07,C-07.reading.girls_ahead,26.76,2.65,points,verified,pisa,I.B1.2c.2,"Source: OECD, PISA 2025 Database, Table I.B1.2c.2",2026-10-04
