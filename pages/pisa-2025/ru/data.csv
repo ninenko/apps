@@ -369,3 +369,28 @@ C-44,C-44.cps.adjusted,61.11,16.14,points,computed,pisa,PISA 2025 student data f
 C-44,C-44.students,558,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-44,C-44.schools,15,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
 C-44,C-44.dropped,40,,count,computed,pisa,PISA 2025 student data file,"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-45,C-45.arm.ci,0.8,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.aze.ci,0.79,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.uzb.ci,0.9,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.dus.ci,0.92,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.geo.ci,0.93,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.kaz.ci,0.95,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.mng.ci,0.95,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.mda.ci,0.96,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.tur.ci,0.72,,index,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.kgz.nc,25.9,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.arm.nc,20,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.aze.nc,20.6,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.dus.nc,8.4,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.geo.nc,6.7,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.kaz.nc,5.1,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.mng.nc,5.2,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.mda.nc,3.6,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.tur.nc,27.8,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.oecd.nc,12.4,,percent,verified,pisa,Figure I.2.11,"Source: OECD, PISA 2025 Database, Figure I.2.11",2026-10-05
+C-45,C-45.range.rwa,32,,percent,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.range.khm,43,,percent,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.range.top,90,,percent,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.range.n,34,,count,verified,pisa,I.A2.1,"Source: OECD, PISA 2025 Database, Table I.A2.1",2026-10-05
+C-45,C-45.below.n,12,,count,computed,pisa,I.A2.1 (count computed from the table),"calculations based on OECD, PISA 2025 Database",2026-10-05
+C-45,C-45.below.total,91,,count,computed,pisa,I.A2.1 (count computed from the table),"calculations based on OECD, PISA 2025 Database",2026-10-05
