@@ -644,3 +644,13 @@ details.orig>summary:focus-visible{outline:3px solid var(--c-focus);outline-offs
   body .more{font-size:18px}
   body .titlebox{padding:calc(var(--u)*1.25) calc(var(--u)*2)}
 }
+
+/* ---------- V11a (D-51, 2026-10-06): «Главная» — the frame goes around the whole block (title + theses + «Подробнее»), not around the title ---------- */
+.section:has(> .section__head .titlebox){border:2px solid var(--c-rule);padding:calc(var(--u)*3) calc(var(--u)*3.5) calc(var(--u)*3);margin-block:calc(var(--mod)*1.5)}
+.section:has(> .section__head .titlebox) > .section__head{border-top:0;padding-top:0}
+.titlebox{display:inline;width:auto;padding:0;border:0;background:none}
+.titlebox:hover{border-color:transparent}
+@media (max-width:599.98px){
+  .section:has(> .section__head .titlebox){padding:calc(var(--u)*2) calc(var(--u)*2)}
+  body .titlebox{padding:0}
+}
