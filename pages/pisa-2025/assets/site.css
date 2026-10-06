@@ -654,3 +654,14 @@ details.orig>summary:focus-visible{outline:3px solid var(--c-focus);outline-offs
   .section:has(> .section__head .titlebox){padding:calc(var(--u)*2) calc(var(--u)*2)}
   body .titlebox{padding:0}
 }
+
+/* V12a (D-52): items page, maths and reading examples. Marker «пример из PISA 2022/2018», screenshot, highlighted Kyrgyzstan column. */
+.itemmark{display:inline-block;margin:0 0 var(--u);padding:4px 10px;border:1px solid var(--c-ink);font-size:15px;font-weight:700}
+.itemshot{margin:0 0 calc(var(--u)*2);max-width:100%}
+.itemshot img{display:block;max-width:min(100%,760px);height:auto;border:1px solid var(--c-hair)}
+.itemshot__cap{font-size:15px;color:var(--c-muted);margin-top:6px}
+table.levels th.hl,table.levels td.hl{background:var(--c-soft);font-weight:700}
+/* V12a (Ivan 2026-10-06): screenshots of released items sit in a closed «Показать экраны задания» toggle under the table */
+.shots{margin:0 0 var(--u)}
+.shots>summary{cursor:pointer;text-decoration:underline;min-height:44px;display:flex;align-items:center}
+.shots__body{padding-top:var(--u)}
