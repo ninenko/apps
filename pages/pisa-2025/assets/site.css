@@ -617,3 +617,30 @@ details.orig>summary:focus-visible{outline:3px solid var(--c-focus);outline-offs
 .section[data-tag="items"] .orig__body,.section[data-tag="items"] .prose p,.section[data-tag="items"] .prose li,.section[data-tag="items"] .prose blockquote{max-width:none}
 .itemtable__after{margin:0 0 var(--u)}
 .itemtable__after p:last-child{margin-bottom:var(--u)}
+
+/* ---------- V10a (D-50, 2026-10-06): «Главная» block titles as framed boxes, «Подробнее» links, TfK label as normal text ---------- */
+/* Block titles link to their pages; same visual language as the section cards (white box, 2px rule, uppercase heading face). Theses stay unboxed. */
+.titlebox{display:block;box-sizing:border-box;width:100%;padding:calc(var(--u)*1.5) calc(var(--u)*2.5);background:#fff;color:var(--c-text);
+  border:2px solid var(--c-rule);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;overflow-wrap:break-word}
+.titlebox::after{content:"\00a0→";text-decoration:none}
+.titlebox:hover{border-color:var(--c-link-hover);color:var(--c-link-hover);text-decoration-thickness:2px}
+.titlebox:focus-visible{outline:3px solid var(--c-focus);outline-offset:3px}
+@media (forced-colors:active){.titlebox{border-color:CanvasText}}
+.more{margin:calc(var(--u)*2) 0 0;font-size:18px;line-height:1.45}
+.more__link{font-weight:700}
+/* TfK programme-data label (C-52): kept, as normal-size text after the sentence */
+.tfkdata .badge--tfk{display:inline;font:inherit;text-transform:none;letter-spacing:0;padding:0;margin:0;border:0;background:none;color:var(--c-ink)}
+/* V10a (D-50 item 22): readability at phone width (checked at 360 px). Small print (top band, captions, chart notes, source lines,
+   sample line, footer) was 14–15 px; at phone width it is now 16 px with a 1.5 line height. Desktop sizes are unchanged. */
+@media (max-width:599.98px){
+  body .wip, body .wip p, body .wip b, body .wip a,
+  body .chart__note, body .keygaps__note, body .srcnote, body .srcnote a, body .src__item, body .sample__line, body .sample__line b,
+  body main cite, body main legend, body .kicker, body .card__text, body .tmpblock__mark, body .itemtable .chart__note,
+  body .footer p, body .footer a, body .footer b{font-size:16px;line-height:1.5}
+  body .card__more{font-size:15px}
+  body .section cite, body .toggle legend, body .src{font-size:16px;line-height:1.5}
+  body .datasrc table, body .dataind table{font-size:15px}
+  body .tabs a{font-size:15px}
+  body .more{font-size:18px}
+  body .titlebox{padding:calc(var(--u)*1.25) calc(var(--u)*2)}
+}
