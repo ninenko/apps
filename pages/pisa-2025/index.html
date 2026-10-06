@@ -3,11 +3,202 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="refresh" content="0; url=ru/index.html">
-<title>Кыргызстан в PISA 2025</title>
-<link rel="canonical" href="ru/index.html">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>Закрытый доступ</title>
+<style>
+  :root{color-scheme:light dark;--bg:#fff;--fg:#1a1a1a;--mut:#666;--ac:#1a1a1a;--acfg:#fff}
+  @media (prefers-color-scheme:dark){:root{--bg:#141414;--fg:#eee;--mut:#9a9a9a;--ac:#eee;--acfg:#141414}}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  main{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
+  .box{max-width:380px;text-align:center}
+  h1{font-size:20px;margin:0 0 8px;font-weight:600}
+  p{margin:0 0 20px;color:var(--mut)}
+  button{font:inherit;font-weight:600;padding:12px 22px;border-radius:8px;border:0;background:var(--ac);color:var(--acfg);cursor:pointer}
+  button.link{background:none;color:var(--mut);font-weight:400;text-decoration:underline;padding:8px}
+  #msg{margin-top:16px;font-size:14px;color:var(--mut);min-height:1.4em}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff}
+  [hidden]{display:none!important}
+</style>
 </head>
 <body>
-<p><a href="ru/index.html">Перейти на русскую версию сайта</a></p>
+<main id="gate">
+  <div class="box">
+    <h1 id="t">Закрытый доступ</h1>
+    <p id="d">Материал доступен только по приглашению. Войдите аккаунтом Google, на который открыт доступ.</p>
+    <button id="login">Войти через Google</button>
+    <button id="out" class="link" hidden>Войти другим аккаунтом</button>
+    <div id="msg"></div>
+  </div>
+</main>
+<iframe id="site" title="Материал" hidden></iframe>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+(function(){
+'use strict';
+firebase.initializeApp({
+  apiKey:"AIzaSyAt9StrSkg4cxpvI-d5SmPba-nMiPXsEa8",
+  authDomain:"ky-app-9c14d.firebaseapp.com",
+  databaseURL:"https://ky-app-9c14d-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"ky-app-9c14d"
+});
+var auth=firebase.auth(), db=firebase.database();
+var ROOT='pisa_site', START='ru/index.html', CONTACT='ivan.ninenko@gmail.com';
+var $=function(i){return document.getElementById(i)};
+var gate=$('gate'), frame=$('site'), msg=$('msg');
+
+function key(p){return p.replace(/\//g,'~').replace(/\./g,',');}
+function resolve(base,rel){
+  var u=new URL(rel,'https://x.invalid/'+base);
+  return {path:decodeURIComponent(u.pathname.slice(1)),hash:u.hash.replace(/^#/,'')};
+}
+
+/* ---------- files from the database ---------- */
+var files={}, blobs={};
+function getFile(p){
+  if(!files[p]) files[p]=db.ref(ROOT+'/'+key(p)).get().then(function(s){return s.val();});
+  return files[p];
+}
+function bytes(b64){var s=atob(b64),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
+function blobUrl(p){
+  if(!blobs[p]) blobs[p]=getFile(p).then(function(f){
+    if(!f) return null;
+    var data=f.e==='b'?bytes(f.d):f.d;
+    return URL.createObjectURL(new Blob([data],{type:f.m}));
+  });
+  return blobs[p];
+}
+function isExternal(u){return /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(u);}
+
+function cssText(p){
+  return getFile(p).then(function(f){
+    if(!f) return '';
+    var css=f.d, re=/url\(\s*(['"]?)([^'")]+)\1\s*\)/g, m, jobs=[];
+    while((m=re.exec(css))){
+      if(isExternal(m[2])||m[2].charAt(0)==='#') continue;
+      (function(whole,rel){
+        jobs.push(blobUrl(resolve(p,rel).path).then(function(u){return [whole,u];}));
+      })(m[0],m[2]);
+    }
+    return Promise.all(jobs).then(function(r){
+      r.forEach(function(x){ if(x[1]) css=css.split(x[0]).join('url("'+x[1]+'")'); });
+      return css;
+    });
+  });
+}
+
+/* ---------- render one page into the iframe ---------- */
+var current=null;
+function render(path,hash){
+  return getFile(path).then(function(f){
+    if(!f) throw new Error('NOT_FOUND');
+    var doc=new DOMParser().parseFromString(f.d,'text/html');
+    var mr=doc.querySelector('meta[http-equiv="refresh" i]');
+    if(mr){
+      var m=/url\s*=\s*(.+)$/i.exec(mr.getAttribute('content')||'');
+      if(m){var r=resolve(path,m[1].trim()); return go(r.path,r.hash,true);}
+    }
+    var jobs=[];
+    doc.querySelectorAll('link[rel~="stylesheet"][href]').forEach(function(l){
+      var h=l.getAttribute('href'); if(isExternal(h)) return;
+      jobs.push(cssText(resolve(path,h).path).then(function(css){
+        var s=doc.createElement('style'); s.textContent=css; l.replaceWith(s);
+      }));
+    });
+    doc.querySelectorAll('link[rel~="icon"][href]').forEach(function(l){l.remove();});
+    doc.querySelectorAll('script[src]').forEach(function(sc){
+      var h=sc.getAttribute('src'); if(isExternal(h)) return;
+      jobs.push(getFile(resolve(path,h).path).then(function(sf){
+        var n=doc.createElement('script'); n.textContent=sf?sf.d:''; sc.replaceWith(n);
+      }));
+    });
+    doc.querySelectorAll('img[src]').forEach(function(im){
+      var h=im.getAttribute('src'); if(isExternal(h)) return;
+      jobs.push(blobUrl(resolve(path,h).path).then(function(u){ if(u) im.setAttribute('src',u); }));
+    });
+    doc.querySelectorAll('a[href]').forEach(function(a){
+      var h=a.getAttribute('href');
+      if(h.charAt(0)==='#') return;
+      if(isExternal(h)){
+        if(/^https?:|^\/\//i.test(h)){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');}
+        return;
+      }
+      var r=resolve(path,h);
+      if(/\.html?$/i.test(r.path)){
+        a.setAttribute('href','#'); a.setAttribute('data-route',r.path); a.setAttribute('data-hash',r.hash);
+      }else{
+        jobs.push(blobUrl(r.path).then(function(u){
+          if(u){a.setAttribute('href',u); a.setAttribute('download',r.path.split('/').pop());}
+        }));
+      }
+    });
+    return Promise.all(jobs).then(function(){
+      document.title=(doc.title||'').trim()||'Материал';
+      current={path:path,hash:hash};
+      gate.hidden=true; frame.hidden=false;
+      frame.onload=function(){
+        var d=frame.contentDocument; if(!d) return;
+        d.addEventListener('click',function(e){
+          var a=e.target.closest&&e.target.closest('a[data-route]'); if(!a) return;
+          e.preventDefault(); go(a.getAttribute('data-route'),a.getAttribute('data-hash'));
+        });
+        if(hash){var el=d.getElementById(hash); if(el) el.scrollIntoView();}
+      };
+      frame.srcdoc='<!doctype html>'+doc.documentElement.outerHTML;
+    });
+  });
+}
+
+function go(path,hash,replace){
+  var h='#/'+path+(hash?'#'+hash:'');
+  if(replace) history.replaceState(null,'',h); else if(location.hash!==h) history.pushState(null,'',h);
+  return render(path,hash||'');
+}
+function parseHash(){
+  var h=location.hash.replace(/^#\/?/,''), i=h.indexOf('#');
+  var p=i<0?h:h.slice(0,i), a=i<0?'':h.slice(i+1);
+  return {path:p||START, hash:a};
+}
+
+/* ---------- gate ---------- */
+function showGate(opts){
+  frame.hidden=true; gate.hidden=false; frame.removeAttribute('srcdoc');
+  $('t').textContent=opts&&opts.title||'Закрытый доступ';
+  $('d').textContent=opts&&opts.text||'Материал доступен только по приглашению. Войдите аккаунтом Google, на который открыт доступ.';
+  $('login').hidden=!!(opts&&opts.denied);
+  $('out').hidden=!(opts&&opts.denied);
+  msg.textContent='';
+}
+function denied(u){
+  showGate({denied:true,title:'Доступ не открыт',
+    text:'Аккаунт '+u.email+' не в списке. Напишите на '+CONTACT+', чтобы доступ открыли.'});
+}
+function open(){
+  var u=auth.currentUser, p=parseHash();
+  if(p.path==='logout'){ return auth.signOut().then(function(){history.replaceState(null,'',location.pathname);showGate();}); }
+  msg.textContent='Загружаю…';
+  return render(p.path,p.hash).catch(function(e){
+    var m=String(e&&(e.code||e.message)||e);
+    if(/permission/i.test(m)) return denied(u);
+    if(m==='NOT_FOUND') return go(START,'',true).catch(function(){msg.textContent='Страница не найдена.';});
+    msg.textContent='Не удалось загрузить: '+m;
+  });
+}
+auth.onAuthStateChanged(function(u){ if(u) open(); else showGate(); });
+window.addEventListener('popstate',function(){ if(auth.currentUser) open(); });
+$('login').onclick=function(){
+  msg.textContent='';
+  var prov=new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(prov).catch(function(e){
+    if(e&&e.code==='auth/popup-closed-by-user') return;
+    auth.signInWithRedirect(prov).catch(function(e2){msg.textContent='Ошибка входа: '+(e2.code||e2.message);});
+  });
+};
+$('out').onclick=function(){ auth.signOut().then(function(){showGate();}); };
+})();
+</script>
 </body>
 </html>
