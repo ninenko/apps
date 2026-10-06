@@ -676,3 +676,11 @@ table.levels th.hl,table.levels td.hl{background:var(--c-soft);font-weight:700}
 .section[id],.chart[id],h2[id]{scroll-margin-top:calc(var(--u)*2)}
 @media (max-width:599.98px){.pagejumps__link{font-size:16px;padding:8px 12px}}
 @media (forced-colors:active){.pagejumps__link{border-color:CanvasText}}
+
+/* V15 (D-56 item 3, 2026-10-06): running text (leads, body paragraphs, takeaways, notes, captions, lists, quotes, source lines) in the
+   main content area is as wide as the content column and the charts/tables on every page, as V9a (D-49) did for the items page.
+   Desktop and tablet only; at phone width the column is narrower than the old measure anyway. Headings and the home intro (.hero__lead) unchanged. */
+@media (min-width:600px){
+  main{--measure:none}
+  main .nonpisa,main .yrs,main .checklist,main .regional,main .regional:has(>.chart){max-width:none}
+}
