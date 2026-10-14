@@ -74,6 +74,7 @@ HTML public/
 | bis-timetable.html | https://ninenko.github.io/apps/apps/bis-timetable.html |
 | skill-tracker-grade8.html | https://ninenko.github.io/apps/apps/skill-tracker-grade8.html |
 | sector-explorer.html | https://ninenko.github.io/apps/apps/sector-explorer.html |
+| phishing-trainer.html | https://ninenko.github.io/apps/apps/phishing-trainer.html |
 
 ### Лекции и слайды
 
