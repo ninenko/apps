@@ -75,6 +75,7 @@ HTML public/
 | skill-tracker-grade8.html | https://ninenko.github.io/apps/apps/skill-tracker-grade8.html |
 | sector-explorer.html | https://ninenko.github.io/apps/apps/sector-explorer.html |
 | phishing-trainer.html | https://ninenko.github.io/apps/apps/phishing-trainer.html |
+| telegram-contest.html | https://ninenko.github.io/apps/apps/telegram-contest.html |
 
 ### Лекции и слайды
 
